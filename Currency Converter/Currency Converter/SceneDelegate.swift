@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let tabBarViewController = UITabBarController()
         
-        let converterViewController = R.storyboard.converter.converterViewController()!
+        let converterViewController = R.storyboard.converter.instantiateInitialViewController()!
         converterViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
         tabBarViewController.viewControllers = [converterViewController]
         

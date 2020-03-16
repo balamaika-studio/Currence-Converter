@@ -14,6 +14,9 @@ protocol ConverterDisplayLogic: class {
 
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     var interactor: ConverterBusinessLogic?
     var router: (NSObjectProtocol & ConverterRoutingLogic)?
     
@@ -51,10 +54,26 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.register(R.nib.converterCurrencyTableViewCell)
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         
+    }
+    
+}
+
+extension ConverterViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        4
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCell,
+                                                           for: indexPath) else { fatalError() }
+        return cell
     }
     
 }
