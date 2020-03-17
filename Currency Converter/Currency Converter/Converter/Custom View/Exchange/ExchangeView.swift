@@ -7,6 +7,11 @@
 //
 
 import UIKit
+
+protocol ExchangeViewDeleagte: class {
+    func changeCurrencyTapped()
+}
+
 @IBDesignable
 class ExchangeView: UIView {
     // MARK: - UI
@@ -16,7 +21,8 @@ class ExchangeView: UIView {
     @IBOutlet weak var changeCurrencyStack: UIStackView!
     
     // MARK: - Properties
-    let tapGesture = UITapGestureRecognizer()
+    private let tapGesture = UITapGestureRecognizer()
+    weak var delegate: ExchangeViewDeleagte?
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -30,14 +36,6 @@ class ExchangeView: UIView {
         loadViewFromNib()
         setup()
     }
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
 
     // MARK: - Private Methods
     private func loadViewFromNib() {
@@ -59,5 +57,6 @@ class ExchangeView: UIView {
     
     @objc private func changeCurrencyTapped() {
         print("Chnage Currency Tapped!")
+        delegate?.changeCurrencyTapped()
     }
 }

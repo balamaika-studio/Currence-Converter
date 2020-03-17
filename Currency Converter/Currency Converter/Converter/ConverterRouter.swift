@@ -9,12 +9,45 @@
 import UIKit
 
 protocol ConverterRoutingLogic {
+    func showChoiceViewController()
 }
 
-class ConverterRouter: NSObject, ConverterRoutingLogic {
-    
+class ConverterRouter {
     weak var viewController: ConverterViewController?
     
     // MARK: Routing
     
+    func showChoiceViewController() {
+        guard
+            let viewController = viewController
+//            let firstDataStore = dataStore,
+//            var secondDataStore = secondVc.router?.dataStore
+            else { fatalError("Fail route to second") }
+        
+        let secondVc = ChoiceViewController(nib: R.nib.choiceViewController)
+        
+//        passDataToSecond(source: firstDataStore, destination: &secondDataStore)
+        present(source: viewController, destination: secondVc)
+    }
 }
+
+// MARK: - Navigation
+extension ConverterRouter: ConverterRoutingLogic {
+    private func present(source: UIViewController, destination: UIViewController) {
+        
+        destination.modalPresentationStyle = .custom
+        destination.transitioningDelegate = source as? ConverterViewController
+        destination.view.backgroundColor = .red
+        
+        source.present(destination, animated: true, completion: nil)
+//        source.navigationController?.pushViewController(destination, animated: true)
+    }
+}
+
+// MARK: - Passing Data
+//extension FirstRouter: FirstDataPassing {
+//    private func passDataToSecond(source: FirstDataStore, destination: inout SecondDataStore) {
+//        destination.number = source.number
+//    }
+//}
+

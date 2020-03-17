@@ -15,10 +15,11 @@ protocol ConverterDisplayLogic: class {
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var converterView: ConverterView!
     
     
     var interactor: ConverterBusinessLogic?
-    var router: (NSObjectProtocol & ConverterRoutingLogic)?
+    var router: ConverterRoutingLogic?
     
     // MARK: Object lifecycle
     
@@ -57,12 +58,18 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
+        converterView.didTap = self.didTap
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         
     }
     
+    // MARK: Private Methods
+    func didTap() {
+        print("In ConverterVC")
+        router?.showChoiceViewController()
+    }
 }
 
 extension ConverterViewController: UITableViewDataSource {
@@ -76,4 +83,33 @@ extension ConverterViewController: UITableViewDataSource {
         return cell
     }
     
+}
+
+
+extension ConverterViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+class HalfSizePresentationController : UIPresentationController {
+    var shadowView: UIView?
+    
+    override var frameOfPresentedViewInContainerView: CGRect {
+        guard let containerView = containerView else { return .zero }
+        return CGRect(x: 0, y: containerView.bounds.height / 2,
+                      width: containerView.bounds.width,
+                      height: containerView.bounds.height / 2)
+    }
+    
+    override func presentationTransitionWillBegin() {
+        shadowView = UIView(frame: presentingViewController.view.frame)
+        shadowView?.backgroundColor = .black
+        shadowView?.layer.opacity = 0.3
+        presentingViewController.view.addSubview(shadowView!)
+    }
+    
+    override func dismissalTransitionWillBegin() {
+        shadowView?.removeFromSuperview()
+    }
 }

@@ -27,6 +27,15 @@
 		595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0FA241FC56E00B4EEE4 /* ConverterView.swift */; };
 		595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0FD241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift */; };
 		595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */; };
+		5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811132420E8CE00426968 /* ChoicePresenter.swift */; };
+		5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811142420E8CE00426968 /* ChoiceWorker.swift */; };
+		5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811152420E8CE00426968 /* ChoiceRouter.swift */; };
+		5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811162420E8CE00426968 /* ChoiceModels.swift */; };
+		5968111E2420E8CE00426968 /* ChoiceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811172420E8CE00426968 /* ChoiceViewController.swift */; };
+		5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811182420E8CE00426968 /* ChoiceInteractor.swift */; };
+		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
+		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
+		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
 		7CC4451B72C84DE623FFD9CD /* Pods_Currency_Converter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */; };
 		A3E8168B007F8123B635C16B /* Pods_Currency_ConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +76,15 @@
 		595FC0FA241FC56E00B4EEE4 /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 		595FC0FD241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		596811132420E8CE00426968 /* ChoicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoicePresenter.swift; sourceTree = "<group>"; };
+		596811142420E8CE00426968 /* ChoiceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWorker.swift; sourceTree = "<group>"; };
+		596811152420E8CE00426968 /* ChoiceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceRouter.swift; sourceTree = "<group>"; };
+		596811162420E8CE00426968 /* ChoiceModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceModels.swift; sourceTree = "<group>"; };
+		596811172420E8CE00426968 /* ChoiceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceViewController.swift; sourceTree = "<group>"; };
+		596811182420E8CE00426968 /* ChoiceInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceInteractor.swift; sourceTree = "<group>"; };
+		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
+		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
+		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
 		75FE0F1A547DD08770B0C2D0 /* Pods-Currency Converter.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.debug.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.debug.xcconfig"; sourceTree = "<group>"; };
 		9A69F0144CE382400E931EEA /* Pods-Currency ConverterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.debug.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDFD26C6F25AA25CE6D9B09 /* Pods-Currency ConverterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.release.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +136,7 @@
 		595FC0B8241FA40400B4EEE4 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				596811122420E89C00426968 /* Choice currency */,
 				595FC0E0241FABC700B4EEE4 /* Converter */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
 				595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */,
@@ -188,6 +207,30 @@
 				595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */,
 			);
 			path = "Table Cell";
+			sourceTree = "<group>";
+		};
+		596811122420E89C00426968 /* Choice currency */ = {
+			isa = PBXGroup;
+			children = (
+				596811212420FA3800426968 /* ChoiceCurrencyTableCell */,
+				596811172420E8CE00426968 /* ChoiceViewController.swift */,
+				596811182420E8CE00426968 /* ChoiceInteractor.swift */,
+				596811132420E8CE00426968 /* ChoicePresenter.swift */,
+				596811142420E8CE00426968 /* ChoiceWorker.swift */,
+				596811162420E8CE00426968 /* ChoiceModels.swift */,
+				596811152420E8CE00426968 /* ChoiceRouter.swift */,
+				596811192420E8CE00426968 /* ChoiceViewController.xib */,
+			);
+			path = "Choice currency";
+			sourceTree = "<group>";
+		};
+		596811212420FA3800426968 /* ChoiceCurrencyTableCell */ = {
+			isa = PBXGroup;
+			children = (
+				596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */,
+				596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */,
+			);
+			path = ChoiceCurrencyTableCell;
 			sourceTree = "<group>";
 		};
 		BC4E34592E1250332CF277CB /* Pods */ = {
@@ -298,9 +341,11 @@
 				595FC0F5241FAD7F00B4EEE4 /* ExchangeView.xib in Resources */,
 				595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */,
 				595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */,
+				596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */,
 				595FC0C1241FA40400B4EEE4 /* Main.storyboard in Resources */,
 				595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */,
 				595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */,
+				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
 				595FC0F0241FAC3600B4EEE4 /* Converter.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,18 +448,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */,
+				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
 				595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */,
 				595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */,
+				5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */,
+				5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */,
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,
 				595FC0BC241FA40400B4EEE4 /* SceneDelegate.swift in Sources */,
+				5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,
+				5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */,
 				595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */,
 				595FC0EA241FABDB00B4EEE4 /* ConverterRouter.swift in Sources */,
 				595FC0EC241FABDB00B4EEE4 /* ConverterViewController.swift in Sources */,
+				5968111E2420E8CE00426968 /* ChoiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

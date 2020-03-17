@@ -9,13 +9,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConverterView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
+                <outlet property="bottomCurrency" destination="qxH-rN-V1r" id="i4e-iy-2Jy"/>
                 <outlet property="swapCurrencyButton" destination="2np-Aj-Y7v" id="Sdd-oW-6gg"/>
+                <outlet property="topCurrency" destination="kDL-Ue-gFf" id="RL6-WN-HKr"/>
                 <outlet property="updatedLabel" destination="0KE-wc-31w" id="4lA-ub-Lgb"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="521" height="188"/>
+            <rect key="frame" x="0.0" y="0.0" width="521" height="227"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kDL-Ue-gFf" customClass="ExchangeView" customModule="Currency_Converter" customModuleProvider="target">
@@ -91,7 +93,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="203.62318840579712" y="81.521739130434796"/>
+            <point key="canvasLocation" x="203.62318840579712" y="97.418478260869577"/>
         </view>
     </objects>
     <resources>

@@ -41,6 +41,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Конвертер валют" id="brH-lA-8CT"/>
                     <connections>
+                        <outlet property="converterView" destination="9YG-ju-YSa" id="Crc-0f-6D7"/>
                         <outlet property="tableView" destination="Ehq-iU-bMO" id="iR7-6r-113"/>
                     </connections>
                 </viewController>

@@ -12,6 +12,11 @@ class ConverterView: UIView {
     // MARK: - UI
     @IBOutlet weak var swapCurrencyButton: UIButton!
     @IBOutlet weak var updatedLabel: UILabel!
+    @IBOutlet weak var topCurrency: ExchangeView!
+    @IBOutlet weak var bottomCurrency: ExchangeView!
+    
+    // MARK: - Properties
+    var didTap: (() -> Void)?
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -45,6 +50,14 @@ class ConverterView: UIView {
     }
     
     private func setup() {
+        topCurrency.delegate = self
+        bottomCurrency.delegate = self
+    }
+}
 
+extension ConverterView: ExchangeViewDeleagte {
+    func changeCurrencyTapped() {
+        print("Delegate Method")
+        didTap?()
     }
 }
