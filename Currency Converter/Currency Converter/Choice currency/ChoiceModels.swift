@@ -13,19 +13,25 @@ enum Choice {
   enum Model {
     struct Request {
       enum RequestType {
-        case some
+        case loadCurrencies
       }
     }
     struct Response {
       enum ResponseType {
-        case some
+        case currencies(_: [ChoiceCurrencyViewModel])
       }
     }
     struct ViewModel {
       enum ViewModelData {
-        case some
+        case displayCurrencies(_: [ChoiceCurrencyViewModel])
       }
     }
   }
   
+}
+
+
+struct ChoiceCurrencyViewModel {
+    let currency: String
+    let title: String
 }

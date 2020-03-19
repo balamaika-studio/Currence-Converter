@@ -38,6 +38,11 @@
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
 		7CC4451B72C84DE623FFD9CD /* Pods_Currency_Converter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */; };
 		A3E8168B007F8123B635C16B /* Pods_Currency_ConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */; };
+		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
+		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
+		D1CEB83E242383C900988B53 /* ParsingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB83D242383C900988B53 /* ParsingService.swift */; };
+		D1CEB84124238E9F00988B53 /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB84024238E9F00988B53 /* Currency.swift */; };
+		D1EF9A29242394F400DD328C /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF9A28242394F400DD328C /* NetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +94,11 @@
 		9A69F0144CE382400E931EEA /* Pods-Currency ConverterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.debug.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDFD26C6F25AA25CE6D9B09 /* Pods-Currency ConverterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.release.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.release.xcconfig"; sourceTree = "<group>"; };
 		C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
+		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
+		D1CEB83D242383C900988B53 /* ParsingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingService.swift; sourceTree = "<group>"; };
+		D1CEB84024238E9F00988B53 /* Currency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
+		D1EF9A28242394F400DD328C /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_Converter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -115,6 +125,7 @@
 		595FC0AD241FA40400B4EEE4 = {
 			isa = PBXGroup;
 			children = (
+				D16E45D72423C047005D99E9 /* currenciesNames.json */,
 				595FC0DC241FA72F00B4EEE4 /* R.generated.swift */,
 				595FC0B8241FA40400B4EEE4 /* Currency Converter */,
 				595FC0CF241FA40600B4EEE4 /* Currency ConverterTests */,
@@ -136,6 +147,8 @@
 		595FC0B8241FA40400B4EEE4 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				D1CEB83F24238B8400988B53 /* Model */,
+				D1CEB83C2423838800988B53 /* Service */,
 				596811122420E89C00426968 /* Choice currency */,
 				595FC0E0241FABC700B4EEE4 /* Converter */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
@@ -244,6 +257,24 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		D1CEB83C2423838800988B53 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D1CEB83D242383C900988B53 /* ParsingService.swift */,
+				D1EF9A28242394F400DD328C /* NetworkService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		D1CEB83F24238B8400988B53 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D1CEB84024238E9F00988B53 /* Currency.swift */,
+				D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D704C2949C2B98B5DF5215FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -347,6 +378,7 @@
 				595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */,
 				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
 				595FC0F0241FAC3600B4EEE4 /* Converter.storyboard in Resources */,
+				D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,6 +480,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1EF9A29242394F400DD328C /* NetworkService.swift in Sources */,
+				D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */,
 				5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
@@ -458,7 +492,9 @@
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
+				D1CEB83E242383C900988B53 /* ParsingService.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,
+				D1CEB84124238E9F00988B53 /* Currency.swift in Sources */,
 				595FC0BC241FA40400B4EEE4 /* SceneDelegate.swift in Sources */,
 				5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,

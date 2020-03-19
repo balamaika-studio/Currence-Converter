@@ -59,6 +59,18 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         converterView.didTap = self.didTap
+        
+//        let network: Networking = NetworkService()
+//        network.fetchData { (data) in
+//            let logic = ECBParser()
+//            let parser: CurrencyParsing = ParsingService(parseLogic: logic)
+//            guard let data = data else {
+//                print("Internet error")
+//                return
+//            }
+//            let cube = parser.parse(data: data)
+//            print(cube)
+//        }
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
