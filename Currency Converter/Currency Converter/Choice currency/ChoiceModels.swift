@@ -14,6 +14,7 @@ enum Choice {
     struct Request {
       enum RequestType {
         case loadCurrencies
+        case chooseCurrency(viewModel: ChoiceCurrencyViewModel)
       }
     }
     struct Response {

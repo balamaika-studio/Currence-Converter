@@ -17,6 +17,7 @@ class ConverterView: UIView {
     
     // MARK: - Properties
     var didTap: (() -> Void)?
+    var replacingView: ExchangeView?
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -53,11 +54,20 @@ class ConverterView: UIView {
         topCurrency.delegate = self
         bottomCurrency.delegate = self
     }
+    
+    func justUpdate(_ viewModel: ConverterViewModel) {
+        topCurrency.configure(with: viewModel.firstExchange)
+        bottomCurrency.configure(with: viewModel.secondExchange)
+    }
+    
+    private func updateConverterCurrency(with currency: Currency) {
+//        replacingView?.configure(with: currency)
+    }
 }
 
 extension ConverterView: ExchangeViewDeleagte {
-    func changeCurrencyTapped() {
-        print("Delegate Method")
+    func changeCurrencyTapped(exchangeView view: ExchangeView) {
+        replacingView = view
         didTap?()
     }
 }

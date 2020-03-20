@@ -45,6 +45,7 @@ class ParsingService: CurrencyParsing {
 
     func parse(data: Data) -> [Currency] {
         var result = [Currency]()
+        result.append(Cube(currency: "EUR", rate: 1))
         
         xmlParser = XMLParser(data: data)
         xmlParser?.delegate = logic

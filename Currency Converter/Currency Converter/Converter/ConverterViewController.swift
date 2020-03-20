@@ -19,7 +19,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     
     var interactor: ConverterBusinessLogic?
-    var router: ConverterRoutingLogic?
+    var router: (ConverterRoutingLogic & ConverterDataPassing)?
     
     // MARK: Object lifecycle
     
@@ -45,6 +45,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor.presenter      = presenter
         presenter.viewController  = viewController
         router.viewController     = viewController
+        router.dataStore          = interactor
     }
     
     // MARK: Routing
@@ -60,21 +61,18 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.dataSource = self
         converterView.didTap = self.didTap
         
-//        let network: Networking = NetworkService()
-//        network.fetchData { (data) in
-//            let logic = ECBParser()
-//            let parser: CurrencyParsing = ParsingService(parseLogic: logic)
-//            guard let data = data else {
-//                print("Internet error")
-//                return
-//            }
-//            let cube = parser.parse(data: data)
-//            print(cube)
-//        }
+        interactor?.makeRequest(request: .loadConverterCurrencies)
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
-        
+        switch viewModel {
+        case .showConverterViewModel(let converterViewModel):
+            converterView.justUpdate(converterViewModel)
+        }
+    }
+    
+    func updateConverter() {
+//        let secondCurency
     }
     
     // MARK: Private Methods
@@ -94,9 +92,7 @@ extension ConverterViewController: UITableViewDataSource {
                                                            for: indexPath) else { fatalError() }
         return cell
     }
-    
 }
-
 
 extension ConverterViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {

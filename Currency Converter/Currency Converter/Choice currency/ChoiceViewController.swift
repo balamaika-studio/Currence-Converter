@@ -46,6 +46,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         interactor.presenter      = presenter
         presenter.viewController  = viewController
         router.viewController     = viewController
+        router.dataStore          = interactor
     }
     
     // MARK: Routing
@@ -97,6 +98,11 @@ extension ChoiceViewController: UITableViewDataSource {
 }
 
 extension ChoiceViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedViewModel = currencies[indexPath.row]
+        interactor?.makeRequest(request: .chooseCurrency(viewModel: selectedViewModel))
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
     }

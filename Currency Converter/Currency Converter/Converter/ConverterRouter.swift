@@ -12,8 +12,13 @@ protocol ConverterRoutingLogic {
     func showChoiceViewController()
 }
 
+protocol ConverterDataPassing {
+    var dataStore: ConverterDataStore? { get }
+}
+
 class ConverterRouter {
     weak var viewController: ConverterViewController?
+    var dataStore: ConverterDataStore?
     
     // MARK: Routing
     
@@ -45,9 +50,9 @@ extension ConverterRouter: ConverterRoutingLogic {
 }
 
 // MARK: - Passing Data
-//extension FirstRouter: FirstDataPassing {
+extension ConverterRouter: ConverterDataPassing {
 //    private func passDataToSecond(source: FirstDataStore, destination: inout SecondDataStore) {
 //        destination.number = source.number
 //    }
-//}
+}
 
