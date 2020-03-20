@@ -2,19 +2,23 @@ PODS:
   - R.swift (5.1.0):
     - R.swift.Library (~> 5.1.0)
   - R.swift.Library (5.1.0)
+  - XMLParsing (0.0.2)
 
 DEPENDENCIES:
   - R.swift
+  - XMLParsing
 
 SPEC REPOS:
   trunk:
     - R.swift
     - R.swift.Library
+    - XMLParsing
 
 SPEC CHECKSUMS:
   R.swift: 8cbc4fc69b740305b6a17c8a8ed968eb788962d9
   R.swift.Library: fa85ce1e0d0b7e818cd9e080df910ba54d2776cc
+  XMLParsing: b6cc40a1de8e321a72b7f0d89080473f9d53cff8
 
-PODFILE CHECKSUM: fe57ee4b6d68661c02cc680c0b7b7204860991f7
+PODFILE CHECKSUM: f6e2b0387d2433f85866384f7edbc8cffeba15f0
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

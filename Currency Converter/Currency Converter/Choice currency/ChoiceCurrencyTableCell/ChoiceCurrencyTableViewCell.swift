@@ -9,7 +9,10 @@
 import UIKit
 
 class ChoiceCurrencyTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var currencyImageView: UIImageView!
+    @IBOutlet weak var currencyAbbreviationLabel: UILabel!
+    @IBOutlet weak var currencyTitleLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -19,6 +22,13 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    func configure(with viewModel: ChoiceCurrencyViewModel) {
+        let image = UIImage(named: viewModel.currency.lowercased())
+        currencyImageView.image = image
+        currencyAbbreviationLabel.text = viewModel.currency
+        currencyTitleLabel.text = viewModel.title
     }
     
 }

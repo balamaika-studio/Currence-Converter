@@ -9,14 +9,18 @@
 import UIKit
 
 protocol ChoicePresentationLogic {
-  func presentData(response: Choice.Model.Response.ResponseType)
+    func presentData(response: Choice.Model.Response.ResponseType)
 }
 
 class ChoicePresenter: ChoicePresentationLogic {
-  weak var viewController: ChoiceDisplayLogic?
-  
-  func presentData(response: Choice.Model.Response.ResponseType) {
-  
-  }
-  
+    weak var viewController: ChoiceDisplayLogic?
+    
+    func presentData(response: Choice.Model.Response.ResponseType) {
+        switch response {
+        case .currencies(let currencies):
+            viewController?.displayData(viewModel: .displayCurrencies(currencies))
+            break
+        }
+    }
+    
 }

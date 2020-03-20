@@ -47,6 +47,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="currencyAbbreviationLabel" destination="vpw-A1-G18" id="Iy7-eb-KXa"/>
+                <outlet property="currencyImageView" destination="FWm-FL-3Rl" id="xcE-CJ-SGx"/>
+                <outlet property="currencyTitleLabel" destination="htc-dl-nsn" id="qYc-0d-WzO"/>
+            </connections>
             <point key="canvasLocation" x="194.20289855072465" y="140.95982142857142"/>
         </tableViewCell>
     </objects>

@@ -20,6 +20,8 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     var interactor: ChoiceBusinessLogic?
     var router: ChoiceRoutingLogic?
     
+    var currencies: [ChoiceCurrencyViewModel]!
+    
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -44,6 +46,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         interactor.presenter      = presenter
         presenter.viewController  = viewController
         router.viewController     = viewController
+        router.dataStore          = interactor
     }
     
     // MARK: Routing
@@ -58,10 +61,17 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         tableView.delegate = self
         tableView.register(R.nib.choiceCurrencyTableViewCell)
         tableView.separatorStyle = .none
+        currencies = []
+        interactor?.makeRequest(request: .loadCurrencies)
+        
     }
     
     func displayData(viewModel: Choice.Model.ViewModel.ViewModelData) {
-        
+        switch viewModel {
+        case .displayCurrencies(let currencies):
+            self.currencies = currencies
+            self.tableView.reloadData()
+        }
     }
     
     @IBAction func doneTapped(_ sender: UIButton) {
@@ -74,18 +84,25 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
 
 extension ChoiceViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return self.currencies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.choiceCurrencyTableViewCell,
                                                        for: indexPath) else { fatalError() }
         
+        let viewModel = currencies[indexPath.row]
+        cell.configure(with: viewModel)
         return cell
     }
 }
 
 extension ChoiceViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedViewModel = currencies[indexPath.row]
+        interactor?.makeRequest(request: .chooseCurrency(viewModel: selectedViewModel))
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 58
     }

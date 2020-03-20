@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ExchangeViewDeleagte: class {
-    func changeCurrencyTapped()
+    func changeCurrencyTapped(exchangeView view: ExchangeView)
 }
 
 @IBDesignable
@@ -36,6 +36,12 @@ class ExchangeView: UIView {
         loadViewFromNib()
         setup()
     }
+    
+    func configure(with currency: ExchangeCurrency) {
+        flagImageViw.image = UIImage(named: currency.currency.lowercased())
+        currencyLabel.text = currency.currency
+        rateLabel.text = currency.regardingRate
+    }
 
     // MARK: - Private Methods
     private func loadViewFromNib() {
@@ -56,7 +62,6 @@ class ExchangeView: UIView {
     }
     
     @objc private func changeCurrencyTapped() {
-        print("Chnage Currency Tapped!")
-        delegate?.changeCurrencyTapped()
+        delegate?.changeCurrencyTapped(exchangeView: self)
     }
 }
