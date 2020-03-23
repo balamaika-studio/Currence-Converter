@@ -34,7 +34,7 @@ class ChoiceRouter {
             var converterDataStore = converterVC.router?.dataStore
         else { fatalError("Fail route to back") }
         passDataBack(source: choiceDataStore, destination: &converterDataStore)
-//        converterVC.interactor?.makeRequest(request: .changeCurrency)
+        converterVC.updateConverter()
         close(choiceVC)
     }
 }

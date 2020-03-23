@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExchangeView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
                 <outlet property="changeCurrencyStack" destination="BKz-hU-MQG" id="jhk-fE-S4Q"/>
+                <outlet property="countTextField" destination="1L9-ZQ-RRh" id="7ef-wX-rto"/>
                 <outlet property="currencyLabel" destination="cKU-XL-9Su" id="454-ME-SUN"/>
                 <outlet property="flagImageViw" destination="j57-ow-yJc" id="5bu-l9-dkV"/>
                 <outlet property="rateLabel" destination="CkW-Tg-zlG" id="skq-Er-EDF"/>
@@ -51,6 +52,9 @@
                     <rect key="frame" x="223.66666666666666" y="10" width="102.33333333333334" height="60"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="decimalPad"/>
+                    <connections>
+                        <action selector="textFieldEditingDidChange:" destination="-1" eventType="editingChanged" id="HUU-7E-lBb"/>
+                    </connections>
                 </textField>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

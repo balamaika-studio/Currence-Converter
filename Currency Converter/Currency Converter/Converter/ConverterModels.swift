@@ -13,7 +13,7 @@ enum Converter {
     enum Model {
         struct Request {
             enum RequestType {
-                case changeCurrencyRegarding(currency: Currency)
+                case changeCurrency(name: String)
                 case loadConverterCurrencies
             }
         }
@@ -32,11 +32,13 @@ enum Converter {
 
 protocol ExchangeCurrency {
     var currency: String { get set }
+    var rate: Double { get set }
     var regardingRate: String { get set }
 }
 
 struct Exchange: ExchangeCurrency {
     var currency: String
+    var rate: Double
     var regardingRate: String
 }
 

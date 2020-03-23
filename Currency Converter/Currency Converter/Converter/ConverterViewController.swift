@@ -72,11 +72,12 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     func updateConverter() {
-//        let secondCurency
+        let currencyName = converterView.replacingView.currencyName
+        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
     }
     
     // MARK: Private Methods
-    func didTap() {
+    func didTap(exchangeView: ExchangeView) {
         print("In ConverterVC")
         router?.showChoiceViewController()
     }

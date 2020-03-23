@@ -16,8 +16,8 @@ class ConverterView: UIView {
     @IBOutlet weak var bottomCurrency: ExchangeView!
     
     // MARK: - Properties
-    var didTap: (() -> Void)?
-    var replacingView: ExchangeView?
+    var didTap: ((ExchangeView) -> Void)?
+    var replacingView: ExchangeView!
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -59,15 +59,22 @@ class ConverterView: UIView {
         topCurrency.configure(with: viewModel.firstExchange)
         bottomCurrency.configure(with: viewModel.secondExchange)
     }
-    
-    private func updateConverterCurrency(with currency: Currency) {
-//        replacingView?.configure(with: currency)
-    }
 }
 
 extension ConverterView: ExchangeViewDeleagte {
+    func convert(exchangeView sender: ExchangeView, total: Double) {
+        // TODO: Calculation accuracy
+        if topCurrency.isEqual(sender) {
+            let converterResult = total * topCurrency.rate
+            bottomCurrency.countTextField.text = "\(converterResult)"
+        } else {
+            let converterResult = total * bottomCurrency.rate
+            topCurrency.countTextField.text = "\(converterResult)"
+        }
+    }
+    
     func changeCurrencyTapped(exchangeView view: ExchangeView) {
         replacingView = view
-        didTap?()
+        didTap?(view)
     }
 }

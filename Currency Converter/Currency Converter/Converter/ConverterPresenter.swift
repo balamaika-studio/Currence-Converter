@@ -33,8 +33,12 @@ class ConverterPresenter: ConverterPresentationLogic {
         let aSymbol = getSymbol(forCurrencyCode: a.currency) ?? "Error"
         let bSymbol = getSymbol(forCurrencyCode: b.currency) ?? "Error"
         
-        let first = Exchange(currency: a.currency, regardingRate: "\(aSymbol)1=\(bSymbol)\(x)")
-        let second = Exchange(currency: b.currency, regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
+        let first = Exchange(currency: a.currency,
+                             rate: x,
+                             regardingRate: "\(aSymbol)1=\(bSymbol)\(x)")
+        let second = Exchange(currency: b.currency,
+                              rate: y,
+                              regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
         return ConverterViewModel(firstExchange: first, secondExchange: second)
     }
     
