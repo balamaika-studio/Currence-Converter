@@ -78,9 +78,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         router?.closeChoiceViewController()
     }
     
-    
 }
-
 
 extension ChoiceViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

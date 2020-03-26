@@ -26,12 +26,11 @@ class ExchangeView: UIView {
     private let tapGesture = UITapGestureRecognizer()
     weak var delegate: ExchangeViewDeleagte?
     
-    // TODO: Replace with Model Currency
     var currencyName: String {
-        return currencyLabel.text ?? "N/A"
+        return viewModel.currency
     }
-    
-    var rate: Double!
+        
+    var viewModel: ExchangeCurrency!
     
     // MARK: - Initialization
     override init(frame: CGRect) {
@@ -50,7 +49,7 @@ class ExchangeView: UIView {
         flagImageViw.image = UIImage(named: currency.currency.lowercased())
         currencyLabel.text = currency.currency
         rateLabel.text = currency.regardingRate
-        rate = currency.rate
+        viewModel = currency
     }
 
     // MARK: - Private Methods
@@ -67,7 +66,6 @@ class ExchangeView: UIView {
     }
     
     private func setup() {
-        countTextField.delegate = self
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         changeCurrencyStack.addGestureRecognizer(tapGesture)
     }
@@ -76,7 +74,6 @@ class ExchangeView: UIView {
         let a = Double(sender.text ?? "0") ?? 0
         delegate?.convert(exchangeView: self, total: a)
     }
-    
     
     @objc private func changeCurrencyTapped() {
         delegate?.changeCurrencyTapped(exchangeView: self)

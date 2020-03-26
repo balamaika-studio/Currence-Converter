@@ -9,13 +9,17 @@
 import Foundation
 
 protocol Networking {
+    var baseURL: String { get }
     func fetchData(completion: @escaping (Data?) -> Void)
 }
 
 class NetworkService: Networking {
+    var baseURL: String {
+        return "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
+    }
+    
     func fetchData(completion: @escaping (Data?) -> Void) {
-        let path = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-        let url = URL(string: path)!
+        let url = URL(string: baseURL)!
         URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 completion(nil)

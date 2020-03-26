@@ -34,7 +34,13 @@ class ConverterView: UIView {
     
     // MARK: - Actions
     @IBAction func swapCurrencyTapped(_ sender: UIButton) {
-        print("Swap Tapped!")
+        let model = ConverterViewModel(firstExchange: bottomCurrency.viewModel,
+                                       secondExchange: topCurrency.viewModel)
+        
+        let tmpTopCount = topCurrency.countTextField.text
+        topCurrency.countTextField.text = bottomCurrency.countTextField.text
+        bottomCurrency.countTextField.text = tmpTopCount
+        configureConverterCurrencies(model)
     }
 
     // MARK: - Private Methods
@@ -56,6 +62,12 @@ class ConverterView: UIView {
     }
     
     func justUpdate(_ viewModel: ConverterViewModel) {
+        configureConverterCurrencies(viewModel)
+        let total = Double(topCurrency.countTextField.text ?? "0") ?? 0
+        convert(exchangeView: topCurrency, total: total)
+    }
+    
+    private func configureConverterCurrencies(_ viewModel: ConverterViewModel) {
         topCurrency.configure(with: viewModel.firstExchange)
         bottomCurrency.configure(with: viewModel.secondExchange)
     }
@@ -64,13 +76,9 @@ class ConverterView: UIView {
 extension ConverterView: ExchangeViewDeleagte {
     func convert(exchangeView sender: ExchangeView, total: Double) {
         // TODO: Calculation accuracy
-        if topCurrency.isEqual(sender) {
-            let converterResult = total * topCurrency.rate
-            bottomCurrency.countTextField.text = "\(converterResult)"
-        } else {
-            let converterResult = total * bottomCurrency.rate
-            topCurrency.countTextField.text = "\(converterResult)"
-        }
+        let converterResult = round(total * sender.viewModel.rate * pow(10, 4)) / pow(10, 4)
+        let activeCurrency = topCurrency.isEqual(sender) ? bottomCurrency : topCurrency
+        activeCurrency?.countTextField.text = "\(converterResult)"
     }
     
     func changeCurrencyTapped(exchangeView view: ExchangeView) {
