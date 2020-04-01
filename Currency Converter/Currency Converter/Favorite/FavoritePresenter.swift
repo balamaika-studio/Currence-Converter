@@ -16,7 +16,10 @@ class FavoritePresenter: FavoritePresentationLogic {
     weak var viewController: FavoriteDisplayLogic?
     
     func presentData(response: Favorite.Model.Response.ResponseType) {
-        
+        switch response {
+        case .currencies(let quotes):
+            viewController?.displayData(viewModel: .showCurrencies(quotes))
+        }
     }
     
 }

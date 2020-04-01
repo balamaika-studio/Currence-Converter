@@ -16,6 +16,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
     
+    private var quotes = [Quote]()
     
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic)?
@@ -61,10 +62,18 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
         tableView.rowHeight = 62
+        
+        interactor?.makeRequest(request: .loadCurrencies)
     }
     
     func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData) {
-        
+        switch viewModel {
+        case .showCurrencies(let quotes):
+            self.quotes = quotes
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
 }
@@ -72,7 +81,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
 
 extension FavoriteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return quotes.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -83,6 +92,12 @@ extension FavoriteViewController: UITableViewDataSource {
         }
         
         cell.selectionStyle = .none
+        
+        let quote = quotes[indexPath.row]
+        
+        cell.currencyAbbreviationLabel.text = quote.currency
+        cell.currencyImageView.image = UIImage(named: quote.currency.lowercased())
+        
         
         return cell
     }

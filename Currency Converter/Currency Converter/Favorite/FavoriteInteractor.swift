@@ -21,6 +21,16 @@ class FavoriteInteractor: FavoriteBusinessLogic {
         if service == nil {
             service = FavoriteService()
         }
+        
+        switch request {
+        case .loadCurrencies:
+            let manager = NetworkManager()
+            manager.getQuotes { [weak self] result, error in
+                guard let self = self,
+                    let quotes = result else { return }
+                self.presenter?.presentData(response: .currencies(quotes))
+            }
+        }
     }
     
 }

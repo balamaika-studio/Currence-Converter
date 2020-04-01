@@ -45,25 +45,15 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
         case .loadConverterCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
-            let network: Networking = NetworkService()
-            network.fetchData { [weak self] (data) in
-                guard let self = self else { return }
-                
-                // load data from xml
-                let logic = ECBParser()
-                let parser: CurrencyParsing = ParsingService(parseLogic: logic)
-                guard let data = data else {
-                    print("Internet error")
-                    return
-                }
-                let cube = parser.parse(data: data)
-                let standartCurrencies = cube
+            
+            NetworkManager().getQuotes { quotes, error in
+                guard let quotes = quotes else { return }
+                let standartCurrencies = quotes
                     .filter { $0.currency == "USD" || $0.currency == "EUR" }
                     .sorted(by: { $0.rate > $1.rate })
                 
                 self.topCurrency = standartCurrencies.first!
                 self.bottomCurrency = standartCurrencies.last!
-                
                 self.presenter?.presentData(response: .converterCurrencies(first: self.topCurrency,
                                                                             second: self.bottomCurrency))
             }

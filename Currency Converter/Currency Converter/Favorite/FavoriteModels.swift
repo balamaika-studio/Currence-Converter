@@ -13,17 +13,17 @@ enum Favorite {
     enum Model {
         struct Request {
             enum RequestType {
-                case some
+                case loadCurrencies
             }
         }
         struct Response {
             enum ResponseType {
-                case some
+                case currencies([Quote])
             }
         }
         struct ViewModel {
             enum ViewModelData {
-                case some
+                case showCurrencies([Quote])
             }
         }
     }

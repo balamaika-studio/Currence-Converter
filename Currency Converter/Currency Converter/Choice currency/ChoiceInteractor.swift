@@ -32,18 +32,10 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
         
         switch request {
         case .loadCurrencies:
-            let network: Networking = NetworkService()
-            network.fetchData { [weak self] (data) in
-                
-                // load data from xml
-                let logic = ECBParser()
-                let parser: CurrencyParsing = ParsingService(parseLogic: logic)
-                guard let data = data else {
-                    print("Internet error")
-                    return
-                }
-                let cube = parser.parse(data: data)
-                self?.currencies = cube
+            
+            NetworkManager().getQuotes { quotes, error in
+                guard let quotes = quotes else { return }
+                self.currencies = quotes
                 
                 // load data from json
                 let path = Bundle.main.path(forResource: "currenciesNames", ofType: ".json")!
@@ -52,30 +44,29 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
                 let info = try? JSONSerialization.jsonObject(with: data2!, options: [])
                 let gg = info as? [String: String]
                 let answer = gg?.map { CurrencyInfo(abbreviation: $0, title: $1) }
-                
-                let haha = cube.filter { value in
+
+                let haha = quotes.filter { value in
                     let abb = answer?.contains { $0.abbreviation == value.currency }
                     return abb ?? false
                 }
                 
                 var result = [ChoiceCurrencyViewModel]()
-                
-                haha.forEach { (value) in
+
+                haha.forEach { value in
                     let abababa = ChoiceCurrencyViewModel(currency: value.currency,
                                                           title: answer!.first { $0.abbreviation == value.currency }!.title)
                     result.append(abababa)
                 }
-                
+
                 result.forEach { print($0) }
+
+                self.presenter?.presentData(response: .currencies(result))
                 
-                self?.presenter?.presentData(response: .currencies(result))
             }
+            
         case .chooseCurrency(let viewModel):
             selectedCurrency = currencies.first { $0.currency == viewModel.currency }
-        default:
-            break
         }
-        
     }
     
 }
