@@ -16,7 +16,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
     
-    private var quotes = [Quote]()
+    private var quotes = [FavoriteViewModel]()
     
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic)?
@@ -91,16 +91,9 @@ extension FavoriteViewController: UITableViewDataSource {
                 fatalError()
         }
         
-        cell.selectionStyle = .none
-        
         let quote = quotes[indexPath.row]
-        
-        cell.currencyAbbreviationLabel.text = quote.currency
-        cell.currencyImageView.image = UIImage(named: quote.currency.lowercased())
-        
-        
+        cell.configure(with: quote)
         return cell
     }
-    
     
 }

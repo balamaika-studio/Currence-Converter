@@ -18,14 +18,19 @@ enum Favorite {
         }
         struct Response {
             enum ResponseType {
-                case currencies([Quote])
+                case currencies([FavoriteViewModel])
             }
         }
         struct ViewModel {
             enum ViewModelData {
-                case showCurrencies([Quote])
+                case showCurrencies([FavoriteViewModel])
             }
         }
     }
     
+}
+
+struct FavoriteViewModel {
+    let currency: String
+    let title: String
 }

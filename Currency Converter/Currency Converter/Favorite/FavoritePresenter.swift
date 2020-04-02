@@ -18,7 +18,8 @@ class FavoritePresenter: FavoritePresentationLogic {
     func presentData(response: Favorite.Model.Response.ResponseType) {
         switch response {
         case .currencies(let quotes):
-            viewController?.displayData(viewModel: .showCurrencies(quotes))
+            let sortedQuotes = quotes.sorted { $0.currency < $1.currency }
+            viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
         }
     }
     

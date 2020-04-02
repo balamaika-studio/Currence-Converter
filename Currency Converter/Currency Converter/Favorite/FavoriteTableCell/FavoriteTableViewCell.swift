@@ -29,4 +29,11 @@ class FavoriteTableViewCell: UITableViewCell {
         selectionView.backgroundColor = selected ? color : nil
     }
     
+    func configure(with viewModel: FavoriteViewModel) {
+        let image = UIImage(named: viewModel.currency.lowercased())
+        currencyImageView.image = image
+        currencyAbbreviationLabel.text = viewModel.currency
+        currencyTitleLabel.text = viewModel.title
+        selectionStyle = .none
+    }
 }

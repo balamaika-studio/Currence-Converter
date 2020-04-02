@@ -327,13 +327,8 @@
 		D1CEB83C2423838800988B53 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D1EF9A28242394F400DD328C /* Router.swift */,
-				D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */,
-				D19A937D242D0CCC00DDCEA9 /* CurrencyLayerApi.swift */,
-				D19A937B242D0C5200DDCEA9 /* EndPointType.swift */,
-				D19A9381242D119400DDCEA9 /* HTTPTask.swift */,
-				D19A937F242D0E4E00DDCEA9 /* HTTPMethod.swift */,
-				D19A9389242D1C8D00DDCEA9 /* Encoding */,
+				D1DC8E872434AA39008FCE50 /* Data Base */,
+				D1DC8E862434AA22008FCE50 /* Networking */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -345,6 +340,27 @@
 				D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		D1DC8E862434AA22008FCE50 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				D1EF9A28242394F400DD328C /* Router.swift */,
+				D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */,
+				D19A937D242D0CCC00DDCEA9 /* CurrencyLayerApi.swift */,
+				D19A937B242D0C5200DDCEA9 /* EndPointType.swift */,
+				D19A9381242D119400DDCEA9 /* HTTPTask.swift */,
+				D19A937F242D0E4E00DDCEA9 /* HTTPMethod.swift */,
+				D19A9389242D1C8D00DDCEA9 /* Encoding */,
+			);
+			path = Networking;
+			sourceTree = "<group>";
+		};
+		D1DC8E872434AA39008FCE50 /* Data Base */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Data Base";
 			sourceTree = "<group>";
 		};
 		D704C2949C2B98B5DF5215FB /* Frameworks */ = {
