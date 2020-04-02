@@ -16,8 +16,12 @@ class FavoritePresenter: FavoritePresentationLogic {
     weak var viewController: FavoriteDisplayLogic?
     
     private var quotes: [FavoriteViewModel]!
+    private var filteredQuotes: [FavoriteViewModel]?
     
     func presentData(response: Favorite.Model.Response.ResponseType) {
+        
+        // TODO: - Replace to functions
+        
         switch response {
         case .currencies(let currencies, let info):
             var result = [FavoriteViewModel]()
@@ -36,10 +40,24 @@ class FavoritePresenter: FavoritePresentationLogic {
             quotes = sortedQuotes
             viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
             
+        case .update(let viewModel, let isSelected):
+            let index = quotes.firstIndex(of: viewModel)!
+            quotes[index].isSelected = isSelected
+            
+            if filteredQuotes != nil {
+                let filterIndex = filteredQuotes!.firstIndex(of: viewModel)!
+                filteredQuotes![filterIndex].isSelected = isSelected
+            }
+            
+            let result = filteredQuotes == nil ? quotes : filteredQuotes
+            viewController?.displayData(viewModel: .showCurrencies(result ?? []))
+            
         case .filter(let title):
             let filteredQuotes = title.isEmpty ? quotes : quotes.filter { quote in
                 quote.title.lowercased().contains(title.lowercased())
             }
+            
+            self.filteredQuotes = filteredQuotes
             viewController?.displayData(viewModel: .showCurrencies(filteredQuotes ?? []))
         }
     }

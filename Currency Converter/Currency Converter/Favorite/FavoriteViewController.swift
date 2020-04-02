@@ -72,6 +72,11 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         interactor?.makeRequest(request: .loadCurrencies)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchBar.text = String()
+    }
+    
     func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showCurrencies(let quotes):

@@ -26,13 +26,13 @@ class FavoriteInteractor: FavoriteBusinessLogic {
         case .loadCurrencies:
             fetchCurrencies()
             
-        case .addFavorite(let favorite):
-            update(favorite, isFavorite: true)
-            fetchCurrencies()
+        case .addFavorite(let model):
+            update(model, isFavorite: true)
+            presenter?.presentData(response: .update(viewModel: model, isSelected: true))
             
-        case .removeFavorite(let favorite):
-            update(favorite, isFavorite: false)
-            fetchCurrencies()
+        case .removeFavorite(let model):
+            update(model, isFavorite: false)
+            presenter?.presentData(response: .update(viewModel: model, isSelected: false))
             
         case .filter(let title):
             presenter?.presentData(response: .filter(title: title))

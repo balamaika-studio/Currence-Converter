@@ -23,6 +23,7 @@ enum Favorite {
             enum ResponseType {
                 case currencies([RealmCurrency], [CurrencyInfo])
                 case filter(title: String)
+                case update(viewModel: FavoriteViewModel, isSelected: Bool)
             }
         }
         struct ViewModel {
@@ -37,5 +38,11 @@ enum Favorite {
 struct FavoriteViewModel {
     let currency: String
     let title: String
-    let isSelected: Bool
+    var isSelected: Bool
+}
+
+extension FavoriteViewModel: Equatable {
+    static func == (lhs: FavoriteViewModel, rhs: FavoriteViewModel) -> Bool {
+        return lhs.currency == rhs.currency
+    }
 }
