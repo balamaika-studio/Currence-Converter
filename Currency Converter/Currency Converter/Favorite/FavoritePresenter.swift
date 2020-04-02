@@ -17,10 +17,21 @@ class FavoritePresenter: FavoritePresentationLogic {
     
     func presentData(response: Favorite.Model.Response.ResponseType) {
         switch response {
-        case .currencies(let quotes):
-            let sortedQuotes = quotes.sorted { $0.currency < $1.currency }
+        case .currencies(let currencies, let info):
+            var result = [FavoriteViewModel]()
+            let validCurrencies = currencies.filter { currency in
+                return info.contains { $0.abbreviation == currency.currency }
+            }
+            
+            validCurrencies.forEach { value in
+                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let viewModel = FavoriteViewModel(currency: value.currency,
+                                                title: currencyTitle,
+                                                isSelected: value.isFavorite)
+                result.append(viewModel)
+            }
+            let sortedQuotes = result.sorted { $0.title < $1.title }
             viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
         }
     }
-    
 }

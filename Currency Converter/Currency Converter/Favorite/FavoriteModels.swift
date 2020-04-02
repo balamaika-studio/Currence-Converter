@@ -14,11 +14,13 @@ enum Favorite {
         struct Request {
             enum RequestType {
                 case loadCurrencies
+                case addFavorite(FavoriteViewModel)
+                case removeFavorite(FavoriteViewModel)
             }
         }
         struct Response {
             enum ResponseType {
-                case currencies([FavoriteViewModel])
+                case currencies([RealmCurrency], [CurrencyInfo])
             }
         }
         struct ViewModel {
@@ -33,4 +35,5 @@ enum Favorite {
 struct FavoriteViewModel {
     let currency: String
     let title: String
+    let isSelected: Bool
 }

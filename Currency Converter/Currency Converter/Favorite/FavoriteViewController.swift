@@ -58,11 +58,15 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         title = "Избранное"
         
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.register(R.nib.favoriteTableViewCell)
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
-        tableView.rowHeight = 62
-        
+        tableView.rowHeight = 62        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadCurrencies)
     }
     
@@ -70,14 +74,22 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         switch viewModel {
         case .showCurrencies(let quotes):
             self.quotes = quotes
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
-    
 }
 
+extension FavoriteViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewModel = quotes[indexPath.row]
+        interactor?.makeRequest(request: .addFavorite(viewModel))
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        let viewModel = quotes[indexPath.row]
+        interactor?.makeRequest(request: .removeFavorite(viewModel))
+    }
+}
 
 extension FavoriteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,7 +105,9 @@ extension FavoriteViewController: UITableViewDataSource {
         
         let quote = quotes[indexPath.row]
         cell.configure(with: quote)
+        if quote.isSelected {
+            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        }
         return cell
     }
-    
 }

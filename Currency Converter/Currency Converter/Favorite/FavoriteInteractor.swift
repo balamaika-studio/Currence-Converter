@@ -15,46 +15,42 @@ protocol FavoriteBusinessLogic {
 class FavoriteInteractor: FavoriteBusinessLogic {
     
     var presenter: FavoritePresentationLogic?
-    var service: FavoriteService?
+    var storage: StorageContext!
+    
+    init(storage: StorageContext = try! RealmStorageContext()) {
+        self.storage = storage
+    }
     
     func makeRequest(request: Favorite.Model.Request.RequestType) {
-        if service == nil {
-            service = FavoriteService()
-        }
-        
         switch request {
         case .loadCurrencies:
-            let manager = NetworkManager()
-            manager.getQuotes { [weak self] quotes, error in
-                guard let self = self,
-                    let quotes = quotes else { return }
-                
-                // load data from json
-                let path = Bundle.main.path(forResource: "currenciesNames", ofType: ".json")!
-                let fileUrl = URL(fileURLWithPath: path)
-                let data2 = try? Data(contentsOf: fileUrl, options: .mappedIfSafe)
-                let info = try? JSONSerialization.jsonObject(with: data2!, options: [])
-                let gg = info as? [String: String]
-                let answer = gg?.map { CurrencyInfo(abbreviation: $0, title: $1) }
-
-                let haha = quotes.filter { value in
-                    let abb = answer?.contains { $0.abbreviation == value.currency }
-                    return abb ?? false
-                }
-                
-                var result = [FavoriteViewModel]()
-
-                haha.forEach { value in
-                    let abababa = FavoriteViewModel(currency: value.currency,
-                                                          title: answer!.first { $0.abbreviation == value.currency }!.title)
-                    result.append(abababa)
-                }
-
-                result.forEach { print($0) }
-                
-                self.presenter?.presentData(response: .currencies(result))
+            fetchCurrencies()
+            
+        case .addFavorite(let favorite):
+            update(favorite, isFavorite: true)
+            fetchCurrencies()
+            
+        case .removeFavorite(let favorite):
+            update(favorite, isFavorite: false)
+            fetchCurrencies()
+        }
+    }
+    
+    private func update(_ favorite: FavoriteViewModel, isFavorite: Bool) {
+        let predicate = NSPredicate(format: "currency = %@", favorite.currency)
+        storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
+            let selectedCurrency = result.first!
+            try! storage.update {
+                selectedCurrency.isFavorite = isFavorite
             }
         }
     }
     
+    private func fetchCurrencies() {
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+            let currenciesInfo = CurrenciesInfoService.shared.fetch()
+            self.presenter?.presentData(response: .currencies(currencies, currenciesInfo))
+        }
+    }
 }
+

@@ -9,11 +9,9 @@
 import UIKit
 
 class FavoriteTableViewCell: UITableViewCell {
-
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
-    
     @IBOutlet weak var selectionView: UIView!
     
     override func awakeFromNib() {
@@ -23,8 +21,7 @@ class FavoriteTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        
         let color = #colorLiteral(red: 0.7019608021, green: 0.8431372643, blue: 1, alpha: 1)
         selectionView.backgroundColor = selected ? color : nil
     }
