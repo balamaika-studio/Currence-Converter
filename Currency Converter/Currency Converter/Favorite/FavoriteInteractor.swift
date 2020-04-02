@@ -33,6 +33,9 @@ class FavoriteInteractor: FavoriteBusinessLogic {
         case .removeFavorite(let favorite):
             update(favorite, isFavorite: false)
             fetchCurrencies()
+            
+        case .filter(let title):
+            presenter?.presentData(response: .filter(title: title))
         }
     }
     

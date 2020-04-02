@@ -16,11 +16,13 @@ enum Favorite {
                 case loadCurrencies
                 case addFavorite(FavoriteViewModel)
                 case removeFavorite(FavoriteViewModel)
+                case filter(title: String)
             }
         }
         struct Response {
             enum ResponseType {
                 case currencies([RealmCurrency], [CurrencyInfo])
+                case filter(title: String)
             }
         }
         struct ViewModel {

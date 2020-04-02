@@ -15,6 +15,8 @@ protocol FavoritePresentationLogic {
 class FavoritePresenter: FavoritePresentationLogic {
     weak var viewController: FavoriteDisplayLogic?
     
+    private var quotes: [FavoriteViewModel]!
+    
     func presentData(response: Favorite.Model.Response.ResponseType) {
         switch response {
         case .currencies(let currencies, let info):
@@ -31,7 +33,14 @@ class FavoritePresenter: FavoritePresentationLogic {
                 result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
+            quotes = sortedQuotes
             viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
+            
+        case .filter(let title):
+            let filteredQuotes = title.isEmpty ? quotes : quotes.filter { quote in
+                quote.title.lowercased().contains(title.lowercased())
+            }
+            viewController?.displayData(viewModel: .showCurrencies(filteredQuotes ?? []))
         }
     }
 }

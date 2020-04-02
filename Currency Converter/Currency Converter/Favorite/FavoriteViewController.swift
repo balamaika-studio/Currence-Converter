@@ -15,6 +15,7 @@ protocol FavoriteDisplayLogic: class {
 class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     private var quotes = [FavoriteViewModel]()
     
@@ -57,6 +58,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         super.viewDidLoad()
         title = "Избранное"
         
+        searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(R.nib.favoriteTableViewCell)
@@ -79,6 +81,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     }
 }
 
+// MARK: - UITableViewDelegate
 extension FavoriteViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewModel = quotes[indexPath.row]
@@ -91,6 +94,7 @@ extension FavoriteViewController: UITableViewDelegate {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension FavoriteViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return quotes.count
@@ -109,5 +113,16 @@ extension FavoriteViewController: UITableViewDataSource {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
         return cell
+    }
+}
+
+// MARK: - UISearchBarDelegate
+extension FavoriteViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        interactor?.makeRequest(request: .filter(title: searchText))
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
     }
 }
