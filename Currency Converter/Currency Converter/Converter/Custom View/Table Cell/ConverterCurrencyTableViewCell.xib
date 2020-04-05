@@ -30,7 +30,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="British Pound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiG-o0-tYo">
-                        <rect key="frame" x="73" y="41.5" width="75.5" height="14.5"/>
+                        <rect key="frame" x="73" y="41.5" width="218.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -49,6 +49,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="fgT-kL-cfZ" firstAttribute="centerX" secondItem="H2p-sc-9uM" secondAttribute="centerX" multiplier="1.2" id="22X-Ma-dVt"/>
                     <constraint firstItem="fgT-kL-cfZ" firstAttribute="centerY" secondItem="eY1-9Q-rpk" secondAttribute="centerY" id="3Yl-I5-bxo"/>
@@ -56,6 +57,7 @@
                     <constraint firstItem="Uyj-6r-rTe" firstAttribute="leading" secondItem="eY1-9Q-rpk" secondAttribute="trailing" constant="17" id="5iZ-Vz-EyZ"/>
                     <constraint firstItem="eY1-9Q-rpk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="76B-21-aRQ"/>
                     <constraint firstItem="Zfx-Pt-iBM" firstAttribute="centerY" secondItem="eY1-9Q-rpk" secondAttribute="centerY" id="C41-TT-oEA"/>
+                    <constraint firstItem="fgT-kL-cfZ" firstAttribute="leading" secondItem="wiG-o0-tYo" secondAttribute="trailing" constant="8" symbolic="YES" id="Dvu-Ob-NQS"/>
                     <constraint firstItem="eY1-9Q-rpk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FgI-jC-2Wk"/>
                     <constraint firstItem="Uyj-6r-rTe" firstAttribute="top" secondItem="eY1-9Q-rpk" secondAttribute="top" id="Kvp-el-sSi"/>
                     <constraint firstItem="wiG-o0-tYo" firstAttribute="bottom" secondItem="eY1-9Q-rpk" secondAttribute="bottom" id="dtX-BL-zQc"/>
@@ -63,7 +65,14 @@
                     <constraint firstAttribute="bottom" secondItem="eY1-9Q-rpk" secondAttribute="bottom" constant="16" id="tJk-vV-bCi"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="currencyAbbreviationLabel" destination="Uyj-6r-rTe" id="JHW-F7-T8V"/>
+                <outlet property="currencyImageView" destination="eY1-9Q-rpk" id="aEk-QD-c1s"/>
+                <outlet property="currencyRateLabel" destination="Zfx-Pt-iBM" id="pi5-ii-RT8"/>
+                <outlet property="currencyTitleLabel" destination="wiG-o0-tYo" id="o8r-10-PIJ"/>
+            </connections>
             <point key="canvasLocation" x="348.55072463768118" y="132.58928571428572"/>
         </tableViewCell>
     </objects>

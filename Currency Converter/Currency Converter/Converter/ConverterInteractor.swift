@@ -42,6 +42,19 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
 
             presenter?.presentData(response: .converterCurrencies(first: topCurrency,
                                                                   second: bottomCurrency))
+            
+        case .updateBaseCurrency(let base):
+            presenter?.presentData(response: .updateBaseCurrency(base: base))
+            
+        case .loadFavoriteCurrencies:
+            let storage: StorageContext = try! RealmStorageContext()
+            
+            let predicate = NSPredicate(format: "isFavorite = true")
+                        
+            storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
+                presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies))
+            }
+            
         case .loadConverterCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
@@ -78,7 +91,7 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
                     let standartCurrencies = currencies
                         .filter { $0.currency == "USD" || $0.currency == "EUR" }
                         .sorted(by: { $0.rate > $1.rate })
-
+                    
                     self.topCurrency = standartCurrencies.first!
                     self.bottomCurrency = standartCurrencies.last!
                     self.presenter?.presentData(response:

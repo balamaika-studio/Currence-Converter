@@ -16,7 +16,8 @@ class ConverterView: UIView {
     @IBOutlet weak var bottomCurrency: ExchangeView!
     
     // MARK: - Properties
-    var didTap: ((ExchangeView) -> Void)?
+    var changeCurrencyTapped: ((ExchangeView) -> Void)?
+    var swapCurrencyTapped: ((Currency) -> Void)?
     var replacingView: ExchangeView!
     
     // MARK: - Initialization
@@ -41,6 +42,7 @@ class ConverterView: UIView {
         topCurrency.countTextField.text = bottomCurrency.countTextField.text
         bottomCurrency.countTextField.text = tmpTopCount
         configureConverterCurrencies(model)
+        swapCurrencyTapped?(topCurrency.viewModel)
     }
 
     // MARK: - Private Methods
@@ -76,13 +78,13 @@ class ConverterView: UIView {
 extension ConverterView: ExchangeViewDeleagte {
     func convert(exchangeView sender: ExchangeView, total: Double) {
         // TODO: Calculation accuracy
-        let converterResult = round(total * sender.viewModel.rate * pow(10, 4)) / pow(10, 4)
+        let converterResult = round(total * sender.viewModel.exchangeRate * pow(10, 4)) / pow(10, 4)
         let activeCurrency = topCurrency.isEqual(sender) ? bottomCurrency : topCurrency
         activeCurrency?.countTextField.text = "\(converterResult)"
     }
     
     func changeCurrencyTapped(exchangeView view: ExchangeView) {
         replacingView = view
-        didTap?(view)
+        changeCurrencyTapped?(view)
     }
 }

@@ -71,8 +71,8 @@ class ExchangeView: UIView {
     }
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
-        let a = Double(sender.text ?? "0") ?? 0
-        delegate?.convert(exchangeView: self, total: a)
+        let total = Double(sender.text ?? "0") ?? 0
+        delegate?.convert(exchangeView: self, total: total)
     }
     
     @objc private func changeCurrencyTapped() {

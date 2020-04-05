@@ -9,26 +9,26 @@
 import UIKit
 
 enum Choice {
-   
-  enum Model {
-    struct Request {
-      enum RequestType {
-        case loadCurrencies
-        case chooseCurrency(viewModel: ChoiceCurrencyViewModel)
-      }
+    
+    enum Model {
+        struct Request {
+            enum RequestType {
+                case loadCurrencies
+                case chooseCurrency(viewModel: ChoiceCurrencyViewModel)
+            }
+        }
+        struct Response {
+            enum ResponseType {
+                case currencies([RealmCurrency], [CurrencyInfo])
+            }
+        }
+        struct ViewModel {
+            enum ViewModelData {
+                case displayCurrencies(_: [ChoiceCurrencyViewModel])
+            }
+        }
     }
-    struct Response {
-      enum ResponseType {
-        case currencies(_: [ChoiceCurrencyViewModel])
-      }
-    }
-    struct ViewModel {
-      enum ViewModelData {
-        case displayCurrencies(_: [ChoiceCurrencyViewModel])
-      }
-    }
-  }
-  
+    
 }
 
 

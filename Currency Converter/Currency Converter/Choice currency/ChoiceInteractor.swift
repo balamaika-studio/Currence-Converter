@@ -21,47 +21,22 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
     var selectedCurrency: Currency?
     
     var presenter: ChoicePresentationLogic?
-    var service: ChoiceService?
+    var storage: StorageContext!
+    
+    init(storage: StorageContext = try! RealmStorageContext()) {
+        self.storage = storage
+    }
     
     var currencies: [Currency]!
     
     func makeRequest(request: Choice.Model.Request.RequestType) {
-        if service == nil {
-            service = ChoiceService()
-        }
         
         switch request {
         case .loadCurrencies:
-            
-            NetworkManager().getQuotes { quotes, error in
-                guard let quotes = quotes else { return }
-                self.currencies = quotes
-                
-                // load data from json
-                let path = Bundle.main.path(forResource: "currenciesNames", ofType: ".json")!
-                let fileUrl = URL(fileURLWithPath: path)
-                let data2 = try? Data(contentsOf: fileUrl, options: .mappedIfSafe)
-                let info = try? JSONSerialization.jsonObject(with: data2!, options: [])
-                let gg = info as? [String: String]
-                let answer = gg?.map { CurrencyInfo(abbreviation: $0, title: $1) }
-
-                let haha = quotes.filter { value in
-                    let abb = answer?.contains { $0.abbreviation == value.currency }
-                    return abb ?? false
-                }
-                
-                var result = [ChoiceCurrencyViewModel]()
-
-                haha.forEach { value in
-                    let abababa = ChoiceCurrencyViewModel(currency: value.currency,
-                                                          title: answer!.first { $0.abbreviation == value.currency }!.title)
-                    result.append(abababa)
-                }
-
-                result.forEach { print($0) }
-
-                self.presenter?.presentData(response: .currencies(result))
-                
+            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+                self.currencies = currencies
+                let currenciesInfo = CurrenciesInfoService.shared.fetch()
+                self.presenter?.presentData(response: .currencies(currencies, currenciesInfo))
             }
             
         case .chooseCurrency(let viewModel):

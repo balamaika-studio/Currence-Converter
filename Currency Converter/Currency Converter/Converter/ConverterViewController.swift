@@ -21,6 +21,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ConverterDataPassing)?
     
+    private var favoriteCurrencies: [FavoriteConverterViewModel]!
+    
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -48,10 +50,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         router.dataStore          = interactor
     }
     
-    // MARK: Routing
-    
-    
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
@@ -59,38 +57,61 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
-        converterView.didTap = self.didTap
+        converterView.changeCurrencyTapped = self.didTap
+        converterView.swapCurrencyTapped = self.swapCurrencyTapped
+        
+        favoriteCurrencies = []
         
         interactor?.makeRequest(request: .loadConverterCurrencies)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
             converterView.justUpdate(converterViewModel)
+            
+        case .showFavoriteViewModel(let favoriteViewModel):
+            self.favoriteCurrencies = favoriteViewModel
+            tableView.reloadData()
         }
     }
     
     func updateConverter() {
         let currencyName = converterView.replacingView.currencyName
         interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     // MARK: Private Methods
     func didTap(exchangeView: ExchangeView) {
-        print("In ConverterVC")
         router?.showChoiceViewController()
+    }
+    
+    func swapCurrencyTapped(baseCurrency: Currency) {
+        
+        print(baseCurrency)
+        
+        interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
 }
 
 extension ConverterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        4
+        return favoriteCurrencies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCell,
                                                            for: indexPath) else { fatalError() }
+        
+        let viewModel = favoriteCurrencies[indexPath.row]
+        cell.configure(with: viewModel)
         return cell
     }
 }

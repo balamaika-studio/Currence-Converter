@@ -15,12 +15,52 @@ protocol ConverterPresentationLogic {
 class ConverterPresenter: ConverterPresentationLogic {
     weak var viewController: ConverterDisplayLogic?
     
+    private var baseCurrency: Currency!
+    
     func presentData(response: Converter.Model.Response.ResponseType) {
         switch response {
         case .converterCurrencies(let first, let second):
+            baseCurrency = first
             let viewModel = test(first, second)
             viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
+            
+        case .favoriteCurrencies(let currencies):
+            let viewModel = buildFavoriteViewModel(currencies)
+            viewController?.displayData(viewModel: .showFavoriteViewModel(viewModel))
+            
+        case .updateBaseCurrency(let base):
+            baseCurrency = base
         }
+    }
+    
+    private func buildFavoriteViewModel(_ favorite: [Currency]) -> [FavoriteConverterViewModel] {
+        
+        var viewModels = [FavoriteConverterViewModel]()
+        
+        print("base Currency = \(baseCurrency.rate)")
+        
+        favorite.forEach { currency in
+            
+            print("curency = \(currency.rate)")
+            
+            let rate = currency.rate / baseCurrency.rate
+            print("rate = \(rate)")
+            let roundedRate = round(rate * pow(10, 4)) / pow(10, 4)
+            let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
+            let stringRate = "\(roundedRate) \(symbol)"
+            
+            print(stringRate)
+            
+            let currenciesInfo = CurrenciesInfoService.shared.fetch()
+            let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
+            
+            let viewModel = FavoriteConverterViewModel(currency: currency.currency,
+                                                       title: title.title,
+                                                       regardingRate: stringRate)
+            viewModels.append(viewModel)
+        }
+        print()
+        return viewModels
     }
     
     private func test(_ a: Currency, _ b: Currency) -> ConverterViewModel {
@@ -34,15 +74,17 @@ class ConverterPresenter: ConverterPresentationLogic {
         let bSymbol = getSymbol(forCurrencyCode: b.currency) ?? "Error"
         
         let first = Exchange(currency: a.currency,
-                             rate: x,
+                             rate: aRate,
+                             exchangeRate: x,
                              regardingRate: "\(aSymbol)1=\(bSymbol)\(x)")
         let second = Exchange(currency: b.currency,
-                              rate: y,
+                              rate: bRate,
+                              exchangeRate: y,
                               regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
         return ConverterViewModel(firstExchange: first, secondExchange: second)
     }
     
-    func getSymbol(forCurrencyCode code: String) -> String? {
+    private func getSymbol(forCurrencyCode code: String) -> String? {
         let locale = NSLocale(localeIdentifier: code)
         if locale.displayName(forKey: .currencySymbol, value: code) == code {
             let newlocale = NSLocale(localeIdentifier: code.dropLast() + "_en")
