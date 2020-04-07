@@ -64,6 +64,8 @@
 		D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */; };
 		D1CEB84124238E9F00988B53 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB84024238E9F00988B53 /* Quote.swift */; };
 		D1EF9A29242394F400DD328C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF9A28242394F400DD328C /* Router.swift */; };
+		D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */; };
+		D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +143,8 @@
 		D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		D1CEB84024238E9F00988B53 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		D1EF9A28242394F400DD328C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
+		D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyState.xib; sourceTree = "<group>"; };
 		FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_Converter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -231,6 +235,7 @@
 		595FC0F1241FAC8800B4EEE4 /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
+				D1FEFAD3243CB5C3004664C6 /* Empty Table View */,
 				595FC0FC241FC96F00B4EEE4 /* Table Cell */,
 				595FC0F7241FBDC000B4EEE4 /* Converter */,
 				595FC0F6241FBDB500B4EEE4 /* Exchange */,
@@ -394,6 +399,15 @@
 			path = "Data Base";
 			sourceTree = "<group>";
 		};
+		D1FEFAD3243CB5C3004664C6 /* Empty Table View */ = {
+			isa = PBXGroup;
+			children = (
+				D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */,
+				D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */,
+			);
+			path = "Empty Table View";
+			sourceTree = "<group>";
+		};
 		D704C2949C2B98B5DF5215FB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				595FC0F5241FAD7F00B4EEE4 /* ExchangeView.xib in Resources */,
+				D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */,
 				595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */,
 				595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */,
 				596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */,
@@ -614,6 +629,7 @@
 				D19A937E242D0CCC00DDCEA9 /* CurrencyLayerApi.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
 				595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */,
+				D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */,
 				595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */,
 				D19A9382242D119500DDCEA9 /* HTTPTask.swift in Sources */,
 				5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */,

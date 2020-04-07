@@ -21,10 +21,10 @@ class ConverterPresenter: ConverterPresentationLogic {
         switch response {
         case .converterCurrencies(let first, let second):
             baseCurrency = first
-            let viewModel = test(first, second)
+            let viewModel = buildConverterViewModel(first, second)
             viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
             
-        case .favoriteCurrencies(let currencies):
+        case .favoriteCurrencies(let currencies):            
             let viewModel = buildFavoriteViewModel(currencies)
             viewController?.displayData(viewModel: .showFavoriteViewModel(viewModel))
             
@@ -34,23 +34,14 @@ class ConverterPresenter: ConverterPresentationLogic {
     }
     
     private func buildFavoriteViewModel(_ favorite: [Currency]) -> [FavoriteConverterViewModel] {
-        
         var viewModels = [FavoriteConverterViewModel]()
-        
-        print("base Currency = \(baseCurrency.rate)")
-        
+                
         favorite.forEach { currency in
-            
-            print("curency = \(currency.rate)")
-            
             let rate = currency.rate / baseCurrency.rate
-            print("rate = \(rate)")
             let roundedRate = round(rate * pow(10, 4)) / pow(10, 4)
             let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
             let stringRate = "\(roundedRate) \(symbol)"
-            
-            print(stringRate)
-            
+                        
             let currenciesInfo = CurrenciesInfoService.shared.fetch()
             let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
             
@@ -59,29 +50,30 @@ class ConverterPresenter: ConverterPresentationLogic {
                                                        regardingRate: stringRate)
             viewModels.append(viewModel)
         }
-        print()
+        
         return viewModels
     }
     
-    private func test(_ a: Currency, _ b: Currency) -> ConverterViewModel {
-        let aRate = Double(a.rate)
-        let bRate = Double(b.rate)
+    private func buildConverterViewModel(_ first: Currency, _ second: Currency) -> ConverterViewModel {
+        let aRate = Double(first.rate)
+        let bRate = Double(second.rate)
         
         let x = round(bRate / aRate * pow(10, 4)) / pow(10, 4)
         let y = round(aRate / bRate * pow(10, 4)) / pow(10, 4)
         
-        let aSymbol = getSymbol(forCurrencyCode: a.currency) ?? "Error"
-        let bSymbol = getSymbol(forCurrencyCode: b.currency) ?? "Error"
+        let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? "Error"
+        let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? "Error"
         
-        let first = Exchange(currency: a.currency,
+        let firstExchange = Exchange(currency: first.currency,
                              rate: aRate,
                              exchangeRate: x,
                              regardingRate: "\(aSymbol)1=\(bSymbol)\(x)")
-        let second = Exchange(currency: b.currency,
+        let secondExchange = Exchange(currency: second.currency,
                               rate: bRate,
                               exchangeRate: y,
                               regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
-        return ConverterViewModel(firstExchange: first, secondExchange: second)
+        return ConverterViewModel(firstExchange: firstExchange,
+                                  secondExchange: secondExchange)
     }
     
     private func getSymbol(forCurrencyCode code: String) -> String? {
