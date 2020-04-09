@@ -32,7 +32,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController = UINavigationController(rootViewController: favoriteViewController)
         navigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
-        tabBarViewController.viewControllers = [converterViewController, navigationController]
+        
+        // Exchanges
+        let exchangeRatesViewController = ExchangeRatesViewController(nib: R.nib.exchangeRatesViewController)
+        
+        let navigationController2 = UINavigationController(rootViewController: exchangeRatesViewController)
+        navigationController2.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 2)
+        
+        tabBarViewController.viewControllers = [converterViewController,
+                                                navigationController,
+                                                navigationController2]
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
