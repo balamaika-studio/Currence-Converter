@@ -23,6 +23,14 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
     
+    private lazy var emptyStateView: UIView = {
+        let frame = CGRect(x: tableView.center.x,
+                           y: tableView.center.y,
+                           width: tableView.bounds.size.width,
+                           height: tableView.bounds.size.height)
+        return EmptyState(frame: frame)
+    }()
+    
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -77,6 +85,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             
         case .showFavoriteViewModel(let favoriteViewModel):
             self.favoriteCurrencies = favoriteViewModel
+            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
             tableView.reloadData()
         }
     }
@@ -93,9 +102,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     func swapCurrencyTapped(baseCurrency: Currency) {
-        
-        print(baseCurrency)
-        
         interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
