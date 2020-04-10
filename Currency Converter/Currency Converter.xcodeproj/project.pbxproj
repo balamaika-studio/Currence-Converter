@@ -41,6 +41,7 @@
 		D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */; };
 		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
 		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
+		D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */; };
 		D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18855492436080600476EB3 /* RealmStorageContext.swift */; };
 		D188554E2436085F00476EB3 /* StorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188554D2436085F00476EB3 /* StorageContext.swift */; };
 		D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188554F243608B500476EB3 /* RealmCurrency.swift */; };
@@ -144,6 +145,7 @@
 		D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
 		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
+		D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesHeader.swift; sourceTree = "<group>"; };
 		D18855492436080600476EB3 /* RealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageContext.swift; sourceTree = "<group>"; };
 		D188554D2436085F00476EB3 /* StorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContext.swift; sourceTree = "<group>"; };
 		D188554F243608B500476EB3 /* RealmCurrency.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmCurrency.swift; sourceTree = "<group>"; };
@@ -369,6 +371,14 @@
 			path = Favorite;
 			sourceTree = "<group>";
 		};
+		D1863CB12440FEC50011F215 /* Exchange Rates Table Header */ = {
+			isa = PBXGroup;
+			children = (
+				D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */,
+			);
+			path = "Exchange Rates Table Header";
+			sourceTree = "<group>";
+		};
 		D188554B2436081100476EB3 /* Realm */ = {
 			isa = PBXGroup;
 			children = (
@@ -452,6 +462,7 @@
 		D1DDE927243F454F0023E789 /* ExchangeRates */ = {
 			isa = PBXGroup;
 			children = (
+				D1863CB12440FEC50011F215 /* Exchange Rates Table Header */,
 				D1DDE945243F4AB60023E789 /* CurrencySelection */,
 				D1DDE936243F4A550023E789 /* CurrencyRates */,
 				D1DDE92C243F45CB0023E789 /* ExchangeRatesViewController.swift */,
@@ -755,6 +766,7 @@
 				D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */,
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
+				D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				D19A9377242CFF6E00DDCEA9 /* FavoriteTableViewCell.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,

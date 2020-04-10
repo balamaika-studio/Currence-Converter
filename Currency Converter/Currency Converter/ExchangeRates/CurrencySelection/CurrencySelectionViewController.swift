@@ -45,23 +45,12 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
         presenter.viewController  = viewController
         router.viewController     = viewController
     }
-    
-    // MARK: Routing
-    
-    
-    
+
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(R.nib.currencyPairTableViewCell)
-        tableView.rowHeight = 44
-        
-        relatives = []
-        
+        setupView()
         interactor?.makeRequest(request: .loadRelatives)
     }
     
@@ -73,6 +62,17 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
         }
     }
     
+    private func setupView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(R.nib.currencyPairTableViewCell)
+        tableView.register(ExchangeRatesHeader.self,
+                           forHeaderFooterViewReuseIdentifier: ExchangeRatesHeader.reuseId)
+        
+        tableView.rowHeight = 44
+        tableView.sectionHeaderHeight = 50
+        relatives = []
+    }
 }
 
 extension CurrencySelectionViewController: UITableViewDataSource {
@@ -94,7 +94,13 @@ extension CurrencySelectionViewController: UITableViewDataSource {
         }
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let id = ExchangeRatesHeader.reuseId
+        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? ExchangeRatesHeader else { return nil }
+        view.hideRateLabel()
+        return view
+    }
 }
 
 extension CurrencySelectionViewController: UITableViewDelegate {
