@@ -62,6 +62,7 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        interactor?.makeRequest(request: .configureExchangeRates)
         setupView()
     }
     

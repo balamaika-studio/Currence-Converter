@@ -13,7 +13,7 @@ enum ExchangeRates {
     enum Model {
         struct Request {
             enum RequestType {
-                case some
+                case configureExchangeRates
             }
         }
         struct Response {

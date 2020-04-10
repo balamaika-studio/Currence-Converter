@@ -15,12 +15,30 @@ protocol CurrencySelectionBusinessLogic {
 class CurrencySelectionInteractor: CurrencySelectionBusinessLogic {
     
     var presenter: CurrencySelectionPresentationLogic?
-    var service: CurrencySelectionService?
+    var storage: StorageContext!
+    
+    init(storage: StorageContext = try! RealmStorageContext()) {
+        self.storage = storage
+    }
     
     func makeRequest(request: CurrencySelection.Model.Request.RequestType) {
-        if service == nil {
-            service = CurrencySelectionService()
+        switch request {
+        case .loadRelatives:
+            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) {
+                presenter?.presentData(response: .relatives($0))
+            }
+            
+        case .addRelative(let relative):
+            update(relative, isSelected: true)
+            
+        case .removeRelative(let relative):
+            update(relative, isSelected: false)
         }
     }
     
+    private func update(_ relative: RealmExchangeRate, isSelected: Bool) {
+        try? storage.update {
+            relative.isSelected = isSelected
+        }
+    }
 }

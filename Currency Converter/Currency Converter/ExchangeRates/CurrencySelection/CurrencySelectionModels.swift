@@ -13,19 +13,27 @@ enum CurrencySelection {
     enum Model {
         struct Request {
             enum RequestType {
-                case some
+                case loadRelatives
+                case addRelative(RealmExchangeRate)
+                case removeRelative(RealmExchangeRate)
             }
         }
         struct Response {
             enum ResponseType {
-                case some
+                case relatives(_ relatives: [RealmExchangeRate])
             }
         }
         struct ViewModel {
             enum ViewModelData {
-                case some
+                case showRelatives([RealmExchangeRate])
             }
         }
     }
     
 }
+
+//struct CurrencySelectionViewModel {
+//    let base: String
+//    let relative: String
+//    let isSelected: Bool
+//}

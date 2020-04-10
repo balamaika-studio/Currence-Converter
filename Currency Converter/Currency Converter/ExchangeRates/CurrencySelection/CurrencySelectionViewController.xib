@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CurrencySelectionViewController">
             <connections>
+                <outlet property="tableView" destination="6rY-Vr-5aI" id="dJL-hH-msA"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
         </placeholder>
@@ -16,7 +17,17 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="6rY-Vr-5aI">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </tableView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="6rY-Vr-5aI" firstAttribute="leading" secondItem="S5s-ew-RdV" secondAttribute="leading" id="B6e-GC-lLi"/>
+                <constraint firstItem="6rY-Vr-5aI" firstAttribute="top" secondItem="S5s-ew-RdV" secondAttribute="top" id="Eqe-JQ-YRs"/>
+                <constraint firstItem="S5s-ew-RdV" firstAttribute="bottom" secondItem="6rY-Vr-5aI" secondAttribute="bottom" id="PtC-Od-AEQ"/>
+                <constraint firstItem="S5s-ew-RdV" firstAttribute="trailing" secondItem="6rY-Vr-5aI" secondAttribute="trailing" id="Sdq-VT-qIZ"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="S5s-ew-RdV"/>
             <point key="canvasLocation" x="462" y="399"/>

@@ -16,7 +16,10 @@ class CurrencySelectionPresenter: CurrencySelectionPresentationLogic {
     weak var viewController: CurrencySelectionDisplayLogic?
     
     func presentData(response: CurrencySelection.Model.Response.ResponseType) {
-        
+        switch response {
+        case .relatives(let relatives):
+            viewController?.displayData(viewModel: .showRelatives(relatives))
+        }
     }
     
 }

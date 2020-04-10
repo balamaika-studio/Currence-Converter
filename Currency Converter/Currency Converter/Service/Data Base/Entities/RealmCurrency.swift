@@ -22,8 +22,4 @@ public class RealmCurrency: Object, Currency {
     dynamic var currency: String = ""
     dynamic var rate: Double = 0.0
     dynamic var isFavorite: Bool = false
-    
-    override public static func primaryKey() -> String? {
-        return "currency"
-    }
 }
