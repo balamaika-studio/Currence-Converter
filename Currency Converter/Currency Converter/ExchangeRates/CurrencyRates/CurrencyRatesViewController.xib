@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CurrencyRatesViewController">
             <connections>
+                <outlet property="tableView" destination="kGS-bc-yfy" id="jbL-Hy-cts"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
         </placeholder>
@@ -16,7 +17,19 @@
         <view contentMode="scaleToFill" id="iN0-l3-epB">
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="kGS-bc-yfy">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="kGS-bc-yfy" firstAttribute="leading" secondItem="Ulz-zH-mvo" secondAttribute="leading" id="M0Q-hF-vXa"/>
+                <constraint firstItem="kGS-bc-yfy" firstAttribute="top" secondItem="Ulz-zH-mvo" secondAttribute="top" id="k3R-n5-0xL"/>
+                <constraint firstItem="Ulz-zH-mvo" firstAttribute="bottom" secondItem="kGS-bc-yfy" secondAttribute="bottom" id="lCI-AA-DSx"/>
+                <constraint firstItem="Ulz-zH-mvo" firstAttribute="trailing" secondItem="kGS-bc-yfy" secondAttribute="trailing" id="vWs-Km-RoL"/>
+            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Ulz-zH-mvo"/>
             <point key="canvasLocation" x="462" y="399"/>

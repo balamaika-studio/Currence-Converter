@@ -18,7 +18,7 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
     var interactor: CurrencySelectionBusinessLogic?
     var router: (NSObjectProtocol & CurrencySelectionRoutingLogic)?
     
-    var relatives: [RealmExchangeRate]!
+    var relatives: [CurrencyPairViewModel]!
     
     // MARK: Object lifecycle
     
@@ -89,6 +89,7 @@ extension CurrencySelectionViewController: UITableViewDataSource {
         
         let relative = relatives[indexPath.row]
         cell.configure(with: relative)
+        cell.configureForSelection()
         if relative.isSelected {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }

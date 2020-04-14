@@ -14,8 +14,13 @@ protocol CurrencyRatesDisplayLogic: class {
 
 class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
     
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     var interactor: CurrencyRatesBusinessLogic?
     var router: (NSObjectProtocol & CurrencyRatesRoutingLogic)?
+    
+    var relatives: [CurrencyPairViewModel]!
     
     // MARK: Object lifecycle
     
@@ -57,5 +62,38 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
     func displayData(viewModel: CurrencyRates.Model.ViewModel.ViewModelData) {
         
     }
+    
+    private func setupView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(R.nib.currencyPairTableViewCell)
+        tableView.register(ExchangeRatesHeader.self,
+                           forHeaderFooterViewReuseIdentifier: ExchangeRatesHeader.reuseId)
+        
+        tableView.rowHeight = 44
+        tableView.sectionHeaderHeight = 50
+        relatives = []
+    }
+}
+
+extension CurrencyRatesViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return relatives.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let id = R.reuseIdentifier.currencyPairTableViewCell
+        guard let
+            cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) else {
+                fatalError()
+        }
+        
+        let relative = relatives[indexPath.row]
+        cell.configure(with: relative)
+        return cell
+    }
+}
+
+extension CurrencyRatesViewController: UITableViewDelegate {
     
 }

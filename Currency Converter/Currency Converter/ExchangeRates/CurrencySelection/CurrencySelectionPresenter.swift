@@ -18,8 +18,25 @@ class CurrencySelectionPresenter: CurrencySelectionPresentationLogic {
     func presentData(response: CurrencySelection.Model.Response.ResponseType) {
         switch response {
         case .relatives(let relatives):
-            viewController?.displayData(viewModel: .showRelatives(relatives))
+            let viewModels = buildCurrencySelectionViewModels(exchangeRates: relatives)
+            viewController?.displayData(viewModel: .showRelatives(viewModels))
         }
+    }
+    
+    private func buildCurrencySelectionViewModels(exchangeRates: [RealmExchangeRate]) -> [CurrencySelectionViewModel] {
+        var result = [CurrencySelectionViewModel]()
+        
+        for exchangeRate in exchangeRates {
+            guard let base = exchangeRate.base,
+                let relative = exchangeRate.relative else { continue }
+            
+            let relation = "\(base.currency)/\(relative.currency)"
+            let viewModel = CurrencySelectionViewModel(id: exchangeRate.id,
+                                                       relation: relation,
+                                                       isSelected: exchangeRate.isSelected)
+            result.append(viewModel)
+        }
+        return result
     }
     
 }

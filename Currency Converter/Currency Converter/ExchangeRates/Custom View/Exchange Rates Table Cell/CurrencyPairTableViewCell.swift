@@ -10,8 +10,10 @@ import UIKit
 
 class CurrencyPairTableViewCell: UITableViewCell {
     @IBOutlet weak var currencyRelativeLabel: UILabel!
-    
+    @IBOutlet weak var changeImageView: UIImageView!
+    @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var selectionView: UIView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,8 +26,16 @@ class CurrencyPairTableViewCell: UITableViewCell {
         selectionView.backgroundColor = selected ? color : nil
     }
     
-    func configure(with viewModel: RealmExchangeRate) {
-        currencyRelativeLabel.text = "\(viewModel.base!.currency)/\(viewModel.relative!.currency)"
+    func configure(with viewModel: CurrencyPairViewModel) {
+        let changeImage = UIImage(named: viewModel.change.rawValue)
+        currencyRelativeLabel.text = viewModel.relation
+        changeImageView.image = changeImage
+        rateLabel.text = "\(viewModel.rate)"
         selectionStyle = .none
+    }
+    
+    func configureForSelection() {
+        changeImageView.isHidden = true
+        rateLabel.isHidden = true
     }
 }
