@@ -36,7 +36,8 @@ class ConverterView: UIView {
     // MARK: - Actions
     @IBAction func swapCurrencyTapped(_ sender: UIButton) {
         let model = ConverterViewModel(firstExchange: bottomCurrency.viewModel,
-                                       secondExchange: topCurrency.viewModel)
+                                       secondExchange: topCurrency.viewModel,
+                                       updated: updatedLabel.text!)
         
         let tmpTopCount = topCurrency.countTextField.text
         topCurrency.countTextField.text = bottomCurrency.countTextField.text
@@ -72,6 +73,7 @@ class ConverterView: UIView {
     private func configureConverterCurrencies(_ viewModel: ConverterViewModel) {
         topCurrency.configure(with: viewModel.firstExchange)
         bottomCurrency.configure(with: viewModel.secondExchange)
+        updatedLabel.text = viewModel.updated
     }
 }
 

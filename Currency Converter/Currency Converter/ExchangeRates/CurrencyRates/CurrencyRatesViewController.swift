@@ -51,6 +51,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(UserDefaults.standard.integer(forKey: "updated"))
     }
     
     func displayData(viewModel: CurrencyRates.Model.ViewModel.ViewModelData) {

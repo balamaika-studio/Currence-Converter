@@ -16,7 +16,7 @@ extension RealmStorageContext {
         }
         
         try self.safeWrite {
-            let newObject = realm.create(model as! Object.Type, value: [], update: .error) as! T
+            let newObject = realm.create(model as! Object.Type, value: [], update: .modified) as! T
             completion(newObject)
         }
     }

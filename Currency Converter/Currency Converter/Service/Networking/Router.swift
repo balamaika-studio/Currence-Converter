@@ -7,31 +7,6 @@
 //
 
 import Foundation
-//
-//protocol Networking {
-//    var baseURL: String { get }
-//    func fetchData(completion: @escaping (Data?) -> Void)
-//}
-//
-//class NetworkService: Networking {
-//    var baseURL: String {
-//        return "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml"
-//    }
-//
-//    func fetchData(completion: @escaping (Data?) -> Void) {
-//        let url = URL(string: baseURL)!
-//        URLSession.shared.dataTask(with: url) { data, response, error in
-//            guard let data = data else {
-//                completion(nil)
-//                return
-//            }
-//            DispatchQueue.main.async {
-//                completion(data)
-//            }
-//        }.resume()
-//    }
-//}
-
 
 public typealias NetworkRouterCompletion = (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void
 
@@ -48,11 +23,10 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
         let session = URLSession.shared
         do {
             let request = try self.buildRequest(from: route)
-                        
             task = session.dataTask(with: request, completionHandler: { data, response, error in
                 completion(data, response, error)
             })
-        }catch {
+        } catch {
             completion(nil, nil, error)
         }
         self.task?.resume()

@@ -13,7 +13,7 @@ protocol Currency {
     var rate: Double { get set }
 }
 
-struct CurrencyLayerApiResponse: Decodable {
+struct RealTimeRatesResponse: Decodable {
     let updated: Int
     let base: String
     private let rates: [String: Double]

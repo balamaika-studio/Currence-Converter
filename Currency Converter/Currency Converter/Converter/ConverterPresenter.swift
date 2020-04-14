@@ -17,6 +17,14 @@ class ConverterPresenter: ConverterPresentationLogic {
     
     private var baseCurrency: Currency!
     
+    private lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM dd, yyyy, HH:mm a"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        return dateFormatter
+    }()
+    
     func presentData(response: Converter.Model.Response.ResponseType) {
         switch response {
         case .converterCurrencies(let first, let second):
@@ -72,8 +80,13 @@ class ConverterPresenter: ConverterPresentationLogic {
                               rate: bRate,
                               exchangeRate: y,
                               regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
+        
+        let timestamp = UserDefaults.standard.integer(forKey: "updated")
+        let updatedTitle = buildUpdatedTitle(from: timestamp)
+        
         return ConverterViewModel(firstExchange: firstExchange,
-                                  secondExchange: secondExchange)
+                                  secondExchange: secondExchange,
+                                  updated: updatedTitle)
     }
     
     private func getSymbol(forCurrencyCode code: String) -> String? {
@@ -83,5 +96,11 @@ class ConverterPresenter: ConverterPresentationLogic {
             return newlocale.displayName(forKey: .currencySymbol, value: code)
         }
         return locale.displayName(forKey: .currencySymbol, value: code)
+    }
+    
+    private func buildUpdatedTitle(from timestamp: Int) -> String {
+        let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        let formattedDate = dateFormatter.string(from: date)
+        return "Updated - \(formattedDate)"
     }
 }

@@ -11,6 +11,7 @@ import Foundation
 
 enum CurrencyLayerApi {
     case live(source: String)
+    case historical(date: String)
 }
 
 extension CurrencyLayerApi: EndPointType {
@@ -27,8 +28,8 @@ extension CurrencyLayerApi: EndPointType {
     
     var path: String {
         switch self {
-        case .live:
-            return "live"
+        case .live: return "live"
+        case .historical: return "historical"
         }
     }
     
@@ -43,8 +44,12 @@ extension CurrencyLayerApi: EndPointType {
                                       bodyEncoding: .urlEncoding,
                                       urlParameters: ["source": source,
                                                       "access_key": NetworkManager.movieAPIKey])
-        default:
-            return .request
+        
+        case .historical(let date):
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["date": date,
+                                                          "access_key": NetworkManager.movieAPIKey])
         }
     }
     

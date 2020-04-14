@@ -33,7 +33,7 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
     
     func makeRequest(request: Converter.Model.Request.RequestType) {
         switch request {
-        // pass Cube Model
+        // TODO: - Pass Quote Model
         case .changeCurrency(let currencyName):
             guard let newCurrency = selectedCurrency else { break }
             
@@ -58,30 +58,54 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
         case .loadConverterCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-                print(currencies)
-
-                if currencies.isEmpty {
-                    networkManager.getQuotes { quotes, error in
-                        guard let quotes = quotes else { return }
-                        // save new quotes to realm
-                        quotes.forEach { quote in
-                            try? self.storage.create(RealmCurrency.self) { currency in
-                                currency.currency = quote.currency
-                                currency.rate = quote.rate
-                            }
-                        }
-                        self.setupConverter(currencies: quotes)
-                    }
-                } else {
-                    setupConverter(currencies: currencies)
-                }
+            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+                $0.isEmpty ? loadQuotes() : setupConverter(with: $0)
             }
             
+        case .updateCurrencies:
+            loadQuotes(update: true)
         }
     }
     
-    private func setupConverter(currencies: [Currency]) {
+    private func loadQuotes(update: Bool = false) {
+        networkManager.getQuotes { response, error in
+            guard let quotes = response?.quotes else { return }
+            
+            // save last updated date
+            UserDefaults.standard.set(response!.updated, forKey: "updated")
+            
+            // save/update quotes
+            switch update {
+            case false: self.createQuotes(quotes)
+            case true: self.updateQuotes(quotes)
+            }
+            self.setupConverter(with: quotes)
+        }
+    }
+    
+    private func createQuotes(_ quotes: [Quote]) {
+        quotes.forEach { quote in
+            try? self.storage.create(RealmCurrency.self) { currency in
+                currency.currency = quote.currency
+                currency.rate = quote.rate
+            }
+        }
+    }
+    
+    private func updateQuotes(_ quotes: [Quote]) {
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            for currency in $0 {
+                let quote = quotes.first { $0.currency == currency.currency }
+                guard let newQuote = quote else { return }
+                try? storage.update {
+                    currency.rate = newQuote.rate
+                }
+            }
+            makeRequest(request: .loadFavoriteCurrencies)
+        }
+    }
+
+    private func setupConverter(with currencies: [Currency]) {
         let standartCurrencies = currencies
             .filter { $0.currency == "USD" || $0.currency == "EUR" }
             .sorted(by: { $0.rate > $1.rate })

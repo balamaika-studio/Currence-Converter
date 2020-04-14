@@ -17,6 +17,7 @@ enum Converter {
                 case loadConverterCurrencies
                 case loadFavoriteCurrencies
                 case updateBaseCurrency(base: Currency)
+                case updateCurrencies
             }
         }
         struct Response {
@@ -50,6 +51,7 @@ struct Exchange: ExchangeCurrency {
 struct ConverterViewModel {
     let firstExchange: ExchangeCurrency
     let secondExchange: ExchangeCurrency
+    let updated: String
 }
 
 

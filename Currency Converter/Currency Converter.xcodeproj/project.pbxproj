@@ -479,12 +479,12 @@
 		D1DDE936243F4A550023E789 /* CurrencyRates */ = {
 			isa = PBXGroup;
 			children = (
-				D1DDE937243F4A7C0023E789 /* CurrencyRatesPresenter.swift */,
-				D1DDE938243F4A7C0023E789 /* CurrencyRatesWorker.swift */,
-				D1DDE939243F4A7C0023E789 /* CurrencyRatesRouter.swift */,
-				D1DDE93A243F4A7C0023E789 /* CurrencyRatesModels.swift */,
 				D1DDE93B243F4A7C0023E789 /* CurrencyRatesViewController.swift */,
 				D1DDE93C243F4A7C0023E789 /* CurrencyRatesInteractor.swift */,
+				D1DDE937243F4A7C0023E789 /* CurrencyRatesPresenter.swift */,
+				D1DDE938243F4A7C0023E789 /* CurrencyRatesWorker.swift */,
+				D1DDE93A243F4A7C0023E789 /* CurrencyRatesModels.swift */,
+				D1DDE939243F4A7C0023E789 /* CurrencyRatesRouter.swift */,
 				D1DDE93D243F4A7C0023E789 /* CurrencyRatesViewController.xib */,
 			);
 			path = CurrencyRates;
