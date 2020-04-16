@@ -25,10 +25,12 @@ enum Converter {
                 case converterCurrencies(first: Currency, second: Currency)
                 case favoriteCurrencies([Currency])
                 case updateBaseCurrency(base: Currency)
+                case error(_ message: String?)
             }
         }
         struct ViewModel {
             enum ViewModelData {
+                case showError(message: String)
                 case showConverterViewModel(_ viewModel: ConverterViewModel)
                 case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
             }

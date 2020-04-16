@@ -66,6 +66,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
     }
     
     private func setupView() {
+        tableView.delegate = self
         tableView.dataSource = self
         tableView.register(R.nib.currencyPairTableViewCell)
         tableView.register(ExchangeRatesHeader.self,
@@ -95,8 +96,10 @@ extension CurrencyRatesViewController: UITableViewDataSource {
         cell.configure(with: relative)
         return cell
     }
-    
-    private func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+}
+
+extension CurrencyRatesViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let id = ExchangeRatesHeader.reuseId
         return tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
     }

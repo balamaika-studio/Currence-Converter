@@ -41,7 +41,9 @@ struct NetworkManager {
                                     with routerData: RouterCompletionData,
                                     callback completion: @escaping (_ answer: T?, _ error: String?) -> Void) {
         if routerData.error != nil {
-            completion(nil, "Please check your network connection.")
+            DispatchQueue.main.async {
+                completion(nil, "Please check your network connection.")
+            }
         }
         
         if let response = routerData.response as? HTTPURLResponse {

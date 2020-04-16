@@ -113,6 +113,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             self.favoriteCurrencies = favoriteViewModel
             tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
             tableView.reloadData()
+            
+        case .showError(let message):
+            // TODO: - Make alert service
+            print(message)
+            refreshControl.endRefreshing()
         }
     }
     

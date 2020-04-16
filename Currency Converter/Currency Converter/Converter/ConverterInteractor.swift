@@ -71,8 +71,11 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
     }
     
     private func loadQuotes(update: Bool = false) {
-        networkManager.getQuotes { response, error in
-            guard let quotes = response?.quotes else { return }
+        networkManager.getQuotes { response, errorMessage in            
+            guard let quotes = response?.quotes else {
+                self.presenter?.presentData(response: .error(errorMessage))
+                return
+            }
             
             // save last updated date
             UserDefaults.standard.set(response!.updated, forKey: "updated")
@@ -100,7 +103,7 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
         
         print(stringDate)
         
-        networkManager.getQuotes(date: stringDate) { response, error in
+        networkManager.getQuotes(date: stringDate) { response, errorMessageerrorMessage in
             guard let quotes = response?.quotes else { return }
             // TODO: - It saves quotes each time!!!
             

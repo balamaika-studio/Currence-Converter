@@ -38,6 +38,10 @@ class ConverterPresenter: ConverterPresentationLogic {
             
         case .updateBaseCurrency(let base):
             baseCurrency = base
+            
+        case .error(let message):
+            guard let message = message else { break }
+            viewController?.displayData(viewModel: .showError(message: message))
         }
     }
     
