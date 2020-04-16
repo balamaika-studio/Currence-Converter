@@ -21,6 +21,7 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
     
     var presenter: ConverterPresentationLogic?
     var storage: StorageContext!
+    var historicalStorage: StorageContext!
     var networkManager: NetworkManager!
     
     var topCurrency: Currency!
@@ -28,6 +29,8 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
     
     init(storage: StorageContext = try! RealmStorageContext()) {
         self.storage = storage
+        let config: ConfigurationType = .named(name: "historical")
+        self.historicalStorage = try! RealmStorageContext(configuration: config)
         self.networkManager = NetworkManager()
     }
     
@@ -76,28 +79,54 @@ class ConverterInteractor: ConverterBusinessLogic, ConverterDataStore {
             
             // save/update quotes
             switch update {
-            case false: self.createQuotes(quotes)
-            case true: self.updateQuotes(quotes)
+            case false: self.createQuotes(quotes, in: self.storage)
+            case true: self.updateQuotes(quotes, in: self.storage)
             }
+            self.loadHistoricalQuotes()
             self.setupConverter(with: quotes)
         }
     }
     
-    private func createQuotes(_ quotes: [Quote]) {
+    private func loadHistoricalQuotes() {
+        // TODO: - Replace in Service (There is another dateFormatter in Converter Presenter)
+        let dayInSec = 86400
+        let timestamp = UserDefaults.standard.integer(forKey: "updated")
+        var date = Date(timeIntervalSince1970: TimeInterval(timestamp))
+        date.addTimeInterval(-TimeInterval(dayInSec))
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let stringDate = dateFormatter.string(from: date)
+        
+        print(stringDate)
+        
+        networkManager.getQuotes(date: stringDate) { response, error in
+            guard let quotes = response?.quotes else { return }
+            // TODO: - It saves quotes each time!!!
+            
+            self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+                $0.isEmpty ?
+                    self.createQuotes(quotes, in: self.historicalStorage) :
+                    self.updateQuotes(quotes, in: self.historicalStorage)
+            }
+        }
+    }
+    
+    private func createQuotes(_ quotes: [Quote], in realm: StorageContext) {
         quotes.forEach { quote in
-            try? self.storage.create(RealmCurrency.self) { currency in
+            try? realm.create(RealmCurrency.self) { currency in
                 currency.currency = quote.currency
                 currency.rate = quote.rate
             }
         }
     }
     
-    private func updateQuotes(_ quotes: [Quote]) {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+    private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
+        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
             for currency in $0 {
                 let quote = quotes.first { $0.currency == currency.currency }
                 guard let newQuote = quote else { return }
-                try? storage.update {
+                try? realm.update {
                     currency.rate = newQuote.rate
                 }
             }

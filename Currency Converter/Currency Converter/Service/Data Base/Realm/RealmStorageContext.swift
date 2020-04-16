@@ -12,12 +12,14 @@ import RealmSwift
 /* Storage config options */
 public enum ConfigurationType {
     case basic(url: String?)
+    case named(name: String)
     case inMemory(identifier: String?)
     
     var associated: String? {
         get {
             switch self {
             case .basic(let url): return url
+            case .named(let name): return name
             case .inMemory(let identifier): return identifier
             }
         }
@@ -36,6 +38,15 @@ class RealmStorageContext: StorageContext {
             if let url = configuration.associated {
                 rmConfig.fileURL = NSURL(string: url) as URL?
             }
+            
+        case .named:
+            if let name = configuration.associated {
+                rmConfig = Realm.Configuration()
+                rmConfig.fileURL = rmConfig.fileURL!
+                    .deletingLastPathComponent()
+                    .appendingPathComponent("\(name).realm")
+            }
+            
         case .inMemory:
             rmConfig = Realm.Configuration()
             if let identifier = configuration.associated {
