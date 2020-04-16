@@ -36,9 +36,13 @@ class CurrencySelectionInteractor: CurrencySelectionBusinessLogic {
         }
     }
     
-    private func update(_ relative: RealmExchangeRate, isSelected: Bool) {
-        try? storage.update {
-            relative.isSelected = isSelected
+    private func update(_ relative: CurrencyPairViewModel, isSelected: Bool) {
+        let realmId = NSPredicate(format: "id = %@", relative.realmId)
+        storage.fetch(RealmExchangeRate.self, predicate: realmId, sorted: nil) {
+            guard let exchangeRate = $0.first else { return }
+            try? storage.update {
+                exchangeRate.isSelected = isSelected
+            }
         }
     }
 }

@@ -23,6 +23,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
     
+    private let refreshControl = UIRefreshControl()
+    
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
                            y: tableView.center.y,
@@ -65,12 +67,35 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
+        
+        
+        let strokeTextAttributes: [NSAttributedString.Key: Any] = [
+            .strokeColor : UIColor.black,
+            .foregroundColor : UIColor.white,
+            .strokeWidth : -2.0,
+            .font : UIFont.boldSystemFont(ofSize: 18)
+        ]
+        tableView.refreshControl = refreshControl
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...",
+                                                            attributes: strokeTextAttributes)
+
+        refreshControl.addTarget(self,
+                                 action: #selector(refreshCurrencies),
+                                 for: .valueChanged)
+
+        
         converterView.changeCurrencyTapped = self.didTap
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
         
         favoriteCurrencies = []
         
         interactor?.makeRequest(request: .loadConverterCurrencies)
+    }
+    
+    @objc private func refreshCurrencies(_ sender: Any) {
+        interactor?.makeRequest(request: .updateCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +107,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
             converterView.justUpdate(converterViewModel)
+            refreshControl.endRefreshing()
             
         case .showFavoriteViewModel(let favoriteViewModel):
             self.favoriteCurrencies = favoriteViewModel
@@ -93,7 +119,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     func updateConverter() {
         let currencyName = converterView.replacingView.currencyName
         interactor?.makeRequest(request: .changeCurrency(name: currencyName))
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     // MARK: Private Methods

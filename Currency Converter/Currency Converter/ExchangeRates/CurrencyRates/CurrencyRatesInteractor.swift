@@ -15,11 +15,29 @@ protocol CurrencyRatesBusinessLogic {
 class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
     
     var presenter: CurrencyRatesPresentationLogic?
-    var service: CurrencyRatesService?
+    var liveStorage: StorageContext!
+    var historicalStorage: StorageContext!
+
+    init(storage: StorageContext = try! RealmStorageContext()) {
+        self.liveStorage = storage
+        let config: ConfigurationType = .named(name: "historical")
+        self.historicalStorage = try! RealmStorageContext(configuration: config)
+    }
     
     func makeRequest(request: CurrencyRates.Model.Request.RequestType) {
-        if service == nil {
-            service = CurrencyRatesService()
+        switch request {
+        case .loadCurrencyRateChanges:
+            // TODO: - Refactoring
+            liveStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { live in
+                let relativesPredicate = NSPredicate(format: "isSelected = true")
+                liveStorage.fetch(RealmExchangeRate.self, predicate: relativesPredicate, sorted: nil) { relatives in
+                    self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { historical in
+                        presenter?.presentData(response: .currencies(live,
+                                                                     historical,
+                                                                     relatives))
+                    }
+                }
+            }
         }
     }
     

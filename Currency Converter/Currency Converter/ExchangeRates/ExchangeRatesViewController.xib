@@ -30,7 +30,7 @@
                     <color key="selectedSegmentTintColor" red="0.38823529411764707" green="0.54117647058823526" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s7S-av-neU">
-                    <rect key="frame" x="0.0" y="111" width="320" height="457"/>
+                    <rect key="frame" x="0.0" y="96" width="320" height="472"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </view>
             </subviews>
@@ -40,7 +40,7 @@
                 <constraint firstItem="Ugv-kQ-j3a" firstAttribute="top" secondItem="To3-Nb-5aN" secondAttribute="top" constant="30" id="2Ag-0l-UYN"/>
                 <constraint firstItem="To3-Nb-5aN" firstAttribute="bottom" secondItem="s7S-av-neU" secondAttribute="bottom" id="J2x-ry-7M0"/>
                 <constraint firstItem="To3-Nb-5aN" firstAttribute="trailing" secondItem="s7S-av-neU" secondAttribute="trailing" id="UEd-Dp-7wq"/>
-                <constraint firstItem="s7S-av-neU" firstAttribute="top" secondItem="Ugv-kQ-j3a" secondAttribute="bottom" constant="50" id="m0c-GV-prt"/>
+                <constraint firstItem="s7S-av-neU" firstAttribute="top" secondItem="Ugv-kQ-j3a" secondAttribute="bottom" constant="35" id="m0c-GV-prt"/>
                 <constraint firstItem="Ugv-kQ-j3a" firstAttribute="leading" secondItem="To3-Nb-5aN" secondAttribute="leading" constant="16" id="rPy-uh-Flt"/>
                 <constraint firstItem="s7S-av-neU" firstAttribute="leading" secondItem="To3-Nb-5aN" secondAttribute="leading" id="s3o-jU-R5v"/>
                 <constraint firstItem="Ugv-kQ-j3a" firstAttribute="centerX" secondItem="To3-Nb-5aN" secondAttribute="centerX" id="tOj-5c-ZGh"/>
