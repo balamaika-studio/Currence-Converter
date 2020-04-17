@@ -7,12 +7,12 @@ PODS:
   - Realm/Headers (4.4.0)
   - RealmSwift (4.4.0):
     - Realm (= 4.4.0)
-  - XMLParsing (0.0.2)
+  - SwiftChart (1.0.1)
 
 DEPENDENCIES:
   - R.swift
   - RealmSwift
-  - XMLParsing
+  - SwiftChart
 
 SPEC REPOS:
   trunk:
@@ -20,15 +20,15 @@ SPEC REPOS:
     - R.swift.Library
     - Realm
     - RealmSwift
-    - XMLParsing
+    - SwiftChart
 
 SPEC CHECKSUMS:
   R.swift: 8cbc4fc69b740305b6a17c8a8ed968eb788962d9
   R.swift.Library: fa85ce1e0d0b7e818cd9e080df910ba54d2776cc
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
-  XMLParsing: b6cc40a1de8e321a72b7f0d89080473f9d53cff8
+  SwiftChart: ba767a678d568a5ee22d419e146a0582865e1aff
 
-PODFILE CHECKSUM: 7ba507a9a7d0c964a882cfb0593c3040ae4ce784
+PODFILE CHECKSUM: ebf98179e32cb23338a107fd57da849f28e0af3b
 
 COCOAPODS: 1.9.1
