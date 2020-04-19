@@ -39,9 +39,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController2 = UINavigationController(rootViewController: exchangeRatesViewController)
         navigationController2.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 2)
         
+        
+        // Graph
+        let graphViewController = GraphViewController(nib: R.nib.graphViewController)
+        
+        let navigationController3 = UINavigationController(rootViewController: graphViewController)
+        navigationController3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
+        
         tabBarViewController.viewControllers = [converterViewController,
                                                 navigationController,
-                                                navigationController2]
+                                                navigationController2,
+                                                navigationController3]
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()

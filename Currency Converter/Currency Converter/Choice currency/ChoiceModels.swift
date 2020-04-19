@@ -36,3 +36,9 @@ struct ChoiceCurrencyViewModel {
     let currency: String
     let title: String
 }
+
+extension ChoiceCurrencyViewModel: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.currency == rhs.currency
+    }
+}

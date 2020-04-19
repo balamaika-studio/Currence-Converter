@@ -12,6 +12,7 @@ class CurrenciesInfoService {
     static let shared = CurrenciesInfoService()
     
     private init() { }
+    private var currencyInfo: [CurrencyInfo]!
     
     /// load data from json
     func fetch() -> [CurrencyInfo] {
@@ -20,6 +21,11 @@ class CurrenciesInfoService {
         let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)
         let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: String]
 
-        return json.map { CurrencyInfo(abbreviation: $0, title: $1) }
+        currencyInfo = json.map { CurrencyInfo(abbreviation: $0, title: $1) }
+        return currencyInfo
+    }
+    
+    func getInfo(by currency: Currency) -> CurrencyInfo? {
+        return currencyInfo.first { $0.abbreviation == currency.currency }
     }
 }

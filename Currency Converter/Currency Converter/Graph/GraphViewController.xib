@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GraphViewController">
+            <connections>
+                <outlet property="chartView" destination="i67-re-yhX" id="Oag-kw-u4X"/>
+                <outlet property="collectionView" destination="wx7-8d-5Qy" id="JOz-Uv-BJF"/>
+                <outlet property="converterView" destination="s9b-ID-dZG" id="FSY-DQ-WMW"/>
+                <outlet property="currenciesRateLabel" destination="n7O-T3-bPB" id="kGW-Sl-lxQ"/>
+                <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i67-re-yhX" customClass="Chart" customModule="SwiftChart">
+                    <rect key="frame" x="20" y="178" width="280" height="233.5"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="i67-re-yhX" secondAttribute="height" multiplier="6:5" id="NUZ-Gy-ENC"/>
+                    </constraints>
+                </view>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wx7-8d-5Qy">
+                    <rect key="frame" x="20" y="426.5" width="280" height="58"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="6" id="6Lh-PU-6QK">
+                        <size key="itemSize" width="50" height="50"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9b-ID-dZG" customClass="RelativeExchangeView" customModule="Currency_Converter" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="76" id="FwT-0s-ZRp"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1USD = xEUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7O-T3-bPB">
+                    <rect key="frame" x="108.5" y="112" width="103" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="i67-re-yhX" secondAttribute="trailing" constant="20" id="2x6-mD-Y8w"/>
+                <constraint firstItem="wx7-8d-5Qy" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="bottom" constant="15" id="2ys-DG-3gB"/>
+                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="wx7-8d-5Qy" secondAttribute="trailing" constant="20" id="8FX-87-HVL"/>
+                <constraint firstItem="n7O-T3-bPB" firstAttribute="top" secondItem="s9b-ID-dZG" secondAttribute="bottom" constant="36" id="B3m-u3-TZ7"/>
+                <constraint firstItem="s9b-ID-dZG" firstAttribute="top" secondItem="Lbm-Zq-2cr" secondAttribute="top" id="F9e-cY-DZE"/>
+                <constraint firstItem="i67-re-yhX" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="LD4-0t-6ET"/>
+                <constraint firstItem="s9b-ID-dZG" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" id="LTK-Me-XI5"/>
+                <constraint firstItem="wx7-8d-5Qy" firstAttribute="height" secondItem="i67-re-yhX" secondAttribute="height" multiplier="1:4" id="TL6-0r-joC"/>
+                <constraint firstItem="n7O-T3-bPB" firstAttribute="centerX" secondItem="Lbm-Zq-2cr" secondAttribute="centerX" id="Tc0-1o-Mxl"/>
+                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="s9b-ID-dZG" secondAttribute="trailing" id="lR1-rt-8Z1"/>
+                <constraint firstItem="wx7-8d-5Qy" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="o6g-or-AgD"/>
+                <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="n7O-T3-bPB" secondAttribute="bottom" constant="45" id="qmW-GO-KAq"/>
+                <constraint firstItem="wx7-8d-5Qy" firstAttribute="centerX" secondItem="Lbm-Zq-2cr" secondAttribute="centerX" id="uiw-9Z-uk0"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="Lbm-Zq-2cr"/>
+            <point key="canvasLocation" x="461.25" y="398.23943661971833"/>
+        </view>
+    </objects>
+</document>

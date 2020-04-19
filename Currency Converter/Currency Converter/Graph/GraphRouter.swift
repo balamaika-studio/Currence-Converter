@@ -1,37 +1,36 @@
 //
-//  ConverterRouter.swift
+//  GraphRouter.swift
 //  Currency Converter
 //
-//  Created by Kiryl Klimiankou on 3/16/20.
+//  Created by Кирилл Клименков on 4/17/20.
 //  Copyright (c) 2020 Kiryl Klimiankou. All rights reserved.
 //
 
 import UIKit
 
-protocol ConverterRoutingLogic {
+protocol GraphRoutingLogic {
     func showChoiceViewController()
 }
 
-class ConverterRouter: ChoiceDataPassing {
-    weak var viewController: ConverterViewController?
+class GraphRouter: ChoiceDataPassing {
+    weak var viewController: GraphViewController?
     var dataStore: ChoiceDataStore?
     
     // MARK: Routing
     func showChoiceViewController() {
-        guard let viewController = viewController else {
-            fatalError("Fail route to second")
-        }
+        guard
+            let viewController = viewController
+            else { fatalError("Graph fail route") }
+        
         let choiceVc = ChoiceViewController(nib: R.nib.choiceViewController)
         present(source: viewController, destination: choiceVc)
     }
 }
 
-// MARK: - Navigation
-extension ConverterRouter: ConverterRoutingLogic {
+extension GraphRouter: GraphRoutingLogic {
     private func present(source: UIViewController, destination: UIViewController) {
         destination.modalPresentationStyle = .custom
-        destination.transitioningDelegate = source as? ConverterViewController
+        destination.transitioningDelegate = source as? GraphViewController
         source.present(destination, animated: true, completion: nil)
     }
 }
-
