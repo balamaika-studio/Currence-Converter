@@ -13,18 +13,14 @@ protocol ConverterDisplayLogic: class {
 }
 
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var converterView: ConverterView!
     
-    
     var interactor: ConverterBusinessLogic?
-    var router: (ConverterRoutingLogic & ConverterDataPassing)?
+    var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
-    
     private let refreshControl = UIRefreshControl()
-    
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
                            y: tableView.center.y,
@@ -121,11 +117,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         }
     }
     
-    func updateConverter() {
-        let currencyName = converterView.replacingView.currencyName
-        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
-    }
-    
     // MARK: Private Methods
     func didTap(exchangeView: ExchangeView) {
         router?.showChoiceViewController()
@@ -134,6 +125,17 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     func swapCurrencyTapped(baseCurrency: Currency) {
         interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
+    }
+}
+
+extension ConverterViewController: ChoiceBackDataPassing {
+    func getRouter() -> ChoiceDataPassing {
+        return router!
+    }
+    
+    func updateControllerWithSelectedCurrency() {
+        let currencyName = converterView.replacingView.currencyName
+        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
     }
 }
 
@@ -158,6 +160,7 @@ extension ConverterViewController: UIViewControllerTransitioningDelegate {
     }
 }
 
+// TODO: - Replace to another file
 class HalfSizePresentationController : UIPresentationController {
     var shadowView: UIView?
     

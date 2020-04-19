@@ -12,15 +12,30 @@ protocol GraphBusinessLogic {
     func makeRequest(request: Graph.Model.Request.RequestType)
 }
 
-class GraphInteractor: GraphBusinessLogic {
-    
+class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
+    var selectedCurrency: Currency?
     var presenter: GraphPresentationLogic?
-    var service: GraphService?
     
     func makeRequest(request: Graph.Model.Request.RequestType) {
-        if service == nil {
-            service = GraphService()
+        switch request {
+        case .getGraphPeriods:
+            let periods = PeriodService.shared.buildGraphPeriodModels()
+            presenter?.presentData(response: .graphPeriods(periods))
+            
+        case .getDefaultConverter:
+            let converter = defaultConverter()
+            presenter?.presentData(response: .defaultConverter(converter))
+            
+        case .updateConverterCurrency:
+            guard let newCurrency = selectedCurrency else { break }
+            presenter?.presentData(response: .newConverterCurrency(newCurrency))
         }
+        
     }
     
+    private func defaultConverter() -> GraphConverterViewModel {
+        let base = ChoiceCurrencyViewModel(currency: "USD", title: "United States Dollar")
+        let relative = ChoiceCurrencyViewModel(currency: "EUR", title: "Euro")
+        return GraphConverterViewModel(base: base, relative: relative)
+    }
 }

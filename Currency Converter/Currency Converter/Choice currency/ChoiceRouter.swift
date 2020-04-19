@@ -16,6 +16,11 @@ protocol ChoiceDataPassing {
     var dataStore: ChoiceDataStore? { get }
 }
 
+protocol ChoiceBackDataPassing {
+    func getRouter() -> ChoiceDataPassing
+    func updateControllerWithSelectedCurrency()
+}
+
 class ChoiceRouter {
     weak var viewController: ChoiceViewController?
     var dataStore: ChoiceDataStore?
@@ -23,18 +28,18 @@ class ChoiceRouter {
     // MARK: Routing
     
     func closeChoiceViewController() {
-        let converterViewController = ((viewController?.presentingViewController as? UITabBarController)?
+        let destinationViewController = ((viewController?.presentingViewController as? UITabBarController)?
             .selectedViewController as? UINavigationController)?
-            .topViewController as? ConverterViewController
-
+            .topViewController as? ChoiceBackDataPassing
+        
         guard
             let choiceVC = viewController,
             let choiceDataStore = dataStore,
-            let converterVC = converterViewController,
-            var converterDataStore = converterVC.router?.dataStore
+            let destinationVC = destinationViewController,
+            var converterDataStore = destinationVC.getRouter().dataStore
         else { fatalError("Fail route to back") }
         passDataBack(source: choiceDataStore, destination: &converterDataStore)
-        converterVC.updateConverter()
+        destinationVC.updateControllerWithSelectedCurrency()
         close(choiceVC)
     }
 }
@@ -48,7 +53,7 @@ extension ChoiceRouter: ChoiceRoutingLogic {
 
 // MARK: - Data Passing
 extension ChoiceRouter: ChoiceDataPassing {
-    private func passDataBack(source: ChoiceDataStore, destination: inout ConverterDataStore) {
+    private func passDataBack(source: ChoiceDataStore, destination: inout ChoiceDataStore) {
         destination.selectedCurrency = source.selectedCurrency
     }
 }

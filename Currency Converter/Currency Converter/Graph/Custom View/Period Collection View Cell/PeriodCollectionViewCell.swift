@@ -24,6 +24,10 @@ class PeriodCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         setupView()
     }
+    
+    func configure(with viewModel: GraphPeriod) {
+        periodLabel.text = viewModel.title
+    }
 
     private func setupView() {
         layer.cornerRadius = bounds.width / 10

@@ -9,13 +9,28 @@
 import UIKit
 
 protocol GraphRoutingLogic {
-    
+    func showChoiceViewController()
 }
 
-class GraphRouter: NSObject, GraphRoutingLogic {
-    
+class GraphRouter: ChoiceDataPassing {
     weak var viewController: GraphViewController?
+    var dataStore: ChoiceDataStore?
     
     // MARK: Routing
-    
+    func showChoiceViewController() {
+        guard
+            let viewController = viewController
+            else { fatalError("Graph fail route") }
+        
+        let choiceVc = ChoiceViewController(nib: R.nib.choiceViewController)
+        present(source: viewController, destination: choiceVc)
+    }
+}
+
+extension GraphRouter: GraphRoutingLogic {
+    private func present(source: UIViewController, destination: UIViewController) {
+        destination.modalPresentationStyle = .custom
+        destination.transitioningDelegate = source as? GraphViewController
+        source.present(destination, animated: true, completion: nil)
+    }
 }
