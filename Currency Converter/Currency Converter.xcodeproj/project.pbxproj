@@ -43,6 +43,17 @@
 		D1156092244A4376000EB5E9 /* PeriodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1156091244A4376000EB5E9 /* PeriodService.swift */; };
 		D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */; };
 		D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */; };
+		D163AFE2244E312800014800 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDB244E312800014800 /* SettingsPresenter.swift */; };
+		D163AFE3244E312800014800 /* SettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDC244E312800014800 /* SettingsWorker.swift */; };
+		D163AFE4244E312800014800 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDD244E312800014800 /* SettingsRouter.swift */; };
+		D163AFE5244E312800014800 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDE244E312800014800 /* SettingsModels.swift */; };
+		D163AFE6244E312800014800 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDF244E312800014800 /* SettingsViewController.swift */; };
+		D163AFE7244E312800014800 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFE0244E312800014800 /* SettingsInteractor.swift */; };
+		D163AFE8244E312800014800 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D163AFE1244E312800014800 /* SettingsViewController.xib */; };
+		D163AFEC244E325200014800 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFEB244E325200014800 /* SettingsSection.swift */; };
+		D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFEE244E33C300014800 /* SectionCellType.swift */; };
+		D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFF0244E341200014800 /* NetworkOptions.swift */; };
+		D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFF2244E352B00014800 /* AppearanceOptions.swift */; };
 		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
 		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
 		D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */; };
@@ -67,6 +78,7 @@
 		D19A9384242D143700DDCEA9 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9383242D143700DDCEA9 /* ParameterEncoding.swift */; };
 		D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9385242D146C00DDCEA9 /* URLEncoding.swift */; };
 		D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */; };
+		D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */; };
 		D1CEB84124238E9F00988B53 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB84024238E9F00988B53 /* Quote.swift */; };
 		D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */; };
 		D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */; };
@@ -102,6 +114,7 @@
 		D1E1A76B2449F6220051E51D /* PeriodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E1A7692449F6220051E51D /* PeriodCollectionViewCell.swift */; };
 		D1E1A76C2449F6220051E51D /* PeriodCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E1A76A2449F6220051E51D /* PeriodCollectionViewCell.xib */; };
 		D1EF9A29242394F400DD328C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF9A28242394F400DD328C /* Router.swift */; };
+		D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */; };
 		D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */; };
 		D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */; };
 /* End PBXBuildFile section */
@@ -160,6 +173,17 @@
 		D1156091244A4376000EB5E9 /* PeriodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodService.swift; sourceTree = "<group>"; };
 		D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairViewModel.swift; sourceTree = "<group>"; };
+		D163AFDB244E312800014800 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
+		D163AFDC244E312800014800 /* SettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWorker.swift; sourceTree = "<group>"; };
+		D163AFDD244E312800014800 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
+		D163AFDE244E312800014800 /* SettingsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsModels.swift; sourceTree = "<group>"; };
+		D163AFDF244E312800014800 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		D163AFE0244E312800014800 /* SettingsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsInteractor.swift; sourceTree = "<group>"; };
+		D163AFE1244E312800014800 /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		D163AFEB244E325200014800 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		D163AFEE244E33C300014800 /* SectionCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCellType.swift; sourceTree = "<group>"; };
+		D163AFF0244E341200014800 /* NetworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkOptions.swift; sourceTree = "<group>"; };
+		D163AFF2244E352B00014800 /* AppearanceOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptions.swift; sourceTree = "<group>"; };
 		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
 		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
 		D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesHeader.swift; sourceTree = "<group>"; };
@@ -184,6 +208,7 @@
 		D19A9383242D143700DDCEA9 /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
 		D19A9385242D146C00DDCEA9 /* URLEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoding.swift; sourceTree = "<group>"; };
 		D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
+		D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		D1CEB84024238E9F00988B53 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesPresenter.swift; sourceTree = "<group>"; };
 		D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesWorker.swift; sourceTree = "<group>"; };
@@ -219,6 +244,7 @@
 		D1E1A7692449F6220051E51D /* PeriodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1E1A76A2449F6220051E51D /* PeriodCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeriodCollectionViewCell.xib; sourceTree = "<group>"; };
 		D1EF9A28242394F400DD328C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewHeader.swift; sourceTree = "<group>"; };
 		D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
 		D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyState.xib; sourceTree = "<group>"; };
 		FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_Converter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -276,6 +302,7 @@
 				595FC0E0241FABC700B4EEE4 /* Converter */,
 				D1E1A7582449F5060051E51D /* Graph */,
 				D1DDE927243F454F0023E789 /* ExchangeRates */,
+				D163AFDA244E30FE00014800 /* Settings */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
 				595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
@@ -416,6 +443,40 @@
 			path = "Custom View";
 			sourceTree = "<group>";
 		};
+		D163AFDA244E30FE00014800 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D1B6A619244F25EB00B4DDE9 /* Custom View */,
+				D163AFDF244E312800014800 /* SettingsViewController.swift */,
+				D163AFE0244E312800014800 /* SettingsInteractor.swift */,
+				D163AFDB244E312800014800 /* SettingsPresenter.swift */,
+				D163AFDC244E312800014800 /* SettingsWorker.swift */,
+				D163AFDE244E312800014800 /* SettingsModels.swift */,
+				D163AFDD244E312800014800 /* SettingsRouter.swift */,
+				D163AFE1244E312800014800 /* SettingsViewController.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D163AFEA244E322100014800 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D163AFEB244E325200014800 /* SettingsSection.swift */,
+				D163AFED244E33A800014800 /* SectionOptions */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D163AFED244E33A800014800 /* SectionOptions */ = {
+			isa = PBXGroup;
+			children = (
+				D163AFEE244E33C300014800 /* SectionCellType.swift */,
+				D163AFF0244E341200014800 /* NetworkOptions.swift */,
+				D163AFF2244E352B00014800 /* AppearanceOptions.swift */,
+			);
+			path = SectionOptions;
+			sourceTree = "<group>";
+		};
 		D1863CB12440FEC50011F215 /* Exchange Rates Table Header */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,6 +522,15 @@
 			path = Encoding;
 			sourceTree = "<group>";
 		};
+		D1B6A619244F25EB00B4DDE9 /* Custom View */ = {
+			isa = PBXGroup;
+			children = (
+				D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */,
+				D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */,
+			);
+			path = "Custom View";
+			sourceTree = "<group>";
+		};
 		D1CEB83C2423838800988B53 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -475,6 +545,7 @@
 		D1CEB83F24238B8400988B53 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D163AFEA244E322100014800 /* Settings */,
 				D1CEB84024238E9F00988B53 /* Quote.swift */,
 				D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */,
 			);
@@ -715,6 +786,7 @@
 				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
 				D1DDE935243F45CB0023E789 /* ExchangeRatesViewController.xib in Resources */,
 				595FC0F0241FAC3600B4EEE4 /* Converter.storyboard in Resources */,
+				D163AFE8244E312800014800 /* SettingsViewController.xib in Resources */,
 				D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -826,13 +898,16 @@
 				D1DDE934243F45CB0023E789 /* ExchangeRatesInteractor.swift in Sources */,
 				D1EF9A29242394F400DD328C /* Router.swift in Sources */,
 				D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */,
+				D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */,
 				D1DDE941243F4A7C0023E789 /* CurrencyRatesModels.swift in Sources */,
 				D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */,
 				D19A9384242D143700DDCEA9 /* ParameterEncoding.swift in Sources */,
 				D1DDE933243F45CB0023E789 /* ExchangeRatesViewController.swift in Sources */,
 				5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */,
+				D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */,
 				D19A937C242D0C5200DDCEA9 /* EndPointType.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
+				D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */,
 				D1E1A7652449F5240051E51D /* GraphInteractor.swift in Sources */,
 				D1E1A7612449F5240051E51D /* GraphWorker.swift in Sources */,
 				D19A937E242D0CCC00DDCEA9 /* CurrencyLayerApi.swift in Sources */,
@@ -843,9 +918,11 @@
 				595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */,
 				D1DDE955243F57110023E789 /* RealmExchangeRate.swift in Sources */,
 				D1DDE93F243F4A7C0023E789 /* CurrencyRatesWorker.swift in Sources */,
+				D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */,
 				D19A9382242D119500DDCEA9 /* HTTPTask.swift in Sources */,
 				D1DDE940243F4A7C0023E789 /* CurrencyRatesRouter.swift in Sources */,
 				5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */,
+				D163AFE2244E312800014800 /* SettingsPresenter.swift in Sources */,
 				D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */,
 				5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */,
 				D1DDE94D243F4AD30023E789 /* CurrencySelectionPresenter.swift in Sources */,
@@ -862,10 +939,12 @@
 				D18855522436090900476EB3 /* RealmStorageContext+Operations.swift in Sources */,
 				D19A936E242CF64000DDCEA9 /* FavoriteWorker.swift in Sources */,
 				D1DDE94E243F4AD30023E789 /* CurrencySelectionWorker.swift in Sources */,
+				D163AFE3244E312800014800 /* SettingsWorker.swift in Sources */,
 				D1DDE94F243F4AD30023E789 /* CurrencySelectionRouter.swift in Sources */,
 				D1156092244A4376000EB5E9 /* PeriodService.swift in Sources */,
 				D19A9371242CF64000DDCEA9 /* FavoriteViewController.swift in Sources */,
 				D1DDE952243F4AD30023E789 /* CurrencySelectionInteractor.swift in Sources */,
+				D163AFEC244E325200014800 /* SettingsSection.swift in Sources */,
 				D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */,
 				D188555424362ACC00476EB3 /* CurrenciesInfoService.swift in Sources */,
 				D1DDE931243F45CB0023E789 /* ExchangeRatesRouter.swift in Sources */,
@@ -874,12 +953,16 @@
 				D1E1A7642449F5240051E51D /* GraphViewController.swift in Sources */,
 				595FC0BC241FA40400B4EEE4 /* SceneDelegate.swift in Sources */,
 				D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */,
+				D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */,
+				D163AFE4244E312800014800 /* SettingsRouter.swift in Sources */,
 				5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */,
 				D1E1A7602449F5240051E51D /* GraphPresenter.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,
+				D163AFE7244E312800014800 /* SettingsInteractor.swift in Sources */,
 				5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */,
 				595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */,
 				D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */,
+				D163AFE6244E312800014800 /* SettingsViewController.swift in Sources */,
 				D1DDE959243F61490023E789 /* CurrencyPairTableViewCell.swift in Sources */,
 				D19A9370242CF64000DDCEA9 /* FavoriteModels.swift in Sources */,
 				D19A936F242CF64000DDCEA9 /* FavoriteRouter.swift in Sources */,
@@ -890,6 +973,7 @@
 				D1DDE942243F4A7C0023E789 /* CurrencyRatesViewController.swift in Sources */,
 				D115608C244A1DA1000EB5E9 /* RelativeExchangeView.swift in Sources */,
 				595FC0EC241FABDB00B4EEE4 /* ConverterViewController.swift in Sources */,
+				D163AFE5244E312800014800 /* SettingsModels.swift in Sources */,
 				5968111E2420E8CE00426968 /* ChoiceViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -26,8 +26,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let converterViewController = R.storyboard.converter.instantiateInitialViewController()!
         converterViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
         
+        // Favorite
         let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
-//        favoriteViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         let navigationController = UINavigationController(rootViewController: favoriteViewController)
         navigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
@@ -46,10 +46,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navigationController3 = UINavigationController(rootViewController: graphViewController)
         navigationController3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
         
+        
+        // Settings
+        let settingsViewController = SettingsViewController(nib: R.nib.settingsViewController)
+        
+        let navigationController4 = UINavigationController(rootViewController: settingsViewController)
+        navigationController4.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 4)
+        
         tabBarViewController.viewControllers = [converterViewController,
                                                 navigationController,
                                                 navigationController2,
-                                                navigationController3]
+                                                navigationController3,
+                                                navigationController4]
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
