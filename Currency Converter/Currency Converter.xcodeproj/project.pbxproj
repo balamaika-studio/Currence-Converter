@@ -113,6 +113,13 @@
 		D1E1A7662449F5240051E51D /* GraphViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E1A75F2449F5240051E51D /* GraphViewController.xib */; };
 		D1E1A76B2449F6220051E51D /* PeriodCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E1A7692449F6220051E51D /* PeriodCollectionViewCell.swift */; };
 		D1E1A76C2449F6220051E51D /* PeriodCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1E1A76A2449F6220051E51D /* PeriodCollectionViewCell.xib */; };
+		D1E4ED0E2451CD3300ECE03F /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED0D2451CD3300ECE03F /* Weak.swift */; };
+		D1E4ED102451CD5900ECE03F /* SubscribableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED0F2451CD5900ECE03F /* SubscribableValue.swift */; };
+		D1E4ED122451CD8800ECE03F /* Theming.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED112451CD8800ECE03F /* Theming.swift */; };
+		D1E4ED142451CD9A00ECE03F /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED132451CD9A00ECE03F /* AppTheme.swift */; };
+		D1E4ED162451CDB300ECE03F /* AppThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED152451CDB300ECE03F /* AppThemeManager.swift */; };
+		D1E4ED212451F0A400ECE03F /* AppFieldClearManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED202451F0A400ECE03F /* AppFieldClearManager.swift */; };
+		D1E4ED232451F88500ECE03F /* FieldClearable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E4ED222451F88500ECE03F /* FieldClearable.swift */; };
 		D1EF9A29242394F400DD328C /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EF9A28242394F400DD328C /* Router.swift */; };
 		D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */; };
 		D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */; };
@@ -243,6 +250,13 @@
 		D1E1A75F2449F5240051E51D /* GraphViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphViewController.xib; sourceTree = "<group>"; };
 		D1E1A7692449F6220051E51D /* PeriodCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCollectionViewCell.swift; sourceTree = "<group>"; };
 		D1E1A76A2449F6220051E51D /* PeriodCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeriodCollectionViewCell.xib; sourceTree = "<group>"; };
+		D1E4ED0D2451CD3300ECE03F /* Weak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weak.swift; sourceTree = "<group>"; };
+		D1E4ED0F2451CD5900ECE03F /* SubscribableValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribableValue.swift; sourceTree = "<group>"; };
+		D1E4ED112451CD8800ECE03F /* Theming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theming.swift; sourceTree = "<group>"; };
+		D1E4ED132451CD9A00ECE03F /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		D1E4ED152451CDB300ECE03F /* AppThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeManager.swift; sourceTree = "<group>"; };
+		D1E4ED202451F0A400ECE03F /* AppFieldClearManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFieldClearManager.swift; sourceTree = "<group>"; };
+		D1E4ED222451F88500ECE03F /* FieldClearable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldClearable.swift; sourceTree = "<group>"; };
 		D1EF9A28242394F400DD328C /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewHeader.swift; sourceTree = "<group>"; };
 		D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyState.swift; sourceTree = "<group>"; };
@@ -534,10 +548,13 @@
 		D1CEB83C2423838800988B53 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				D1156091244A4376000EB5E9 /* PeriodService.swift */,
-				D188555324362ACC00476EB3 /* CurrenciesInfoService.swift */,
+				D1E4ED192451E0C300ECE03F /* FieldClearManager */,
+				D1E4ED0C2451CD2000ECE03F /* Helpers */,
+				D1E4ED0B2451CC6C00ECE03F /* ThemeManager */,
 				D1DC8E872434AA39008FCE50 /* Data Base */,
 				D1DC8E862434AA22008FCE50 /* Networking */,
+				D1156091244A4376000EB5E9 /* PeriodService.swift */,
+				D188555324362ACC00476EB3 /* CurrenciesInfoService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -662,6 +679,34 @@
 				D1E1A76A2449F6220051E51D /* PeriodCollectionViewCell.xib */,
 			);
 			path = "Period Collection View Cell";
+			sourceTree = "<group>";
+		};
+		D1E4ED0B2451CC6C00ECE03F /* ThemeManager */ = {
+			isa = PBXGroup;
+			children = (
+				D1E4ED112451CD8800ECE03F /* Theming.swift */,
+				D1E4ED132451CD9A00ECE03F /* AppTheme.swift */,
+				D1E4ED152451CDB300ECE03F /* AppThemeManager.swift */,
+			);
+			path = ThemeManager;
+			sourceTree = "<group>";
+		};
+		D1E4ED0C2451CD2000ECE03F /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D1E4ED0D2451CD3300ECE03F /* Weak.swift */,
+				D1E4ED0F2451CD5900ECE03F /* SubscribableValue.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		D1E4ED192451E0C300ECE03F /* FieldClearManager */ = {
+			isa = PBXGroup;
+			children = (
+				D1E4ED222451F88500ECE03F /* FieldClearable.swift */,
+				D1E4ED202451F0A400ECE03F /* AppFieldClearManager.swift */,
+			);
+			path = FieldClearManager;
 			sourceTree = "<group>";
 		};
 		D1FEFAD3243CB5C3004664C6 /* Empty Table View */ = {
@@ -899,13 +944,17 @@
 				D1EF9A29242394F400DD328C /* Router.swift in Sources */,
 				D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */,
 				D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */,
+				D1E4ED162451CDB300ECE03F /* AppThemeManager.swift in Sources */,
 				D1DDE941243F4A7C0023E789 /* CurrencyRatesModels.swift in Sources */,
 				D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */,
 				D19A9384242D143700DDCEA9 /* ParameterEncoding.swift in Sources */,
 				D1DDE933243F45CB0023E789 /* ExchangeRatesViewController.swift in Sources */,
+				D1E4ED0E2451CD3300ECE03F /* Weak.swift in Sources */,
 				5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */,
+				D1E4ED102451CD5900ECE03F /* SubscribableValue.swift in Sources */,
 				D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */,
 				D19A937C242D0C5200DDCEA9 /* EndPointType.swift in Sources */,
+				D1E4ED232451F88500ECE03F /* FieldClearable.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */,
 				D1E1A7652449F5240051E51D /* GraphInteractor.swift in Sources */,
@@ -926,6 +975,8 @@
 				D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */,
 				5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */,
 				D1DDE94D243F4AD30023E789 /* CurrencySelectionPresenter.swift in Sources */,
+				D1E4ED142451CD9A00ECE03F /* AppTheme.swift in Sources */,
+				D1E4ED122451CD8800ECE03F /* Theming.swift in Sources */,
 				D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */,
 				D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */,
 				D1E1A7622449F5240051E51D /* GraphRouter.swift in Sources */,
@@ -964,6 +1015,7 @@
 				D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */,
 				D163AFE6244E312800014800 /* SettingsViewController.swift in Sources */,
 				D1DDE959243F61490023E789 /* CurrencyPairTableViewCell.swift in Sources */,
+				D1E4ED212451F0A400ECE03F /* AppFieldClearManager.swift in Sources */,
 				D19A9370242CF64000DDCEA9 /* FavoriteModels.swift in Sources */,
 				D19A936F242CF64000DDCEA9 /* FavoriteRouter.swift in Sources */,
 				D19A9372242CF64000DDCEA9 /* FavoriteInteractor.swift in Sources */,

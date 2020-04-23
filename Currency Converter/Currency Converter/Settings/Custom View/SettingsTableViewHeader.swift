@@ -39,6 +39,14 @@ class SettingsTableViewHeader: UITableViewHeaderFooterView {
             headerTitleLabel.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
             headerTitleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
+        setUpTheming()
     }
     
+}
+
+extension SettingsTableViewHeader: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        headerTitleLabel.textColor = theme.textColor
+        contentView.backgroundColor = theme.backgroundColor
+    }
 }

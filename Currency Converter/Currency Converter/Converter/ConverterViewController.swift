@@ -86,7 +86,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         
         favoriteCurrencies = []
         
-        interactor?.makeRequest(request: .loadConverterCurrencies)
+//        interactor?.makeRequest(request: .loadConverterCurrencies)
     }
     
     @objc private func refreshCurrencies(_ sender: Any) {
@@ -96,6 +96,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     

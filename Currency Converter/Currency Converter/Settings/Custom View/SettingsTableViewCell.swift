@@ -46,14 +46,16 @@ class SettingsTableViewCell: UITableViewCell {
     
     // MARK: - Private Methods
     private func setupView() {
+        backgroundColor = .clear
         addSubview(switchControl)
         NSLayoutConstraint.activate([
             switchControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             trailingAnchor.constraint(equalTo: switchControl.trailingAnchor, constant: 16)
         ])
         detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        detailTextLabel?.textColor = .gray
         textLabel?.font = UIFont.systemFont(ofSize: 16)
+        setUpTheming()
+
     }
 
     @objc private func handleSwitchAction(sender: UISwitch) {
@@ -69,6 +71,13 @@ class SettingsTableViewCell: UITableViewCell {
             clearFieldChnaged?(sender.isOn)
         }
         detailTextLabel?.text = result
+    }
+}
+
+extension SettingsTableViewCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        textLabel?.textColor = theme.textColor
+        detailTextLabel?.textColor = theme.subtitleColor
     }
 }
 

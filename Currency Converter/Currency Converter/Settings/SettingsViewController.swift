@@ -63,6 +63,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
                            forHeaderFooterViewReuseIdentifier: SettingsTableViewHeader.reuseId)
         tableView.register(SettingsTableViewCell.self,
                            forCellReuseIdentifier: SettingsTableViewCell.cellId)
+        setUpTheming()
     }
     
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData) {
@@ -71,11 +72,18 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     // MARK: - Private Methods
     private func autoUpdate(_ state: Bool) {
-        print("\(#function) = \(state)")
+        UserDefaults.standard.set(state, forKey: "autoUpdate")
     }
     
     private func clearField(_ state: Bool) {
-        print("\(#function) = \(state)")
+        AppFieldClearManager.shared.isClear = state
+        UserDefaults.standard.set(state, forKey: "clearField")
+    }
+}
+
+extension SettingsViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {     
+        view.backgroundColor = theme.backgroundColor
     }
 }
 
@@ -117,6 +125,7 @@ extension SettingsViewController: UITableViewDataSource {
             cell.sectionType = network
             cell.autoUpdateChanged = self.autoUpdate
             cell.selectionStyle = .none
+            cell.switchControl.isOn = UserDefaults.standard.bool(forKey: "autoUpdate")
             
         case .appearance:
             guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
@@ -124,6 +133,7 @@ extension SettingsViewController: UITableViewDataSource {
             case .clearField:
                 cell.selectionStyle = .none
                 cell.clearFieldChnaged = self.clearField
+                cell.switchControl.isOn = AppFieldClearManager.shared.isClear
             default: break
             }
             cell.sectionType = appearance
@@ -149,7 +159,7 @@ extension SettingsViewController: UITableViewDelegate {
             guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
             switch appearance {
             case .accuracy: print("Open accuracy")
-            case .theme: print("Open theme")
+            case .theme: themeProvider.currentTheme = .dark
             default: break
             }
             

@@ -45,6 +45,10 @@ class ExchangeView: UIView {
         setup()
     }
     
+    deinit {
+        AppFieldClearManager.shared.detach(self)
+    }
+    
     func configure(with currency: ExchangeCurrency) {
         flagImageViw.image = UIImage(named: currency.currency.lowercased())
         currencyLabel.text = currency.currency
@@ -68,6 +72,7 @@ class ExchangeView: UIView {
     private func setup() {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         changeCurrencyStack.addGestureRecognizer(tapGesture)
+        setUpClearSetting()
     }
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
@@ -77,5 +82,11 @@ class ExchangeView: UIView {
     
     @objc private func changeCurrencyTapped() {
         delegate?.changeCurrencyTapped(exchangeView: self)
+    }
+}
+
+extension ExchangeView: FieldClearable {
+    func update(with subject: AppFieldClearManager) {
+        countTextField.clearsOnBeginEditing = subject.isClear
     }
 }
