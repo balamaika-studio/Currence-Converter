@@ -9,10 +9,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="GraphViewController">
             <connections>
+                <outlet property="chartValueLabel" destination="p1V-Le-she" id="zPg-D1-27V"/>
                 <outlet property="chartView" destination="i67-re-yhX" id="Oag-kw-u4X"/>
                 <outlet property="collectionView" destination="wx7-8d-5Qy" id="JOz-Uv-BJF"/>
                 <outlet property="converterView" destination="s9b-ID-dZG" id="FSY-DQ-WMW"/>
                 <outlet property="currenciesRateLabel" destination="n7O-T3-bPB" id="kGW-Sl-lxQ"/>
+                <outlet property="labelLeadingMarginConstraint" destination="yHm-Ad-u8h" id="RFh-2x-gLO"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
         </placeholder>
@@ -29,7 +31,7 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wx7-8d-5Qy">
-                    <rect key="frame" x="20" y="426.5" width="280" height="58"/>
+                    <rect key="frame" x="20" y="419.5" width="280" height="58"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="6" id="6Lh-PU-6QK">
                         <size key="itemSize" width="50" height="50"/>
@@ -51,14 +53,35 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1V-Le-she" customClass="EdgeInsetLabel" customModule="Currency_Converter" customModuleProvider="target">
+                    <rect key="frame" x="20" y="178" width="0.0" height="0.0"/>
+                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="leftTextInset">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="rightTextInset">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="topTextInset">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="bottomTextInset">
+                            <real key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="i67-re-yhX" secondAttribute="trailing" constant="20" id="2x6-mD-Y8w"/>
-                <constraint firstItem="wx7-8d-5Qy" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="bottom" constant="15" id="2ys-DG-3gB"/>
+                <constraint firstItem="wx7-8d-5Qy" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="bottom" constant="8" symbolic="YES" id="2ys-DG-3gB"/>
                 <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="wx7-8d-5Qy" secondAttribute="trailing" constant="20" id="8FX-87-HVL"/>
                 <constraint firstItem="n7O-T3-bPB" firstAttribute="top" secondItem="s9b-ID-dZG" secondAttribute="bottom" constant="36" id="B3m-u3-TZ7"/>
                 <constraint firstItem="s9b-ID-dZG" firstAttribute="top" secondItem="Lbm-Zq-2cr" secondAttribute="top" id="F9e-cY-DZE"/>
+                <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="p1V-Le-she" secondAttribute="bottom" id="GOj-Ah-Bgg"/>
                 <constraint firstItem="i67-re-yhX" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="LD4-0t-6ET"/>
                 <constraint firstItem="s9b-ID-dZG" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" id="LTK-Me-XI5"/>
                 <constraint firstItem="wx7-8d-5Qy" firstAttribute="height" secondItem="i67-re-yhX" secondAttribute="height" multiplier="1:4" id="TL6-0r-joC"/>
@@ -67,6 +90,7 @@
                 <constraint firstItem="wx7-8d-5Qy" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="o6g-or-AgD"/>
                 <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="n7O-T3-bPB" secondAttribute="bottom" constant="45" id="qmW-GO-KAq"/>
                 <constraint firstItem="wx7-8d-5Qy" firstAttribute="centerX" secondItem="Lbm-Zq-2cr" secondAttribute="centerX" id="uiw-9Z-uk0"/>
+                <constraint firstItem="p1V-Le-she" firstAttribute="leading" secondItem="i67-re-yhX" secondAttribute="leading" id="yHm-Ad-u8h"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Lbm-Zq-2cr"/>

@@ -13,27 +13,6 @@ protocol Currency {
     var rate: Double { get set }
 }
 
-struct RealTimeRatesResponse: Decodable {
-    let updated: Int
-    let base: String
-    private let rates: [String: Double]
-    
-    var quotes: [Quote] {
-        return rates.map { name, rate in
-            let startIndex = name.index(name.startIndex, offsetBy: base.count)
-            let currency = String(name.suffix(from: startIndex))
-            
-            return Quote(currency: currency, rate: rate)
-        }
-    }
-    
-    enum CodingKeys: String, CodingKey {
-        case updated = "timestamp"
-        case base = "source"
-        case rates = "quotes"
-    }
-}
-
 struct Quote: Currency {
     var currency: String
     var rate: Double

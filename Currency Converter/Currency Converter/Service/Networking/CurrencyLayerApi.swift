@@ -12,7 +12,6 @@ import Foundation
 enum CurrencyLayerApi {
     case live(source: String)
     case historical(date: String)
-    case timeFrame(source: String, currencies: [String], start: String, end: String)
 }
 
 extension CurrencyLayerApi: EndPointType {
@@ -31,7 +30,6 @@ extension CurrencyLayerApi: EndPointType {
         switch self {
         case .live: return "live"
         case .historical: return "historical"
-        case .timeFrame: return "timeframe"
         }
     }
     
@@ -51,16 +49,6 @@ extension CurrencyLayerApi: EndPointType {
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
                                           urlParameters: ["date": date,
-                                                          "access_key": NetworkManager.movieAPIKey])
-            
-        case .timeFrame(let source, let currencies, let start, let end):
-            let currenciesString = currencies.joined(separator: ",")
-            return .requestWithParameters(bodyParameters: nil,
-                                          bodyEncoding: .urlEncoding,
-                                          urlParameters: ["source": source,
-                                                          "currencies": currenciesString,
-                                                          "start_date": start,
-                                                          "end_date": end,
                                                           "access_key": NetworkManager.movieAPIKey])
         }
     }

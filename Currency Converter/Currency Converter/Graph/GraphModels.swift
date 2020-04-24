@@ -16,6 +16,7 @@ enum Graph {
                 case getGraphPeriods
                 case getDefaultConverter
                 case updateConverterCurrency
+                case loadGraphData(base: String, relative: String, start: Int)
             }
         }
         struct Response {
@@ -23,6 +24,7 @@ enum Graph {
                 case graphPeriods([GraphPeriod])
                 case defaultConverter(GraphConverterViewModel)
                 case newConverterCurrency(Currency)
+                case graphData([TimeFrameQuote])
             }
         }
         struct ViewModel {
@@ -30,6 +32,7 @@ enum Graph {
                 case showGraphPeriods([GraphPeriod])
                 case showGraphConverter(_ viewModel: GraphConverterViewModel)
                 case updateConverter(newModel: ChoiceCurrencyViewModel)
+                case showGraphData(_ viewModel: GraphViewModel)
             }
         }
     }
@@ -49,4 +52,15 @@ struct GraphPeriod: Interval {
 struct GraphConverterViewModel {
     let base: ChoiceCurrencyViewModel
     let relative: ChoiceCurrencyViewModel
+}
+
+struct GraphPeriodInterval {
+    let startDate: String
+    let endDate: String
+}
+
+struct GraphViewModel {
+    let labels: [Double]
+    let data: [Double]
+    let dates: [String]
 }

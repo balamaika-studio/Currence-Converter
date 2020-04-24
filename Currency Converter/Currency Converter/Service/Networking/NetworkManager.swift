@@ -15,24 +15,35 @@ public typealias RouterCompletionData = (
 )
 
 struct NetworkManager {
-    let router = Router<CurrencyLayerApi>()
+    let currencyLayeRouter = Router<CurrencyLayerApi>()
+    let exchangeRatesRouter = Router<ExchangeRatesApi>()
     private let baseCurrency = "EUR"
     static let movieAPIKey = "816f75b418e0a37e105feaabd5585cc3"
     
-    func getQuotes(completion: @escaping (_ response: RealTimeRatesResponse?, _ error: String?) -> Void) {
-        router.request(.live(source: baseCurrency)) { data, response, error in
-            self.build(RealTimeRatesResponse.self,
+    func getQuotes(completion: @escaping (_ response: CurrencyLayerResponse?, _ error: String?) -> Void) {
+        currencyLayeRouter.request(.live(source: baseCurrency)) { data, response, error in
+            self.build(CurrencyLayerResponse.self,
                        with: (data, response, error),
                        callback: completion)
         }
     }
     
     func getQuotes(date: String,
-                   completion: @escaping (_ response: RealTimeRatesResponse?,_ error: String?) -> Void) {
-        router.request(.historical(date: date)) { data, response, error in
-            self.build(RealTimeRatesResponse.self,
+                   completion: @escaping (_ response: CurrencyLayerResponse?,_ error: String?) -> Void) {
+        currencyLayeRouter.request(.historical(date: date)) { data, response, error in
+            self.build(CurrencyLayerResponse.self,
                         with: (data, response, error),
                         callback: completion)
+        }
+    }
+    
+    func getQuotes(base: String, currencies: [String], start: String, end: String,
+                   completion: @escaping (_ response: ExchangeRatesResponse?,_ error: String?) -> Void) {
+        exchangeRatesRouter
+            .request(.timeFrame(base: base, currencies: currencies, start: start, end: end)) { data, response, error in
+            self.build(ExchangeRatesResponse.self,
+                       with: (data, response, error),
+                       callback: completion)
         }
     }
     

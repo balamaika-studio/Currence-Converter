@@ -15,6 +15,11 @@ protocol GraphBusinessLogic {
 class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
     var selectedCurrency: Currency?
     var presenter: GraphPresentationLogic?
+    var networkManager: NetworkManager!
+    
+    init() {
+        self.networkManager = NetworkManager()
+    }
     
     func makeRequest(request: Graph.Model.Request.RequestType) {
         switch request {
@@ -29,6 +34,16 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
         case .updateConverterCurrency:
             guard let newCurrency = selectedCurrency else { break }
             presenter?.presentData(response: .newConverterCurrency(newCurrency))
+            
+        case .loadGraphData(let base, let relative, let start):
+            let interval = buildGraphRequestInterval(startInterval: start)
+            networkManager.getQuotes(base: base, currencies: [relative], start: interval.startDate, end: interval.endDate) { response, errorMessage in
+                guard let answer = response?.quotes else {
+                    print(errorMessage)
+                    return
+                }
+                self.presenter?.presentData(response: .graphData(answer.sorted(by: <)))
+            }
         }
         
     }
@@ -37,5 +52,16 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
         let base = ChoiceCurrencyViewModel(currency: "USD", title: "United States Dollar")
         let relative = ChoiceCurrencyViewModel(currency: "EUR", title: "Euro")
         return GraphConverterViewModel(base: base, relative: relative)
+    }
+    
+    private func buildGraphRequestInterval(startInterval: Int) -> GraphPeriodInterval {
+        let startDate = Date(timeIntervalSinceNow: TimeInterval(-startInterval))
+        let endDate = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        
+        let start = dateFormatter.string(from: startDate)
+        let end = dateFormatter.string(from: endDate)
+        return GraphPeriodInterval(startDate: start, endDate: end)
     }
 }
