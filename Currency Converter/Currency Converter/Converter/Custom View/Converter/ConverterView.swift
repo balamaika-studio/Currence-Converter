@@ -64,7 +64,7 @@ class ConverterView: UIView {
         bottomCurrency.delegate = self
     }
     
-    func justUpdate(_ viewModel: ConverterViewModel) {
+    func updateWith(_ viewModel: ConverterViewModel) {
         configureConverterCurrencies(viewModel)
         let total = Double(topCurrency.countTextField.text ?? "0") ?? 0
         convert(exchangeView: topCurrency, total: total)
@@ -79,8 +79,7 @@ class ConverterView: UIView {
 
 extension ConverterView: ExchangeViewDeleagte {
     func convert(exchangeView sender: ExchangeView, total: Double) {
-        // TODO: Calculation accuracy
-        let converterResult = round(total * sender.viewModel.exchangeRate * pow(10, 4)) / pow(10, 4)
+        let converterResult = AccuracyManager.shared.formatNumber(total * sender.viewModel.exchangeRate)
         let activeCurrency = topCurrency.isEqual(sender) ? bottomCurrency : topCurrency
         activeCurrency?.countTextField.text = "\(converterResult)"
     }

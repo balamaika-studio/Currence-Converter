@@ -38,7 +38,7 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
             let change = calculateChange(exchangeRate: exchangeRate,
                                          historical: historical)
             let rate = base.rate / relative.rate
-            let roundedRate = round(rate * pow(10, 4)) / pow(10, 4)
+            let roundedRate = AccuracyManager.shared.formatNumber(rate)
             
             let viewModel = CurrencyRatesViewModel(relation: relation,
                                                    change: change,

@@ -14,6 +14,14 @@ class SettingsTableViewCell: UITableViewCell {
     var autoUpdateChanged: ((Bool) -> Void)?
     var clearFieldChnaged: ((Bool) -> Void)?
     
+    var switchState: SwitchState? {
+        didSet {
+            guard let state = switchState else { return }
+            switchControl.isOn = state.rawValue
+            handleSwitchAction(sender: switchControl)
+        }
+    }
+    
     var sectionType: SectionCellType? {
         didSet {
             guard let sectionType = sectionType else { return }
@@ -27,10 +35,10 @@ class SettingsTableViewCell: UITableViewCell {
         let switchControl = UISwitch()
         switchControl.translatesAutoresizingMaskIntoConstraints = false
         switchControl.onTintColor = #colorLiteral(red: 0.3647058824, green: 0.5647058824, blue: 0.9921568627, alpha: 1)
-        switchControl.isOn = true
         switchControl.addTarget(self,
                                 action: #selector(handleSwitchAction(sender:)),
                                 for: .valueChanged)
+        switchControl.isOn = false
         return switchControl
     }()
     
@@ -60,14 +68,14 @@ class SettingsTableViewCell: UITableViewCell {
 
     @objc private func handleSwitchAction(sender: UISwitch) {
         var result = String()
-        let testEnum = TestEnum(rawValue: sender.isOn)
-        guard let test = testEnum?.description else { return }
+        let switchState = SwitchState(rawValue: sender.isOn)
+        guard let switchText = switchState?.description else { return }
         
         if let network = sectionType as? NetworkOptions {
-            result = "\(network) \(test)"
+            result = "\(network) \(switchText)"
             autoUpdateChanged?(sender.isOn)
         } else if let _ = sectionType as? AppearanceOptions {
-            result = test.capitalized
+            result = switchText.capitalized
             clearFieldChnaged?(sender.isOn)
         }
         detailTextLabel?.text = result
@@ -78,34 +86,5 @@ extension SettingsTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         textLabel?.textColor = theme.textColor
         detailTextLabel?.textColor = theme.subtitleColor
-    }
-}
-
-enum TestEnum {
-    case on
-    case off
-}
-
-extension TestEnum: RawRepresentable {
-    typealias RawValue = Bool
-    
-    var rawValue: RawValue {
-        switch self {
-        case .on: return true
-        case .off: return false
-        }
-    }
-    
-    init?(rawValue: RawValue) {
-        self = rawValue == true ? .on : .off
-    }
-}
-
-extension TestEnum: CustomStringConvertible {
-    var description: String {
-        switch self {
-        case .on: return "включено"
-        case .off: return "отключено"
-        }
     }
 }

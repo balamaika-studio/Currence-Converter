@@ -41,7 +41,11 @@
 		D115608C244A1DA1000EB5E9 /* RelativeExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */; };
 		D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */; };
 		D1156092244A4376000EB5E9 /* PeriodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1156091244A4376000EB5E9 /* PeriodService.swift */; };
+		D11F8BB32452345E0074D293 /* SettingsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB22452345E0074D293 /* SettingsTableViewDataSource.swift */; };
+		D11F8BB5245237980074D293 /* SwitchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB4245237980074D293 /* SwitchState.swift */; };
+		D11F8BB8245239730074D293 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB7245239730074D293 /* Accuracy.swift */; };
 		D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */; };
+		D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12E04EC245311DB005B68A4 /* AccuracyManager.swift */; };
 		D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */; };
 		D163AFE2244E312800014800 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDB244E312800014800 /* SettingsPresenter.swift */; };
 		D163AFE3244E312800014800 /* SettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDC244E312800014800 /* SettingsWorker.swift */; };
@@ -178,7 +182,11 @@
 		D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeExchangeView.swift; sourceTree = "<group>"; };
 		D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelativeExchangeView.xib; sourceTree = "<group>"; };
 		D1156091244A4376000EB5E9 /* PeriodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodService.swift; sourceTree = "<group>"; };
+		D11F8BB22452345E0074D293 /* SettingsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewDataSource.swift; sourceTree = "<group>"; };
+		D11F8BB4245237980074D293 /* SwitchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchState.swift; sourceTree = "<group>"; };
+		D11F8BB7245239730074D293 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
 		D120C9E9242B4D3E00E6D78B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		D12E04EC245311DB005B68A4 /* AccuracyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyManager.swift; sourceTree = "<group>"; };
 		D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairViewModel.swift; sourceTree = "<group>"; };
 		D163AFDB244E312800014800 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		D163AFDC244E312800014800 /* SettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWorker.swift; sourceTree = "<group>"; };
@@ -433,6 +441,14 @@
 			path = "Relative Exchange View";
 			sourceTree = "<group>";
 		};
+		D11F8BB6245239550074D293 /* PickerOptions */ = {
+			isa = PBXGroup;
+			children = (
+				D11F8BB7245239730074D293 /* Accuracy.swift */,
+			);
+			path = PickerOptions;
+			sourceTree = "<group>";
+		};
 		D1218DE6242CF404008D3449 /* Favorite */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +484,7 @@
 				D163AFDE244E312800014800 /* SettingsModels.swift */,
 				D163AFDD244E312800014800 /* SettingsRouter.swift */,
 				D163AFE1244E312800014800 /* SettingsViewController.xib */,
+				D11F8BB22452345E0074D293 /* SettingsTableViewDataSource.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -475,8 +492,10 @@
 		D163AFEA244E322100014800 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D11F8BB4245237980074D293 /* SwitchState.swift */,
 				D163AFEB244E325200014800 /* SettingsSection.swift */,
 				D163AFED244E33A800014800 /* SectionOptions */,
+				D11F8BB6245239550074D293 /* PickerOptions */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -555,6 +574,7 @@
 				D1DC8E862434AA22008FCE50 /* Networking */,
 				D1156091244A4376000EB5E9 /* PeriodService.swift */,
 				D188555324362ACC00476EB3 /* CurrenciesInfoService.swift */,
+				D12E04EC245311DB005B68A4 /* AccuracyManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -937,6 +957,7 @@
 				D1DDE950243F4AD30023E789 /* CurrencySelectionModels.swift in Sources */,
 				D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */,
 				D1E1A76B2449F6220051E51D /* PeriodCollectionViewCell.swift in Sources */,
+				D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */,
 				D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */,
 				D188554E2436085F00476EB3 /* StorageContext.swift in Sources */,
 				D1E1A7632449F5240051E51D /* GraphModels.swift in Sources */,
@@ -986,9 +1007,11 @@
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				D19A9377242CFF6E00DDCEA9 /* FavoriteTableViewCell.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,
+				D11F8BB8245239730074D293 /* Accuracy.swift in Sources */,
 				D1CEB84124238E9F00988B53 /* Quote.swift in Sources */,
 				D18855522436090900476EB3 /* RealmStorageContext+Operations.swift in Sources */,
 				D19A936E242CF64000DDCEA9 /* FavoriteWorker.swift in Sources */,
+				D11F8BB32452345E0074D293 /* SettingsTableViewDataSource.swift in Sources */,
 				D1DDE94E243F4AD30023E789 /* CurrencySelectionWorker.swift in Sources */,
 				D163AFE3244E312800014800 /* SettingsWorker.swift in Sources */,
 				D1DDE94F243F4AD30023E789 /* CurrencySelectionRouter.swift in Sources */,
@@ -1013,6 +1036,7 @@
 				5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */,
 				595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */,
 				D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */,
+				D11F8BB5245237980074D293 /* SwitchState.swift in Sources */,
 				D163AFE6244E312800014800 /* SettingsViewController.swift in Sources */,
 				D1DDE959243F61490023E789 /* CurrencyPairTableViewCell.swift in Sources */,
 				D1E4ED212451F0A400ECE03F /* AppFieldClearManager.swift in Sources */,

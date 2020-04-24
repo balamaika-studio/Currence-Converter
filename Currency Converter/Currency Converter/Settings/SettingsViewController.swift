@@ -14,9 +14,18 @@ protocol SettingsDisplayLogic: class {
 
 class SettingsViewController: UIViewController, SettingsDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var hiddenTextField: UITextField!
     
     var interactor: SettingsBusinessLogic?
     var router: (NSObjectProtocol & SettingsRoutingLogic)?
+    
+    var themePickerView: UIPickerView!
+    var blurView: UIVisualEffectView!
+    var vibrancyView: UIVisualEffectView!
+    var tableViewDataSource: UITableViewDataSource!
+    
+    var selectedCell: UITableViewCell?
+    var selectedAccuracy: Accuracy?
     
     // MARK: Object lifecycle
     
@@ -43,18 +52,77 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         presenter.viewController  = viewController
         router.viewController     = viewController
     }
-    
-    // MARK: Routing
-    
-    
-    
+
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Настройки"
+        createPickerView()
+        setupTableView()
+        setUpTheming()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        createVisualEffects()
+    }
+    
+    func displayData(viewModel: Settings.Model.ViewModel.ViewModelData) {
+        
+    }
+    
+    // MARK: - Private Methods
+    private func createPickerView() {
+        themePickerView = UIPickerView()
+        themePickerView.delegate = self
+        themePickerView.dataSource = self
+
+        let toolBar = UIToolbar()
+        toolBar.barStyle = .default
+        toolBar.tintColor = .systemBlue
+        toolBar.isUserInteractionEnabled = true
+        toolBar.sizeToFit()
+        
+        let doneButton = UIBarButtonItem(title: "Done",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(self.donePicker))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let closeButton = UIBarButtonItem(title: "Close",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(self.closePicker))
+        toolBar.setItems([doneButton, spaceButton, closeButton], animated: true)
+
+        hiddenTextField.inputView = themePickerView
+        hiddenTextField.inputAccessoryView = toolBar
+    }
+    
+    @objc func donePicker() {
+        let selectedRow = themePickerView.selectedRow(inComponent: 0)
+        selectedAccuracy = Accuracy(rawValue: selectedRow + 1)
+        selectedCell?.detailTextLabel?.text = selectedAccuracy?.description
+        
+        let newAccurancy = selectedAccuracy != nil ? selectedAccuracy! : Accuracy.defaultAccurancy
+        AccuracyManager.shared.accurancy = newAccurancy.rawValue
+
+        // TODO: Сделать пикер для theme Manager, покрасить все
+        // TODO: Добавить отрисовку графика
+        
+        hiddenTextField.resignFirstResponder()
+        removeBlure()
+    }
+    
+    @objc func closePicker() {
+        hiddenTextField.resignFirstResponder()
+        removeBlure()
+    }
+    
+    private func setupTableView() {
+        tableViewDataSource = SettingsTableViewDataSource()
         tableView.delegate = self
-        tableView.dataSource = self
+        tableView.dataSource = tableViewDataSource
         tableView.sectionHeaderHeight = 40
         tableView.rowHeight = 60
         tableView.sectionFooterHeight = 0.5
@@ -63,21 +131,38 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
                            forHeaderFooterViewReuseIdentifier: SettingsTableViewHeader.reuseId)
         tableView.register(SettingsTableViewCell.self,
                            forCellReuseIdentifier: SettingsTableViewCell.cellId)
-        setUpTheming()
     }
     
-    func displayData(viewModel: Settings.Model.ViewModel.ViewModelData) {
-        
+    private func createVisualEffects() {
+        let blurEffect = UIBlurEffect(style: .dark)
+        blurView = UIVisualEffectView(effect: blurEffect)
+        blurView.alpha = 0.8
+        blurView.frame = view.frame
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
+        vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blurEffect))
+        vibrancyView.frame = blurView.frame
+        vibrancyView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
-    // MARK: - Private Methods
-    private func autoUpdate(_ state: Bool) {
-        UserDefaults.standard.set(state, forKey: "autoUpdate")
+    private func addBlure() {
+        UIView.animate(withDuration: 0.5) {
+            self.view.addSubview(self.blurView)
+            self.blurView.contentView.addSubview(self.vibrancyView)
+        }
     }
     
-    private func clearField(_ state: Bool) {
-        AppFieldClearManager.shared.isClear = state
-        UserDefaults.standard.set(state, forKey: "clearField")
+    private func removeBlure() {
+        UIView.animate(withDuration: 0.5) {
+            self.vibrancyView.removeFromSuperview()
+            self.blurView.removeFromSuperview()
+        }
+    }
+    
+    private func chooseAccuracyTapped(cell: UITableViewCell) {
+        addBlure()
+        hiddenTextField.becomeFirstResponder()
+        selectedCell = cell
     }
 }
 
@@ -87,19 +172,8 @@ extension SettingsViewController: Themed {
     }
 }
 
-extension SettingsViewController: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return SettingsSection.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let section = SettingsSection(rawValue: section) else { return 0 }
-        switch section {
-        case .network: return NetworkOptions.allCases.count
-        case .appearance: return AppearanceOptions.allCases.count
-        }
-    }
-    
+// MARK: - UITableViewDelegate
+extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let reuseId = SettingsTableViewHeader.reuseId
         guard
@@ -110,36 +184,6 @@ extension SettingsViewController: UITableViewDataSource {
         return header
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellId = SettingsTableViewCell.cellId
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
-                                                     for: indexPath) as? SettingsTableViewCell,
-            let section = SettingsSection(rawValue: indexPath.section) else {
-                return UITableViewCell()
-        }
-        
-        switch section {
-        case .network:
-            let network = NetworkOptions(rawValue: indexPath.row)
-            cell.sectionType = network
-            cell.autoUpdateChanged = self.autoUpdate
-            cell.selectionStyle = .none
-            cell.switchControl.isOn = UserDefaults.standard.bool(forKey: "autoUpdate")
-            
-        case .appearance:
-            guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
-            switch appearance {
-            case .clearField:
-                cell.selectionStyle = .none
-                cell.clearFieldChnaged = self.clearField
-                cell.switchControl.isOn = AppFieldClearManager.shared.isClear
-            default: break
-            }
-            cell.sectionType = appearance
-        }
-        return cell
-    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let separatorFrame = CGRect(x: 0, y: 0,
@@ -149,21 +193,39 @@ extension SettingsViewController: UITableViewDataSource {
         separator.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
         return separator
     }
-}
-
-extension SettingsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let section = SettingsSection(rawValue: indexPath.section) else { return }
+        guard
+            let section = SettingsSection(rawValue: indexPath.section),
+            let selectedCell = tableView.cellForRow(at: indexPath) else { return }
         switch section {
         case .appearance:
             guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
             switch appearance {
-            case .accuracy: print("Open accuracy")
+            case .accuracy: chooseAccuracyTapped(cell: selectedCell)
             case .theme: themeProvider.currentTheme = .dark
             default: break
             }
             
         default: break
         }
+    }
+}
+
+// MARK: - UIPickerViewDataSource
+extension SettingsViewController: UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return Accuracy.allCases.count
+    }
+}
+
+// MARK: - UIPickerViewDelegate
+extension SettingsViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return Accuracy(rawValue: row + 1)?.description
     }
 }

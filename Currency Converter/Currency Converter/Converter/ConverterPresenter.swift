@@ -50,7 +50,7 @@ class ConverterPresenter: ConverterPresentationLogic {
                 
         favorite.forEach { currency in
             let rate = currency.rate / baseCurrency.rate
-            let roundedRate = round(rate * pow(10, 4)) / pow(10, 4)
+            let roundedRate = AccuracyManager.shared.formatNumber(rate)
             let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
             let stringRate = "\(roundedRate) \(symbol)"
                         
@@ -67,23 +67,23 @@ class ConverterPresenter: ConverterPresentationLogic {
     }
     
     private func buildConverterViewModel(_ first: Currency, _ second: Currency) -> ConverterViewModel {
-        let aRate = Double(first.rate)
-        let bRate = Double(second.rate)
+        let firstRate = Double(first.rate)
+        let secondRate = Double(second.rate)
         
-        let x = round(bRate / aRate * pow(10, 4)) / pow(10, 4)
-        let y = round(aRate / bRate * pow(10, 4)) / pow(10, 4)
+        let firstExchangeRate = AccuracyManager.shared.formatNumber(secondRate / firstRate)
+        let secondExchangeRate = AccuracyManager.shared.formatNumber(firstRate / secondRate)
         
         let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? "Error"
         let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? "Error"
         
         let firstExchange = Exchange(currency: first.currency,
-                             rate: aRate,
-                             exchangeRate: x,
-                             regardingRate: "\(aSymbol)1=\(bSymbol)\(x)")
+                             rate: firstRate,
+                             exchangeRate: firstExchangeRate,
+                             regardingRate: "\(aSymbol)1=\(bSymbol)\(firstExchangeRate)")
         let secondExchange = Exchange(currency: second.currency,
-                              rate: bRate,
-                              exchangeRate: y,
-                              regardingRate: "\(bSymbol)1=\(aSymbol)\(y)")
+                              rate: secondRate,
+                              exchangeRate: secondExchangeRate,
+                              regardingRate: "\(bSymbol)1=\(aSymbol)\(secondExchangeRate)")
         
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         let updatedTitle = buildUpdatedTitle(from: timestamp)
