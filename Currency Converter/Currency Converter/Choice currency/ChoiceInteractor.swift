@@ -32,15 +32,26 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
     func makeRequest(request: Choice.Model.Request.RequestType) {
         
         switch request {
-        case .loadCurrencies:
+        case .loadCurrencies(let isGraphCurrencies):
             storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-                self.currencies = currencies
+                self.currencies = isGraphCurrencies == true ?
+                    filterGraphCurrencies(from: currencies) :
+                    currencies
+                
                 let currenciesInfo = CurrenciesInfoService.shared.fetch()
-                self.presenter?.presentData(response: .currencies(currencies, currenciesInfo))
+                self.presenter?.presentData(response: .currencies(self.currencies,
+                                                                  currenciesInfo))
             }
             
         case .chooseCurrency(let viewModel):
             selectedCurrency = currencies.first { $0.currency == viewModel.currency }
+        }
+    }
+    
+    private func filterGraphCurrencies(from currencies: [Currency]) -> [Currency] {
+        let graphCurrencies = CurrenciesInfoService.shared.getGraphSupportedCurrencies()
+        return currencies.filter { currency in
+            graphCurrencies.contains { $0.currency == currency.currency }
         }
     }
     

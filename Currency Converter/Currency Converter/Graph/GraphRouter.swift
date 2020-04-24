@@ -23,6 +23,7 @@ class GraphRouter: ChoiceDataPassing {
             else { fatalError("Graph fail route") }
         
         let choiceVc = ChoiceViewController(nib: R.nib.choiceViewController)
+        choiceVc.isShowGraphCurrencies = true
         present(source: viewController, destination: choiceVc)
     }
 }

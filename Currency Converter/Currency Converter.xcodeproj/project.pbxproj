@@ -697,9 +697,9 @@
 		D1E1A7672449F5E40051E51D /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
+				D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */,
 				D115608A244A1D78000EB5E9 /* Relative Exchange View */,
 				D1E1A7682449F5F30051E51D /* Period Collection View Cell */,
-				D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */,
 			);
 			path = "Custom View";
 			sourceTree = "<group>";

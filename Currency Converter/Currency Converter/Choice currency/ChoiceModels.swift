@@ -13,13 +13,13 @@ enum Choice {
     enum Model {
         struct Request {
             enum RequestType {
-                case loadCurrencies
+                case loadCurrencies(forGraph: Bool = false)
                 case chooseCurrency(viewModel: ChoiceCurrencyViewModel)
             }
         }
         struct Response {
             enum ResponseType {
-                case currencies([RealmCurrency], [CurrencyInfo])
+                case currencies([Currency], [CurrencyInfo])
             }
         }
         struct ViewModel {

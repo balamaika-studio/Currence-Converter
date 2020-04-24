@@ -11,8 +11,15 @@ import Foundation
 class CurrenciesInfoService {
     static let shared = CurrenciesInfoService()
     
-    private init() { }
     private var currencyInfo: [CurrencyInfo]!
+    private let graphSupportedSymbols = [
+        "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK", "GBP", "RON",
+        "SEK", "IDR", "INR", "BRL", "RUB", "HRK", "JPY", "THB", "CHF",
+        "EUR", "MYR", "BGN", "TRY", "CNY", "NOK", "NZD", "ZAR", "USD",
+        "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
+    ]
+    
+    private init() { }
     
     /// load data from json
     func fetch() -> [CurrencyInfo] {
@@ -27,5 +34,9 @@ class CurrenciesInfoService {
     
     func getInfo(by currency: Currency) -> CurrencyInfo? {
         return currencyInfo.first { $0.abbreviation == currency.currency }
+    }
+    
+    func getGraphSupportedCurrencies() -> [Currency] {
+        return graphSupportedSymbols.map { Quote(currency: $0, rate: 0) }
     }
 }

@@ -13,14 +13,13 @@ protocol ChoiceDisplayLogic: class {
 }
 
 class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
-    
-    
     @IBOutlet weak var tableView: UITableView!
     
     var interactor: ChoiceBusinessLogic?
     var router: ChoiceRoutingLogic?
     
-    var currencies: [ChoiceCurrencyViewModel]!
+    var isShowGraphCurrencies = false
+    private var currencies: [ChoiceCurrencyViewModel]!
     
     // MARK: Object lifecycle
     
@@ -50,20 +49,20 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     }
     
     // MARK: Routing
-    
-    
+    @IBAction func doneTapped(_ sender: UIButton) {
+        router?.closeChoiceViewController()
+    }
     
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(R.nib.choiceCurrencyTableViewCell)
-        tableView.separatorStyle = .none
-        currencies = []
-        interactor?.makeRequest(request: .loadCurrencies)
-        
+        setupView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies))
     }
     
     func displayData(viewModel: Choice.Model.ViewModel.ViewModelData) {
@@ -74,8 +73,12 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         }
     }
     
-    @IBAction func doneTapped(_ sender: UIButton) {
-        router?.closeChoiceViewController()
+    private func setupView() {
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(R.nib.choiceCurrencyTableViewCell)
+        tableView.separatorStyle = .none
+        currencies = []
     }
     
 }
