@@ -17,6 +17,11 @@ class SettingsTableViewDataSource: NSObject {
         AppFieldClearManager.shared.isClear = state
         UserDefaults.standard.set(state, forKey: "clearField")
     }
+    
+    private func updateTheme(_ state: Bool) {        
+        let newTheme = state == true ? AppTheme.dark : AppTheme.light
+        AppThemeManager.shared.currentTheme = newTheme
+    }
 }
 
 extension SettingsTableViewDataSource: UITableViewDataSource {
@@ -64,7 +69,12 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
             case .accuracy:
                 let accuracy = Accuracy(rawValue: AccuracyManager.shared.accurancy)
                 cell.detailTextLabel?.text = accuracy?.description
-            default: break
+                
+            case .theme:
+                let switchState = AppThemeManager.shared.currentTheme == .dark ? true : false
+                cell.themeChanged = self.updateTheme
+                cell.selectionStyle = .none
+                cell.switchState = SwitchState(rawValue: switchState)
             }
         }
         

@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     var interactor: SettingsBusinessLogic?
     var router: (NSObjectProtocol & SettingsRoutingLogic)?
     
-    var themePickerView: UIPickerView!
+    var accuracyPicker: UIPickerView!
     var blurView: UIVisualEffectView!
     var vibrancyView: UIVisualEffectView!
     var tableViewDataSource: UITableViewDataSource!
@@ -74,9 +74,9 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     // MARK: - Private Methods
     private func createPickerView() {
-        themePickerView = UIPickerView()
-        themePickerView.delegate = self
-        themePickerView.dataSource = self
+        accuracyPicker = UIPickerView()
+        accuracyPicker.delegate = self
+        accuracyPicker.dataSource = self
 
         let toolBar = UIToolbar()
         toolBar.barStyle = .default
@@ -95,12 +95,12 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
                                          action: #selector(self.closePicker))
         toolBar.setItems([doneButton, spaceButton, closeButton], animated: true)
 
-        hiddenTextField.inputView = themePickerView
+        hiddenTextField.inputView = accuracyPicker
         hiddenTextField.inputAccessoryView = toolBar
     }
     
     @objc func donePicker() {
-        let selectedRow = themePickerView.selectedRow(inComponent: 0)
+        let selectedRow = accuracyPicker.selectedRow(inComponent: 0)
         selectedAccuracy = Accuracy(rawValue: selectedRow + 1)
         selectedCell?.detailTextLabel?.text = selectedAccuracy?.description
         
@@ -160,9 +160,9 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     }
     
     private func chooseAccuracyTapped(cell: UITableViewCell) {
+        selectedCell = cell
         addBlure()
         hiddenTextField.becomeFirstResponder()
-        selectedCell = cell
     }
 }
 
@@ -203,7 +203,6 @@ extension SettingsViewController: UITableViewDelegate {
             guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
             switch appearance {
             case .accuracy: chooseAccuracyTapped(cell: selectedCell)
-            case .theme: themeProvider.currentTheme = .dark
             default: break
             }
             

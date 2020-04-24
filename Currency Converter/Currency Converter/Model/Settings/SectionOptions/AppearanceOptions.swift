@@ -18,7 +18,7 @@ extension AppearanceOptions: SectionCellType {
         switch self {
         case .accuracy: return "2 десятичных знака"
         case .clearField: return "Включено"
-        case .theme: return "Светлая"
+        case .theme: return "Отключено"
         }
     }
     
@@ -26,7 +26,7 @@ extension AppearanceOptions: SectionCellType {
         switch self {
         case .accuracy: return false
         case .clearField: return true
-        case .theme: return false
+        case .theme: return true
         }
     }
     
@@ -34,7 +34,7 @@ extension AppearanceOptions: SectionCellType {
         switch self {
         case .accuracy: return "Десятичные знаки"
         case .clearField: return "Очищать сумму при наборе"
-        case .theme: return "Тема"
+        case .theme: return "Включить темную тему"
         }
     }
 }

@@ -13,6 +13,7 @@ class SettingsTableViewCell: UITableViewCell {
     
     var autoUpdateChanged: ((Bool) -> Void)?
     var clearFieldChnaged: ((Bool) -> Void)?
+    var themeChanged: ((Bool) -> Void)?
     
     var switchState: SwitchState? {
         didSet {
@@ -74,10 +75,17 @@ class SettingsTableViewCell: UITableViewCell {
         if let network = sectionType as? NetworkOptions {
             result = "\(network) \(switchText)"
             autoUpdateChanged?(sender.isOn)
-        } else if let _ = sectionType as? AppearanceOptions {
+        } else if let appearanceOptions = sectionType as? AppearanceOptions {
             result = switchText.capitalized
-            clearFieldChnaged?(sender.isOn)
+            switch appearanceOptions {
+            case .clearField: clearFieldChnaged?(sender.isOn)
+            case .theme: themeChanged?(sender.isOn)
+                
+            default: break
+            }
         }
+        
+        
         detailTextLabel?.text = result
     }
 }
