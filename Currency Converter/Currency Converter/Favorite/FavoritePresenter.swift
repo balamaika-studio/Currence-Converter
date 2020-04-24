@@ -44,9 +44,9 @@ class FavoritePresenter: FavoritePresentationLogic {
             let index = quotes.firstIndex(of: viewModel)!
             quotes[index].isSelected = isSelected
             
-            if filteredQuotes != nil {
-                let filterIndex = filteredQuotes!.firstIndex(of: viewModel)!
-                filteredQuotes![filterIndex].isSelected = isSelected
+            if let filteredQuotes = filteredQuotes, !filteredQuotes.isEmpty {
+                let filterIndex = filteredQuotes.firstIndex(of: viewModel)!
+                self.filteredQuotes![filterIndex].isSelected = isSelected
             }
             
             let result = filteredQuotes == nil ? quotes : filteredQuotes
@@ -56,7 +56,6 @@ class FavoritePresenter: FavoritePresentationLogic {
             let filteredQuotes = title.isEmpty ? quotes : quotes.filter { quote in
                 quote.title.lowercased().contains(title.lowercased())
             }
-            
             self.filteredQuotes = filteredQuotes
             viewController?.displayData(viewModel: .showCurrencies(filteredQuotes ?? []))
         }

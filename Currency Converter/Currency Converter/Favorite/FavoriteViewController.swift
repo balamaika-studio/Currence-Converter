@@ -75,6 +75,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchBar.text = String()
+        searchBar(self.searchBar, textDidChange: String())
     }
     
     func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData) {
