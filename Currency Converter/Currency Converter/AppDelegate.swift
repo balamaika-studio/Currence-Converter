@@ -14,8 +14,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        restoreAccuracySettings()
+        
         return true
+    }
+    
+    private func restoreAccuracySettings() {
+        guard let _ = UserDefaults.standard.value(forKey: "accuracy") else {
+            AccuracyManager.shared.accurancy = Accuracy.defaultAccurancy.rawValue
+            return
+        }
     }
 
     // MARK: UISceneSession Lifecycle

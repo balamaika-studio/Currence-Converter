@@ -36,7 +36,6 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     func makeRequest(request: Converter.Model.Request.RequestType) {
         switch request {
-        // TODO: - Pass Quote Model
         case .changeCurrency(let currencyName):
             guard let newCurrency = selectedCurrency else { break }
             
@@ -91,7 +90,6 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
     
     private func loadHistoricalQuotes() {
-        // TODO: - Replace in Service (There is another dateFormatter in Converter Presenter)
         let dayInSec = 86400
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         var date = Date(timeIntervalSince1970: TimeInterval(timestamp))
@@ -100,13 +98,9 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let stringDate = dateFormatter.string(from: date)
-        
-        print(stringDate)
-        
+
         networkManager.getQuotes(date: stringDate) { response, errorMessageerrorMessage in
             guard let quotes = response?.quotes else { return }
-            // TODO: - It saves quotes each time!!!
-            
             self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ?
                     self.createQuotes(quotes, in: self.historicalStorage) :

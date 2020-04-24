@@ -63,30 +63,18 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
-        
-        
-        let strokeTextAttributes: [NSAttributedString.Key: Any] = [
-            .strokeColor : UIColor.black,
-            .foregroundColor : UIColor.white,
-            .strokeWidth : -2.0,
-            .font : UIFont.boldSystemFont(ofSize: 18)
-        ]
         tableView.refreshControl = refreshControl
+        
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
-        refreshControl.attributedTitle = NSAttributedString(string: "Fetching Data...",
-                                                            attributes: strokeTextAttributes)
-
         refreshControl.addTarget(self,
                                  action: #selector(refreshCurrencies),
                                  for: .valueChanged)
 
         
-        converterView.changeCurrencyTapped = self.didTap
+        converterView.changeCurrencyTapped = self.changeCurrencyTapped
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
-        
+
         favoriteCurrencies = []
-        
-        interactor?.makeRequest(request: .loadConverterCurrencies)
     }
     
     @objc private func refreshCurrencies(_ sender: Any) {
@@ -96,13 +84,14 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
-            converterView.justUpdate(converterViewModel)
+            converterView.updateWith(converterViewModel)
             refreshControl.endRefreshing()
             
         case .showFavoriteViewModel(let favoriteViewModel):
@@ -118,7 +107,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     // MARK: Private Methods
-    func didTap(exchangeView: ExchangeView) {
+    func changeCurrencyTapped(exchangeView: ExchangeView) {
         router?.showChoiceViewController()
     }
     

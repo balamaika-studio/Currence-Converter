@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController">
+            <connections>
+                <outlet property="hiddenTextField" destination="G31-7E-Rru" id="GfM-qh-3xw"/>
+                <outlet property="tableView" destination="AbT-E2-HIe" id="t8E-hG-aMp"/>
+                <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G31-7E-Rru">
+                    <rect key="frame" x="144" y="267" width="32" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="AbT-E2-HIe">
+                    <rect key="frame" x="0.0" y="16" width="320" height="552"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="AbT-E2-HIe" firstAttribute="leading" secondItem="fCu-QO-Few" secondAttribute="leading" id="9eX-0V-6xu"/>
+                <constraint firstItem="fCu-QO-Few" firstAttribute="bottom" secondItem="AbT-E2-HIe" secondAttribute="bottom" id="Nt6-FK-0Jd"/>
+                <constraint firstItem="G31-7E-Rru" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Ql5-eX-s9M"/>
+                <constraint firstItem="AbT-E2-HIe" firstAttribute="top" secondItem="fCu-QO-Few" secondAttribute="top" constant="16" id="cLO-xj-5qt"/>
+                <constraint firstItem="fCu-QO-Few" firstAttribute="trailing" secondItem="AbT-E2-HIe" secondAttribute="trailing" id="jlq-SM-Ol0"/>
+                <constraint firstItem="G31-7E-Rru" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="mvy-8Z-Sfx"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fCu-QO-Few"/>
+            <point key="canvasLocation" x="462" y="399"/>
+        </view>
+    </objects>
+</document>
