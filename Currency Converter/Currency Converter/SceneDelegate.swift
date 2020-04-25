@@ -22,43 +22,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         storage = try! RealmStorageContext()
         networkManager = NetworkManager()
         
-        let tabBarViewController = AppTabBarController()
+        let tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
         
-        let converterViewController = R.storyboard.converter.instantiateInitialViewController()!
-        converterViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
-        
-        // Favorite
-        let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
-        
-        let navigationController = AppNavigationController(rootViewController: favoriteViewController)
-        navigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        
-        
-        // Exchanges
-        let exchangeRatesViewController = ExchangeRatesViewController(nib: R.nib.exchangeRatesViewController)
-        
-        let navigationController2 = AppNavigationController(rootViewController: exchangeRatesViewController)
-        navigationController2.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 2)
-        
-        
-        // Graph
-        let graphViewController = GraphViewController(nib: R.nib.graphViewController)
-        
-        let navigationController3 = AppNavigationController(rootViewController: graphViewController)
-        navigationController3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
-        
-        
-        // Settings
-        let settingsViewController = SettingsViewController(nib: R.nib.settingsViewController)
-        
-        let navigationController4 = AppNavigationController(rootViewController: settingsViewController)
-        navigationController4.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 4)
+        let converterViewController = AppViewController.converter.viewController
+        let favoriteViewController = AppViewController.favorite.viewController
+        let exchangeRatesViewController = AppViewController.exchangeRates.viewController
+        let graphViewController = AppViewController.graph.viewController
+        let settingsViewController = AppViewController.settings.viewController
         
         tabBarViewController.viewControllers = [converterViewController,
-                                                navigationController,
-                                                navigationController2,
-                                                navigationController3,
-                                                navigationController4]
+                                                favoriteViewController,
+                                                exchangeRatesViewController,
+                                                graphViewController,
+                                                settingsViewController]
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()

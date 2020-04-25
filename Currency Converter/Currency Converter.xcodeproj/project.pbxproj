@@ -20,7 +20,6 @@
 		595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */; };
 		595FC0EC241FABDB00B4EEE4 /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */; };
 		595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E6241FABDB00B4EEE4 /* ConverterInteractor.swift */; };
-		595FC0F0241FAC3600B4EEE4 /* Converter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0EF241FAC3600B4EEE4 /* Converter.storyboard */; };
 		595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0F2241FAD6D00B4EEE4 /* ExchangeView.swift */; };
 		595FC0F5241FAD7F00B4EEE4 /* ExchangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0F4241FAD7F00B4EEE4 /* ExchangeView.xib */; };
 		595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0F8241FBDE700B4EEE4 /* ConverterView.xib */; };
@@ -91,6 +90,8 @@
 		D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92A24543FA600985B9B /* AppTabBarController.swift */; };
 		D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */; };
 		D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */; };
+		D1BBC9312454517200985B9B /* ConverterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1BBC9302454517100985B9B /* ConverterViewController.xib */; };
+		D1BBC933245453F000985B9B /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC932245453F000985B9B /* AppViewController.swift */; };
 		D1CEB84124238E9F00988B53 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB84024238E9F00988B53 /* Quote.swift */; };
 		D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */; };
 		D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */; };
@@ -167,7 +168,6 @@
 		595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterModels.swift; sourceTree = "<group>"; };
 		595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewController.swift; sourceTree = "<group>"; };
 		595FC0E6241FABDB00B4EEE4 /* ConverterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterInteractor.swift; sourceTree = "<group>"; };
-		595FC0EF241FAC3600B4EEE4 /* Converter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Converter.storyboard; sourceTree = "<group>"; };
 		595FC0F2241FAD6D00B4EEE4 /* ExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeView.swift; sourceTree = "<group>"; };
 		595FC0F4241FAD7F00B4EEE4 /* ExchangeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExchangeView.xib; sourceTree = "<group>"; };
 		595FC0F8241FBDE700B4EEE4 /* ConverterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterView.xib; sourceTree = "<group>"; };
@@ -240,6 +240,8 @@
 		D1BBC92A24543FA600985B9B /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
 		D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeCodableExtension.swift; sourceTree = "<group>"; };
+		D1BBC9302454517100985B9B /* ConverterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterViewController.xib; sourceTree = "<group>"; };
+		D1BBC932245453F000985B9B /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		D1CEB84024238E9F00988B53 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesPresenter.swift; sourceTree = "<group>"; };
 		D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesWorker.swift; sourceTree = "<group>"; };
@@ -336,12 +338,12 @@
 				D1BBC92724543ED700985B9B /* Classes */,
 				D1CEB83C2423838800988B53 /* Service */,
 				D1CEB83F24238B8400988B53 /* Model */,
-				D1218DE6242CF404008D3449 /* Favorite */,
-				596811122420E89C00426968 /* Choice currency */,
 				595FC0E0241FABC700B4EEE4 /* Converter */,
-				D1E1A7582449F5060051E51D /* Graph */,
+				D1218DE6242CF404008D3449 /* Favorite */,
 				D1DDE927243F454F0023E789 /* ExchangeRates */,
+				D1E1A7582449F5060051E51D /* Graph */,
 				D163AFDA244E30FE00014800 /* Settings */,
+				596811122420E89C00426968 /* Choice currency */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
 				595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
@@ -371,7 +373,7 @@
 				595FC0E2241FABDB00B4EEE4 /* ConverterWorker.swift */,
 				595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */,
 				595FC0E3241FABDB00B4EEE4 /* ConverterRouter.swift */,
-				595FC0EF241FAC3600B4EEE4 /* Converter.storyboard */,
+				D1BBC9302454517100985B9B /* ConverterViewController.xib */,
 			);
 			path = Converter;
 			sourceTree = "<group>";
@@ -587,6 +589,7 @@
 				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
 				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
 				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
+				D1BBC932245453F000985B9B /* AppViewController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -881,8 +884,8 @@
 				595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */,
 				D19A9373242CF64000DDCEA9 /* FavoriteViewController.xib in Resources */,
 				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
+				D1BBC9312454517200985B9B /* ConverterViewController.xib in Resources */,
 				D1DDE935243F45CB0023E789 /* ExchangeRatesViewController.xib in Resources */,
-				595FC0F0241FAC3600B4EEE4 /* Converter.storyboard in Resources */,
 				D163AFE8244E312800014800 /* SettingsViewController.xib in Resources */,
 				D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */,
 			);
@@ -1020,6 +1023,7 @@
 				595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */,
 				D1DDE943243F4A7C0023E789 /* CurrencyRatesInteractor.swift in Sources */,
 				D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */,
+				D1BBC933245453F000985B9B /* AppViewController.swift in Sources */,
 				595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */,
 				D1DDE955243F57110023E789 /* RealmExchangeRate.swift in Sources */,
 				D1DDE93F243F4A7C0023E789 /* CurrencyRatesWorker.swift in Sources */,

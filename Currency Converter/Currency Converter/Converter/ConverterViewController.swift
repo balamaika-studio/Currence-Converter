@@ -104,6 +104,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     private func setupView() {
+        title = "Конвертер валют"
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
