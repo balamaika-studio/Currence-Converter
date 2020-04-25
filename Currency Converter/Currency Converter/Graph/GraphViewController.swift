@@ -59,6 +59,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setUpTheming()
         interactor?.makeRequest(request: .getGraphPeriods)
         interactor?.makeRequest(request: .getDefaultConverter)
     }
@@ -149,6 +150,14 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         chartValueLabel.text = ""
         chartValueLabel.backgroundColor = .clear
         labelLeadingMarginConstraint.constant = labelLeadingMarginInitialConstant
+    }
+}
+
+extension GraphViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        view.backgroundColor = theme.specificBackgroundColor
+        chartView.labelColor = theme.textColor
+        currenciesRateLabel.textColor = theme.textColor
     }
 }
 

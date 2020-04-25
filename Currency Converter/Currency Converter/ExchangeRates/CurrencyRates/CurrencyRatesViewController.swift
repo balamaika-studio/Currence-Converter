@@ -51,6 +51,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setUpTheming()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,6 +78,13 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
         relatives = []
+    }
+}
+
+extension CurrencyRatesViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        view.backgroundColor = theme.backgroundColor
+        tableView.backgroundColor = .clear
     }
 }
 

@@ -22,7 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         storage = try! RealmStorageContext()
         networkManager = NetworkManager()
         
-        let tabBarViewController = UITabBarController()
+        let tabBarViewController = AppTabBarController()
         
         let converterViewController = R.storyboard.converter.instantiateInitialViewController()!
         converterViewController.tabBarItem = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
@@ -30,28 +30,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Favorite
         let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
         
-        let navigationController = UINavigationController(rootViewController: favoriteViewController)
+        let navigationController = AppNavigationController(rootViewController: favoriteViewController)
         navigationController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
         
         
         // Exchanges
         let exchangeRatesViewController = ExchangeRatesViewController(nib: R.nib.exchangeRatesViewController)
         
-        let navigationController2 = UINavigationController(rootViewController: exchangeRatesViewController)
+        let navigationController2 = AppNavigationController(rootViewController: exchangeRatesViewController)
         navigationController2.tabBarItem = UITabBarItem(tabBarSystemItem: .more, tag: 2)
         
         
         // Graph
         let graphViewController = GraphViewController(nib: R.nib.graphViewController)
         
-        let navigationController3 = UINavigationController(rootViewController: graphViewController)
+        let navigationController3 = AppNavigationController(rootViewController: graphViewController)
         navigationController3.tabBarItem = UITabBarItem(tabBarSystemItem: .downloads, tag: 3)
         
         
         // Settings
         let settingsViewController = SettingsViewController(nib: R.nib.settingsViewController)
         
-        let navigationController4 = UINavigationController(rootViewController: settingsViewController)
+        let navigationController4 = AppNavigationController(rootViewController: settingsViewController)
         navigationController4.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 4)
         
         tabBarViewController.viewControllers = [converterViewController,

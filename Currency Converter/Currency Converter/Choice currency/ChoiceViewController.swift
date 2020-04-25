@@ -14,6 +14,7 @@ protocol ChoiceDisplayLogic: class {
 
 class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var doneButton: UIButton!
     
     var interactor: ChoiceBusinessLogic?
     var router: ChoiceRoutingLogic?
@@ -58,6 +59,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setUpTheming()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +83,13 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         currencies = []
     }
     
+}
+
+extension ChoiceViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        view.backgroundColor = theme.specificBackgroundColor
+        tableView.reloadData()
+    }
 }
 
 extension ChoiceViewController: UITableViewDataSource {

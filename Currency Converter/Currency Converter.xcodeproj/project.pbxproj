@@ -87,6 +87,10 @@
 		D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9385242D146C00DDCEA9 /* URLEncoding.swift */; };
 		D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */; };
 		D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */; };
+		D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */; };
+		D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92A24543FA600985B9B /* AppTabBarController.swift */; };
+		D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */; };
+		D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */; };
 		D1CEB84124238E9F00988B53 /* Quote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1CEB84024238E9F00988B53 /* Quote.swift */; };
 		D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */; };
 		D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */; };
@@ -232,6 +236,10 @@
 		D19A9385242D146C00DDCEA9 /* URLEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoding.swift; sourceTree = "<group>"; };
 		D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
 		D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
+		D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
+		D1BBC92A24543FA600985B9B /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
+		D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
+		D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeCodableExtension.swift; sourceTree = "<group>"; };
 		D1CEB84024238E9F00988B53 /* Quote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quote.swift; sourceTree = "<group>"; };
 		D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesPresenter.swift; sourceTree = "<group>"; };
 		D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesWorker.swift; sourceTree = "<group>"; };
@@ -325,6 +333,7 @@
 		595FC0B8241FA40400B4EEE4 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				D1BBC92724543ED700985B9B /* Classes */,
 				D1CEB83C2423838800988B53 /* Service */,
 				D1CEB83F24238B8400988B53 /* Model */,
 				D1218DE6242CF404008D3449 /* Favorite */,
@@ -572,6 +581,16 @@
 			path = "Custom View";
 			sourceTree = "<group>";
 		};
+		D1BBC92724543ED700985B9B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
+				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
+				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		D1CEB83C2423838800988B53 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -719,6 +738,7 @@
 				D1E4ED112451CD8800ECE03F /* Theming.swift */,
 				D1E4ED132451CD9A00ECE03F /* AppTheme.swift */,
 				D1E4ED152451CDB300ECE03F /* AppThemeManager.swift */,
+				D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */,
 			);
 			path = ThemeManager;
 			sourceTree = "<group>";
@@ -985,10 +1005,12 @@
 				D1DDE933243F45CB0023E789 /* ExchangeRatesViewController.swift in Sources */,
 				D1E4ED0E2451CD3300ECE03F /* Weak.swift in Sources */,
 				5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */,
+				D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */,
 				D1E4ED102451CD5900ECE03F /* SubscribableValue.swift in Sources */,
 				D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */,
 				D19A937C242D0C5200DDCEA9 /* EndPointType.swift in Sources */,
 				D1E4ED232451F88500ECE03F /* FieldClearable.swift in Sources */,
+				D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */,
 				D1E1A7652449F5240051E51D /* GraphInteractor.swift in Sources */,
@@ -1002,6 +1024,7 @@
 				D1DDE955243F57110023E789 /* RealmExchangeRate.swift in Sources */,
 				D1DDE93F243F4A7C0023E789 /* CurrencyRatesWorker.swift in Sources */,
 				D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */,
+				D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */,
 				D19A9382242D119500DDCEA9 /* HTTPTask.swift in Sources */,
 				D1DDE940243F4A7C0023E789 /* CurrencyRatesRouter.swift in Sources */,
 				5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */,
@@ -1045,6 +1068,7 @@
 				D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */,
 				D163AFE4244E312800014800 /* SettingsRouter.swift in Sources */,
 				5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */,
+				D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */,
 				D1E1A7602449F5240051E51D /* GraphPresenter.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,
 				D163AFE7244E312800014800 /* SettingsInteractor.swift in Sources */,

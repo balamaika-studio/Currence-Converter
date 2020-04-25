@@ -60,21 +60,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(R.nib.converterCurrencyTableViewCell)
-        tableView.separatorStyle = .none
-        tableView.dataSource = self
-        tableView.refreshControl = refreshControl
-        
-        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
-        refreshControl.addTarget(self,
-                                 action: #selector(refreshCurrencies),
-                                 for: .valueChanged)
-
-        
-        converterView.changeCurrencyTapped = self.changeCurrencyTapped
-        converterView.swapCurrencyTapped = self.swapCurrencyTapped
-
-        favoriteCurrencies = []
+        setupView()
+        setUpTheming()
     }
     
     @objc private func refreshCurrencies(_ sender: Any) {
@@ -115,6 +102,30 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
+    
+    private func setupView() {
+        tableView.register(R.nib.converterCurrencyTableViewCell)
+        tableView.separatorStyle = .none
+        tableView.dataSource = self
+        tableView.refreshControl = refreshControl
+        
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+        refreshControl.addTarget(self,
+                                 action: #selector(refreshCurrencies),
+                                 for: .valueChanged)
+
+        converterView.changeCurrencyTapped = self.changeCurrencyTapped
+        converterView.swapCurrencyTapped = self.swapCurrencyTapped
+        favoriteCurrencies = []
+    }
+}
+
+extension ConverterViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        tableView.backgroundColor = .clear
+        view.backgroundColor = theme.backgroundColor
+        tableView.reloadData()
+    }
 }
 
 extension ConverterViewController: ChoiceBackDataPassing {
@@ -146,28 +157,5 @@ extension ConverterViewController: UITableViewDataSource {
 extension ConverterViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
-    }
-}
-
-// TODO: - Replace to another file
-class HalfSizePresentationController : UIPresentationController {
-    var shadowView: UIView?
-    
-    override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView = containerView else { return .zero }
-        return CGRect(x: 0, y: containerView.bounds.height / 2,
-                      width: containerView.bounds.width,
-                      height: containerView.bounds.height / 2)
-    }
-    
-    override func presentationTransitionWillBegin() {
-        shadowView = UIView(frame: presentingViewController.view.frame)
-        shadowView?.backgroundColor = .black
-        shadowView?.layer.opacity = 0.3
-        presentingViewController.view.addSubview(shadowView!)
-    }
-    
-    override func dismissalTransitionWillBegin() {
-        shadowView?.removeFromSuperview()
     }
 }

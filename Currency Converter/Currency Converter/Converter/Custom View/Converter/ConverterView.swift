@@ -20,17 +20,21 @@ class ConverterView: UIView {
     var swapCurrencyTapped: ((Currency) -> Void)?
     var replacingView: ExchangeView!
     
+    private var contentView: UIView!
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     // MARK: - Actions
@@ -49,6 +53,7 @@ class ConverterView: UIView {
     // MARK: - Private Methods
     private func loadViewFromNib() {
         let view = R.nib.converterView(owner: self)!
+        contentView = view
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         NSLayoutConstraint.activate([
@@ -87,5 +92,13 @@ extension ConverterView: ExchangeViewDeleagte {
     func changeCurrencyTapped(exchangeView view: ExchangeView) {
         replacingView = view
         changeCurrencyTapped?(view)
+    }
+}
+
+
+extension ConverterView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        updatedLabel.textColor = theme.subtitleColor
+        contentView.backgroundColor = theme.backgroundConverterColor
     }
 }

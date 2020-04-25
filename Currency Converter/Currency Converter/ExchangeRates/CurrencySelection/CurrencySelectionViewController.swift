@@ -51,6 +51,7 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setUpTheming()
         interactor?.makeRequest(request: .loadRelatives)
     }
     
@@ -72,6 +73,14 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
         tableView.rowHeight = 44
         tableView.sectionHeaderHeight = 50
         relatives = []
+    }
+}
+
+extension CurrencySelectionViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        tableView.backgroundColor = .clear
+        view.backgroundColor = theme.backgroundColor
+        tableView.reloadData()
     }
 }
 

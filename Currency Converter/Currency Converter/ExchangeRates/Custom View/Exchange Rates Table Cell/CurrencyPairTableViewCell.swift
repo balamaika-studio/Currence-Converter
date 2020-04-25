@@ -14,16 +14,17 @@ class CurrencyPairTableViewCell: UITableViewCell {
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var selectionView: UIView!
     
+    private var selectionColor: UIColor!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setUpTheming()
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        let color = #colorLiteral(red: 0.7019608021, green: 0.8431372643, blue: 1, alpha: 1)
-        selectionView.backgroundColor = selected ? color : nil
+        selectionView.backgroundColor = selected ? selectionColor : nil
     }
     
     func configure(with viewModel: CurrencyPairViewModel) {
@@ -48,5 +49,14 @@ class CurrencyPairTableViewCell: UITableViewCell {
         case .stay: color = .darkText
         }
         return color
+    }
+}
+
+extension CurrencyPairTableViewCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        backgroundColor = .clear
+        contentView.backgroundColor = .clear
+        selectionColor = theme.tableCellSelectionColor
+        currencyRelativeLabel.textColor = theme.textColor
     }
 }

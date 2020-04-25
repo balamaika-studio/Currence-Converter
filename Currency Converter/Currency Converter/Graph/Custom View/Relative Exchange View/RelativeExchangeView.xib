@@ -9,10 +9,12 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RelativeExchangeView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
+                <outlet property="baseChangeCurrencyIcon" destination="R7a-Ic-nTJ" id="bL1-Sw-96H"/>
                 <outlet property="baseChangeCurrencyStack" destination="tiE-Lh-OoS" id="xSR-oR-PE7"/>
                 <outlet property="baseCurrencyImageView" destination="zr7-2b-GZ9" id="572-Zo-mDV"/>
                 <outlet property="baseCurrencyLabel" destination="imm-sR-7ZJ" id="kpd-kR-zvo"/>
                 <outlet property="baseCurrencyTitleLabel" destination="k1H-eO-kbd" id="7d1-B6-xcr"/>
+                <outlet property="relativeChangeCurrencyIcon" destination="hNy-vc-5pl" id="FAd-RE-ivo"/>
                 <outlet property="relativeChangeCurrencyStack" destination="Spl-q8-Dnp" id="pU7-xQ-Zxw"/>
                 <outlet property="relativeCurrencyImageView" destination="yYE-wU-WXe" id="RjW-SP-Uyf"/>
                 <outlet property="relativeCurrencyLabel" destination="jbZ-SN-t3E" id="23Q-e4-QQW"/>
@@ -41,7 +43,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrency" translatesAutoresizingMaskIntoConstraints="NO" id="R7a-Ic-nTJ">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="R7a-Ic-nTJ">
                             <rect key="frame" x="40.666666666666671" y="0.0" width="9" height="21.666666666666668"/>
                         </imageView>
                     </subviews>
@@ -68,7 +70,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrency" translatesAutoresizingMaskIntoConstraints="NO" id="hNy-vc-5pl">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="hNy-vc-5pl">
                             <rect key="frame" x="38.666666666666629" y="0.0" width="9" height="21.666666666666668"/>
                         </imageView>
                     </subviews>
@@ -118,7 +120,7 @@
         </view>
     </objects>
     <resources>
-        <image name="changeCurrency" width="9" height="6"/>
+        <image name="changeCurrencyLight" width="9" height="6"/>
         <image name="eur" width="512" height="512"/>
         <image name="rotatedSwap" width="24" height="24"/>
         <image name="usd" width="512" height="512"/>

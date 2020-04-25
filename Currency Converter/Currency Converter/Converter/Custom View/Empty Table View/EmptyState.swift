@@ -9,21 +9,28 @@
 import UIKit
 
 class EmptyState: UIView {
-
+    @IBOutlet weak var emptyImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    private var contentView: UIView!
+    
     // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib()
+        setUpTheming()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadViewFromNib()
+        setUpTheming()
     }
     
     // MARK: - Private Methods
     private func loadViewFromNib() {
         let view = R.nib.emptyState(owner: self)!
+        contentView = view
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         NSLayoutConstraint.activate([
@@ -34,4 +41,15 @@ class EmptyState: UIView {
         ])
     }
 
+}
+
+extension EmptyState: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        let emptyImage = theme == .light ?
+            R.image.emptyTableViewLight() :
+            R.image.emptyTableViewDark()
+        titleLabel.textColor = theme.textColor
+        contentView.backgroundColor = theme.backgroundColor
+        emptyImageView.image = emptyImage
+    }
 }

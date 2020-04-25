@@ -93,7 +93,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
                                          style: .done,
                                          target: self,
                                          action: #selector(self.closePicker))
-        toolBar.setItems([doneButton, spaceButton, closeButton], animated: true)
+        toolBar.setItems([closeButton, spaceButton, doneButton], animated: true)
 
         hiddenTextField.inputView = accuracyPicker
         hiddenTextField.inputAccessoryView = toolBar
@@ -106,9 +106,6 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         
         let newAccurancy = selectedAccuracy != nil ? selectedAccuracy! : Accuracy.defaultAccurancy
         AccuracyManager.shared.accurancy = newAccurancy.rawValue
-
-        // TODO: Сделать пикер для theme Manager, покрасить все
-        // TODO: Добавить отрисовку графика
         
         hiddenTextField.resignFirstResponder()
         removeBlure()
@@ -167,8 +164,14 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
 }
 
 extension SettingsViewController: Themed {
-    func applyTheme(_ theme: AppTheme) {     
-        view.backgroundColor = theme.backgroundColor
+    func applyTheme(_ theme: AppTheme) {
+        if let toolBar = hiddenTextField.inputAccessoryView as? UIToolbar {
+            toolBar.barStyle = theme == .light ? .default : .black
+        } else {
+            hiddenTextField.inputAccessoryView?.backgroundColor = theme.specificBackgroundColor
+        }
+        view.backgroundColor = theme.specificBackgroundColor
+        hiddenTextField.inputView?.backgroundColor = theme.backgroundColor
     }
 }
 
@@ -224,6 +227,14 @@ extension SettingsViewController: UIPickerViewDataSource {
 
 // MARK: - UIPickerViewDelegate
 extension SettingsViewController: UIPickerViewDelegate {
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        guard let accuracyText = Accuracy(rawValue: row + 1)?.description else {
+            return nil
+        }
+        let color = themeProvider.currentTheme.textColor
+        return NSAttributedString(string: accuracyText,
+                                  attributes: [.foregroundColor: color])
+    }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Accuracy(rawValue: row + 1)?.description
     }

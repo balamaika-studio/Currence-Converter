@@ -10,17 +10,21 @@ import UIKit
 
 class RelativeExchangeView: UIView {
     // MARK: - UI
+    @IBOutlet weak var baseChangeCurrencyIcon: UIImageView!
     @IBOutlet weak var baseCurrencyImageView: UIImageView!
     @IBOutlet weak var baseCurrencyLabel: UILabel!
     @IBOutlet weak var baseCurrencyTitleLabel: UILabel!
     @IBOutlet weak var baseChangeCurrencyStack: UIStackView!
     
+    @IBOutlet weak var relativeChangeCurrencyIcon: UIImageView!
     @IBOutlet weak var relativeCurrencyImageView: UIImageView!
     @IBOutlet weak var relativeCurrencyLabel: UILabel!
     @IBOutlet weak var relativeCurrencyTitleLabel: UILabel!
     @IBOutlet weak var relativeChangeCurrencyStack: UIStackView!
     
     @IBOutlet weak var swapCurrenciesWidth: NSLayoutConstraint!
+    
+    private var contentView: UIView!
     
     //MARK: - Properties
     var baseCurrency: ChoiceCurrencyViewModel!
@@ -34,12 +38,14 @@ class RelativeExchangeView: UIView {
         super.init(frame: frame)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     // MARK: - Actions
@@ -88,6 +94,7 @@ class RelativeExchangeView: UIView {
     
     private func loadViewFromNib() {
         let view = R.nib.relativeExchangeView(owner: self)!
+        contentView = view
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         NSLayoutConstraint.activate([
@@ -131,5 +138,24 @@ class RelativeExchangeView: UIView {
             print("Unknown view ID")
         }
         changeCurrencyTapped?()
+    }
+}
+
+
+extension RelativeExchangeView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        let changeCurrencyIcon = theme == .light ?
+            R.image.changeCurrencyLight() :
+            R.image.changeCurrencyDark()
+        
+        contentView.backgroundColor = theme.backgroundConverterColor
+        backgroundColor = theme.backgroundConverterColor
+        baseCurrencyLabel.textColor = theme.textColor
+        baseCurrencyTitleLabel.textColor = theme.subtitleColor
+        baseChangeCurrencyIcon.image = changeCurrencyIcon
+        
+        relativeCurrencyLabel.textColor = theme.textColor
+        relativeCurrencyTitleLabel.textColor = theme.subtitleColor
+        relativeChangeCurrencyIcon.image = changeCurrencyIcon
     }
 }

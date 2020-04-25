@@ -16,6 +16,7 @@ protocol ExchangeViewDeleagte: class {
 @IBDesignable
 class ExchangeView: UIView {
     // MARK: - UI
+    @IBOutlet weak var changeCurrencyIcon: UIImageView!
     @IBOutlet weak var flagImageViw: UIImageView!
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
@@ -23,6 +24,7 @@ class ExchangeView: UIView {
     @IBOutlet weak var countTextField: UITextField!
     
     // MARK: - Properties
+    private var contentView: UIView!
     private let tapGesture = UITapGestureRecognizer()
     weak var delegate: ExchangeViewDeleagte?
     
@@ -37,12 +39,14 @@ class ExchangeView: UIView {
         super.init(frame: frame)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadViewFromNib()
         setup()
+        setUpTheming()
     }
     
     deinit {
@@ -59,6 +63,7 @@ class ExchangeView: UIView {
     // MARK: - Private Methods
     private func loadViewFromNib() {
         let view = R.nib.exchangeView(owner: self)!
+        contentView = view
         view.translatesAutoresizingMaskIntoConstraints = false
         addSubview(view)
         NSLayoutConstraint.activate([
@@ -88,5 +93,18 @@ class ExchangeView: UIView {
 extension ExchangeView: FieldClearable {
     func update(with subject: AppFieldClearManager) {
         countTextField.clearsOnBeginEditing = subject.isClear
+    }
+}
+
+extension ExchangeView: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        let changeCurrencyIconImage = theme == .light ?
+            R.image.changeCurrencyLight() :
+            R.image.changeCurrencyDark()
+        contentView.backgroundColor = theme.backgroundConverterColor
+        currencyLabel.textColor = theme.textColor
+        rateLabel.textColor = theme.subtitleColor
+        countTextField.textColor = theme.textColor
+        changeCurrencyIcon.image = changeCurrencyIconImage
     }
 }

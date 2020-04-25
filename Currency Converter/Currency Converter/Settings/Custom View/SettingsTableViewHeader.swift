@@ -47,6 +47,6 @@ class SettingsTableViewHeader: UITableViewHeaderFooterView {
 extension SettingsTableViewHeader: Themed {
     func applyTheme(_ theme: AppTheme) {
         headerTitleLabel.textColor = theme.textColor
-        contentView.backgroundColor = theme.backgroundColor
+        contentView.backgroundColor = theme.specificBackgroundColor
     }
 }

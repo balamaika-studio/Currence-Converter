@@ -35,7 +35,7 @@
                         <color key="textColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swapCurrency" translatesAutoresizingMaskIntoConstraints="NO" id="fgT-kL-cfZ">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swapCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="fgT-kL-cfZ">
                         <rect key="frame" x="299.5" y="29" width="14" height="14"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="fgT-kL-cfZ" secondAttribute="height" multiplier="1:1" id="02L-X6-zYi"/>
@@ -72,12 +72,13 @@
                 <outlet property="currencyImageView" destination="eY1-9Q-rpk" id="aEk-QD-c1s"/>
                 <outlet property="currencyRateLabel" destination="Zfx-Pt-iBM" id="pi5-ii-RT8"/>
                 <outlet property="currencyTitleLabel" destination="wiG-o0-tYo" id="o8r-10-PIJ"/>
+                <outlet property="swapCurrencyIcon" destination="fgT-kL-cfZ" id="Zhr-mQ-ON2"/>
             </connections>
             <point key="canvasLocation" x="348.55072463768118" y="132.58928571428572"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="swapCurrency" width="15" height="14"/>
+        <image name="swapCurrencyLight" width="15" height="14"/>
         <image name="usa" width="64" height="64"/>
     </resources>
 </document>

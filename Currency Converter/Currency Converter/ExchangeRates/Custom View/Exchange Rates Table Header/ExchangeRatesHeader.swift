@@ -30,6 +30,7 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         configureContents()
+        setUpTheming()
     }
     
     required init?(coder: NSCoder) {
@@ -41,7 +42,6 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
     }
     
     private func configureContents() {
-        contentView.backgroundColor = .white
         contentView.addSubview(pairsLabel)
         contentView.addSubview(rateLabel)
 
@@ -54,4 +54,12 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
         ])
     }
     
+}
+
+extension ExchangeRatesHeader: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        contentView.backgroundColor = theme.backgroundColor
+        rateLabel.textColor = theme.textColor
+        pairsLabel.textColor = theme.textColor
+    }
 }

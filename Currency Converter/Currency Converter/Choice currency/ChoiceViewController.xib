@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChoiceViewController">
             <connections>
+                <outlet property="doneButton" destination="Ahy-8T-3s9" id="XI4-QT-tlP"/>
                 <outlet property="tableView" destination="Kgf-h3-HHW" id="XY1-Em-Mf6"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
@@ -17,46 +19,32 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zRH-4Z-6La" userLabel="Back View">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <subviews>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahy-8T-3s9">
-                            <rect key="frame" x="322" y="13" width="37" height="30"/>
-                            <state key="normal" title="Done">
-                                <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="doneTapped:" destination="-1" eventType="touchUpInside" id="il1-gP-292"/>
-                            </connections>
-                        </button>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kgf-h3-HHW">
-                            <rect key="frame" x="0.0" y="43" width="375" height="624"/>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        </tableView>
-                    </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="trailing" secondItem="Ahy-8T-3s9" secondAttribute="trailing" constant="16" id="9Dv-Cx-agT"/>
-                        <constraint firstItem="Ahy-8T-3s9" firstAttribute="top" secondItem="zRH-4Z-6La" secondAttribute="top" constant="13" id="HqN-ZQ-rvO"/>
-                        <constraint firstAttribute="trailing" secondItem="Kgf-h3-HHW" secondAttribute="trailing" id="P4B-2J-Wbn"/>
-                        <constraint firstItem="Kgf-h3-HHW" firstAttribute="leading" secondItem="zRH-4Z-6La" secondAttribute="leading" id="adI-Fb-jNW"/>
-                        <constraint firstAttribute="bottom" secondItem="Kgf-h3-HHW" secondAttribute="bottom" id="nQR-wX-qKs"/>
-                        <constraint firstItem="Kgf-h3-HHW" firstAttribute="top" secondItem="Ahy-8T-3s9" secondAttribute="bottom" id="twy-ql-3Uo"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                </view>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Kgf-h3-HHW">
+                    <rect key="frame" x="0.0" y="46" width="375" height="621"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ahy-8T-3s9">
+                    <rect key="frame" x="322" y="8" width="37" height="30"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="doneTapped:" destination="-1" eventType="touchUpInside" id="il1-gP-292"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="zRH-4Z-6La" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Yda-UA-P9L"/>
-                <constraint firstAttribute="trailing" secondItem="zRH-4Z-6La" secondAttribute="trailing" id="f4L-ae-8xg"/>
-                <constraint firstItem="zRH-4Z-6La" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="l4U-CU-wv2"/>
-                <constraint firstAttribute="bottom" secondItem="zRH-4Z-6La" secondAttribute="bottom" id="n1m-uf-VSF"/>
+                <constraint firstItem="i9f-El-RHT" firstAttribute="trailing" secondItem="Ahy-8T-3s9" secondAttribute="trailing" constant="16" id="6vq-5T-xAC"/>
+                <constraint firstItem="Kgf-h3-HHW" firstAttribute="trailing" secondItem="i9f-El-RHT" secondAttribute="trailing" id="O59-kU-Vw4"/>
+                <constraint firstItem="Ahy-8T-3s9" firstAttribute="top" secondItem="i9f-El-RHT" secondAttribute="top" constant="8" id="UY0-bM-DGs"/>
+                <constraint firstItem="i9f-El-RHT" firstAttribute="bottom" secondItem="Kgf-h3-HHW" secondAttribute="bottom" id="ak2-6C-Vu1"/>
+                <constraint firstItem="Kgf-h3-HHW" firstAttribute="leading" secondItem="i9f-El-RHT" secondAttribute="leading" id="cEd-BK-vT9"/>
+                <constraint firstItem="Kgf-h3-HHW" firstAttribute="top" secondItem="Ahy-8T-3s9" secondAttribute="bottom" constant="8" id="qAY-LN-e0s"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
-            <point key="canvasLocation" x="461.25" y="398.23943661971833"/>
+            <viewLayoutGuide key="safeArea" id="i9f-El-RHT"/>
+            <point key="canvasLocation" x="460" y="398.05097451274366"/>
         </view>
     </objects>
 </document>

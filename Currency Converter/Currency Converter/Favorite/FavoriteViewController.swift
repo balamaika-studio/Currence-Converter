@@ -13,7 +13,6 @@ protocol FavoriteDisplayLogic: class {
 }
 
 class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
-    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -48,23 +47,12 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         router.viewController     = viewController
     }
     
-    // MARK: Routing
-    
-    
-    
     // MARK: View lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Избранное"
-        
-        searchBar.delegate = self
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(R.nib.favoriteTableViewCell)
-        tableView.separatorStyle = .none
-        tableView.allowsMultipleSelection = true
-        tableView.rowHeight = 62        
+        setupView()
+        setUpTheming()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +72,30 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
             self.quotes = quotes
             self.tableView.reloadData()
         }
+    }
+    
+    private func setupView() {
+        title = "Избранное"
+        searchBar.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(R.nib.favoriteTableViewCell)
+        tableView.separatorStyle = .none
+        tableView.allowsMultipleSelection = true
+        tableView.rowHeight = 62
+    }
+}
+
+extension FavoriteViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        let searchIcon = theme == .light ?
+        R.image.searchLight() :
+        R.image.searchDark()
+        view.backgroundColor = theme.specificBackgroundColor
+        searchBar.searchTextField.textColor = theme.searchTextColor
+        searchBar.setImage(searchIcon, for: .search, state: .normal)
+        tableView.backgroundColor = .clear
+        tableView.reloadData()
     }
 }
 

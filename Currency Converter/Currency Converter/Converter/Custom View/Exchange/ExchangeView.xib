@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExchangeView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
+                <outlet property="changeCurrencyIcon" destination="TQV-Hf-tCc" id="Jks-qI-loK"/>
                 <outlet property="changeCurrencyStack" destination="BKz-hU-MQG" id="jhk-fE-S4Q"/>
                 <outlet property="countTextField" destination="1L9-ZQ-RRh" id="7ef-wX-rto"/>
                 <outlet property="currencyLabel" destination="cKU-XL-9Su" id="454-ME-SUN"/>
@@ -37,7 +38,7 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrency" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-Hf-tCc">
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-Hf-tCc">
                             <rect key="frame" x="40.666666666666671" y="0.0" width="9" height="21.666666666666668"/>
                         </imageView>
                     </subviews>
@@ -79,7 +80,7 @@
         </view>
     </objects>
     <resources>
-        <image name="changeCurrency" width="9" height="6"/>
+        <image name="changeCurrencyLight" width="9" height="6"/>
         <image name="usa" width="64" height="64"/>
     </resources>
 </document>

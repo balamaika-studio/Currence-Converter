@@ -20,8 +20,11 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        let theme = themeProvider.currentTheme
+        let selectColor = selected ?
+            theme.tableCellSelectionColor :
+            theme.specificBackgroundColor
+        contentView.backgroundColor = selectColor
     }
     
     func configure(with viewModel: ChoiceCurrencyViewModel) {
@@ -29,6 +32,13 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
         currencyImageView.image = image
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
+        selectionStyle = .none
     }
     
+}
+extension ChoiceCurrencyTableViewCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        currencyAbbreviationLabel.textColor = theme.textColor
+        currencyTitleLabel.textColor = theme.subtitleColor
+    }
 }

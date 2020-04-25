@@ -64,6 +64,7 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
         super.viewDidLoad()
         interactor?.makeRequest(request: .configureExchangeRates)
         setupView()
+        setUpTheming()
     }
     
     func displayData(viewModel: ExchangeRates.Model.ViewModel.ViewModelData) {
@@ -88,10 +89,6 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
         
         // Select First Segment
         segmentedControl.selectedSegmentIndex = 0
-                
-        let normalColor = #colorLiteral(red: 0.3882352941, green: 0.5411764706, blue: 0.9843137255, alpha: 1)
-        segmentedControl.setTitleTextAttributes([.foregroundColor: normalColor],
-                                                for: .normal)
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
                                                 for: .selected)
     }
@@ -142,5 +139,15 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
 
         // Notify Child View Controller
         viewController.removeFromParent()
+    }
+}
+
+extension ExchangeRatesViewController: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        view.backgroundColor = theme.backgroundColor
+        segmentedControl.backgroundColor = theme.backgroundColor
+        let normalColor = theme.unselectedSwitchTextColor
+        segmentedControl.setTitleTextAttributes([.foregroundColor: normalColor],
+                                                for: .normal)
     }
 }

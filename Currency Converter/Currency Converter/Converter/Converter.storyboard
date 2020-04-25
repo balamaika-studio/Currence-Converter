@@ -49,10 +49,10 @@
             </objects>
             <point key="canvasLocation" x="1942.0289855072465" y="127.98913043478262"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--App Navigation Controller-->
         <scene sceneID="3p6-86-ECd">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BBw-W2-vXq" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="BBw-W2-vXq" customClass="AppNavigationController" customModule="Currency_Converter" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QCD-3B-RLF">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>

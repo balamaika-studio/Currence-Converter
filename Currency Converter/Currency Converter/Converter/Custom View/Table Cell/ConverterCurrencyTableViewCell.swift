@@ -9,7 +9,7 @@
 import UIKit
 
 class ConverterCurrencyTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var swapCurrencyIcon: UIImageView!
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
@@ -17,13 +17,11 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        setUpTheming()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     func configure(with viewModel: FavoriteConverterViewModel) {
@@ -32,5 +30,18 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
         currencyRateLabel.text = viewModel.regardingRate
+        selectionStyle = .none
+    }
+}
+
+extension ConverterCurrencyTableViewCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        let swapCurrencyIconImage = theme == .light ?
+        R.image.swapCurrencyLight() :
+        R.image.swapCurrencyDark()
+        currencyAbbreviationLabel.textColor = theme.textColor
+        currencyTitleLabel.textColor = theme.subtitleColor
+        currencyRateLabel.textColor = theme.textColor
+        swapCurrencyIcon.image = swapCurrencyIconImage
     }
 }

@@ -23,6 +23,7 @@ class PeriodCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setupView()
+        setUpTheming()
     }
     
     func configure(with viewModel: GraphPeriod) {
@@ -45,10 +46,21 @@ class PeriodCollectionViewCell: UICollectionViewCell {
     }
     
     private func deselect() {
-        periodLabel.textColor = .black
+        let unselecetedColor: UIColor = themeProvider.currentTheme == .light ?
+            .black :
+            .white
+        periodLabel.textColor = unselecetedColor
         let gradientLayer = layer.sublayers?
             .filter { $0.name == gradientName }
             .first
         gradientLayer?.removeFromSuperlayer()
+    }
+}
+
+
+extension PeriodCollectionViewCell: Themed {
+    func applyTheme(_ theme: AppTheme) {
+        backgroundColor = theme.collectionCellSelectionColor
+        periodLabel.textColor = theme.textColor
     }
 }
