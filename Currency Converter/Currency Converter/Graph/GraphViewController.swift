@@ -7,7 +7,8 @@
 //
 
 import UIKit
-import SwiftChart
+//import SwiftChart
+import Charts
 
 protocol GraphDisplayLogic: class {
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData)
@@ -15,7 +16,7 @@ protocol GraphDisplayLogic: class {
 
 class GraphViewController: UIViewController, GraphDisplayLogic {
     @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var chartView: Chart!
+    @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var converterView: RelativeExchangeView!
     @IBOutlet weak var currenciesRateLabel: UILabel!
     
@@ -98,20 +99,36 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(R.nib.periodCollectionViewCell)
-        
-        // Configure chart layout
-        chartView.gridColor = .clear
-        chartView.axesColor = .clear
-        chartView.labelColor = .black
-        chartView.highlightLineColor = #colorLiteral(red: 0.389953196, green: 0.5452895164, blue: 0.9827637076, alpha: 1)
-        chartView.highlightLineWidth = 1.5
-        chartView.areaAlphaComponent = 0.3
+
         chartView.delegate = self
-        chartView.lineWidth = 2
-        chartView.labelFont = UIFont.systemFont(ofSize: 12)
-        chartView.xLabelsTextAlignment = .left
-        chartView.xLabelsSkipLast = true
-        chartView.yLabelsOnRightSide = true
+        chartView.drawGridBackgroundEnabled = false
+        chartView.drawBordersEnabled = false
+        chartView.chartDescription?.enabled = false
+        chartView.pinchZoomEnabled = false
+        chartView.setScaleEnabled(false)
+        chartView.legend.enabled = false
+
+        // YAxis
+        let leftYAxis = chartView.getAxis(.left)
+        leftYAxis.drawLabelsEnabled = false // no axis labels
+        leftYAxis.drawAxisLineEnabled = false // no axis line
+        leftYAxis.drawGridLinesEnabled = false // no grid lines
+        leftYAxis.drawZeroLineEnabled = true // draw a zero line
+        
+        let rightYAxis = chartView.getAxis(.right)
+        rightYAxis.enabled = true // right axis
+        rightYAxis.labelTextColor = .gray
+        rightYAxis.drawGridLinesEnabled = false
+        rightYAxis.drawAxisLineEnabled = false
+        
+        // XAxis
+        let xAxis = chartView.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.labelFont = UIFont.systemFont(ofSize: 12)
+        xAxis.labelTextColor = .gray
+        xAxis.drawAxisLineEnabled = false
+        xAxis.drawGridLinesEnabled = false
+        xAxis.granularity = 1
         
         converterView.changeCurrencyTapped = self.showChoiceViewController
         converterView.updateCurrenciesLabel = self.updateCurrenciesRateLabel
@@ -131,27 +148,28 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func setChartData(with graphViewModel: GraphViewModel) {
-        var graphViewModel = graphViewModel
-        // Initialize data series and labels
-        chartView.removeAllSeries()
-        let serieData: [Double] = graphViewModel.data
-        let series = ChartSeries(serieData)
-        series.area = true
-        
-        // Add some padding above the x-axis
-        let midValue = (serieData.min()! + serieData.max()!) / 2
-        let padding = (serieData.min()! - midValue) / 2
-        chartView.minY = serieData.min()! + padding
-        
-        chartView.xLabels = graphViewModel.visiableLabels
-        chartView.xLabelsFormatter = { index, value in
-            return graphViewModel.visiableLabels.contains(value) ?
-                graphViewModel.nextXLabel() :
-                String()
+        chartView.clear()
+        chartView.xAxis.valueFormatter = ChartXValueFormatter(dates: graphViewModel.dates)
+        let entries = graphViewModel.data.enumerated().map { index, value in
+            return ChartDataEntry(x: Double(index), y: value)
         }
         
-        chartView.yLabelsFormatter = { "\(AccuracyManager.shared.formatNumber($1))" }
-        chartView.add(series)
+        let lineDataSet = LineChartDataSet(entries: entries)
+        lineDataSet.axisDependency = .left
+        lineDataSet.drawCirclesEnabled = false
+        lineDataSet.fillColor = #colorLiteral(red: 0.4196078431, green: 0.5176470588, blue: 0.9764705882, alpha: 1)
+        lineDataSet.fillAlpha = 0.3
+        lineDataSet.lineWidth = 2
+        lineDataSet.drawFilledEnabled = true
+        lineDataSet.setColor(#colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9843137255, alpha: 1))
+        lineDataSet.highlightColor = #colorLiteral(red: 0.4196078431, green: 0.5176470588, blue: 0.9764705882, alpha: 1)
+        lineDataSet.drawHorizontalHighlightIndicatorEnabled = false
+        lineDataSet.highlightLineWidth = 1.5
+        lineDataSet.drawValuesEnabled = false
+        lineDataSet.mode = .cubicBezier
+        
+        let chartData = LineChartData(dataSet: lineDataSet)
+        chartView.data = chartData
     }
     
     private func clearChartLabel() {
@@ -165,7 +183,6 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
 extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         view.backgroundColor = theme.specificBackgroundColor
-        chartView.labelColor = theme.textColor
         currenciesRateLabel.textColor = theme.textColor
     }
 }
@@ -181,40 +198,28 @@ extension GraphViewController: ChoiceBackDataPassing {
     }
 }
 
-// MARK: - ChartDelegate
-extension GraphViewController: ChartDelegate {
-    func didTouchChart(_ chart: Chart, indexes: [Int?], x: Double, left: CGFloat) {
-        if let value = chart.valueForSeries(0, atIndex: indexes[0]) {
-            chartValueLabel.backgroundColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9843137255, alpha: 1)
-            chartValueLabel.text = "\(AccuracyManager.shared.formatNumber(value))"
-            
-            // Align the label to the touch left position, centered
-            var constant = labelLeadingMarginInitialConstant + left - (chartValueLabel.frame.width / 2)
-            
-            // Avoid placing the label on the left of the chart
-            if constant < labelLeadingMarginInitialConstant {
-                constant = labelLeadingMarginInitialConstant
-            }
-            
-            // Avoid placing the label on the right of the chart
-            let rightMargin = chart.frame.width - chartValueLabel.frame.width
-            if constant > rightMargin {
-                constant = rightMargin
-            }
-            
-            labelLeadingMarginConstraint.constant = constant
-            
+// MARK: - ChartViewDelegate
+extension GraphViewController: ChartViewDelegate {
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        let left = highlight.xPx
+        chartValueLabel.backgroundColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9843137255, alpha: 1)
+        chartValueLabel.text = "\(AccuracyManager.shared.formatNumber(entry.y))"
+        
+        // Align the label to the touch left position, centered
+        var constant = labelLeadingMarginInitialConstant + left - (chartValueLabel.frame.width / 2)
+        
+        // Avoid placing the label on the left of the chart
+        if constant < labelLeadingMarginInitialConstant {
+            constant = labelLeadingMarginInitialConstant
         }
+        
+        // Avoid placing the label on the right of the chart
+        let rightMargin = chartView.frame.width - chartValueLabel.frame.width
+        if constant > rightMargin {
+            constant = rightMargin
+        }
+        labelLeadingMarginConstraint.constant = constant
     }
-    
-    func didFinishTouchingChart(_ chart: Chart) {
-        clearChartLabel()
-    }
-    
-    func didEndTouchingChart(_ chart: Chart) {
-        //
-    }
-    
 }
 
 // MARK: - UICollectionViewDataSource

@@ -60,22 +60,6 @@ struct GraphPeriodInterval {
 }
 
 struct GraphViewModel {
-    var visiableLabels: [Double] = []
-    let labels: [Double]
     let data: [Double]
     let dates: [String]
-    
-    private var currentXLabelIndex = 0
-    
-    init(labels: [Double], data: [Double], dates: [String]) {
-        self.labels = labels
-        self.data = data
-        self.dates = dates
-    }
-    
-    mutating func nextXLabel() -> String {
-        let label = dates[currentXLabelIndex]
-        currentXLabelIndex += 1
-        return label
-    }
 }

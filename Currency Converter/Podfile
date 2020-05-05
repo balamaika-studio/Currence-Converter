@@ -8,6 +8,7 @@ target 'Currency Converter' do
   # Pods for Currency Converter
   pod 'R.swift'
   pod 'SwiftChart'
+  pod 'Charts'
   pod 'RealmSwift'
 
   target 'Currency ConverterTests' do

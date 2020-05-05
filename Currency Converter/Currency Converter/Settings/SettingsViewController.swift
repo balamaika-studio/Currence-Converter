@@ -104,8 +104,8 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         selectedAccuracy = Accuracy(rawValue: selectedRow + 1)
         selectedCell?.detailTextLabel?.text = selectedAccuracy?.description
         
-        let newAccurancy = selectedAccuracy != nil ? selectedAccuracy! : Accuracy.defaultAccurancy
-        AccuracyManager.shared.accurancy = newAccurancy.rawValue
+        let newAccuracy = selectedAccuracy != nil ? selectedAccuracy! : Accuracy.defaultAccurancy
+        AccuracyManager.shared.accurancy = newAccuracy.rawValue
         
         hiddenTextField.resignFirstResponder()
         removeBlure()

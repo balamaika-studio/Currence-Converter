@@ -1,4 +1,7 @@
 PODS:
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
   - R.swift (5.1.0):
     - R.swift.Library (~> 5.1.0)
   - R.swift.Library (5.1.0)
@@ -10,12 +13,14 @@ PODS:
   - SwiftChart (1.0.1)
 
 DEPENDENCIES:
+  - Charts
   - R.swift
   - RealmSwift
   - SwiftChart
 
 SPEC REPOS:
   trunk:
+    - Charts
     - R.swift
     - R.swift.Library
     - Realm
@@ -23,12 +28,13 @@ SPEC REPOS:
     - SwiftChart
 
 SPEC CHECKSUMS:
+  Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   R.swift: 8cbc4fc69b740305b6a17c8a8ed968eb788962d9
   R.swift.Library: fa85ce1e0d0b7e818cd9e080df910ba54d2776cc
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
   SwiftChart: ba767a678d568a5ee22d419e146a0582865e1aff
 
-PODFILE CHECKSUM: ebf98179e32cb23338a107fd57da849f28e0af3b
+PODFILE CHECKSUM: 37a948fe6ce62bdbbfdbaaba4bae5fc1b526f1af
 
 COCOAPODS: 1.9.1

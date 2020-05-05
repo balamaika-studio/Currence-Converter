@@ -21,11 +21,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="npH-1g-KBF">
-                    <rect key="frame" x="8" y="0.0" width="304" height="56"/>
+                    <rect key="frame" x="8" y="8" width="304" height="56"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </searchBar>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wl3-Uk-epu">
-                    <rect key="frame" x="0.0" y="56" width="320" height="512"/>
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                 </tableView>
             </subviews>
@@ -37,7 +37,7 @@
                 <constraint firstItem="wl3-Uk-epu" firstAttribute="leading" secondItem="Nzj-bd-fat" secondAttribute="leading" id="gvU-iD-Sfx"/>
                 <constraint firstItem="npH-1g-KBF" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="oVx-Lo-xpg"/>
                 <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="wl3-Uk-epu" secondAttribute="trailing" id="rA4-ZG-HVy"/>
-                <constraint firstItem="npH-1g-KBF" firstAttribute="top" secondItem="Nzj-bd-fat" secondAttribute="top" id="whb-aL-S5b"/>
+                <constraint firstItem="npH-1g-KBF" firstAttribute="top" secondItem="Nzj-bd-fat" secondAttribute="top" constant="8" id="whb-aL-S5b"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Nzj-bd-fat"/>
