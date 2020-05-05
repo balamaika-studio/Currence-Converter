@@ -146,7 +146,8 @@ extension ExchangeRatesViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         view.backgroundColor = theme.backgroundColor
         segmentedControl.backgroundColor = theme.backgroundColor
-        let normalColor = theme.unselectedSwitchTextColor
+        segmentedControl.tintColor = theme.segmentedControlTintColor
+        let normalColor = theme.segmentedControlTintColor
         segmentedControl.setTitleTextAttributes([.foregroundColor: normalColor],
                                                 for: .normal)
     }

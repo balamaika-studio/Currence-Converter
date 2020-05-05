@@ -35,14 +35,15 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
             guard let newCurrency = selectedCurrency else { break }
             presenter?.presentData(response: .newConverterCurrency(newCurrency))
             
-        case .loadGraphData(let base, let relative, let start):
-            let interval = buildGraphRequestInterval(startInterval: start)
+        case .loadGraphData(let base, let relative, let period):
+            let interval = buildGraphRequestInterval(period: period)
             networkManager.getQuotes(base: base, currencies: [relative], start: interval.startDate, end: interval.endDate) { response, errorMessage in
                 guard let answer = response?.quotes else {
                     print(errorMessage)
                     return
                 }
-                self.presenter?.presentData(response: .graphData(answer.sorted(by: <)))
+                self.presenter?.presentData(response: .graphData(answer.sorted(by: <),
+                                                                 period: period))
             }
         }
         
@@ -54,7 +55,8 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
         return GraphConverterViewModel(base: base, relative: relative)
     }
     
-    private func buildGraphRequestInterval(startInterval: Int) -> GraphPeriodInterval {
+    private func buildGraphRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {
+        let startInterval = period.interval
         let startDate = Date(timeIntervalSinceNow: TimeInterval(-startInterval))
         let endDate = Date()
         let dateFormatter = DateFormatter()

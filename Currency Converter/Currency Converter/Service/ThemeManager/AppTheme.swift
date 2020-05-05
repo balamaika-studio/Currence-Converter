@@ -25,6 +25,8 @@ struct AppTheme {
     
     var shadowOpacity: Float
     var searchTextColor: UIColor
+    var searchTextFieldColor: UIColor
+    var segmentedControlTintColor: UIColor
 }
 
 extension AppTheme: Equatable {
@@ -48,17 +50,20 @@ extension AppTheme {
         textColor: .darkText,
         subtitleColor: .gray,
         unselectedSwitchTextColor: .systemBlue,
+        
         shadowOpacity: 0.3,
-        searchTextColor: #colorLiteral(red: 0.4196078431, green: 0.4196078431, blue: 0.4196078431, alpha: 1)
+        searchTextColor: #colorLiteral(red: 0.4196078431, green: 0.4196078431, blue: 0.4196078431, alpha: 1),
+        searchTextFieldColor: #colorLiteral(red: 0.8745098039, green: 0.8901960784, blue: 0.9294117647, alpha: 1),
+        segmentedControlTintColor: #colorLiteral(red: 0.4078431373, green: 0.4941176471, blue: 0.9960784314, alpha: 1)
     )
 
     static let dark = AppTheme(
         themeId: "dark",
-        barBackgroundColor: #colorLiteral(red: 0.2235294118, green: 0.2078431373, blue: 0.3411764706, alpha: 1),
-        
-        backgroundColor: #colorLiteral(red: 0.1568627451, green: 0.1490196078, blue: 0.262745098, alpha: 1),
-        specificBackgroundColor: #colorLiteral(red: 0.1568627451, green: 0.1490196078, blue: 0.262745098, alpha: 1),
-        backgroundConverterColor: #colorLiteral(red: 0.2235294118, green: 0.2078431373, blue: 0.3411764706, alpha: 1),
+        barBackgroundColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
+
+        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        specificBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        backgroundConverterColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
         
         tableCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
         collectionCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
@@ -66,7 +71,10 @@ extension AppTheme {
         textColor: .white,
         subtitleColor: .lightGray,
         unselectedSwitchTextColor: .white,
+        
         shadowOpacity: 0.6,
-        searchTextColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1)
+        searchTextColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),
+        searchTextFieldColor: #colorLiteral(red: 0.262745098, green: 0.2705882353, blue: 0.4392156863, alpha: 1),
+        segmentedControlTintColor: #colorLiteral(red: 0.3803921569, green: 0.5176470588, blue: 1, alpha: 1)
     )
 }

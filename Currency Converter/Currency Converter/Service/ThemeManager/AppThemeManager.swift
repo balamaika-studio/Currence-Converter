@@ -33,9 +33,8 @@ final class AppThemeManager: ThemeManager {
     }
 
     private func setNewTheme(_ newTheme: AppTheme) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let sceneDelegate = windowScene.delegate as? SceneDelegate,
-            let window = sceneDelegate.window else { return }
+        guard let appDelegateWindow = UIApplication.shared.delegate?.window,
+            let window = appDelegateWindow else { return }
         
         UIView.transition(
             with: window,

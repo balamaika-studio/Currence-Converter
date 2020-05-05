@@ -31,8 +31,11 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wx7-8d-5Qy">
-                    <rect key="frame" x="20" y="419.5" width="280" height="58"/>
+                    <rect key="frame" x="20" y="419.5" width="280" height="60"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="NiL-Za-axw"/>
+                    </constraints>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="6" id="6Lh-PU-6QK">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -94,6 +97,11 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Lbm-Zq-2cr"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="TL6-0r-joC"/>
+                </mask>
+            </variation>
             <point key="canvasLocation" x="461.25" y="398.23943661971833"/>
         </view>
     </objects>

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */; };
-		595FC0BC241FA40400B4EEE4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */; };
 		595FC0C1241FA40400B4EEE4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0BF241FA40400B4EEE4 /* Main.storyboard */; };
 		595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0C2241FA40600B4EEE4 /* Assets.xcassets */; };
 		595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0C4241FA40600B4EEE4 /* LaunchScreen.storyboard */; };
@@ -50,6 +49,7 @@
 		D125731C24536AA8005F8332 /* EdgeInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */; };
 		D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12E04EC245311DB005B68A4 /* AccuracyManager.swift */; };
 		D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */; };
+		D15117122461E16700D86D9F /* CodableColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D15117112461E16700D86D9F /* CodableColor.swift */; };
 		D163AFE2244E312800014800 /* SettingsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDB244E312800014800 /* SettingsPresenter.swift */; };
 		D163AFE3244E312800014800 /* SettingsWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDC244E312800014800 /* SettingsWorker.swift */; };
 		D163AFE4244E312800014800 /* SettingsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFDD244E312800014800 /* SettingsRouter.swift */; };
@@ -153,7 +153,6 @@
 		542A8D16B638C84491568462 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
 		595FC0B6241FA40400B4EEE4 /* Currency Converter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Currency Converter.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		595FC0C0241FA40400B4EEE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		595FC0C2241FA40600B4EEE4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		595FC0C5241FA40600B4EEE4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -200,6 +199,7 @@
 		D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetLabel.swift; sourceTree = "<group>"; };
 		D12E04EC245311DB005B68A4 /* AccuracyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyManager.swift; sourceTree = "<group>"; };
 		D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairViewModel.swift; sourceTree = "<group>"; };
+		D15117112461E16700D86D9F /* CodableColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableColor.swift; sourceTree = "<group>"; };
 		D163AFDB244E312800014800 /* SettingsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPresenter.swift; sourceTree = "<group>"; };
 		D163AFDC244E312800014800 /* SettingsWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWorker.swift; sourceTree = "<group>"; };
 		D163AFDD244E312800014800 /* SettingsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRouter.swift; sourceTree = "<group>"; };
@@ -345,7 +345,6 @@
 				D163AFDA244E30FE00014800 /* Settings */,
 				596811122420E89C00426968 /* Choice currency */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
-				595FC0BB241FA40400B4EEE4 /* SceneDelegate.swift */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
 				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
 				595FC0C4241FA40600B4EEE4 /* LaunchScreen.storyboard */,
@@ -742,6 +741,7 @@
 				D1E4ED132451CD9A00ECE03F /* AppTheme.swift */,
 				D1E4ED152451CDB300ECE03F /* AppThemeManager.swift */,
 				D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */,
+				D15117112461E16700D86D9F /* CodableColor.swift */,
 			);
 			path = ThemeManager;
 			sourceTree = "<group>";
@@ -991,6 +991,7 @@
 			files = (
 				D1DDE950243F4AD30023E789 /* CurrencySelectionModels.swift in Sources */,
 				D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */,
+				D15117122461E16700D86D9F /* CodableColor.swift in Sources */,
 				D1E1A76B2449F6220051E51D /* PeriodCollectionViewCell.swift in Sources */,
 				D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */,
 				D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */,
@@ -1066,7 +1067,6 @@
 				D19A9380242D0E4E00DDCEA9 /* HTTPMethod.swift in Sources */,
 				D1DDE93E243F4A7C0023E789 /* CurrencyRatesPresenter.swift in Sources */,
 				D1E1A7642449F5240051E51D /* GraphViewController.swift in Sources */,
-				595FC0BC241FA40400B4EEE4 /* SceneDelegate.swift in Sources */,
 				D125731C24536AA8005F8332 /* EdgeInsetLabel.swift in Sources */,
 				D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */,
 				D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */,
@@ -1186,7 +1186,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1240,7 +1240,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1265,7 +1265,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Alex.Novitsky.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1284,7 +1284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = Alex.Novitsky.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

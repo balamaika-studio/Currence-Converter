@@ -11,11 +11,57 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    var window: UIWindow?
+    var storage: StorageContext!
+    var networkManager: NetworkManager!
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
+        storage = try! RealmStorageContext()
+        networkManager = NetworkManager()
         restoreAccuracySettings()
+        
+        let tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
+        
+        let converterViewController = AppViewController.converter.viewController
+        let favoriteViewController = AppViewController.favorite.viewController
+        let exchangeRatesViewController = AppViewController.exchangeRates.viewController
+        let graphViewController = AppViewController.graph.viewController
+        let settingsViewController = AppViewController.settings.viewController
+        
+        tabBarViewController.viewControllers = [converterViewController,
+                                                favoriteViewController,
+                                                exchangeRatesViewController,
+                                                graphViewController,
+                                                settingsViewController]
+        
+        window?.rootViewController = tabBarViewController
+        window?.makeKeyAndVisible()
+        
         return true
+    }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        if UserDefaults.standard.bool(forKey: "autoUpdate") {
+            print("Load Quotes")
+            networkManager.getQuotes { response, errorMessage in
+                guard let quotes = response?.quotes else { return }
+                UserDefaults.standard.set(response!.updated, forKey: "updated")
+                self.updateQuotes(quotes, in: self.storage)
+            }
+        }
+    }
+    
+    private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
+        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            for currency in $0 {
+                let quote = quotes.first { $0.currency == currency.currency }
+                guard let newQuote = quote else { return }
+                try? realm.update {
+                    currency.rate = newQuote.rate
+                }
+            }
+        }
     }
     
     private func restoreAccuracySettings() {
@@ -24,21 +70,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
     }
-
-    // MARK: UISceneSession Lifecycle
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        // Called when a new scene session is being created.
-        // Use this method to select a configuration to create the new scene with.
-        return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
-    }
-
-    func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
-    }
-
-
 }
 

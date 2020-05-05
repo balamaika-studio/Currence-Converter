@@ -16,7 +16,7 @@ enum Graph {
                 case getGraphPeriods
                 case getDefaultConverter
                 case updateConverterCurrency
-                case loadGraphData(base: String, relative: String, start: Int)
+                case loadGraphData(base: String, relative: String, period: GraphPeriod)
             }
         }
         struct Response {
@@ -24,7 +24,7 @@ enum Graph {
                 case graphPeriods([GraphPeriod])
                 case defaultConverter(GraphConverterViewModel)
                 case newConverterCurrency(Currency)
-                case graphData([TimeFrameQuote])
+                case graphData([TimeFrameQuote], period: GraphPeriod)
             }
         }
         struct ViewModel {
@@ -60,7 +60,22 @@ struct GraphPeriodInterval {
 }
 
 struct GraphViewModel {
+    var visiableLabels: [Double] = []
     let labels: [Double]
     let data: [Double]
     let dates: [String]
+    
+    private var currentXLabelIndex = 0
+    
+    init(labels: [Double], data: [Double], dates: [String]) {
+        self.labels = labels
+        self.data = data
+        self.dates = dates
+    }
+    
+    mutating func nextXLabel() -> String {
+        let label = dates[currentXLabelIndex]
+        currentXLabelIndex += 1
+        return label
+    }
 }

@@ -34,25 +34,31 @@ class AppNavigationController: UINavigationController {
 
 extension AppNavigationController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-            let statusBarManager = windowScene.statusBarManager else { return }
+        var startColor: UIColor!
+        var endColor: UIColor!
+        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+        
+        switch theme {
+        case .light:
+            startColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+            endColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        case .dark:
+            startColor = theme.backgroundColor
+            endColor = theme.backgroundColor
+        default: break
+        }
         
         let gradient = CAGradientLayer()
-        let startColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
-        let endColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         var bounds = navigationBar.bounds
-        bounds.size.height += statusBarManager.statusBarFrame.height
+        bounds.size.height += statusBarHeight
         gradient.frame = bounds
         gradient.colors = [startColor.cgColor, endColor.cgColor]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 0, y: 1)
-        
         if let image = getImageFrom(gradientLayer: gradient) {
             navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
         }
         themedStatusBarStyle = .lightContent
-        navigationBar.titleTextAttributes = [
-            NSAttributedString.Key.foregroundColor: UIColor.white
-        ]
+        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }

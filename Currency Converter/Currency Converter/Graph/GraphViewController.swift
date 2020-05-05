@@ -109,7 +109,8 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         chartView.delegate = self
         chartView.lineWidth = 2
         chartView.labelFont = UIFont.systemFont(ofSize: 12)
-        chartView.xLabelsTextAlignment = .center
+        chartView.xLabelsTextAlignment = .left
+        chartView.xLabelsSkipLast = true
         chartView.yLabelsOnRightSide = true
         
         converterView.changeCurrencyTapped = self.showChoiceViewController
@@ -130,6 +131,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func setChartData(with graphViewModel: GraphViewModel) {
+        var graphViewModel = graphViewModel
         // Initialize data series and labels
         chartView.removeAllSeries()
         let serieData: [Double] = graphViewModel.data
@@ -141,7 +143,13 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         let padding = (serieData.min()! - midValue) / 2
         chartView.minY = serieData.min()! + padding
         
-        chartView.xLabels = []
+        chartView.xLabels = graphViewModel.visiableLabels
+        chartView.xLabelsFormatter = { index, value in
+            return graphViewModel.visiableLabels.contains(value) ?
+                graphViewModel.nextXLabel() :
+                String()
+        }
+        
         chartView.yLabelsFormatter = { "\(AccuracyManager.shared.formatNumber($1))" }
         chartView.add(series)
     }
@@ -153,6 +161,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     }
 }
 
+// MARK: - Themed
 extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         view.backgroundColor = theme.specificBackgroundColor
@@ -161,6 +170,7 @@ extension GraphViewController: Themed {
     }
 }
 
+// MARK: - ChoiceBackDataPassing
 extension GraphViewController: ChoiceBackDataPassing {
     func getRouter() -> ChoiceDataPassing {
         return router!
@@ -207,6 +217,7 @@ extension GraphViewController: ChartDelegate {
     
 }
 
+// MARK: - UICollectionViewDataSource
 extension GraphViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return periods.count
@@ -226,6 +237,7 @@ extension GraphViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
 extension GraphViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PeriodCollectionViewCell else { return }
@@ -233,10 +245,10 @@ extension GraphViewController: UICollectionViewDelegate {
         cell.isSelected = true
         let base = converterView.baseCurrency.currency
         let relative = converterView.relativeCurrency.currency
-        let startInterval = periods[indexPath.row].interval
+        let graphPeriod = periods[indexPath.row]
         interactor?.makeRequest(request: .loadGraphData(base: base,
                                                         relative: relative,
-                                                        start: startInterval))
+                                                        period: graphPeriod))
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -245,6 +257,7 @@ extension GraphViewController: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UIViewControllerTransitioningDelegate
 extension GraphViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)

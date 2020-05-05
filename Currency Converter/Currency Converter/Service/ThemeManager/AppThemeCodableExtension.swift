@@ -26,101 +26,72 @@ extension AppTheme: Codable {
         
         case shadowOpacity
         case searchTextColor
+        case searchTextFieldColor
+        case segmentedControlTintColor
     }
     
     // MARK: - Decoder
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
         let themeId = try container.decode(String.self, forKey: .themeId)
-        
-        let barBackgroundColorData = try container.decode(Data.self,
-                                                          forKey: .barBackgroundColor)
-        let backgroundColorData = try container.decode(Data.self,
-                                                          forKey: .backgroundColor)
-        let specificBackgroundColorData = try container.decode(Data.self,
-                                                               forKey: .specificBackgroundColor)
-        let backgroundConverterColorData = try container.decode(Data.self,
-                                                                forKey: .backgroundConverterColor)
-        
-        let tableCellSelectionColorData = try container.decode(Data.self,
-                                                               forKey: .tableCellSelectionColor)
-        let collectionCellSelectionColorData = try container.decode(Data.self,
-                                                                    forKey: .collectionCellSelectionColor)
-        
-        let textColorData = try container.decode(Data.self,
-                                             forKey: .textColor)
-        let subtitleColorData = try container.decode(Data.self,
-                                                 forKey: .subtitleColor)
-        let unselectedSwitchTextColorData = try container.decode(Data.self,
-                                                             forKey: .unselectedSwitchTextColor)
-        
-        let shadowOpacity = try container.decode(Float.self,
-                                                 forKey: .shadowOpacity)
-        let searchTextColorData = try container.decode(Data.self,
-                                                   forKey: .searchTextColor)
+        let shadowOpacity = try container.decode(Float.self, forKey: .shadowOpacity)
         
         self.themeId = themeId
-        
-        barBackgroundColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(barBackgroundColorData) as? UIColor ?? UIColor.black
-        backgroundColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(backgroundColorData) as? UIColor ?? UIColor.black
-        specificBackgroundColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(specificBackgroundColorData) as? UIColor ?? UIColor.black
-        backgroundConverterColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(backgroundConverterColorData) as? UIColor ?? UIColor.black
-        
-        tableCellSelectionColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(tableCellSelectionColorData) as? UIColor ?? UIColor.black
-        collectionCellSelectionColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(collectionCellSelectionColorData) as? UIColor ?? UIColor.black
-        
-        textColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(textColorData) as? UIColor ?? UIColor.black
-        subtitleColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(subtitleColorData) as? UIColor ?? UIColor.black
-        unselectedSwitchTextColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(unselectedSwitchTextColorData) as? UIColor ?? UIColor.black
-        
         self.shadowOpacity = shadowOpacity
-        searchTextColor = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(searchTextColorData) as? UIColor ?? UIColor.black
+        
+        barBackgroundColor = try container.decode(CodableColor.self, forKey: .barBackgroundColor).color
+        backgroundColor = try container.decode(CodableColor.self, forKey: .backgroundColor).color
+        specificBackgroundColor = try container.decode(CodableColor.self, forKey: .specificBackgroundColor).color
+        backgroundConverterColor = try container.decode(CodableColor.self, forKey: .backgroundConverterColor).color
+        
+        tableCellSelectionColor = try container.decode(CodableColor.self, forKey: .tableCellSelectionColor).color
+        collectionCellSelectionColor = try container.decode(CodableColor.self, forKey: .collectionCellSelectionColor).color
+        
+        textColor = try container.decode(CodableColor.self, forKey: .textColor).color
+        subtitleColor = try container.decode(CodableColor.self, forKey: .subtitleColor).color
+        unselectedSwitchTextColor = try container.decode(CodableColor.self, forKey: .unselectedSwitchTextColor).color
+        
+        searchTextColor = try container.decode(CodableColor.self, forKey: .searchTextColor).color
+        searchTextFieldColor = try container.decode(CodableColor.self,
+            forKey: .searchTextFieldColor).color
+        segmentedControlTintColor = try container.decode(CodableColor.self,
+            forKey: .segmentedControlTintColor).color
     }
     
     // MARK: - Encoder
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
-
-        let barBackgroundColorData = try NSKeyedArchiver.archivedData(withRootObject: barBackgroundColor, requiringSecureCoding: false)
-        let backgroundColorData = try NSKeyedArchiver.archivedData(withRootObject: backgroundColor, requiringSecureCoding: false)
-        let specificBackgroundColorData = try NSKeyedArchiver.archivedData(withRootObject: specificBackgroundColor, requiringSecureCoding: false)
-        let backgroundConverterColorData = try NSKeyedArchiver.archivedData(withRootObject: backgroundConverterColor, requiringSecureCoding: false)
-        
-        let tableCellSelectionColorData = try NSKeyedArchiver.archivedData(withRootObject: tableCellSelectionColor, requiringSecureCoding: false)
-        let collectionCellSelectionColorData = try NSKeyedArchiver.archivedData(withRootObject: collectionCellSelectionColor, requiringSecureCoding: false)
-        
-        let textColorData = try NSKeyedArchiver.archivedData(withRootObject: textColor, requiringSecureCoding: false)
-        let subtitleColorData = try NSKeyedArchiver.archivedData(withRootObject: subtitleColor, requiringSecureCoding: false)
-        let unselectedSwitchTextColorData = try NSKeyedArchiver.archivedData(withRootObject: unselectedSwitchTextColor, requiringSecureCoding: false)
-        
-        let searchTextColorData = try NSKeyedArchiver.archivedData(withRootObject: searchTextColor, requiringSecureCoding: false)
-        
         
         try container.encode(themeId, forKey: .themeId)
         try container.encode(shadowOpacity, forKey: .shadowOpacity)
         
-        
-        try container.encode(barBackgroundColorData,
+        try container.encode(CodableColor(color: barBackgroundColor),
                              forKey: .barBackgroundColor)
-        try container.encode(backgroundColorData,
+        try container.encode(CodableColor(color: backgroundColor),
                              forKey: .backgroundColor)
-        try container.encode(specificBackgroundColorData,
+        try container.encode(CodableColor(color: specificBackgroundColor),
                              forKey: .specificBackgroundColor)
-        try container.encode(backgroundConverterColorData,
+        try container.encode(CodableColor(color: backgroundConverterColor),
                              forKey: .backgroundConverterColor)
         
-        try container.encode(tableCellSelectionColorData,
+        try container.encode(CodableColor(color: tableCellSelectionColor),
                              forKey: .tableCellSelectionColor)
-        try container.encode(collectionCellSelectionColorData,
+        try container.encode(CodableColor(color: collectionCellSelectionColor),
                              forKey: .collectionCellSelectionColor)
         
-        try container.encode(textColorData, forKey: .textColor)
-        try container.encode(subtitleColorData, forKey: .subtitleColor)
-        try container.encode(unselectedSwitchTextColorData,
+        try container.encode(CodableColor(color: textColor),
+                             forKey: .textColor)
+        try container.encode(CodableColor(color: subtitleColor),
+                             forKey: .subtitleColor)
+        try container.encode(CodableColor(color: unselectedSwitchTextColor),
                              forKey: .unselectedSwitchTextColor)
         
-        try container.encode(searchTextColorData, forKey: .searchTextColor)
+        try container.encode(CodableColor(color: searchTextColor),
+                             forKey: .searchTextColor)
+        try container.encode(CodableColor(color: searchTextFieldColor),
+                             forKey: .searchTextFieldColor)
+        try container.encode(CodableColor(color: segmentedControlTintColor),
+                             forKey: .segmentedControlTintColor)
         
     }
 }

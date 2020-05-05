@@ -76,6 +76,8 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     private func setupView() {
         title = "Избранное"
+        searchBar.backgroundImage = UIImage()
+        searchBar.placeholder = self.setPlaceHolder(placeholder: "Search")
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
@@ -84,16 +86,53 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         tableView.allowsMultipleSelection = true
         tableView.rowHeight = 62
     }
+    
+    private func setPlaceHolder(placeholder: String) -> String {
+        let text = placeholder
+        if text.last! != " " {
+            let maxSize = CGSize(width: UIScreen.main.bounds.size.width - 97, height: 40)
+            // get the size of the text
+            let widthText = text.boundingRect(with: maxSize,
+                                              options: .usesLineFragmentOrigin,
+                                              attributes: nil,
+                                              context: nil).size.width
+            // get the size of one space
+            let widthSpace = " ".boundingRect(with: maxSize,
+                                              options: .usesLineFragmentOrigin,
+                                              attributes: nil,
+                                              context: nil).size.width
+            let spaces = floor((maxSize.width - widthText) / widthSpace)
+            // add the spaces
+            let newText = text + ((Array(repeating: " ",
+                                         count: Int(spaces)).joined(separator: "")))
+            // apply the new text if nescessary
+            if newText != text {
+                return newText
+            }
+        }
+        return placeholder;
+    }
 }
 
+// MARK: - Themed
 extension FavoriteViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
+        var searchTextField: UITextField?
         let searchIcon = theme == .light ?
-        R.image.searchLight() :
-        R.image.searchDark()
-        view.backgroundColor = theme.specificBackgroundColor
-        searchBar.searchTextField.textColor = theme.searchTextColor
+            R.image.searchLight() :
+            R.image.searchDark()
+        
+        if #available(iOS 13.0, *) {
+            searchTextField = searchBar.searchTextField
+        } else {
+            searchTextField = searchBar.value(forKey: "_searchField") as? UITextField
+        }
+        
+        searchBar.barTintColor = theme.specificBackgroundColor
         searchBar.setImage(searchIcon, for: .search, state: .normal)
+        searchTextField?.textColor = theme.searchTextColor
+        searchTextField?.backgroundColor = theme.searchTextFieldColor
+        view.backgroundColor = theme.specificBackgroundColor
         tableView.backgroundColor = .clear
         tableView.reloadData()
     }
