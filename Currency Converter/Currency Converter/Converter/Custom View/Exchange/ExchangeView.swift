@@ -17,7 +17,7 @@ protocol ExchangeViewDeleagte: class {
 class ExchangeView: UIView {
     // MARK: - UI
     @IBOutlet weak var changeCurrencyIcon: UIImageView!
-    @IBOutlet weak var flagImageViw: UIImageView!
+    @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
     @IBOutlet weak var changeCurrencyStack: UIStackView!
@@ -54,7 +54,8 @@ class ExchangeView: UIView {
     }
     
     func configure(with currency: ExchangeCurrency) {
-        flagImageViw.image = UIImage(named: currency.currency.lowercased())
+        let emptyFlag = R.image.emptyFlag()
+        flagImageView.image = UIImage(named: currency.currency.lowercased()) ?? emptyFlag
         currencyLabel.text = currency.currency
         rateLabel.text = currency.regardingRate
         viewModel = currency

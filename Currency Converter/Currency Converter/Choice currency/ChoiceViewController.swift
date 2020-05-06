@@ -87,6 +87,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
 
 extension ChoiceViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
+        tableView.backgroundColor = theme.specificBackgroundColor
         view.backgroundColor = theme.specificBackgroundColor
         tableView.reloadData()
     }

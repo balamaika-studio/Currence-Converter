@@ -28,7 +28,8 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
     }
     
     func configure(with viewModel: ChoiceCurrencyViewModel) {
-        let image = UIImage(named: viewModel.currency.lowercased())
+        let emptyFlag = R.image.emptyFlag()
+        let image = UIImage(named: viewModel.currency.lowercased()) ?? emptyFlag
         currencyImageView.image = image
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title

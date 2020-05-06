@@ -81,11 +81,12 @@ class RelativeExchangeView: UIView {
     
     // MARK: - Private Methods
     private func setupView() {
-        baseCurrencyImageView.image = UIImage(named: baseCurrency.currency.lowercased())
+        let emptyFlag = R.image.emptyFlag()
+        baseCurrencyImageView.image = UIImage(named: baseCurrency.currency.lowercased()) ?? emptyFlag
         baseCurrencyLabel.text = baseCurrency.currency
         baseCurrencyTitleLabel.text = baseCurrency.title
         
-        relativeCurrencyImageView.image = UIImage(named: relativeCurrency.currency.lowercased())
+        relativeCurrencyImageView.image = UIImage(named: relativeCurrency.currency.lowercased()) ?? emptyFlag
         relativeCurrencyLabel.text = relativeCurrency.currency
         relativeCurrencyTitleLabel.text = relativeCurrency.title
         

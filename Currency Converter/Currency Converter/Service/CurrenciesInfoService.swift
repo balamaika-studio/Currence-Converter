@@ -18,6 +18,7 @@ class CurrenciesInfoService {
         "EUR", "MYR", "BGN", "TRY", "CNY", "NOK", "NZD", "ZAR", "USD",
         "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
     ]
+    private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
     
     private init() { }
     
@@ -38,5 +39,9 @@ class CurrenciesInfoService {
     
     func getGraphSupportedCurrencies() -> [Currency] {
         return graphSupportedSymbols.map { Quote(currency: $0, rate: 0) }
+    }
+    
+    func getPopularCurrencies() -> [Currency] {
+        return popularCurrencies.map { Quote(currency: $0, rate: 0) }
     }
 }
