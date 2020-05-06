@@ -17,6 +17,7 @@
                 <outlet property="converterView" destination="s9b-ID-dZG" id="FSY-DQ-WMW"/>
                 <outlet property="currenciesRateLabel" destination="n7O-T3-bPB" id="kGW-Sl-lxQ"/>
                 <outlet property="labelLeadingMarginConstraint" destination="q7j-Q6-Jud" id="xUv-tr-C1f"/>
+                <outlet property="leadingCollectionViewConstraint" destination="yOl-YB-ddM" id="Aga-vv-qKs"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
         </placeholder>

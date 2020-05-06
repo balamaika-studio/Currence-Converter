@@ -7,7 +7,6 @@
 //
 
 import UIKit
-//import SwiftChart
 import Charts
 
 protocol GraphDisplayLogic: class {
@@ -23,8 +22,8 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     @IBOutlet weak var labelLeadingMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var chartValueLabel: EdgeInsetLabel!
     
-    
     @IBOutlet weak var contenerView: UIView!
+    @IBOutlet weak var leadingCollectionViewConstraint: NSLayoutConstraint!
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -70,9 +69,6 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.addSubview(scrollView)
-        self.edgesForExtendedLayout = UIRectEdge()
-        self.extendedLayoutIncludesOpaqueBars = false
         setupView()
         setUpTheming()
         interactor?.makeRequest(request: .getGraphPeriods)
@@ -87,12 +83,20 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         let indexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
         self.collectionView(collectionView, didSelectItemAt: indexPath)
+        
+        print(traitCollection.horizontalSizeClass)
     }
     
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showGraphPeriods(let periods):
             self.periods = periods
+            let padding = leadingCollectionViewConstraint.constant
+            let sizeClass = traitCollection.horizontalSizeClass
+            let layout = PeriodCollectionViewHelper.shared.getLayout(for: sizeClass,
+                                                                     itemsCount: periods.count,
+                                                                     padding: padding)
+            collectionView.setCollectionViewLayout(layout, animated: false)
             collectionView.reloadData()
             
         case .showGraphConverter(let viewModel):
@@ -107,6 +111,9 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func setupView() {
+        view.addSubview(scrollView)
+        edgesForExtendedLayout = UIRectEdge()
+        extendedLayoutIncludesOpaqueBars = false
         NSLayoutConstraint.activate([
         scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
         scrollView.topAnchor.constraint(equalTo: converterView.bottomAnchor),

@@ -24,19 +24,6 @@ class PeriodService {
         return periods
             .map { GraphPeriod(interval: $0.rawValue, title: $0.description) }
     }
-    
-//    private func normalizeKeyLength(_ peiod: Period) -> periodTuple {
-//        var normalizedkey = peiod.description
-//        if peiod.description.count < normalKeyLength {
-//            guard let spaceIndex = normalizedkey.firstIndex(of: " ") else {
-//                fatalError("Can't find space in period data.")
-//            }
-//            let spaces = String(repeating: " ",
-//                                count: normalKeyLength - peiod.description.count)
-//            normalizedkey.insert(Character(spaces), at: spaceIndex)
-//        }
-//        return (key: normalizedkey, value: peiod.rawValue)
-//    }
 }
 
 enum Period: Int {
