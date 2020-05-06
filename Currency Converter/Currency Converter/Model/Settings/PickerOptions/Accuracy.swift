@@ -37,10 +37,10 @@ extension Accuracy: CustomStringConvertible {
     var description: String {
         var result = "\(self.rawValue) "
         switch self {
-        case .one: result += "десятичный знак"
+        case .one: result += R.string.localizable.decimalPlace()
         case .two: fallthrough
         case .three: fallthrough
-        case .four: result += "десятичных знака"
+        case .four: result += R.string.localizable.decimalPlaces()
         }
         return result
     }

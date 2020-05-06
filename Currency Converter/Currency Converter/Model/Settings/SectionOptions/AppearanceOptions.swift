@@ -16,9 +16,9 @@ enum AppearanceOptions: Int, CaseIterable {
 extension AppearanceOptions: SectionCellType {
     var detailText: String {
         switch self {
-        case .accuracy: return "2 десятичных знака"
-        case .clearField: return "Включено"
-        case .theme: return "Отключено"
+        case .accuracy: return "2 \(R.string.localizable.decimalPlaces())"
+        case .clearField: return R.string.localizable.enabled().uppercased()
+        case .theme: return R.string.localizable.disabled().uppercased()
         }
     }
     
@@ -32,9 +32,9 @@ extension AppearanceOptions: SectionCellType {
     
     var description: String {
         switch self {
-        case .accuracy: return "Десятичные знаки"
-        case .clearField: return "Очищать сумму при наборе"
-        case .theme: return "Включить темную тему"
+        case .accuracy: return R.string.localizable.accuracyTitle()
+        case .clearField: return R.string.localizable.clearAmount()
+        case .theme: return R.string.localizable.theme()
         }
     }
 }

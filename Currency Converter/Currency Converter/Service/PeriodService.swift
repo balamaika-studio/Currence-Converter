@@ -22,22 +22,21 @@ class PeriodService {
     
     func buildGraphPeriodModels() -> [GraphPeriod] {
         return periods
-            .map(normalizeKeyLength)
-            .map { GraphPeriod(interval: $0.value, title: $0.key) }
+            .map { GraphPeriod(interval: $0.rawValue, title: $0.description) }
     }
     
-    private func normalizeKeyLength(_ peiod: Period) -> periodTuple {
-        var normalizedkey = peiod.description
-        if peiod.description.count < normalKeyLength {
-            guard let spaceIndex = normalizedkey.firstIndex(of: " ") else {
-                fatalError("Can't find space in period data.")
-            }
-            let spaces = String(repeating: " ",
-                                count: normalKeyLength - peiod.description.count)
-            normalizedkey.insert(Character(spaces), at: spaceIndex)
-        }
-        return (key: normalizedkey, value: peiod.rawValue)
-    }
+//    private func normalizeKeyLength(_ peiod: Period) -> periodTuple {
+//        var normalizedkey = peiod.description
+//        if peiod.description.count < normalKeyLength {
+//            guard let spaceIndex = normalizedkey.firstIndex(of: " ") else {
+//                fatalError("Can't find space in period data.")
+//            }
+//            let spaces = String(repeating: " ",
+//                                count: normalKeyLength - peiod.description.count)
+//            normalizedkey.insert(Character(spaces), at: spaceIndex)
+//        }
+//        return (key: normalizedkey, value: peiod.rawValue)
+//    }
 }
 
 enum Period: Int {
@@ -54,13 +53,13 @@ extension Period: CustomStringConvertible {
     var description: String {
         var result: String
         switch self {
-        case .week: result = "5 дней"
-        case .halfMonth: result = "15 дней"
-        case .month: result = "1 мес"
-        case .threeMonths: result = "3 мес"
-        case .halfYear: result = "6 мес"
-        case .nineMonths: result = "9 мес"
-        case .year: result = "1 год"
+        case .week: result = "5 \(R.string.localizable.days())"
+        case .halfMonth: result = "15 \(R.string.localizable.days())"
+        case .month: result = "1 \(R.string.localizable.months())"
+        case .threeMonths: result = "3 \(R.string.localizable.months())"
+        case .halfYear: result = "6 \(R.string.localizable.months())"
+        case .nineMonths: result = "9 \(R.string.localizable.months())"
+        case .year: result = "1 \(R.string.localizable.year())"
         }
         return result
     }

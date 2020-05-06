@@ -31,8 +31,8 @@ extension SwitchState: RawRepresentable {
 extension SwitchState: CustomStringConvertible {
     var description: String {
         switch self {
-        case .on: return "включено"
-        case .off: return "отключено"
+        case .on: return R.string.localizable.enabled()
+        case .off: return R.string.localizable.disabled()
         }
     }
 }

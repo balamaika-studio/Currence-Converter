@@ -19,9 +19,13 @@ class ConverterPresenter: ConverterPresentationLogic {
     
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd, yyyy, HH:mm a"
-        dateFormatter.amSymbol = "AM"
-        dateFormatter.pmSymbol = "PM"
+        if Locale.current.identifier.starts(with: "ru") {
+            dateFormatter.dateFormat = "LLL dd, yyyy, HH:mm"
+        } else {
+            dateFormatter.dateFormat = "LLL dd, yyyy, HH:mm a"
+            dateFormatter.amSymbol = "AM"
+            dateFormatter.pmSymbol = "PM"
+        }
         return dateFormatter
     }()
     
@@ -105,6 +109,6 @@ class ConverterPresenter: ConverterPresentationLogic {
     private func buildUpdatedTitle(from timestamp: Int) -> String {
         let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
         let formattedDate = dateFormatter.string(from: date)
-        return "Updated - \(formattedDate)"
+        return "\(R.string.localizable.updated()) - \(formattedDate)"
     }
 }

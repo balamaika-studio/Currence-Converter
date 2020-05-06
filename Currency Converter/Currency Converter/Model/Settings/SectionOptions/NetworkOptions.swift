@@ -15,7 +15,7 @@ enum NetworkOptions: Int, CaseIterable {
 extension NetworkOptions: SectionCellType {
     var detailText: String {
         switch self {
-        case .autoUpdate: return "Автоматическое обновление включено"
+        case .autoUpdate: return "\(R.string.localizable.automaticUpdate()) \(R.string.localizable.enabled())"
         }
     }
     
@@ -27,7 +27,7 @@ extension NetworkOptions: SectionCellType {
     
     var description: String {
         switch self {
-        case .autoUpdate: return "Автоматическое обновление"
+        case .autoUpdate: return R.string.localizable.automaticUpdate()
         }
     }
 }

@@ -16,8 +16,8 @@ enum SettingsSection: Int, CaseIterable {
 extension SettingsSection: CustomStringConvertible {
     var description: String {
         switch self {
-        case .network: return "Сеть"
-        case .appearance: return "Вид"
+        case .network: return R.string.localizable.networkSectionTitle()
+        case .appearance: return R.string.localizable.appearanceSectionTitle()
         }
     }
 }

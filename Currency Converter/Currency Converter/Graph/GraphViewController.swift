@@ -134,6 +134,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         chartView.pinchZoomEnabled = false
         chartView.setScaleEnabled(false)
         chartView.legend.enabled = false
+        chartView.noDataText = R.string.localizable.noGraphData()
 
         // YAxis
         let leftYAxis = chartView.getAxis(.left)
@@ -211,6 +212,7 @@ extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         view.backgroundColor = theme.specificBackgroundColor
         currenciesRateLabel.textColor = theme.textColor
+        chartView.noDataTextColor = theme.textColor
     }
 }
 

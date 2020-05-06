@@ -61,7 +61,7 @@ class GraphPresenter: GraphPresentationLogic {
             dates = responseDates.compactMap { dateFormatter.string(from: $0) }
 
         default:
-            dateFormatter.dateFormat = "MMM."
+            dateFormatter.dateFormat = "LLL"
             dates = responseDates.compactMap { dateFormatter.string(from: $0) }
         }
         

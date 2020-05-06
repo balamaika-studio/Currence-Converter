@@ -39,7 +39,7 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
             let interval = buildGraphRequestInterval(period: period)
             networkManager.getQuotes(base: base, currencies: [relative], start: interval.startDate, end: interval.endDate) { response, errorMessage in
                 guard let answer = response?.quotes else {
-                    print(errorMessage)
+                    print(errorMessage ?? "Error Load graph data")
                     return
                 }
                 self.presenter?.presentData(response: .graphData(answer.sorted(by: <),

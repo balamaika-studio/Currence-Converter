@@ -1,0 +1,66 @@
+/* 
+  Localizable.strings
+  Currency Converter
+
+  Created by Кирилл Клименков on 5/6/20.
+  Copyright © 2020 Kiryl Klimiankou. All rights reserved.
+*/
+
+// MARK: - Converter
+"Converter title" = "Конвертер валют";
+"Updated" = "Обновлено";
+"Empty state title" = "Добавьте дополнительные валюты в разделе «Избранное»";
+"Converter tabBar item" = "Конвертер";
+
+// MARK: - Favorite
+"Favorite title" = "Избранное";
+"Search placeholder" = "Поиск";
+"Favorite tabBar item" = "Избранное";
+
+// MARK: - Exchanges
+"Exchanges title" = "Курс валют";
+"Exchanges tabBar item" = "Курс валют";
+
+// segmented controll
+"Rates" = "Курсы";
+"Choice of currencies." = "Выбор валют";
+
+// table header
+"Pairs" = "Основные пары";
+"Rate" = "Курс";
+
+// MARK: - Graph
+"Graph title" = "Графики";
+"Graph tabBar item" = "Графики";
+"No graph data" = "Нет данных графика";
+
+// periods collection view
+"Days" = "дней";
+"Months" = "мес";
+"Year" = "год";
+
+// MARK: - Settings
+"Settings title" = "Настройки";
+"Settings tabBar item" = "Настройки";
+
+// setting states
+"Enabled" = "включено";
+"Disabled" = "отключено";
+
+// Mark: network
+"Network section title" = "Сеть";
+"Automatic update" = "Автоматическое обновление";
+
+// Mark: appearance
+"Appearance section title" = "Вид";
+
+// accuracy
+"Accuracy title" = "Десятичные знаки";
+"Decimal place" = "десятичный знак";
+"Decimal places" = "десятичных знака";
+
+// Clear fileds
+"Clear amount" = "Очищать сумму при наборе";
+
+// theme
+"Theme" = "Включить темную тему";

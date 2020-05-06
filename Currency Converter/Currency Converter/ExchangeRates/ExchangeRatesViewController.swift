@@ -80,8 +80,10 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
     private func setupSegmentedControl() {
         // Configure Segmented Control
         segmentedControl.removeAllSegments()
-        segmentedControl.insertSegment(withTitle: "Курсы", at: 0, animated: false)
-        segmentedControl.insertSegment(withTitle: "Выбор валют", at: 1, animated: false)
+        segmentedControl.insertSegment(withTitle: R.string.localizable.rates(),
+                                       at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: R.string.localizable.choiceOfCurrencies(),
+                                       at: 1, animated: false)
         segmentedControl.addTarget(self,
                                    action: #selector(selectionDidChange(_:)),
                                    for: .valueChanged)

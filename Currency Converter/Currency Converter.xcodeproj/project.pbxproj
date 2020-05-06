@@ -61,6 +61,7 @@
 		D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFEE244E33C300014800 /* SectionCellType.swift */; };
 		D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFF0244E341200014800 /* NetworkOptions.swift */; };
 		D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D163AFF2244E352B00014800 /* AppearanceOptions.swift */; };
+		D164543024630203009B6E75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D164543224630203009B6E75 /* Localizable.strings */; };
 		D167E44E24620BEA0069683A /* ChartXValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */; };
 		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
 		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
@@ -212,6 +213,10 @@
 		D163AFEE244E33C300014800 /* SectionCellType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionCellType.swift; sourceTree = "<group>"; };
 		D163AFF0244E341200014800 /* NetworkOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkOptions.swift; sourceTree = "<group>"; };
 		D163AFF2244E352B00014800 /* AppearanceOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceOptions.swift; sourceTree = "<group>"; };
+		D164542C24630133009B6E75 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
+		D164542D24630134009B6E75 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		D164543124630203009B6E75 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D164543324630208009B6E75 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXValueFormatter.swift; sourceTree = "<group>"; };
 		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
 		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
@@ -351,6 +356,7 @@
 				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
 				595FC0C4241FA40600B4EEE4 /* LaunchScreen.storyboard */,
 				595FC0C7241FA40600B4EEE4 /* Info.plist */,
+				D164543224630203009B6E75 /* Localizable.strings */,
 			);
 			path = "Currency Converter";
 			sourceTree = "<group>";
@@ -853,6 +859,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 595FC0AD241FA40400B4EEE4;
 			productRefGroup = 595FC0B7241FA40400B4EEE4 /* Products */;
@@ -883,6 +890,7 @@
 				D19A9378242CFF6E00DDCEA9 /* FavoriteTableViewCell.xib in Resources */,
 				D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */,
 				595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */,
+				D164543024630203009B6E75 /* Localizable.strings in Resources */,
 				D1E1A7662449F5240051E51D /* GraphViewController.xib in Resources */,
 				595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */,
 				D19A9373242CF64000DDCEA9 /* FavoriteViewController.xib in Resources */,
@@ -1125,6 +1133,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				595FC0C0241FA40400B4EEE4 /* Base */,
+				D164542C24630133009B6E75 /* ru */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -1133,8 +1142,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				595FC0C5241FA40600B4EEE4 /* Base */,
+				D164542D24630134009B6E75 /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D164543224630203009B6E75 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D164543124630203009B6E75 /* en */,
+				D164543324630208009B6E75 /* ru */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1144,6 +1163,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1204,6 +1224,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";

@@ -76,7 +76,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     private func setupView() {
         searchBar.backgroundImage = UIImage()
-        searchBar.placeholder = self.setPlaceHolder(placeholder: "Search")
+        searchBar.placeholder = setPlaceHolder(placeholder: R.string.localizable.searchPlaceholder())
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self

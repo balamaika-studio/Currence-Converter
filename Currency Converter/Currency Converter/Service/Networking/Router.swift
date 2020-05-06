@@ -60,7 +60,8 @@ class Router<EndPoint: EndPointType>: NetworkRouter {
                 throw error
             }
             
-        case .requestParametersAndHeaders(let bodyParameters, let bodyEncoding, let urlParameters, let additionHeaders):
+        // let bodyParameters, let bodyEncoding, let urlParameters, let additionHeaders
+        case .requestParametersAndHeaders(_, _, _, _):
             break
         }
         return request

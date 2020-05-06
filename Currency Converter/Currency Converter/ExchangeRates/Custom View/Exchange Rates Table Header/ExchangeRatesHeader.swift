@@ -15,7 +15,7 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Основные пары"
+        label.text = R.string.localizable.pairs()
         return label
     }()
     
@@ -23,7 +23,7 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = "Курс"
+        label.text = R.string.localizable.rate()
         return label
     }()
     
