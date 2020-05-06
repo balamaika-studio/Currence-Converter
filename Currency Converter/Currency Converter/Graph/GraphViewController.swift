@@ -82,9 +82,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         }
         let indexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
-        self.collectionView(collectionView, didSelectItemAt: indexPath)
-        
-        print(traitCollection.horizontalSizeClass)
+        self.collectionView(collectionView, didSelectItemAt: indexPath)        
     }
     
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData) {

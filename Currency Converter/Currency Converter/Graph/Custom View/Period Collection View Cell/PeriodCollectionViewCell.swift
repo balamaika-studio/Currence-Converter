@@ -10,6 +10,10 @@ import UIKit
 
 class PeriodCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var periodLabel: UILabel!
+    @IBOutlet weak var titlePeriodLabel: UILabel!
+    
+    @IBOutlet weak var periodCenterYConstraint: NSLayoutConstraint!
+    @IBOutlet weak var titleCenterYConstraint: NSLayoutConstraint!
     
     private let gradientName = "gradient"
     
@@ -27,11 +31,25 @@ class PeriodCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with viewModel: GraphPeriod) {
-        periodLabel.text = viewModel.title
+        periodLabel.text = viewModel.period
+        titlePeriodLabel.text = viewModel.title
     }
 
     private func setupView() {
         layer.cornerRadius = bounds.width / 10
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.width / 5
+        let fontSize = bounds.width * 25 / 100
+        periodLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        titlePeriodLabel.font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+        
+        let centerPadding = bounds.width * 15 / 100
+        periodCenterYConstraint.constant = -centerPadding
+        titleCenterYConstraint.constant = centerPadding
+        updateConstraintsIfNeeded()
     }
     
     private func select() {
@@ -43,6 +61,7 @@ class PeriodCollectionViewCell: UICollectionViewCell {
         gradientLayer.colors = [startColor.cgColor, endColor.cgColor]
         layer.insertSublayer(gradientLayer, at: 0)
         periodLabel.textColor = .white
+        titlePeriodLabel.textColor = .white
     }
     
     private func deselect() {
@@ -50,6 +69,7 @@ class PeriodCollectionViewCell: UICollectionViewCell {
             .black :
             .white
         periodLabel.textColor = unselecetedColor
+        titlePeriodLabel.textColor = unselecetedColor
         let gradientLayer = layer.sublayers?
             .filter { $0.name == gradientName }
             .first
@@ -62,5 +82,6 @@ extension PeriodCollectionViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         backgroundColor = theme.collectionCellSelectionColor
         periodLabel.textColor = theme.textColor
+        titlePeriodLabel.textColor = theme.textColor
     }
 }

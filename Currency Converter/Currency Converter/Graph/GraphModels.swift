@@ -46,6 +46,7 @@ protocol Interval {
 
 struct GraphPeriod: Interval {
     var interval: Int
+    let period: String
     let title: String
 }
 

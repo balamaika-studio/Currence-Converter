@@ -21,8 +21,12 @@ class PeriodService {
     private init() { }
     
     func buildGraphPeriodModels() -> [GraphPeriod] {
-        return periods
-            .map { GraphPeriod(interval: $0.rawValue, title: $0.description) }
+        return periods.map { period in
+            let periodData = period.description.split(separator: " ").compactMap { String($0) }
+            let numberPeriod = periodData.first!
+            let title = periodData.last!
+            return GraphPeriod(interval: period.rawValue, period: numberPeriod, title: title)
+        }
     }
 }
 
