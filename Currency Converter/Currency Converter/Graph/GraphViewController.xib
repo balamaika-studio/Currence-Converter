@@ -13,9 +13,10 @@
                 <outlet property="chartValueLabel" destination="p1V-Le-she" id="zPg-D1-27V"/>
                 <outlet property="chartView" destination="i67-re-yhX" id="Oag-kw-u4X"/>
                 <outlet property="collectionView" destination="wx7-8d-5Qy" id="JOz-Uv-BJF"/>
+                <outlet property="contenerView" destination="GcT-Yb-kuj" id="4Lf-Um-8p2"/>
                 <outlet property="converterView" destination="s9b-ID-dZG" id="FSY-DQ-WMW"/>
                 <outlet property="currenciesRateLabel" destination="n7O-T3-bPB" id="kGW-Sl-lxQ"/>
-                <outlet property="labelLeadingMarginConstraint" destination="yHm-Ad-u8h" id="RFh-2x-gLO"/>
+                <outlet property="labelLeadingMarginConstraint" destination="q7j-Q6-Jud" id="xUv-tr-C1f"/>
                 <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
             </connections>
         </placeholder>
@@ -24,26 +25,73 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i67-re-yhX" customClass="LineChartView" customModule="Charts">
-                    <rect key="frame" x="20" y="178" width="280" height="233.5"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="i67-re-yhX" secondAttribute="height" multiplier="6:5" id="NUZ-Gy-ENC"/>
-                    </constraints>
-                </view>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wx7-8d-5Qy">
-                    <rect key="frame" x="20" y="419.5" width="280" height="60"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GcT-Yb-kuj">
+                    <rect key="frame" x="8" y="96" width="320" height="452"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i67-re-yhX" customClass="LineChartView" customModule="Charts">
+                            <rect key="frame" x="20" y="86.5" width="280" height="233.5"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="i67-re-yhX" secondAttribute="height" multiplier="6:5" id="NUZ-Gy-ENC"/>
+                            </constraints>
+                        </view>
+                        <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="wx7-8d-5Qy">
+                            <rect key="frame" x="20" y="328" width="280" height="80"/>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="80" id="Vn9-wP-RlH"/>
+                            </constraints>
+                            <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="6" id="6Lh-PU-6QK">
+                                <size key="itemSize" width="50" height="50"/>
+                                <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            </collectionViewFlowLayout>
+                        </collectionView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1USD = xEUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7O-T3-bPB">
+                            <rect key="frame" x="108.5" y="25" width="103" height="20.5"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1V-Le-she" customClass="EdgeInsetLabel" customModule="Currency_Converter" customModuleProvider="target">
+                            <rect key="frame" x="20" y="70.5" width="0.0" height="0.0"/>
+                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="leftTextInset">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="rightTextInset">
+                                    <real key="value" value="16"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="topTextInset">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                                <userDefinedRuntimeAttribute type="number" keyPath="bottomTextInset">
+                                    <real key="value" value="8"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </label>
+                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="NiL-Za-axw"/>
+                        <constraint firstItem="n7O-T3-bPB" firstAttribute="top" secondItem="GcT-Yb-kuj" secondAttribute="top" constant="25" id="0kf-fg-5ip"/>
+                        <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="n7O-T3-bPB" secondAttribute="bottom" constant="41" id="5Ep-2i-fMY"/>
+                        <constraint firstItem="wx7-8d-5Qy" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="bottom" constant="8" symbolic="YES" id="ACK-LP-VtX"/>
+                        <constraint firstAttribute="trailing" secondItem="i67-re-yhX" secondAttribute="trailing" constant="20" id="J54-Ep-AB7"/>
+                        <constraint firstItem="wx7-8d-5Qy" firstAttribute="centerX" secondItem="GcT-Yb-kuj" secondAttribute="centerX" id="Ocr-fE-VD8"/>
+                        <constraint firstItem="i67-re-yhX" firstAttribute="leading" secondItem="GcT-Yb-kuj" secondAttribute="leading" constant="20" id="PHm-I8-N7w"/>
+                        <constraint firstItem="i67-re-yhX" firstAttribute="centerY" secondItem="GcT-Yb-kuj" secondAttribute="centerY" multiplier="0.9" id="S4y-Xi-dHc"/>
+                        <constraint firstItem="i67-re-yhX" firstAttribute="centerX" secondItem="GcT-Yb-kuj" secondAttribute="centerX" id="a1M-iM-kFW"/>
+                        <constraint firstItem="p1V-Le-she" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="top" constant="-16" id="pnX-zv-JER"/>
+                        <constraint firstItem="p1V-Le-she" firstAttribute="leading" secondItem="i67-re-yhX" secondAttribute="leading" id="q7j-Q6-Jud"/>
+                        <constraint firstAttribute="trailing" secondItem="wx7-8d-5Qy" secondAttribute="trailing" constant="20" id="qau-tZ-Q0H"/>
+                        <constraint firstItem="n7O-T3-bPB" firstAttribute="centerX" secondItem="GcT-Yb-kuj" secondAttribute="centerX" id="vBF-Tg-aj5"/>
+                        <constraint firstItem="wx7-8d-5Qy" firstAttribute="leading" secondItem="GcT-Yb-kuj" secondAttribute="leading" constant="20" id="yOl-YB-ddM"/>
                     </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="6" id="6Lh-PU-6QK">
-                        <size key="itemSize" width="50" height="50"/>
-                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                    </collectionViewFlowLayout>
-                </collectionView>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="s9b-ID-dZG" customClass="RelativeExchangeView" customModule="Currency_Converter" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="76"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -51,58 +99,19 @@
                         <constraint firstAttribute="height" constant="76" id="FwT-0s-ZRp"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1USD = xEUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n7O-T3-bPB">
-                    <rect key="frame" x="108.5" y="112" width="103" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1V-Le-she" customClass="EdgeInsetLabel" customModule="Currency_Converter" customModuleProvider="target">
-                    <rect key="frame" x="20" y="178" width="0.0" height="0.0"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
-                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="number" keyPath="leftTextInset">
-                            <real key="value" value="16"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="rightTextInset">
-                            <real key="value" value="16"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="topTextInset">
-                            <real key="value" value="8"/>
-                        </userDefinedRuntimeAttribute>
-                        <userDefinedRuntimeAttribute type="number" keyPath="bottomTextInset">
-                            <real key="value" value="8"/>
-                        </userDefinedRuntimeAttribute>
-                    </userDefinedRuntimeAttributes>
-                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="i67-re-yhX" secondAttribute="trailing" constant="20" id="2x6-mD-Y8w"/>
-                <constraint firstItem="wx7-8d-5Qy" firstAttribute="top" secondItem="i67-re-yhX" secondAttribute="bottom" constant="8" symbolic="YES" id="2ys-DG-3gB"/>
-                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="wx7-8d-5Qy" secondAttribute="trailing" constant="20" id="8FX-87-HVL"/>
-                <constraint firstItem="n7O-T3-bPB" firstAttribute="top" secondItem="s9b-ID-dZG" secondAttribute="bottom" constant="36" id="B3m-u3-TZ7"/>
+                <constraint firstItem="GcT-Yb-kuj" firstAttribute="trailing" secondItem="Lbm-Zq-2cr" secondAttribute="trailing" constant="8" placeholder="YES" id="BXB-Nu-7vp"/>
                 <constraint firstItem="s9b-ID-dZG" firstAttribute="top" secondItem="Lbm-Zq-2cr" secondAttribute="top" id="F9e-cY-DZE"/>
-                <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="p1V-Le-she" secondAttribute="bottom" id="GOj-Ah-Bgg"/>
-                <constraint firstItem="i67-re-yhX" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="LD4-0t-6ET"/>
+                <constraint firstItem="Lbm-Zq-2cr" firstAttribute="bottom" secondItem="GcT-Yb-kuj" secondAttribute="bottom" constant="20" placeholder="YES" id="KHq-NL-vof"/>
                 <constraint firstItem="s9b-ID-dZG" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" id="LTK-Me-XI5"/>
-                <constraint firstItem="wx7-8d-5Qy" firstAttribute="height" secondItem="i67-re-yhX" secondAttribute="height" multiplier="1:4" id="TL6-0r-joC"/>
-                <constraint firstItem="n7O-T3-bPB" firstAttribute="centerX" secondItem="Lbm-Zq-2cr" secondAttribute="centerX" id="Tc0-1o-Mxl"/>
+                <constraint firstItem="GcT-Yb-kuj" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="8" placeholder="YES" id="RjC-By-Gg1"/>
+                <constraint firstItem="GcT-Yb-kuj" firstAttribute="top" secondItem="s9b-ID-dZG" secondAttribute="bottom" constant="20" placeholder="YES" id="aU0-rX-jLt"/>
                 <constraint firstItem="Lbm-Zq-2cr" firstAttribute="trailing" secondItem="s9b-ID-dZG" secondAttribute="trailing" id="lR1-rt-8Z1"/>
-                <constraint firstItem="wx7-8d-5Qy" firstAttribute="leading" secondItem="Lbm-Zq-2cr" secondAttribute="leading" constant="20" id="o6g-or-AgD"/>
-                <constraint firstItem="i67-re-yhX" firstAttribute="top" secondItem="n7O-T3-bPB" secondAttribute="bottom" constant="45" id="qmW-GO-KAq"/>
-                <constraint firstItem="wx7-8d-5Qy" firstAttribute="centerX" secondItem="Lbm-Zq-2cr" secondAttribute="centerX" id="uiw-9Z-uk0"/>
-                <constraint firstItem="p1V-Le-she" firstAttribute="leading" secondItem="i67-re-yhX" secondAttribute="leading" id="yHm-Ad-u8h"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="Lbm-Zq-2cr"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="TL6-0r-joC"/>
-                </mask>
-            </variation>
             <point key="canvasLocation" x="461.25" y="398.23943661971833"/>
         </view>
     </objects>

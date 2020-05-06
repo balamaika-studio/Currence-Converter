@@ -43,13 +43,13 @@ extension CurrencyLayerApi: EndPointType {
             return .requestWithParameters(bodyParameters: nil,
                                       bodyEncoding: .urlEncoding,
                                       urlParameters: ["source": source,
-                                                      "access_key": NetworkManager.movieAPIKey])
+                                                      "access_key": NetworkManager.currencyAPIKey])
         
         case .historical(let date):
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
                                           urlParameters: ["date": date,
-                                                          "access_key": NetworkManager.movieAPIKey])
+                                                          "access_key": NetworkManager.currencyAPIKey])
         }
     }
     

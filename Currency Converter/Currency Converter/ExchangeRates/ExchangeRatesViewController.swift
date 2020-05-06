@@ -73,7 +73,6 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
     
     // MARK: - Private Methods
     private func setupView() {
-        title = "Курс Валют"
         setupSegmentedControl()
         updateView(selectedIndex: segmentedControl.selectedSegmentIndex)
     }

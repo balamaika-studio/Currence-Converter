@@ -57,7 +57,6 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Настройки"
         createPickerView()
         setupTableView()
         setUpTheming()

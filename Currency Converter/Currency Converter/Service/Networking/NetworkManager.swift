@@ -18,7 +18,7 @@ struct NetworkManager {
     let currencyLayeRouter = Router<CurrencyLayerApi>()
     let exchangeRatesRouter = Router<ExchangeRatesApi>()
     private let baseCurrency = "EUR"
-    static let movieAPIKey = "816f75b418e0a37e105feaabd5585cc3"
+    static let currencyAPIKey = "53777a00fe92ea3eb514eed3b2e0ed24"
     
     func getQuotes(completion: @escaping (_ response: CurrencyLayerResponse?, _ error: String?) -> Void) {
         currencyLayeRouter.request(.live(source: baseCurrency)) { data, response, error in

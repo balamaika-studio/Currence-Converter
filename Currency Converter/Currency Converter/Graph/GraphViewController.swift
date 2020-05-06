@@ -23,6 +23,17 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     @IBOutlet weak var labelLeadingMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var chartValueLabel: EdgeInsetLabel!
     
+    
+    @IBOutlet weak var contenerView: UIView!
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.preservesSuperviewLayoutMargins = true
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(contenerView)
+        return scrollView
+    }()
+    
     var interactor: GraphBusinessLogic?
     var router: (GraphRoutingLogic & ChoiceDataPassing)?
     
@@ -59,6 +70,9 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     // MARK: View lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.addSubview(scrollView)
+        self.edgesForExtendedLayout = UIRectEdge()
+        self.extendedLayoutIncludesOpaqueBars = false
         setupView()
         setUpTheming()
         interactor?.makeRequest(request: .getGraphPeriods)
@@ -93,8 +107,21 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func setupView() {
+        NSLayoutConstraint.activate([
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+        scrollView.topAnchor.constraint(equalTo: converterView.bottomAnchor),
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        
+        scrollView.leadingAnchor.constraint(equalTo: contenerView.leadingAnchor),
+        scrollView.topAnchor.constraint(equalTo: contenerView.topAnchor),
+        scrollView.trailingAnchor.constraint(equalTo: contenerView.trailingAnchor),
+        scrollView.bottomAnchor.constraint(equalTo: contenerView.bottomAnchor),
+        
+        contenerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+        ])
+        
         periods = []
-        title = "Графики"
         labelLeadingMarginInitialConstant = labelLeadingMarginConstraint.constant
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -202,6 +229,8 @@ extension GraphViewController: ChoiceBackDataPassing {
 extension GraphViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         let left = highlight.xPx
+        scrollView.isScrollEnabled = false
+        scrollView.touchesShouldCancel(in: chartView)        
         chartValueLabel.backgroundColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9843137255, alpha: 1)
         chartValueLabel.text = "\(AccuracyManager.shared.formatNumber(entry.y))"
         
@@ -219,6 +248,14 @@ extension GraphViewController: ChartViewDelegate {
             constant = rightMargin
         }
         labelLeadingMarginConstraint.constant = constant
+    }
+    
+    func chartViewDidEndPanning(_ chartView: ChartViewBase) {
+        scrollView.isScrollEnabled = true
+    }
+    
+    func chartValueNothingSelected(_ chartView: ChartViewBase) {
+        scrollView.isScrollEnabled = true
     }
 }
 

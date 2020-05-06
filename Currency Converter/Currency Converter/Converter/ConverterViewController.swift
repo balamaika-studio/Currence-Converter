@@ -19,6 +19,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
+    private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
@@ -104,7 +105,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     private func setupView() {
-        title = "Конвертер валют"
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.dataSource = self
@@ -118,6 +118,14 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         converterView.changeCurrencyTapped = self.changeCurrencyTapped
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
         favoriteCurrencies = []
+        
+        gestureRecognizer = UITapGestureRecognizer(target: self,
+                                                   action: #selector(closeKeyboard))
+        view.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc private func closeKeyboard() {
+        view.endEditing(true)
     }
 }
 
