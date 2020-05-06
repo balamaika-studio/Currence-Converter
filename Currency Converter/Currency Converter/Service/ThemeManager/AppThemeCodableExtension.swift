@@ -12,7 +12,10 @@ extension AppTheme: Codable {
     enum CodingKeys: String, CodingKey {
         case themeId
         
+        case barTintColor
+        case barUnselectedTintColor
         case barBackgroundColor
+        
         case backgroundColor
         case specificBackgroundColor
         case backgroundConverterColor
@@ -28,6 +31,7 @@ extension AppTheme: Codable {
         case searchTextColor
         case searchTextFieldColor
         case segmentedControlTintColor
+        case separatorColor
     }
     
     // MARK: - Decoder
@@ -39,7 +43,12 @@ extension AppTheme: Codable {
         self.themeId = themeId
         self.shadowOpacity = shadowOpacity
         
-        barBackgroundColor = try container.decode(CodableColor.self, forKey: .barBackgroundColor).color
+        barTintColor = try container.decode(CodableColor.self, forKey: .barTintColor).color
+        barUnselectedTintColor = try container.decode(CodableColor.self,
+                                                      forKey: .barUnselectedTintColor).color
+        barBackgroundColor = try container.decode(CodableColor.self,
+                                                  forKey: .barBackgroundColor).color
+        
         backgroundColor = try container.decode(CodableColor.self, forKey: .backgroundColor).color
         specificBackgroundColor = try container.decode(CodableColor.self, forKey: .specificBackgroundColor).color
         backgroundConverterColor = try container.decode(CodableColor.self, forKey: .backgroundConverterColor).color
@@ -56,6 +65,8 @@ extension AppTheme: Codable {
             forKey: .searchTextFieldColor).color
         segmentedControlTintColor = try container.decode(CodableColor.self,
             forKey: .segmentedControlTintColor).color
+        separatorColor = try container.decode(CodableColor.self,
+                                              forKey: .separatorColor).color
     }
     
     // MARK: - Encoder
@@ -65,8 +76,13 @@ extension AppTheme: Codable {
         try container.encode(themeId, forKey: .themeId)
         try container.encode(shadowOpacity, forKey: .shadowOpacity)
         
+        try container.encode(CodableColor(color: barTintColor),
+                             forKey: .barTintColor)
+        try container.encode(CodableColor(color: barUnselectedTintColor),
+                             forKey: .barUnselectedTintColor)
         try container.encode(CodableColor(color: barBackgroundColor),
                              forKey: .barBackgroundColor)
+        
         try container.encode(CodableColor(color: backgroundColor),
                              forKey: .backgroundColor)
         try container.encode(CodableColor(color: specificBackgroundColor),
@@ -92,6 +108,7 @@ extension AppTheme: Codable {
                              forKey: .searchTextFieldColor)
         try container.encode(CodableColor(color: segmentedControlTintColor),
                              forKey: .segmentedControlTintColor)
-        
+        try container.encode(CodableColor(color: separatorColor),
+                             forKey: .separatorColor)
     }
 }

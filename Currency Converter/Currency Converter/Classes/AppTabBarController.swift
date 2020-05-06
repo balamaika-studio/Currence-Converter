@@ -18,5 +18,7 @@ class AppTabBarController: UITabBarController {
 extension AppTabBarController: Themed {
     func applyTheme(_ theme: AppTheme) {
         tabBar.barTintColor = theme.barBackgroundColor
+        tabBar.tintColor = theme.barTintColor
+        tabBar.unselectedItemTintColor = theme.barUnselectedTintColor
     }
 }

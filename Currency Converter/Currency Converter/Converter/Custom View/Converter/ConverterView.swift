@@ -14,6 +14,8 @@ class ConverterView: UIView {
     @IBOutlet weak var updatedLabel: UILabel!
     @IBOutlet weak var topCurrency: ExchangeView!
     @IBOutlet weak var bottomCurrency: ExchangeView!
+    @IBOutlet weak var topSeparator: UIView!
+    @IBOutlet weak var bottomSeparator: UIView!
     
     // MARK: - Properties
     var changeCurrencyTapped: ((ExchangeView) -> Void)?
@@ -100,5 +102,7 @@ extension ConverterView: Themed {
     func applyTheme(_ theme: AppTheme) {
         updatedLabel.textColor = theme.subtitleColor
         contentView.backgroundColor = theme.backgroundConverterColor
+        topSeparator.backgroundColor = theme.separatorColor
+        bottomSeparator.backgroundColor = theme.separatorColor
     }
 }
