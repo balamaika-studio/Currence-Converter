@@ -26,6 +26,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     var topCurrency: Currency!
     var bottomCurrency: Currency!
+    var isFirstLoading = true
     
     init(storage: StorageContext = try! RealmStorageContext()) {
         self.storage = storage
@@ -132,12 +133,16 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
 
     private func setupConverter(with currencies: [Currency]) {
-        let standartCurrencies = currencies
-            .filter { $0.currency == "USD" || $0.currency == "EUR" }
-            .sorted(by: { $0.rate > $1.rate })
-
-        topCurrency = standartCurrencies.first!
-        bottomCurrency = standartCurrencies.last!
+        if isFirstLoading {
+            let standartCurrencies = currencies
+                .filter { $0.currency == "USD" || $0.currency == "EUR" }
+                .sorted(by: { $0.rate > $1.rate })
+            
+            topCurrency = standartCurrencies.first!
+            bottomCurrency = standartCurrencies.last!
+            isFirstLoading = false
+        }
+        
         presenter?.presentData(response: .converterCurrencies(first: topCurrency,
                                                               second: bottomCurrency))
     }

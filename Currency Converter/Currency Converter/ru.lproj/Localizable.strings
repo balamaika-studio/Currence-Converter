@@ -23,7 +23,7 @@
 
 // segmented controll
 "Rates" = "Курсы";
-"Choice of currencies." = "Выбор валют";
+"Choice of currencies" = "Выбор валют";
 
 // table header
 "Pairs" = "Основные пары";
@@ -64,3 +64,8 @@
 
 // theme
 "Theme" = "Включить темную тему";
+
+
+// MARK: - Common
+"Done" = "Готово";
+"Close" = "Закрыть";

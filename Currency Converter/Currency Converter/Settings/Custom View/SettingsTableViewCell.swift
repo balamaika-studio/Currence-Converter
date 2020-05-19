@@ -61,7 +61,9 @@ class SettingsTableViewCell: UITableViewCell {
             switchControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             trailingAnchor.constraint(equalTo: switchControl.trailingAnchor, constant: 16)
         ])
-        detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
+        // 3.75% of cell width
+        let size = bounds.width * 0.0375
+        detailTextLabel?.font = UIFont.systemFont(ofSize: size)
         textLabel?.font = UIFont.systemFont(ofSize: 16)
         setUpTheming()
 
@@ -84,7 +86,6 @@ class SettingsTableViewCell: UITableViewCell {
             default: break
             }
         }
-        
         
         detailTextLabel?.text = result
     }

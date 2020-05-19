@@ -83,12 +83,12 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         toolBar.isUserInteractionEnabled = true
         toolBar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done",
+        let doneButton = UIBarButtonItem(title: R.string.localizable.done(),
                                          style: .done,
                                          target: self,
                                          action: #selector(self.donePicker))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let closeButton = UIBarButtonItem(title: "Close",
+        let closeButton = UIBarButtonItem(title: R.string.localizable.close(),
                                          style: .done,
                                          target: self,
                                          action: #selector(self.closePicker))

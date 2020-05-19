@@ -77,12 +77,10 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if let _ = collectionView.indexPathsForSelectedItems?.first {
-            return
+        if let indexPath = collectionView.indexPathsForSelectedItems?.first {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
+            self.collectionView(collectionView, didSelectItemAt: indexPath)
         }
-        let indexPath = IndexPath(item: 0, section: 0)
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
-        self.collectionView(collectionView, didSelectItemAt: indexPath)        
     }
     
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData) {

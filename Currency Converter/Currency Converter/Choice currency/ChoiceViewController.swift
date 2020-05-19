@@ -76,6 +76,8 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     }
     
     private func setupView() {
+        doneButton.setTitle(R.string.localizable.done(),
+                            for: .normal)
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(R.nib.choiceCurrencyTableViewCell)

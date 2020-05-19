@@ -23,7 +23,7 @@
 
 // segmented controll
 "Rates" = "Rates";
-"Choice of currencies." = "Choice of currencies";
+"Choice of currencies" = "Choice of currencies";
 
 // table header
 "Pairs" = "Main pairs";
@@ -64,3 +64,8 @@
 
 // theme
 "Theme" = "Enable dark theme";
+
+
+// MARK: - Common
+"Done" = "Done";
+"Close" = "Close";
