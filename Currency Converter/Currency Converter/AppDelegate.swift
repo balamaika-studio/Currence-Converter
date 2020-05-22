@@ -72,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     offlineVC.didConnect = { [weak self] in
                         selectedVC?.viewWillAppear(true)
                         self?.tabBarViewController.tabBar.isUserInteractionEnabled = true
+                        ConnectionManager.stopNotifier()
                     }
                     // show offline screen
                     selectedVC?.present(offlineNavigationVC, animated: true, completion: nil)

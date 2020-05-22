@@ -67,6 +67,20 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             
         case .updateCurrencies:
             loadQuotes(update: true)
+            
+        case .remove(let favoriteCurrency):
+            update(favoriteCurrency, isFavorite: false)
+        }
+    }
+    
+    // MARK: - Private Methods
+    private func update(_ favorite: FavoriteConverterViewModel, isFavorite: Bool) {
+        let predicate = NSPredicate(format: "currency = %@", favorite.currency)
+        storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
+            let selectedCurrency = result.first!
+            try! storage.update {
+                selectedCurrency.isFavorite = isFavorite
+            }
         }
     }
     

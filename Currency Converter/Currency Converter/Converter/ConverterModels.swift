@@ -18,6 +18,7 @@ enum Converter {
                 case loadFavoriteCurrencies
                 case updateBaseCurrency(base: Currency)
                 case updateCurrencies
+                case remove(favorite: FavoriteConverterViewModel)
             }
         }
         struct Response {

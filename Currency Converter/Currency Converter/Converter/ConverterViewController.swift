@@ -19,6 +19,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
+    private var rightBarButtonItem: UIBarButtonItem!
+    
     private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
     private let refreshControl = UIRefreshControl()
@@ -126,20 +128,45 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                  action: #selector(refreshCurrencies),
                                  for: .valueChanged)
 
+        favoriteCurrencies = []
         converterView.changeCurrencyTapped = self.changeCurrencyTapped
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
-        favoriteCurrencies = []
         
-        gestureRecognizer = UITapGestureRecognizer(target: self,
-                                                   action: #selector(closeKeyboard))
+        gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         view.addGestureRecognizer(gestureRecognizer)
+        
+        rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                            target: self,
+                                            action: #selector(reorder))
+        navigationItem.rightBarButtonItem = rightBarButtonItem
     }
     
     @objc private func closeKeyboard() {
         view.endEditing(true)
     }
+    
+    @objc private func reorder() {
+        let isEditing = tableView.isEditing
+        var tableDelagete: UITableViewDelegate?
+        if isEditing {
+            rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                                 target: self,
+                                                 action: #selector(reorder))
+            tableDelagete = nil
+        } else {
+            rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
+                                                 target: self,
+                                                 action: #selector(reorder))
+            tableDelagete = self
+        }
+        tableView.delegate = tableDelagete
+        navigationItem.rightBarButtonItem = rightBarButtonItem
+        tableView.setEditing(!isEditing, animated: true)
+    }
+    
 }
 
+// MARK: - Themed
 extension ConverterViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         tableView.backgroundColor = .clear
@@ -148,6 +175,7 @@ extension ConverterViewController: Themed {
     }
 }
 
+// MARK: - ChoiceBackDataPassing
 extension ConverterViewController: ChoiceBackDataPassing {
     func getRouter() -> ChoiceDataPassing {
         return router!
@@ -159,6 +187,7 @@ extension ConverterViewController: ChoiceBackDataPassing {
     }
 }
 
+// MARK: - UITableViewDataSource
 extension ConverterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteCurrencies.count
@@ -167,13 +196,53 @@ extension ConverterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCell,
                                                            for: indexPath) else { fatalError() }
-        
         let viewModel = favoriteCurrencies[indexPath.row]
         cell.configure(with: viewModel)
         return cell
     }
+    
+    // Moving Cells
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let currency = favoriteCurrencies[sourceIndexPath.row]
+        favoriteCurrencies.insert(currency, at: destinationIndexPath.row)
+        favoriteCurrencies.remove(at: sourceIndexPath.row)
+    }
+    
+    // Deleting
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        switch editingStyle {
+        case .delete:
+            tableView.beginUpdates()
+            let currency = favoriteCurrencies.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
+            tableView.endUpdates()
+            interactor?.makeRequest(request: .remove(favorite: currency))
+        default: return
+        }
+    }
 }
 
+// MARK: - UITableViewDelegate
+extension ConverterViewController: UITableViewDelegate {
+    // Disable the delete buttons
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+}
+
+// MARK: - UIViewControllerTransitioningDelegate
 extension ConverterViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)

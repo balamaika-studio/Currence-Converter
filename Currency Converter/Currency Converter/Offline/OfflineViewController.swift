@@ -64,11 +64,6 @@ class OfflineViewController: UIViewController, OfflineDisplayLogic {
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        ConnectionManager.shared.reachability.stopNotifier()
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let size = view.bounds.width / 20
