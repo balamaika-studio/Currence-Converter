@@ -9,7 +9,6 @@
 import UIKit
 
 class ConverterCurrencyTableViewCell: UITableViewCell {
-    @IBOutlet weak var swapCurrencyIcon: UIImageView!
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
@@ -52,20 +51,16 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
         currencyImageView.image = image
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
-        currencyRateLabel.text = viewModel.regardingRate
+        currencyRateLabel.text = viewModel.total
         selectionStyle = .none
     }
 }
 
 extension ConverterCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
-        let swapCurrencyIconImage = theme == .light ?
-        R.image.swapCurrencyLight() :
-        R.image.swapCurrencyDark()
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
         currencyRateLabel.textColor = theme.textColor
-        swapCurrencyIcon.image = swapCurrencyIconImage
         reorderControlImageView?.tint(color: theme.textColor)
     }
 }

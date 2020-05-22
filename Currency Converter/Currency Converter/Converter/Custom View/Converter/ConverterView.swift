@@ -20,6 +20,7 @@ class ConverterView: UIView {
     // MARK: - Properties
     var changeCurrencyTapped: ((ExchangeView) -> Void)?
     var swapCurrencyTapped: ((Currency) -> Void)?
+    var topCurrencyTotal: ((Double) -> Void)?
     var replacingView: ExchangeView!
     
     private var contentView: UIView!
@@ -44,11 +45,7 @@ class ConverterView: UIView {
         let model = ConverterViewModel(firstExchange: bottomCurrency.viewModel,
                                        secondExchange: topCurrency.viewModel,
                                        updated: updatedLabel.text!)
-        
-        let tmpTopCount = topCurrency.countTextField.text
-        topCurrency.countTextField.text = bottomCurrency.countTextField.text
-        bottomCurrency.countTextField.text = tmpTopCount
-        configureConverterCurrencies(model)
+        updateWith(model)
         swapCurrencyTapped?(topCurrency.viewModel)
     }
 
@@ -73,7 +70,7 @@ class ConverterView: UIView {
     
     func updateWith(_ viewModel: ConverterViewModel) {
         configureConverterCurrencies(viewModel)
-        let total = Double(topCurrency.countTextField.text ?? "0") ?? 0
+        let total = topCurrency.total
         convert(exchangeView: topCurrency, total: total)
     }
     
@@ -89,6 +86,7 @@ extension ConverterView: ExchangeViewDeleagte {
         let converterResult = AccuracyManager.shared.formatNumber(total * sender.viewModel.exchangeRate)
         let activeCurrency = topCurrency.isEqual(sender) ? bottomCurrency : topCurrency
         activeCurrency?.countTextField.text = "\(converterResult)"
+        topCurrencyTotal?(topCurrency.total)
     }
     
     func changeCurrencyTapped(exchangeView view: ExchangeView) {

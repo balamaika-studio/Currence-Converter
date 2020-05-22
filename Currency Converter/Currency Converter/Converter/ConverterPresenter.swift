@@ -36,8 +36,8 @@ class ConverterPresenter: ConverterPresentationLogic {
             let viewModel = buildConverterViewModel(first, second)
             viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
             
-        case .favoriteCurrencies(let currencies):            
-            let viewModel = buildFavoriteViewModel(currencies)
+        case .favoriteCurrencies(let currencies, let total):
+            let viewModel = buildFavoriteViewModel(currencies, total: total)
             viewController?.displayData(viewModel: .showFavoriteViewModel(viewModel))
             
         case .updateBaseCurrency(let base):
@@ -49,21 +49,23 @@ class ConverterPresenter: ConverterPresentationLogic {
         }
     }
     
-    private func buildFavoriteViewModel(_ favorite: [Currency]) -> [FavoriteConverterViewModel] {
+    private func buildFavoriteViewModel(_ favorite: [Currency], total: Double) -> [FavoriteConverterViewModel] {
         var viewModels = [FavoriteConverterViewModel]()
                 
         favorite.forEach { currency in
             let rate = currency.rate / baseCurrency.rate
-            let roundedRate = AccuracyManager.shared.formatNumber(rate)
+            let totalSum = rate * total
+            let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
             let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
-            let stringRate = "\(roundedRate) \(symbol)"
+            let stringSum = "\(roundedSum) \(symbol)"
                         
             let currenciesInfo = CurrenciesInfoService.shared.fetch()
             let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
             
             let viewModel = FavoriteConverterViewModel(currency: currency.currency,
                                                        title: title.title,
-                                                       regardingRate: stringRate)
+                                                       total: stringSum,
+                                                       rate: currency.rate)
             viewModels.append(viewModel)
         }
         

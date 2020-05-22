@@ -69,13 +69,13 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @objc private func refreshCurrencies(_ sender: Any) {
         interactor?.makeRequest(request: .updateCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadConverterCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
@@ -83,6 +83,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         case .showConverterViewModel(let converterViewModel):
             converterView.updateWith(converterViewModel)
             refreshControl.endRefreshing()
+            // request updated favorite after changing of main currencies
+            interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
             
         case .showFavoriteViewModel(let favoriteViewModel):
             self.favoriteCurrencies = favoriteViewModel
@@ -101,7 +103,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     private func swapCurrencyTapped(baseCurrency: Currency) {
         interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+    }
+    
+    private func updateFavoriteWith(total: Double) {
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
     }
     
     private func showAlert(with message: String, title: String) {
@@ -131,6 +137,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         favoriteCurrencies = []
         converterView.changeCurrencyTapped = self.changeCurrencyTapped
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
+        converterView.topCurrencyTotal = self.updateFavoriteWith
         
         gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         view.addGestureRecognizer(gestureRecognizer)

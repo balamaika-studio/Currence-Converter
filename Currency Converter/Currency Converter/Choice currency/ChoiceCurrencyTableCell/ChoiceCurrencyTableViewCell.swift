@@ -39,6 +39,7 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
 }
 extension ChoiceCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
+        backgroundColor = theme.specificBackgroundColor
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
     }

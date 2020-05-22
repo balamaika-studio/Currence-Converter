@@ -15,7 +15,7 @@ enum Converter {
             enum RequestType {
                 case changeCurrency(name: String)
                 case loadConverterCurrencies
-                case loadFavoriteCurrencies
+                case loadFavoriteCurrencies(total: Double? = nil)
                 case updateBaseCurrency(base: Currency)
                 case updateCurrencies
                 case remove(favorite: FavoriteConverterViewModel)
@@ -24,7 +24,7 @@ enum Converter {
         struct Response {
             enum ResponseType {
                 case converterCurrencies(first: Currency, second: Currency)
-                case favoriteCurrencies([Currency])
+                case favoriteCurrencies([Currency], total: Double)
                 case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
             }
@@ -62,5 +62,6 @@ struct ConverterViewModel {
 struct FavoriteConverterViewModel {
     let currency: String
     let title: String
-    let regardingRate: String
+    let total: String
+    let rate: Double
 }

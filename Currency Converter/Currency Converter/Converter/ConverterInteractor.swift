@@ -27,6 +27,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     var topCurrency: Currency!
     var bottomCurrency: Currency!
     var isFirstLoading = true
+    var lastTotalSum: Double = 1
     
     init(storage: StorageContext = try! RealmStorageContext()) {
         self.storage = storage
@@ -52,10 +53,12 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         case .updateBaseCurrency(let base):
             presenter?.presentData(response: .updateBaseCurrency(base: base))
             
-        case .loadFavoriteCurrencies:
+        case .loadFavoriteCurrencies(let total):
+            lastTotalSum = total == nil ? lastTotalSum : total!
             let predicate = NSPredicate(format: "isFavorite = true")
             storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
-                presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies))
+                presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies,
+                                                                     total: lastTotalSum))
             }
             
         case .loadConverterCurrencies:
@@ -142,7 +145,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
                     currency.rate = newQuote.rate
                 }
             }
-            makeRequest(request: .loadFavoriteCurrencies)
+            makeRequest(request: .loadFavoriteCurrencies(total: nil))
         }
     }
 

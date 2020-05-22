@@ -31,6 +31,10 @@ class ExchangeView: UIView {
     var currencyName: String {
         return viewModel.currency
     }
+    
+    var total: Double {
+        return Double(countTextField.text ?? "0") ?? 0
+    }
         
     var viewModel: ExchangeCurrency!
     
@@ -78,11 +82,32 @@ class ExchangeView: UIView {
     private func setup() {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         changeCurrencyStack.addGestureRecognizer(tapGesture)
+        addDoneButtonOnKeyboard()
         setUpClearSetting()
     }
     
+    private func addDoneButtonOnKeyboard(){
+        let width = UIScreen.main.bounds.width
+        let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: width, height: 50))
+        doneToolbar.barStyle = .default
+        
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                                        target: nil, action: nil)
+        let done: UIBarButtonItem = UIBarButtonItem(title: R.string.localizable.done(),
+                                                    style: .done,
+                                                    target: self,
+                                                    action: #selector(self.doneButtonAction))
+        let items = [flexSpace, done]
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        countTextField.inputAccessoryView = doneToolbar
+    }
+    
+    @objc func doneButtonAction(){
+        countTextField.resignFirstResponder()
+    }
+    
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
-        let total = Double(sender.text ?? "0") ?? 0
         delegate?.convert(exchangeView: self, total: total)
     }
     
