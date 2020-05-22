@@ -88,20 +88,31 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             tableView.reloadData()
             
         case .showError(let message):
-            // TODO: - Make alert service
-            print(message)
-            refreshControl.endRefreshing()
+            showAlert(with: message, title: R.string.localizable.error())
         }
     }
     
     // MARK: Private Methods
-    func changeCurrencyTapped(exchangeView: ExchangeView) {
+    private func changeCurrencyTapped(exchangeView: ExchangeView) {
         router?.showChoiceViewController()
     }
     
-    func swapCurrencyTapped(baseCurrency: Currency) {
+    private func swapCurrencyTapped(baseCurrency: Currency) {
         interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
         interactor?.makeRequest(request: .loadFavoriteCurrencies)
+    }
+    
+    private func showAlert(with message: String, title: String) {
+        let alert = UIAlertController(title: title,
+                                      message: message,
+                                      preferredStyle: .alert)
+        let okAction = UIAlertAction(title: R.string.localizable.oK(),
+                                     style: .default) { [weak self] _ in
+                                        self?.refreshControl.endRefreshing()
+        }
+        
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
     
     private func setupView() {

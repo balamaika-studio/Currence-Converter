@@ -69,3 +69,14 @@
 // MARK: - Common
 "Done" = "Done";
 "Close" = "Close";
+"Error" = "Error";
+"OK" = "OK";
+
+// MARK: - Network Errors
+"Network connection" = "Please check your network connection.";
+"Network authentication" = "You need to be authenticated first.";
+"Bad request" = "Bad request";
+"Outdated URL" = "The url you requested is outdated.";
+"Request failed" = "Network request failed";
+"Network no data" = "Response returned with no data to decode.";
+"Decode problem" = "We could not decode the response.";

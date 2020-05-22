@@ -53,7 +53,7 @@ struct NetworkManager {
                                     callback completion: @escaping (_ answer: T?, _ error: String?) -> Void) {
         if routerData.error != nil {
             DispatchQueue.main.async {
-                completion(nil, "Please check your network connection.")
+                completion(nil, R.string.localizable.networkConnection())
             }
         }
         
@@ -63,7 +63,7 @@ struct NetworkManager {
             case .success:
                 guard let responseData = routerData.data else {
                     DispatchQueue.main.async {
-                        completion(nil, NetworkResponse.noData.rawValue)
+                        completion(nil, NetworkResponse.noData.description)
                     }
                     return
                 }
@@ -75,7 +75,7 @@ struct NetworkManager {
                 } catch {
                     print(error)
                     DispatchQueue.main.async {
-                        completion(nil, NetworkResponse.unableToDecode.rawValue)
+                        completion(nil, NetworkResponse.unableToDecode.description)
                     }
                 }
                 
@@ -94,22 +94,36 @@ struct NetworkManager {
     fileprivate func handleNetworkResponse(_ response: HTTPURLResponse) -> NetworkingResult<String> {
         switch response.statusCode {
         case 200...299: return .success
-        case 401...500: return .failure(NetworkResponse.authenticationError.rawValue)
-        case 501...599: return .failure(NetworkResponse.badRequest.rawValue)
-        case 600: return .failure(NetworkResponse.outdated.rawValue)
-        default: return .failure(NetworkResponse.failed.rawValue)
+        case 401...500: return .failure(NetworkResponse.authenticationError.description)
+        case 501...599: return .failure(NetworkResponse.badRequest.description)
+        case 600: return .failure(NetworkResponse.outdated.description)
+        default: return .failure(NetworkResponse.failed.description)
         }
     }
 }
 
-enum NetworkResponse: String {
+enum NetworkResponse {
     case success
-    case authenticationError = "You need to be authenticated first."
-    case badRequest = "Bad request"
-    case outdated = "The url you requested is outdated."
-    case failed = "Network request failed."
-    case noData = "Response returned with no data to decode."
-    case unableToDecode = "We could not decode the response."
+    case authenticationError
+    case badRequest
+    case outdated
+    case failed
+    case noData
+    case unableToDecode
+}
+
+extension NetworkResponse: CustomStringConvertible {
+    var description: String {
+        switch self {
+        case .authenticationError: return R.string.localizable.networkAuthentication()
+        case .badRequest: return R.string.localizable.badRequest()
+        case .outdated: return R.string.localizable.outdatedURL()
+        case .failed: return R.string.localizable.requestFailed()
+        case .noData: return R.string.localizable.networkNoData()
+        case .unableToDecode: return R.string.localizable.decodeProblem()
+        default: return String()
+        }
+    }
 }
 
 enum NetworkingResult<String>{

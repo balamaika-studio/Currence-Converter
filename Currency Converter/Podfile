@@ -9,6 +9,7 @@ target 'Currency Converter' do
   pod 'R.swift'
   pod 'Charts'
   pod 'RealmSwift'
+  pod 'ReachabilitySwift'
 
   target 'Currency ConverterTests' do
     inherit! :search_paths

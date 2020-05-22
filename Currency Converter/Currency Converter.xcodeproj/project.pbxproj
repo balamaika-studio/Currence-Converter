@@ -66,6 +66,7 @@
 		D167E44E24620BEA0069683A /* ChartXValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */; };
 		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
 		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
+		D17A1E432473F7CB00C5E2E6 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */; };
 		D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */; };
 		D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18855492436080600476EB3 /* RealmStorageContext.swift */; };
 		D188554E2436085F00476EB3 /* StorageContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188554D2436085F00476EB3 /* StorageContext.swift */; };
@@ -88,6 +89,13 @@
 		D19A9384242D143700DDCEA9 /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9383242D143700DDCEA9 /* ParameterEncoding.swift */; };
 		D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9385242D146C00DDCEA9 /* URLEncoding.swift */; };
 		D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */; };
+		D1A2A2922477ACF0001949BD /* OfflinePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28B2477ACF0001949BD /* OfflinePresenter.swift */; };
+		D1A2A2932477ACF0001949BD /* OfflineWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28C2477ACF0001949BD /* OfflineWorker.swift */; };
+		D1A2A2942477ACF0001949BD /* OfflineRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28D2477ACF0001949BD /* OfflineRouter.swift */; };
+		D1A2A2952477ACF0001949BD /* OfflineModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28E2477ACF0001949BD /* OfflineModels.swift */; };
+		D1A2A2962477ACF0001949BD /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28F2477ACF0001949BD /* OfflineViewController.swift */; };
+		D1A2A2972477ACF0001949BD /* OfflineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A2902477ACF0001949BD /* OfflineInteractor.swift */; };
+		D1A2A2982477ACF0001949BD /* OfflineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1A2A2912477ACF0001949BD /* OfflineViewController.xib */; };
 		D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */; };
 		D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */; };
 		D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92A24543FA600985B9B /* AppTabBarController.swift */; };
@@ -222,6 +230,7 @@
 		D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXValueFormatter.swift; sourceTree = "<group>"; };
 		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
 		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
+		D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		D1863CB22440FF200011F215 /* ExchangeRatesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesHeader.swift; sourceTree = "<group>"; };
 		D18855492436080600476EB3 /* RealmStorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmStorageContext.swift; sourceTree = "<group>"; };
 		D188554D2436085F00476EB3 /* StorageContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageContext.swift; sourceTree = "<group>"; };
@@ -244,6 +253,13 @@
 		D19A9383242D143700DDCEA9 /* ParameterEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoding.swift; sourceTree = "<group>"; };
 		D19A9385242D146C00DDCEA9 /* URLEncoding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLEncoding.swift; sourceTree = "<group>"; };
 		D19A9387242D1BEC00DDCEA9 /* JSONParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParameterEncoder.swift; sourceTree = "<group>"; };
+		D1A2A28B2477ACF0001949BD /* OfflinePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflinePresenter.swift; sourceTree = "<group>"; };
+		D1A2A28C2477ACF0001949BD /* OfflineWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineWorker.swift; sourceTree = "<group>"; };
+		D1A2A28D2477ACF0001949BD /* OfflineRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineRouter.swift; sourceTree = "<group>"; };
+		D1A2A28E2477ACF0001949BD /* OfflineModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineModels.swift; sourceTree = "<group>"; };
+		D1A2A28F2477ACF0001949BD /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
+		D1A2A2902477ACF0001949BD /* OfflineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineInteractor.swift; sourceTree = "<group>"; };
+		D1A2A2912477ACF0001949BD /* OfflineViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfflineViewController.xib; sourceTree = "<group>"; };
 		D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		D1BBC92A24543FA600985B9B /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
@@ -353,6 +369,7 @@
 				D1E1A7582449F5060051E51D /* Graph */,
 				D163AFDA244E30FE00014800 /* Settings */,
 				596811122420E89C00426968 /* Choice currency */,
+				D1A2A28A2477ACC5001949BD /* Offline */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
 				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
@@ -583,6 +600,20 @@
 			path = Encoding;
 			sourceTree = "<group>";
 		};
+		D1A2A28A2477ACC5001949BD /* Offline */ = {
+			isa = PBXGroup;
+			children = (
+				D1A2A28F2477ACF0001949BD /* OfflineViewController.swift */,
+				D1A2A2902477ACF0001949BD /* OfflineInteractor.swift */,
+				D1A2A28B2477ACF0001949BD /* OfflinePresenter.swift */,
+				D1A2A28C2477ACF0001949BD /* OfflineWorker.swift */,
+				D1A2A28E2477ACF0001949BD /* OfflineModels.swift */,
+				D1A2A28D2477ACF0001949BD /* OfflineRouter.swift */,
+				D1A2A2912477ACF0001949BD /* OfflineViewController.xib */,
+			);
+			path = Offline;
+			sourceTree = "<group>";
+		};
 		D1B6A619244F25EB00B4DDE9 /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
@@ -616,6 +647,7 @@
 				D16454342463308B009B6E75 /* PeriodCollectionViewHelper.swift */,
 				D188555324362ACC00476EB3 /* CurrenciesInfoService.swift */,
 				D12E04EC245311DB005B68A4 /* AccuracyManager.swift */,
+				D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -884,6 +916,7 @@
 				D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */,
 				595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */,
 				D1DDE95A243F61490023E789 /* CurrencyPairTableViewCell.xib in Resources */,
+				D1A2A2982477ACF0001949BD /* OfflineViewController.xib in Resources */,
 				595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */,
 				D1DDE953243F4AD30023E789 /* CurrencySelectionViewController.xib in Resources */,
 				D1E1A76C2449F6220051E51D /* PeriodCollectionViewCell.xib in Resources */,
@@ -1032,12 +1065,15 @@
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */,
 				D1E1A7652449F5240051E51D /* GraphInteractor.swift in Sources */,
+				D1A2A2932477ACF0001949BD /* OfflineWorker.swift in Sources */,
 				D1E1A7612449F5240051E51D /* GraphWorker.swift in Sources */,
 				D19A937E242D0CCC00DDCEA9 /* CurrencyLayerApi.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
 				595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */,
 				D1DDE943243F4A7C0023E789 /* CurrencyRatesInteractor.swift in Sources */,
+				D1A2A2952477ACF0001949BD /* OfflineModels.swift in Sources */,
 				D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */,
+				D17A1E432473F7CB00C5E2E6 /* ConnectionManager.swift in Sources */,
 				D1BBC933245453F000985B9B /* AppViewController.swift in Sources */,
 				595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */,
 				D1DDE955243F57110023E789 /* RealmExchangeRate.swift in Sources */,
@@ -1050,6 +1086,7 @@
 				D163AFE2244E312800014800 /* SettingsPresenter.swift in Sources */,
 				D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */,
 				5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */,
+				D1A2A2972477ACF0001949BD /* OfflineInteractor.swift in Sources */,
 				D1DDE94D243F4AD30023E789 /* CurrencySelectionPresenter.swift in Sources */,
 				D125731A245343BC005F8332 /* ExchangeRatesResponse.swift in Sources */,
 				D1E4ED142451CD9A00ECE03F /* AppTheme.swift in Sources */,
@@ -1060,6 +1097,7 @@
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
 				D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */,
+				D1A2A2962477ACF0001949BD /* OfflineViewController.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				D19A9377242CFF6E00DDCEA9 /* FavoriteTableViewCell.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,
@@ -1076,12 +1114,14 @@
 				D1DDE952243F4AD30023E789 /* CurrencySelectionInteractor.swift in Sources */,
 				D163AFEC244E325200014800 /* SettingsSection.swift in Sources */,
 				D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */,
+				D1A2A2922477ACF0001949BD /* OfflinePresenter.swift in Sources */,
 				D188555424362ACC00476EB3 /* CurrenciesInfoService.swift in Sources */,
 				D1DDE931243F45CB0023E789 /* ExchangeRatesRouter.swift in Sources */,
 				D167E44E24620BEA0069683A /* ChartXValueFormatter.swift in Sources */,
 				D19A9380242D0E4E00DDCEA9 /* HTTPMethod.swift in Sources */,
 				D1DDE93E243F4A7C0023E789 /* CurrencyRatesPresenter.swift in Sources */,
 				D1E1A7642449F5240051E51D /* GraphViewController.swift in Sources */,
+				D1A2A2942477ACF0001949BD /* OfflineRouter.swift in Sources */,
 				D125731C24536AA8005F8332 /* EdgeInsetLabel.swift in Sources */,
 				D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */,
 				D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */,

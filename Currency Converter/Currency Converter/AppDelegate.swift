@@ -12,6 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var tabBarViewController: UITabBarController!
     var storage: StorageContext!
     var networkManager: NetworkManager!
     
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         networkManager = NetworkManager()
         restoreAccuracySettings()
         
-        let tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
+        tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
         
         let converterViewController = AppViewController.converter.viewController
         let favoriteViewController = AppViewController.favorite.viewController
@@ -37,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
+        checkInternetConnection()
         
         return true
     }
@@ -51,6 +53,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    //MARK: - Private Methods
+    private func checkInternetConnection() {
+        ConnectionManager.shared.reachability.whenUnreachable = { _ in
+            self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] in
+                guard let self = self else { return }
+                if $0.isEmpty {
+                    // configure modal offline screen
+                    self.tabBarViewController.tabBar.isUserInteractionEnabled = false
+                    let selectedVC = self.tabBarViewController.selectedViewController
+                    let offlineVC = OfflineViewController(nib: R.nib.offlineViewController)
+                    let offlineNavigationVC = AppNavigationController(rootViewController: offlineVC)
+                    offlineNavigationVC.navigationBar.topItem?.title = R.string.localizable.converterTitle()
+                    offlineNavigationVC.modalPresentationStyle = .overCurrentContext
+                    
+                    // offline screen completion
+                    offlineVC.didConnect = { [weak self] in
+                        selectedVC?.viewWillAppear(true)
+                        self?.tabBarViewController.tabBar.isUserInteractionEnabled = true
+                    }
+                    // show offline screen
+                    selectedVC?.present(offlineNavigationVC, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
     
     private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
         realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
