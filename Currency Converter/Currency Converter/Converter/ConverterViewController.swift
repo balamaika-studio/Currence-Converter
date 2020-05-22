@@ -159,8 +159,10 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                                  action: #selector(reorder))
             tableDelagete = self
         }
-        tableView.delegate = tableDelagete
+        rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
+                                                  for: .normal)
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        tableView.delegate = tableDelagete
         tableView.setEditing(!isEditing, animated: true)
     }
     
@@ -172,6 +174,8 @@ extension ConverterViewController: Themed {
         tableView.backgroundColor = .clear
         view.backgroundColor = theme.backgroundColor
         tableView.reloadData()
+        rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
+                                                  for: .normal)
     }
 }
 

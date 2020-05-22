@@ -15,6 +15,16 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
     @IBOutlet weak var currencyTitleLabel: UILabel!
     @IBOutlet weak var currencyRateLabel: UILabel!
     
+    /// get reoder control image view
+    var reorderControlImageView: UIImageView? {
+        let reorderControl = self.subviews.first {
+            $0.classForCoder.description() == "UITableViewCellReorderControl"
+        }
+        return reorderControl?.subviews.first { $0 is UIImageView } as? UIImageView
+    }
+    
+    private var myReorderImage: UIImage? = nil
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setUpTheming()
@@ -22,6 +32,18 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
+    }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        // Change reorder control image color
+        guard let imageView = reorderControlImageView else { return }
+        if myReorderImage == nil {
+            let reorderImage = imageView.image
+            myReorderImage = reorderImage?.withRenderingMode(.alwaysTemplate)
+        }
+        imageView.image = myReorderImage
+        imageView.tintColor = themeProvider.currentTheme.textColor
     }
     
     func configure(with viewModel: FavoriteConverterViewModel) {
@@ -44,5 +66,13 @@ extension ConverterCurrencyTableViewCell: Themed {
         currencyTitleLabel.textColor = theme.subtitleColor
         currencyRateLabel.textColor = theme.textColor
         swapCurrencyIcon.image = swapCurrencyIconImage
+        reorderControlImageView?.tint(color: theme.textColor)
+    }
+}
+
+extension UIImageView {
+    func tint(color: UIColor) {
+        self.image = self.image?.withRenderingMode(.alwaysTemplate)
+        self.tintColor = color
     }
 }
