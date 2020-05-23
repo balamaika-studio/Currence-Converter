@@ -20,7 +20,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
     private var rightBarButtonItem: UIBarButtonItem!
-    
+    private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]!
     private let refreshControl = UIRefreshControl()
@@ -97,6 +97,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     // MARK: Private Methods
+    // MARK: Router
     private func changeCurrencyTapped(exchangeView: ExchangeView) {
         router?.showChoiceViewController()
     }
@@ -110,6 +111,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
     }
     
+    // MARK: Alert
     private func showAlert(with message: String, title: String) {
         let alert = UIAlertController(title: title,
                                       message: message,
@@ -118,11 +120,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                      style: .default) { [weak self] _ in
                                         self?.refreshControl.endRefreshing()
         }
-        
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
     
+    // MARK: Setup
     private func setupView() {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
@@ -139,13 +141,33 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
         converterView.topCurrencyTotal = self.updateFavoriteWith
         
-        gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        view.addGestureRecognizer(gestureRecognizer)
-        
+        setupGestureRecognizer()
         rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
                                             target: self,
                                             action: #selector(reorder))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+    }
+    
+    private func setupGestureRecognizer() {
+        gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        view.addGestureRecognizer(gestureRecognizer)
+        
+        longPressGesture = UILongPressGestureRecognizer(target: self,
+                                                        action: #selector(self.handleLongPress))
+        longPressGesture.minimumPressDuration = 0.5 // 0.5 second press
+        longPressGesture.allowableMovement = 15
+        self.tableView.addGestureRecognizer(longPressGesture)
+    }
+
+    // MARK: Handlers
+    @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: self.tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                let currency = favoriteCurrencies[indexPath.row]
+                interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+            }
+        }
     }
     
     @objc private func closeKeyboard() {
@@ -156,20 +178,21 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         let isEditing = tableView.isEditing
         var tableDelagete: UITableViewDelegate?
         if isEditing {
+            tableDelagete = nil
             rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
                                                  target: self,
                                                  action: #selector(reorder))
-            tableDelagete = nil
         } else {
+            tableDelagete = self
             rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
                                                  target: self,
                                                  action: #selector(reorder))
-            tableDelagete = self
         }
         rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
                                                   for: .normal)
         navigationItem.rightBarButtonItem = rightBarButtonItem
         tableView.delegate = tableDelagete
+        longPressGesture.isEnabled = !longPressGesture.isEnabled
         tableView.setEditing(!isEditing, animated: true)
     }
     

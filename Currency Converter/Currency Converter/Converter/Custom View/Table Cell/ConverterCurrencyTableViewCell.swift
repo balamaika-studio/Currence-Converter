@@ -52,7 +52,6 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
         currencyRateLabel.text = viewModel.total
-        selectionStyle = .none
     }
 }
 

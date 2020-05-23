@@ -18,7 +18,8 @@ enum Converter {
                 case loadFavoriteCurrencies(total: Double? = nil)
                 case updateBaseCurrency(base: Currency)
                 case updateCurrencies
-                case remove(favorite: FavoriteConverterViewModel)
+                case remove(favorite: Currency)
+                case changeBottomCurrency(with: Currency)
             }
         }
         struct Response {
@@ -59,9 +60,9 @@ struct ConverterViewModel {
 
 
 // MARK: - Favorite View Model
-struct FavoriteConverterViewModel {
-    let currency: String
+struct FavoriteConverterViewModel: Currency {
+    var currency: String
     let title: String
     let total: String
-    let rate: Double
+    var rate: Double
 }

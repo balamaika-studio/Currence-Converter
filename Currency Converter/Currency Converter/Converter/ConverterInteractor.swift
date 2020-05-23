@@ -53,6 +53,10 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         case .updateBaseCurrency(let base):
             presenter?.presentData(response: .updateBaseCurrency(base: base))
             
+        case .changeBottomCurrency(let newCurrency):
+            presenter?.presentData(response: .converterCurrencies(first: topCurrency,
+                                                                  second: newCurrency))
+            
         case .loadFavoriteCurrencies(let total):
             lastTotalSum = total == nil ? lastTotalSum : total!
             let predicate = NSPredicate(format: "isFavorite = true")
@@ -77,7 +81,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
     
     // MARK: - Private Methods
-    private func update(_ favorite: FavoriteConverterViewModel, isFavorite: Bool) {
+    private func update(_ favorite: Currency, isFavorite: Bool) {
         let predicate = NSPredicate(format: "currency = %@", favorite.currency)
         storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
             let selectedCurrency = result.first!
@@ -93,7 +97,6 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
                 self.presenter?.presentData(response: .error(errorMessage))
                 return
             }
-            
             // save last updated date
             UserDefaults.standard.set(response!.updated, forKey: "updated")
             
