@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
         checkInternetConnection()
-        
         return true
     }
     

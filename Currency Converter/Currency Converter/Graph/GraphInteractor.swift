@@ -28,7 +28,7 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
             presenter?.presentData(response: .graphPeriods(periods))
             
         case .getDefaultConverter:
-            let converter = defaultConverter()
+            let converter = CurrenciesInfoService.shared.getGraphDefaultCurrencies()
             presenter?.presentData(response: .defaultConverter(converter))
             
         case .updateConverterCurrency:
@@ -47,12 +47,6 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
             }
         }
         
-    }
-    
-    private func defaultConverter() -> GraphConverterViewModel {
-        let base = ChoiceCurrencyViewModel(currency: "USD", title: "United States Dollar")
-        let relative = ChoiceCurrencyViewModel(currency: "EUR", title: "Euro")
-        return GraphConverterViewModel(base: base, relative: relative)
     }
     
     private func buildGraphRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {

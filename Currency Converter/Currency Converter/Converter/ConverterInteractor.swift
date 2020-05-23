@@ -54,8 +54,9 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             presenter?.presentData(response: .updateBaseCurrency(base: base))
             
         case .changeBottomCurrency(let newCurrency):
+            bottomCurrency = newCurrency
             presenter?.presentData(response: .converterCurrencies(first: topCurrency,
-                                                                  second: newCurrency))
+                                                                  second: bottomCurrency))
             
         case .loadFavoriteCurrencies(let total):
             lastTotalSum = total == nil ? lastTotalSum : total!

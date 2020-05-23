@@ -19,6 +19,7 @@ class CurrenciesInfoService {
         "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
     ]
     private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
+    private let graphDefaultCurrencies = ["USD", "EUR"]
     
     private init() { }
     
@@ -29,7 +30,13 @@ class CurrenciesInfoService {
         let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)
         let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: String]
 
-        currencyInfo = json.map { CurrencyInfo(abbreviation: $0, title: $1) }
+        var result = [CurrencyInfo]()
+        json.forEach { code, _ in
+            guard let title = getTitle(for: code) else { return }
+            let model = CurrencyInfo(abbreviation: code, title: title)
+            result.append(model)
+        }
+        currencyInfo = result
         return currencyInfo
     }
     
@@ -43,5 +50,27 @@ class CurrenciesInfoService {
     
     func getPopularCurrencies() -> [Currency] {
         return popularCurrencies.map { Quote(currency: $0, rate: 0) }
+    }
+    
+    func getGraphDefaultCurrencies() -> GraphConverterViewModel {
+        guard let baseCode = graphDefaultCurrencies.first,
+            let relativeCode = graphDefaultCurrencies.last,
+            let baseInfo = currencyInfo.first(where: { $0.abbreviation == baseCode }),
+            let relativeInfo = currencyInfo.first(where: { $0.abbreviation == relativeCode })
+        else {
+            print(#function)
+            print(#line)
+            fatalError("Unknown default graph currencies")
+        }
+        let base = ChoiceCurrencyViewModel(currency: baseInfo.abbreviation,
+                                           title: baseInfo.title)
+        let relative = ChoiceCurrencyViewModel(currency: relativeInfo.abbreviation,
+                                               title: relativeInfo.title)
+        return GraphConverterViewModel(base: base, relative: relative)
+    }
+    
+    // MARK: Private Methods
+    private func getTitle(for code: String) -> String? {
+        return Locale.current.localizedString(forCurrencyCode: code)?.capitalized
     }
 }
