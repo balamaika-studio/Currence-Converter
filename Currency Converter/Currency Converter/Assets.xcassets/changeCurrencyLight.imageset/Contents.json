@@ -7,10 +7,12 @@
     },
     {
       "idiom" : "universal",
+      "filename" : "changeCurrencyLight-2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "changeCurrencyLight-3.png",
       "scale" : "3x"
     }
   ],

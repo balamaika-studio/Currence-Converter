@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "ic_arrows_small.png",
+      "filename" : "converterDeselected.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "converterDeselected-2.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "converterDeselected-3.png",
       "scale" : "3x"
     }
   ],
