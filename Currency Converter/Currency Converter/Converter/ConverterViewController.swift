@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JJFloatingActionButton
 
 protocol ConverterDisplayLogic: class {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
@@ -19,6 +20,10 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
+    private var horizontalConstraint: NSLayoutConstraint!
+    private var verticalConstraint: NSLayoutConstraint!
+    
+    private var actionButton: JJFloatingActionButton!
     private var rightBarButtonItem: UIBarButtonItem!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
@@ -31,6 +36,20 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                            height: tableView.bounds.size.height)
         return EmptyState(frame: frame)
     }()
+    
+    var safeBottomAnchor: NSLayoutYAxisAnchor {
+        if #available(iOS 11.0, *) {
+            return view.safeAreaLayoutGuide.bottomAnchor
+        }
+        else {
+            return bottomLayoutGuide.topAnchor
+        }
+    }
+    
+    var safeArea: UILayoutGuide {
+        if #available(iOS 11.0, *) { return view.safeAreaLayoutGuide}
+        else { return view.layoutMarginsGuide }
+    }
     
     // MARK: Object lifecycle
     
@@ -146,11 +165,46 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                             target: self,
                                             action: #selector(reorder))
         navigationItem.rightBarButtonItem = rightBarButtonItem
+        addFAB()
+    }
+    
+    private func addFAB() {
+        actionButton = JJFloatingActionButton()
+        actionButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(actionButton)
+        horizontalConstraint = safeArea.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 31)
+        verticalConstraint = safeBottomAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 26)
+        horizontalConstraint.isActive = true
+        verticalConstraint.isActive = true
+        
+        actionButton.handleSingleActionDirectly = true
+        actionButton.buttonDiameter = 56
+        actionButton.buttonColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9882352941, alpha: 1)
+
+        // shadow
+        actionButton.layer.shadowColor = UIColor.black.cgColor
+        actionButton.layer.shadowOffset = CGSize(width: 0, height: actionButton.buttonDiameter / 10)
+        actionButton.layer.shadowOpacity = 0.3
+        actionButton.layer.shadowRadius = 8
+        
+        // action handler
+        actionButton.addItem(title: nil, image: nil) { [weak self] _ in
+            guard let self = self else { return }
+            self.router?.showFavoriteViewController()
+        }
+    }
+    
+    private func rotateFAB() {
+        let offset = actionButton.buttonDiameter / 2
+        horizontalConstraint.constant += tableView.isEditing ? offset : -offset
+        UIView.animate(withDuration: 0.3) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func setupGestureRecognizer() {
         gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        view.addGestureRecognizer(gestureRecognizer)
+        tableView.addGestureRecognizer(gestureRecognizer)
         
         longPressGesture = UILongPressGestureRecognizer(target: self,
                                                         action: #selector(self.handleLongPress))
@@ -194,6 +248,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.delegate = tableDelagete
         longPressGesture.isEnabled = !longPressGesture.isEnabled
         tableView.setEditing(!isEditing, animated: true)
+        rotateFAB()
     }
     
 }

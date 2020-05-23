@@ -10,6 +10,7 @@ import UIKit
 
 protocol ConverterRoutingLogic {
     func showChoiceViewController()
+    func showFavoriteViewController()
 }
 
 class ConverterRouter: ChoiceDataPassing {
@@ -23,6 +24,15 @@ class ConverterRouter: ChoiceDataPassing {
         }
         let choiceVc = ChoiceViewController(nib: R.nib.choiceViewController)
         present(source: viewController, destination: choiceVc)
+    }
+    
+    func showFavoriteViewController() {
+        guard let viewController = viewController,
+            let navigationController = viewController.navigationController else {
+                fatalError("Fail route to second")
+        }
+        let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
+        navigationController.pushViewController(favoriteViewController, animated: true)
     }
 }
 

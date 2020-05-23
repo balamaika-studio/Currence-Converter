@@ -10,6 +10,7 @@ target 'Currency Converter' do
   pod 'Charts'
   pod 'RealmSwift'
   pod 'ReachabilitySwift'
+  pod 'JJFloatingActionButton'
 
   target 'Currency ConverterTests' do
     inherit! :search_paths

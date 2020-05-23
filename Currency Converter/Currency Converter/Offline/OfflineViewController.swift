@@ -56,12 +56,7 @@ class OfflineViewController: UIViewController, OfflineDisplayLogic {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpTheming()
-        
-        ConnectionManager.shared.reachability.whenReachable = { [weak self] _ in
-            guard let self = self else { return }
-            self.didConnect?()
-            self.dismiss(animated: true, completion: nil)
-        }
+        setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,6 +67,18 @@ class OfflineViewController: UIViewController, OfflineDisplayLogic {
     
     func displayData(viewModel: Offline.Model.ViewModel.ViewModelData) {
         
+    }
+    
+    //MARK: - Private Methods
+    //MARK: Setup
+    private func setupView() {
+        titleLabel.text = R.string.localizable.offlineTitle()
+        descriptionLabel.text = R.string.localizable.offlineDescription()
+        ConnectionManager.shared.reachability.whenReachable = { [weak self] _ in
+            guard let self = self else { return }
+            self.didConnect?()
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
 }

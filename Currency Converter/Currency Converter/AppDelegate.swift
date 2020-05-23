@@ -25,13 +25,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
         
         let converterViewController = AppViewController.converter.viewController
-        let favoriteViewController = AppViewController.favorite.viewController
         let exchangeRatesViewController = AppViewController.exchangeRates.viewController
         let graphViewController = AppViewController.graph.viewController
         let settingsViewController = AppViewController.settings.viewController
         
         tabBarViewController.viewControllers = [converterViewController,
-                                                favoriteViewController,
                                                 exchangeRatesViewController,
                                                 graphViewController,
                                                 settingsViewController]

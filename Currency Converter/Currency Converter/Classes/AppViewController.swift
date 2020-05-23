@@ -10,7 +10,6 @@ import UIKit
 
 enum AppViewController {
     case converter
-    case favorite
     case exchangeRates
     case graph
     case settings
@@ -26,17 +25,6 @@ enum AppViewController {
             let tabItem = UITabBarItem(title: R.string.localizable.converterTabBarItem(),
                          image: R.image.converterDeselected(),
                          selectedImage: R.image.converterSelected())
-            navigationController.tabBarItem = tabItem
-            
-        case .favorite:
-            let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
-            navigationController = AppNavigationController(rootViewController: favoriteViewController)
-            navigationController.navigationBar.topItem?.title = R.string.localizable.favoriteTitle()
-            
-            let tabItem = UITabBarItem(title: R.string.localizable.favoriteTabBarItem(),
-            image: R.image.favoriteDeselected(),
-            selectedImage: R.image.favoriteSelected())
-            
             navigationController.tabBarItem = tabItem
             
         case .exchangeRates:

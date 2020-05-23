@@ -75,6 +75,11 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     }
     
     private func setupView() {
+        title = R.string.localizable.favoriteTitle()
+        let rootViewControoler = navigationController?.viewControllers.first
+        let rootVCTitle = rootViewControoler?.navigationController?.navigationBar.topItem?.title
+        navigationController?.navigationBar.topItem?.title = rootVCTitle
+        
         searchBar.backgroundImage = UIImage()
         searchBar.placeholder = setPlaceHolder(placeholder: R.string.localizable.searchPlaceholder())
         searchBar.delegate = self

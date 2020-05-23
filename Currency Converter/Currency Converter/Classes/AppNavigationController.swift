@@ -34,6 +34,8 @@ class AppNavigationController: UINavigationController {
 
 extension AppNavigationController: Themed {
     func applyTheme(_ theme: AppTheme) {
+        navigationBar.tintColor = .white
+        // gradient
         var startColor: UIColor!
         var endColor: UIColor!
         let statusBarHeight = UIApplication.shared.statusBarFrame.height

@@ -80,3 +80,7 @@
 "Request failed" = "Network request failed";
 "Network no data" = "Response returned with no data to decode.";
 "Decode problem" = "We could not decode the response.";
+
+// MARK: - Offline Screen
+"Offline title" = "No internet connection";
+"Offline description" = "Please check your connection again, or connect to Wi-Fi";
