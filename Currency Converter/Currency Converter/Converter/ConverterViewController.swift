@@ -111,6 +111,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             tableView.reloadData()
             
         case .showError(let message):
+            // dont show alert over top controller
+            if let _ = presentedViewController { break }
             showAlert(with: message, title: R.string.localizable.error())
         }
     }
