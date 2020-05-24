@@ -20,6 +20,7 @@ enum Converter {
                 case updateCurrencies
                 case remove(favorite: Currency)
                 case changeBottomCurrency(with: Currency)
+                case saveFavoriteOrder(currencies: [Currency])
             }
         }
         struct Response {

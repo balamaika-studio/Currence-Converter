@@ -49,10 +49,25 @@ class ConverterPresenter: ConverterPresentationLogic {
         }
     }
     
+    private func restoreOrder(for favorite: [Currency]) -> [Currency] {
+        var favoriteCopy = favorite
+        let ordered = FavoriteOrderService.shared.fetchOrder()
+        
+        favorite.forEach { fav in
+            if ordered.contains(where: { $0.currency == fav.currency }) {
+                let orderIndex = ordered.firstIndex { $0.currency == fav.currency }
+                let favoriteIndex = favoriteCopy.firstIndex { $0.currency == fav.currency }
+                favoriteCopy.swapAt(orderIndex!, favoriteIndex!)
+            }
+        }
+        return favoriteCopy
+    }
+    
     private func buildFavoriteViewModel(_ favorite: [Currency], total: Double) -> [FavoriteConverterViewModel] {
         var viewModels = [FavoriteConverterViewModel]()
-                
-        favorite.forEach { currency in
+        let orderedCurrencies = restoreOrder(for: favorite)
+        
+        orderedCurrencies.forEach { currency in
             let rate = currency.rate / baseCurrency.rate
             let totalSum = rate * total
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
@@ -68,7 +83,6 @@ class ConverterPresenter: ConverterPresentationLogic {
                                                        rate: currency.rate)
             viewModels.append(viewModel)
         }
-        
         return viewModels
     }
     

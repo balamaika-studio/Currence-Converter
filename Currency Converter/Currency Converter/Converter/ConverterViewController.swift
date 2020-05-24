@@ -27,7 +27,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var rightBarButtonItem: UIBarButtonItem!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
-    private var favoriteCurrencies: [FavoriteConverterViewModel]!
+    private var favoriteCurrencies: [FavoriteConverterViewModel]! {
+        didSet {
+            interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
+        }
+    }
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
@@ -95,6 +99,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
@@ -298,9 +307,9 @@ extension ConverterViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let currency = favoriteCurrencies[sourceIndexPath.row]
-        favoriteCurrencies.insert(currency, at: destinationIndexPath.row)
+        let item = favoriteCurrencies[sourceIndexPath.row]
         favoriteCurrencies.remove(at: sourceIndexPath.row)
+        favoriteCurrencies.insert(item, at: destinationIndexPath.row)
     }
     
     // Deleting

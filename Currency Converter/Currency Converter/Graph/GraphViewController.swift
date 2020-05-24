@@ -74,9 +74,8 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         interactor?.makeRequest(request: .getGraphPeriods)
         interactor?.makeRequest(request: .getDefaultConverter)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         var indexPath = IndexPath(item: 0, section: 0)
         if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
             indexPath = selectedIndexPath

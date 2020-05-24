@@ -78,6 +78,14 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             
         case .remove(let favoriteCurrency):
             update(favoriteCurrency, isFavorite: false)
+            
+        case .saveFavoriteOrder(let currencies):
+            let saved = FavoriteOrderService.shared.fetchOrder()
+            if !saved.isEmpty && currencies.isEmpty {
+                // dont overwrite saved data with an empty array.
+                break
+            }
+            FavoriteOrderService.shared.saveOrder(currencies)
         }
     }
     
