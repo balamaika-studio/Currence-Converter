@@ -26,6 +26,7 @@ class ExchangeView: UIView {
     // MARK: - Properties
     private var contentView: UIView!
     private let tapGesture = UITapGestureRecognizer()
+    private let maxLength = 8
     weak var delegate: ExchangeViewDeleagte?
     
     var currencyName: String {
@@ -82,6 +83,7 @@ class ExchangeView: UIView {
     private func setup() {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         changeCurrencyStack.addGestureRecognizer(tapGesture)
+        countTextField.delegate = self
         addDoneButtonOnKeyboard()
         setUpClearSetting()
     }
@@ -116,12 +118,31 @@ class ExchangeView: UIView {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension ExchangeView: UITextFieldDelegate {
+    // textfiled max length
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // get the current text, or use an empty string if that failed
+        let currentText = textField.text ?? ""
+        
+        // attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        
+        // add their new text to the existing text
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        // make sure the result is under max length
+        return updatedText.count <= maxLength
+    }
+}
+
+// MARK: - FieldClearable
 extension ExchangeView: FieldClearable {
     func update(with subject: AppFieldClearManager) {
         countTextField.clearsOnBeginEditing = subject.isClear
     }
 }
 
+// MARK: - Themed
 extension ExchangeView: Themed {
     func applyTheme(_ theme: AppTheme) {
         let changeCurrencyIconImage = theme == .light ?

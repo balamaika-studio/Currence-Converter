@@ -40,7 +40,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         switch request {
         case .changeCurrency(let currencyName):
             guard let newCurrency = selectedCurrency else { break }
-            
+
             if topCurrency.currency == currencyName {
                 topCurrency = newCurrency
             } else {
@@ -51,6 +51,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
                                      second: bottomCurrency))
             
         case .updateBaseCurrency(let base):
+            topCurrency = base
             presenter?.presentData(response: .updateBaseCurrency(base: base))
             
         case .changeBottomCurrency(let newCurrency):

@@ -53,13 +53,11 @@ class CurrenciesInfoService {
     }
     
     func getGraphDefaultCurrencies() -> GraphConverterViewModel {
-        if currencyInfo.isEmpty {
-            let _ = fetch()
-        }
+        let info = currencyInfo == nil ? fetch() : currencyInfo!
         guard let baseCode = graphDefaultCurrencies.first,
             let relativeCode = graphDefaultCurrencies.last,
-            let baseInfo = currencyInfo.first(where: { $0.abbreviation == baseCode }),
-            let relativeInfo = currencyInfo.first(where: { $0.abbreviation == relativeCode })
+            let baseInfo = info.first(where: { $0.abbreviation == baseCode }),
+            let relativeInfo = info.first(where: { $0.abbreviation == relativeCode })
         else {
             print(#function)
             print(#line)
