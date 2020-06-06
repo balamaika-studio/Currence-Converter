@@ -20,7 +20,6 @@ class ExchangeView: UIView {
     @IBOutlet weak var flagImageView: UIImageView!
     @IBOutlet weak var currencyLabel: UILabel!
     @IBOutlet weak var rateLabel: UILabel!
-    @IBOutlet weak var changeCurrencyStack: UIStackView!
     @IBOutlet weak var countTextField: UITextField!
     
     // MARK: - Properties
@@ -82,7 +81,7 @@ class ExchangeView: UIView {
     
     private func setup() {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
-        changeCurrencyStack.addGestureRecognizer(tapGesture)
+        contentView.addGestureRecognizer(tapGesture)
         countTextField.delegate = self
         addDoneButtonOnKeyboard()
         setUpClearSetting()

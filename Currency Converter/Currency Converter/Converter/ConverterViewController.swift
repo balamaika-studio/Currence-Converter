@@ -24,7 +24,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var verticalConstraint: NSLayoutConstraint!
     
     private var actionButton: JJFloatingActionButton!
-    private var rightBarButtonItem: UIBarButtonItem!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]! {
@@ -90,11 +89,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         setUpTheming()
     }
     
-    @objc private func refreshCurrencies(_ sender: Any) {
-        interactor?.makeRequest(request: .updateCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadConverterCurrencies)
@@ -158,6 +152,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private func setupView() {
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
+        tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
         
@@ -172,10 +167,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         converterView.topCurrencyTotal = self.updateFavoriteWith
         
         setupGestureRecognizer()
-        rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
-                                            target: self,
-                                            action: #selector(reorder))
-        navigationItem.rightBarButtonItem = rightBarButtonItem
         addFAB()
     }
     
@@ -205,32 +196,83 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         }
     }
     
-    private func rotateFAB() {
-        let offset = actionButton.buttonDiameter / 2
-        horizontalConstraint.constant += tableView.isEditing ? offset : -offset
-        UIView.animate(withDuration: 0.3) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
     private func setupGestureRecognizer() {
-        gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
-        tableView.addGestureRecognizer(gestureRecognizer)
-        
-        longPressGesture = UILongPressGestureRecognizer(target: self,
-                                                        action: #selector(self.handleLongPress))
-        longPressGesture.minimumPressDuration = 0.5 // 0.5 second press
-        longPressGesture.allowableMovement = 15
-        self.tableView.addGestureRecognizer(longPressGesture)
+        let longpress = UILongPressGestureRecognizer(target: self,
+                                                     action: #selector(handleLongPress(_:)))
+        tableView.addGestureRecognizer(longpress)
     }
 
     // MARK: Handlers
-    @objc private func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer){
-        if gestureRecognizer.state == .began {
-            let touchPoint = gestureRecognizer.location(in: self.tableView)
-            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
-                let currency = favoriteCurrencies[indexPath.row]
-                interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+    @objc private func handleLongPress(_ longPress: UILongPressGestureRecognizer) {
+        let state = longPress.state
+        let locationInView = longPress.location(in: tableView)
+        guard let indexPath = tableView.indexPathForRow(at: locationInView),
+            let cell = tableView.cellForRow(at: indexPath) else {
+            return
+        }
+        
+        switch state {
+        case UIGestureRecognizerState.began:
+            Path.initialIndexPath = indexPath
+            CellInfo.cellSnapshot = CellInfo.snapshotOfCell(cell)
+            var center = cell.center
+            CellInfo.cellSnapshot!.center = center
+            CellInfo.cellSnapshot!.alpha = 0.0
+            tableView.addSubview(CellInfo.cellSnapshot!)
+            UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                center.y = locationInView.y
+                CellInfo.cellIsAnimating = true
+                CellInfo.cellSnapshot!.center = center
+                CellInfo.cellSnapshot!.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                CellInfo.cellSnapshot!.alpha = 0.98
+                cell.alpha = 0.0
+            }, completion: { finished in
+                if finished {
+                    CellInfo.cellIsAnimating = false
+                    if CellInfo.cellNeedToShow {
+                        CellInfo.cellNeedToShow = false
+                        UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                            cell.alpha = 1
+                        })
+                    } else {
+                        cell.isHidden = true
+                    }
+                }
+            })
+            
+        case UIGestureRecognizerState.changed:
+            if CellInfo.cellSnapshot != nil {
+                var center = CellInfo.cellSnapshot!.center
+                center.y = locationInView.y
+                CellInfo.cellSnapshot!.center = center
+                if indexPath != Path.initialIndexPath {
+                    let a = favoriteCurrencies.remove(at: Path.initialIndexPath!.row)
+                    favoriteCurrencies.insert(a, at: indexPath.row)
+                    tableView.moveRow(at: Path.initialIndexPath!, to: indexPath)
+                    Path.initialIndexPath = indexPath
+                }
+            }
+        default:
+            if Path.initialIndexPath != nil {
+                let cell = tableView.cellForRow(at: Path.initialIndexPath!)
+                if CellInfo.cellIsAnimating {
+                    CellInfo.cellNeedToShow = true
+                } else {
+                    cell?.isHidden = false
+                    cell?.alpha = 0.0
+                }
+                UIView.animate(withDuration: 0.25, animations: { () -> Void in
+                    CellInfo.cellSnapshot!.center = (cell?.center)!
+                    CellInfo.cellSnapshot!.transform = CGAffineTransform.identity
+                    CellInfo.cellSnapshot!.alpha = 0.0
+                    cell?.alpha = 1.0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        Path.initialIndexPath = nil
+                        CellInfo.cellSnapshot!.removeFromSuperview()
+                        CellInfo.cellSnapshot = nil
+                    }
+                })
             }
         }
     }
@@ -239,29 +281,10 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         view.endEditing(true)
     }
     
-    @objc private func reorder() {
-        let isEditing = tableView.isEditing
-        var tableDelagete: UITableViewDelegate?
-        if isEditing {
-            tableDelagete = nil
-            rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
-                                                 target: self,
-                                                 action: #selector(reorder))
-        } else {
-            tableDelagete = self
-            rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done,
-                                                 target: self,
-                                                 action: #selector(reorder))
-        }
-        rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
-                                                  for: .normal)
-        navigationItem.rightBarButtonItem = rightBarButtonItem
-        tableView.delegate = tableDelagete
-        longPressGesture.isEnabled = !longPressGesture.isEnabled
-        tableView.setEditing(!isEditing, animated: true)
-        rotateFAB()
+    @objc private func refreshCurrencies(_ sender: Any) {
+        interactor?.makeRequest(request: .updateCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
-    
 }
 
 // MARK: - Themed
@@ -270,8 +293,6 @@ extension ConverterViewController: Themed {
         tableView.backgroundColor = .clear
         view.backgroundColor = theme.backgroundColor
         tableView.reloadData()
-        rightBarButtonItem.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.white],
-                                                  for: .normal)
     }
 }
 
@@ -301,17 +322,6 @@ extension ConverterViewController: UITableViewDataSource {
         return cell
     }
     
-    // Moving Cells
-    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        true
-    }
-
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item = favoriteCurrencies[sourceIndexPath.row]
-        favoriteCurrencies.remove(at: sourceIndexPath.row)
-        favoriteCurrencies.insert(item, at: destinationIndexPath.row)
-    }
-    
     // Deleting
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
@@ -332,13 +342,9 @@ extension ConverterViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {
-    // Disable the delete buttons
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
-    }
-    
-    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let currency = favoriteCurrencies[indexPath.row]
+        interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
 }
 

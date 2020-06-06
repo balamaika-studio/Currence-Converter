@@ -11,7 +11,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExchangeView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
                 <outlet property="changeCurrencyIcon" destination="TQV-Hf-tCc" id="Jks-qI-loK"/>
-                <outlet property="changeCurrencyStack" destination="BKz-hU-MQG" id="jhk-fE-S4Q"/>
                 <outlet property="countTextField" destination="1L9-ZQ-RRh" id="7ef-wX-rto"/>
                 <outlet property="currencyLabel" destination="cKU-XL-9Su" id="454-ME-SUN"/>
                 <outlet property="flagImageView" destination="j57-ow-yJc" id="5bu-l9-dkV"/>
@@ -31,7 +30,7 @@
                     </constraints>
                 </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="BKz-hU-MQG">
-                    <rect key="frame" x="70" y="20" width="49.666666666666657" height="21.666666666666671"/>
+                    <rect key="frame" x="70" y="20" width="49" height="21.666666666666671"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKU-XL-9Su">
                             <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="21.666666666666668"/>
@@ -40,7 +39,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-Hf-tCc">
-                            <rect key="frame" x="40.666666666666671" y="0.0" width="9" height="21.666666666666668"/>
+                            <rect key="frame" x="40.666666666666671" y="0.0" width="8.3333333333333357" height="21.666666666666668"/>
                         </imageView>
                     </subviews>
                 </stackView>
@@ -81,7 +80,7 @@
         </view>
     </objects>
     <resources>
-        <image name="changeCurrencyLight" width="9" height="6"/>
+        <image name="changeCurrencyLight" width="8.3333330154418945" height="5.3333334922790527"/>
         <image name="emptyFlag" width="512" height="512"/>
     </resources>
 </document>

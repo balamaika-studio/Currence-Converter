@@ -98,6 +98,8 @@
 		D1A2A2962477ACF0001949BD /* OfflineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A28F2477ACF0001949BD /* OfflineViewController.swift */; };
 		D1A2A2972477ACF0001949BD /* OfflineInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A2A2902477ACF0001949BD /* OfflineInteractor.swift */; };
 		D1A2A2982477ACF0001949BD /* OfflineViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1A2A2912477ACF0001949BD /* OfflineViewController.xib */; };
+		D1A68842248BD5AD00286372 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A68841248BD5AD00286372 /* Path.swift */; };
+		D1A68844248BD5F700286372 /* CellInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A68843248BD5F700286372 /* CellInfo.swift */; };
 		D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */; };
 		D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */; };
 		D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92A24543FA600985B9B /* AppTabBarController.swift */; };
@@ -264,6 +266,8 @@
 		D1A2A28F2477ACF0001949BD /* OfflineViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineViewController.swift; sourceTree = "<group>"; };
 		D1A2A2902477ACF0001949BD /* OfflineInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineInteractor.swift; sourceTree = "<group>"; };
 		D1A2A2912477ACF0001949BD /* OfflineViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OfflineViewController.xib; sourceTree = "<group>"; };
+		D1A68841248BD5AD00286372 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		D1A68843248BD5F700286372 /* CellInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellInfo.swift; sourceTree = "<group>"; };
 		D1B6A61A244F261500B4DDE9 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
 		D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		D1BBC92A24543FA600985B9B /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
@@ -618,6 +622,15 @@
 			path = Offline;
 			sourceTree = "<group>";
 		};
+		D1A68840248BD59200286372 /* Cell Reorder */ = {
+			isa = PBXGroup;
+			children = (
+				D1A68841248BD5AD00286372 /* Path.swift */,
+				D1A68843248BD5F700286372 /* CellInfo.swift */,
+			);
+			path = "Cell Reorder";
+			sourceTree = "<group>";
+		};
 		D1B6A619244F25EB00B4DDE9 /* Custom View */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +643,7 @@
 		D1BBC92724543ED700985B9B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D1A68840248BD59200286372 /* Cell Reorder */,
 				D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */,
 				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
 				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
@@ -1042,6 +1056,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1A68844248BD5F700286372 /* CellInfo.swift in Sources */,
+				D1A68842248BD5AD00286372 /* Path.swift in Sources */,
 				D1DDE950243F4AD30023E789 /* CurrencySelectionModels.swift in Sources */,
 				D19A9386242D146C00DDCEA9 /* URLEncoding.swift in Sources */,
 				D15117122461E16700D86D9F /* CodableColor.swift in Sources */,
