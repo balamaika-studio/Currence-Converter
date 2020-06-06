@@ -72,6 +72,7 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
         
         tableView.rowHeight = 44
         tableView.sectionHeaderHeight = 50
+        tableView.contentInset = AdBannerInsetService.shared.tableInset
         relatives = []
     }
 }

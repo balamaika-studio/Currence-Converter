@@ -52,9 +52,12 @@ class FavoritePresenter: FavoritePresentationLogic {
             let result = filteredQuotes == nil ? quotes : filteredQuotes
             viewController?.displayData(viewModel: .showCurrencies(result ?? []))
             
-        case .filter(let title):
-            let filteredQuotes = title.isEmpty ? quotes : quotes.filter { quote in
-                quote.title.lowercased().contains(title.lowercased())
+        case .filter(let text):
+            let filter = text.lowercased()
+            let filteredQuotes = text.isEmpty ? quotes : quotes.filter { quote in
+                let title = quote.title.lowercased()
+                let currency = quote.currency.lowercased()
+                return title.contains(filter) || currency.contains(filter)
             }
             self.filteredQuotes = filteredQuotes
             viewController?.displayData(viewModel: .showCurrencies(filteredQuotes ?? []))

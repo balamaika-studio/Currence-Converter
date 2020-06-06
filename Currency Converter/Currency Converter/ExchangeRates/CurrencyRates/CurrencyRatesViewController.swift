@@ -77,6 +77,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
         tableView.sectionHeaderHeight = 50
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
+        tableView.contentInset = AdBannerInsetService.shared.tableInset
         relatives = []
     }
 }

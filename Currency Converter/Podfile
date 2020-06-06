@@ -11,6 +11,7 @@ target 'Currency Converter' do
   pod 'RealmSwift'
   pod 'ReachabilitySwift'
   pod 'JJFloatingActionButton'
+  pod 'Google-Mobile-Ads-SDK'
 
   target 'Currency ConverterTests' do
     inherit! :search_paths

@@ -89,6 +89,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         tableView.separatorStyle = .none
         tableView.allowsMultipleSelection = true
         tableView.rowHeight = 62
+        tableView.contentInset = AdBannerInsetService.shared.tableInset
     }
     
     private func setPlaceHolder(placeholder: String) -> String {

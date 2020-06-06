@@ -8,6 +8,7 @@
 
 import UIKit
 import JJFloatingActionButton
+import GoogleMobileAds
 
 protocol ConverterDisplayLogic: class {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
@@ -155,6 +156,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
+        tableView.contentInset = AdBannerInsetService.shared.tableInset
         
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.addTarget(self,
@@ -175,7 +177,10 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(actionButton)
         horizontalConstraint = safeArea.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 31)
-        verticalConstraint = safeBottomAnchor.constraint(equalTo: actionButton.bottomAnchor, constant: 26)
+        let bottomInset = AdBannerInsetService.shared.bannerHeight + 8
+        verticalConstraint = safeBottomAnchor.constraint(equalTo: actionButton.bottomAnchor,
+                                                         constant: bottomInset)
+        
         horizontalConstraint.isActive = true
         verticalConstraint.isActive = true
         

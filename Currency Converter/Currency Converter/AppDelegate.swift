@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    private let adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    
     var window: UIWindow?
     var tabBarViewController: UITabBarController!
     var storage: StorageContext!
     var networkManager: NetworkManager!
+    private var bannerView: GADBannerView!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -37,7 +41,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
         checkInternetConnection()
+        setupAds()
         return true
+    }
+    
+    func setupAds() {
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        print(kGADAdSizeBanner.size.height)
+        addBanner(bannerView)
+        bannerView.adUnitID = adUnitID
+        bannerView.rootViewController = tabBarViewController
+        bannerView.load(GADRequest())
+    }
+    
+    func addBanner(_ bannerView: GADBannerView) {
+        bannerView.translatesAutoresizingMaskIntoConstraints = false
+        tabBarViewController.view.addSubview(bannerView)
+        tabBarViewController.view.addConstraints([
+            NSLayoutConstraint(item: bannerView,
+                                attribute: .bottom,
+                                relatedBy: .equal,
+                                toItem: tabBarViewController.tabBar,
+                                attribute: .top,
+                                multiplier: 1,
+                                constant: 0),
+             NSLayoutConstraint(item: bannerView,
+                                attribute: .centerX,
+                                relatedBy: .equal,
+                                toItem: tabBarViewController.view,
+                                attribute: .centerX,
+                                multiplier: 1,
+                                constant: 0)
+       ])
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
