@@ -80,6 +80,7 @@ class ExchangeView: UIView {
     }
     
     private func setup() {
+        tapGesture.delegate = self
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         contentView.addGestureRecognizer(tapGesture)
         countTextField.delegate = self
@@ -114,6 +115,17 @@ class ExchangeView: UIView {
     
     @objc private func changeCurrencyTapped() {
         delegate?.changeCurrencyTapped(exchangeView: self)
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension ExchangeView: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        let point = touch.location(in: contentView)
+        if point.x >= countTextField.frame.minX {
+           return false
+        }
+        return true
     }
 }
 

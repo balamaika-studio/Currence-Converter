@@ -158,11 +158,9 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
-        tableView.contentInset = AdBannerInsetService.shared.tableInset
         reorderTableView = LongPressReorderTableView(tableView,
                                                      scrollBehaviour: .late,
                                                      selectedRowScale: .big)
-//        reorderTableView = LongPressReorderTableView(tableView)
         reorderTableView.delegate = self
         reorderTableView.enableLongPressReorder()
         

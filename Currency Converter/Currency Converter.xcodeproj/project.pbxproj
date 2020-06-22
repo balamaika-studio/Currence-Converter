@@ -67,6 +67,7 @@
 		D164543024630203009B6E75 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D164543224630203009B6E75 /* Localizable.strings */; };
 		D16454352463308B009B6E75 /* PeriodCollectionViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16454342463308B009B6E75 /* PeriodCollectionViewHelper.swift */; };
 		D167E44E24620BEA0069683A /* ChartXValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */; };
+		D16AD72824A0F83100D7C9DE /* AdaptiveTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16AD72724A0F83100D7C9DE /* AdaptiveTableView.swift */; };
 		D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */ = {isa = PBXBuildFile; fileRef = D16E45D72423C047005D99E9 /* currenciesNames.json */; };
 		D16E45DA2423C2E6005D99E9 /* CurrencyInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */; };
 		D17A1E432473F7CB00C5E2E6 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */; };
@@ -236,6 +237,7 @@
 		D164543324630208009B6E75 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D16454342463308B009B6E75 /* PeriodCollectionViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodCollectionViewHelper.swift; sourceTree = "<group>"; };
 		D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartXValueFormatter.swift; sourceTree = "<group>"; };
+		D16AD72724A0F83100D7C9DE /* AdaptiveTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdaptiveTableView.swift; sourceTree = "<group>"; };
 		D16E45D72423C047005D99E9 /* currenciesNames.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = currenciesNames.json; sourceTree = "<group>"; };
 		D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyInfo.swift; sourceTree = "<group>"; };
 		D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
@@ -652,6 +654,7 @@
 				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
 				D1BBC932245453F000985B9B /* AppViewController.swift */,
 				D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */,
+				D16AD72724A0F83100D7C9DE /* AdaptiveTableView.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1086,6 +1089,7 @@
 				D1E4ED102451CD5900ECE03F /* SubscribableValue.swift in Sources */,
 				D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */,
 				D19A937C242D0C5200DDCEA9 /* EndPointType.swift in Sources */,
+				D16AD72824A0F83100D7C9DE /* AdaptiveTableView.swift in Sources */,
 				D1E4ED232451F88500ECE03F /* FieldClearable.swift in Sources */,
 				D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
