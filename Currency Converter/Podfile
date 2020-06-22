@@ -12,6 +12,7 @@ target 'Currency Converter' do
   pod 'ReachabilitySwift'
   pod 'JJFloatingActionButton'
   pod 'Google-Mobile-Ads-SDK'
+  pod "LongPressReorder"
 
   target 'Currency ConverterTests' do
     inherit! :search_paths

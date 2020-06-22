@@ -8,7 +8,7 @@
 
 import UIKit
 import JJFloatingActionButton
-import GoogleMobileAds
+import LongPressReorder
 
 protocol ConverterDisplayLogic: class {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
@@ -24,6 +24,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var horizontalConstraint: NSLayoutConstraint!
     private var verticalConstraint: NSLayoutConstraint!
     
+    private var reorderTableView: LongPressReorderTableView!
     private var actionButton: JJFloatingActionButton!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
@@ -151,12 +152,19 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     // MARK: Setup
     private func setupView() {
+        
         tableView.register(R.nib.converterCurrencyTableViewCell)
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
         tableView.contentInset = AdBannerInsetService.shared.tableInset
+        reorderTableView = LongPressReorderTableView(tableView,
+                                                     scrollBehaviour: .late,
+                                                     selectedRowScale: .big)
+//        reorderTableView = LongPressReorderTableView(tableView)
+        reorderTableView.delegate = self
+        reorderTableView.enableLongPressReorder()
         
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.addTarget(self,
@@ -168,7 +176,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
         converterView.topCurrencyTotal = self.updateFavoriteWith
         
-        setupGestureRecognizer()
         addFAB()
     }
     
@@ -200,88 +207,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             self.router?.showFavoriteViewController()
         }
     }
-    
-    private func setupGestureRecognizer() {
-        let longpress = UILongPressGestureRecognizer(target: self,
-                                                     action: #selector(handleLongPress(_:)))
-        tableView.addGestureRecognizer(longpress)
-    }
-
-    // MARK: Handlers
-    @objc private func handleLongPress(_ longPress: UILongPressGestureRecognizer) {
-        let state = longPress.state
-        let locationInView = longPress.location(in: tableView)
-        guard let indexPath = tableView.indexPathForRow(at: locationInView),
-            let cell = tableView.cellForRow(at: indexPath) else {
-            return
-        }
-        
-        switch state {
-        case UIGestureRecognizerState.began:
-            Path.initialIndexPath = indexPath
-            CellInfo.cellSnapshot = CellInfo.snapshotOfCell(cell)
-            var center = cell.center
-            CellInfo.cellSnapshot!.center = center
-            CellInfo.cellSnapshot!.alpha = 0.0
-            tableView.addSubview(CellInfo.cellSnapshot!)
-            UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                center.y = locationInView.y
-                CellInfo.cellIsAnimating = true
-                CellInfo.cellSnapshot!.center = center
-                CellInfo.cellSnapshot!.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
-                CellInfo.cellSnapshot!.alpha = 0.98
-                cell.alpha = 0.0
-            }, completion: { finished in
-                if finished {
-                    CellInfo.cellIsAnimating = false
-                    if CellInfo.cellNeedToShow {
-                        CellInfo.cellNeedToShow = false
-                        UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                            cell.alpha = 1
-                        })
-                    } else {
-                        cell.isHidden = true
-                    }
-                }
-            })
-            
-        case UIGestureRecognizerState.changed:
-            if CellInfo.cellSnapshot != nil {
-                var center = CellInfo.cellSnapshot!.center
-                center.y = locationInView.y
-                CellInfo.cellSnapshot!.center = center
-                if indexPath != Path.initialIndexPath {
-                    let a = favoriteCurrencies.remove(at: Path.initialIndexPath!.row)
-                    favoriteCurrencies.insert(a, at: indexPath.row)
-                    tableView.moveRow(at: Path.initialIndexPath!, to: indexPath)
-                    Path.initialIndexPath = indexPath
-                }
-            }
-        default:
-            if Path.initialIndexPath != nil {
-                let cell = tableView.cellForRow(at: Path.initialIndexPath!)
-                if CellInfo.cellIsAnimating {
-                    CellInfo.cellNeedToShow = true
-                } else {
-                    cell?.isHidden = false
-                    cell?.alpha = 0.0
-                }
-                UIView.animate(withDuration: 0.25, animations: { () -> Void in
-                    CellInfo.cellSnapshot!.center = (cell?.center)!
-                    CellInfo.cellSnapshot!.transform = CGAffineTransform.identity
-                    CellInfo.cellSnapshot!.alpha = 0.0
-                    cell?.alpha = 1.0
-                }, completion: { (finished) -> Void in
-                    if finished {
-                        Path.initialIndexPath = nil
-                        CellInfo.cellSnapshot!.removeFromSuperview()
-                        CellInfo.cellSnapshot = nil
-                    }
-                })
-            }
-        }
-    }
-    
+  
     @objc private func closeKeyboard() {
         view.endEditing(true)
     }
@@ -350,6 +276,14 @@ extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currency = favoriteCurrencies[indexPath.row]
         interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+    }
+}
+
+// MARK: - LongPressReorder Delegate
+extension ConverterViewController {
+    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
+        let currency = favoriteCurrencies.remove(at: initialIndex.row)
+        favoriteCurrencies.insert(currency, at: finalIndex.row)
     }
 }
 
