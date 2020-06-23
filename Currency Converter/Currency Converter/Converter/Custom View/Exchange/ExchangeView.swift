@@ -136,13 +136,24 @@ extension ExchangeView: UITextFieldDelegate {
         // get the current text, or use an empty string if that failed
         let currentText = textField.text ?? ""
         
+        if string == "," {
+            textField.text = currentText + "."
+            return false
+        }
+        
         // attempt to read the range they are trying to change, or exit if we can't
         guard let stringRange = Range(range, in: currentText) else { return false }
-        
         // add their new text to the existing text
         let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // remove symbol tapped
+        if updatedText.count < currentText.count { return true }
         // make sure the result is under max length
         return updatedText.count <= maxLength
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        return true
     }
 }
 

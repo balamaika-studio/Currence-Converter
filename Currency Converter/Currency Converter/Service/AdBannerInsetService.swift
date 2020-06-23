@@ -23,7 +23,14 @@ struct AdBannerInsetService: TableInset {
     
     var tableInset: UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0,
-                            bottom: bannerHeight * 2, right: 0)
+                            bottom: bannerHeight * 2,
+                            right: 0)
+    }
+    
+    var graphScrollInset: UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 0,
+                            bottom: bannerHeight,
+                            right: 0)
     }
     
     private init() {}
