@@ -30,8 +30,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="British Pound" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiG-o0-tYo">
-                        <rect key="frame" x="73" y="41.5" width="332.5" height="14.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="British Pound" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wiG-o0-tYo">
+                        <rect key="frame" x="73" y="42" width="332.5" height="14.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.80392156862745101" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -50,8 +50,8 @@
                     <constraint firstItem="eY1-9Q-rpk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="76B-21-aRQ"/>
                     <constraint firstItem="Zfx-Pt-iBM" firstAttribute="centerY" secondItem="eY1-9Q-rpk" secondAttribute="centerY" id="C41-TT-oEA"/>
                     <constraint firstItem="eY1-9Q-rpk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FgI-jC-2Wk"/>
+                    <constraint firstItem="wiG-o0-tYo" firstAttribute="top" secondItem="Uyj-6r-rTe" secondAttribute="bottom" constant="5" id="IH7-0i-m0D"/>
                     <constraint firstItem="Uyj-6r-rTe" firstAttribute="top" secondItem="eY1-9Q-rpk" secondAttribute="top" id="Kvp-el-sSi"/>
-                    <constraint firstItem="wiG-o0-tYo" firstAttribute="bottom" secondItem="eY1-9Q-rpk" secondAttribute="bottom" id="dtX-BL-zQc"/>
                     <constraint firstItem="Zfx-Pt-iBM" firstAttribute="leading" secondItem="wiG-o0-tYo" secondAttribute="trailing" constant="20" id="f4T-gR-gyh"/>
                     <constraint firstItem="wiG-o0-tYo" firstAttribute="leading" secondItem="eY1-9Q-rpk" secondAttribute="trailing" constant="17" id="pNg-Od-pJ5"/>
                     <constraint firstAttribute="bottom" secondItem="eY1-9Q-rpk" secondAttribute="bottom" constant="16" id="tJk-vV-bCi"/>

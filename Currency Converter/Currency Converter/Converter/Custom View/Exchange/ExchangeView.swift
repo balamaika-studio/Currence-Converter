@@ -26,6 +26,7 @@ class ExchangeView: UIView {
     private var contentView: UIView!
     private let tapGesture = UITapGestureRecognizer()
     private let maxLength = 8
+    private var validateService: Validating?
     weak var delegate: ExchangeViewDeleagte?
     
     var currencyName: String {
@@ -84,6 +85,7 @@ class ExchangeView: UIView {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         contentView.addGestureRecognizer(tapGesture)
         countTextField.delegate = self
+        validateService = ValidateService()
         addDoneButtonOnKeyboard()
         setUpClearSetting()
     }
@@ -136,6 +138,10 @@ extension ExchangeView: UITextFieldDelegate {
         // get the current text, or use an empty string if that failed
         let currentText = textField.text ?? ""
         
+        // checks data validity
+        let validateResult = validateService?.isConverterFieldCorrect(text: string) ?? false
+        if !validateResult { return false }
+                
         // only one point supported
         if currentText.contains(".") && string == "," { return false }
         

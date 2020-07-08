@@ -50,7 +50,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1L9-ZQ-RRh">
-                    <rect key="frame" x="223.66666666666666" y="10" width="102.33333333333334" height="60"/>
+                    <rect key="frame" x="223.66666666666666" y="12" width="102.33333333333334" height="56"/>
                     <fontDescription key="fontDescription" type="system" pointSize="22"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="decimalPad"/>
                     <connections>
@@ -68,9 +68,9 @@
                 <constraint firstItem="j57-ow-yJc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="WKw-Rv-7rR"/>
                 <constraint firstItem="1L9-ZQ-RRh" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="cfz-jc-fHm"/>
                 <constraint firstItem="j57-ow-yJc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="gCO-lu-NTN"/>
-                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="jwi-cQ-euX"/>
+                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="jwi-cQ-euX"/>
                 <constraint firstItem="BKz-hU-MQG" firstAttribute="top" secondItem="j57-ow-yJc" secondAttribute="top" id="ljQ-Y1-abV"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1L9-ZQ-RRh" secondAttribute="bottom" constant="10" id="omc-Nh-54E"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1L9-ZQ-RRh" secondAttribute="bottom" constant="12" id="omc-Nh-54E"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1L9-ZQ-RRh" secondAttribute="trailing" constant="15" id="p5f-gQ-jTF"/>
                 <constraint firstItem="CkW-Tg-zlG" firstAttribute="bottom" secondItem="j57-ow-yJc" secondAttribute="bottom" id="ucN-go-oN3"/>
             </constraints>
