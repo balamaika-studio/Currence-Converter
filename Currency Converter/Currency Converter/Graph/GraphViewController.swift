@@ -148,6 +148,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         leftYAxis.drawZeroLineEnabled = true // draw a zero line
         
         let rightYAxis = chartView.getAxis(.right)
+        rightYAxis.valueFormatter = ChartYValueFormatter()
         rightYAxis.enabled = true // right axis
         rightYAxis.labelTextColor = .gray
         rightYAxis.drawGridLinesEnabled = false

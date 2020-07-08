@@ -104,14 +104,16 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         selectedCell?.detailTextLabel?.text = selectedAccuracy?.description
         
         let newAccuracy = selectedAccuracy != nil ? selectedAccuracy! : Accuracy.defaultAccurancy
-        AccuracyManager.shared.accurancy = newAccuracy.rawValue
+        AccuracyManager.shared.accuracy = newAccuracy.rawValue
         
         hiddenTextField.resignFirstResponder()
+        deselectDecimaPlacesCell()
         removeBlure()
     }
     
     @objc func closePicker() {
         hiddenTextField.resignFirstResponder()
+        deselectDecimaPlacesCell()
         removeBlure()
     }
     
@@ -129,11 +131,17 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
                            forCellReuseIdentifier: SettingsTableViewCell.cellId)
     }
     
+    private func deselectDecimaPlacesCell() {
+        if let decimalPlacesPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: decimalPlacesPath, animated: true)
+        }
+    }
+    
     private func createVisualEffects() {
         let blurEffect = UIBlurEffect(style: .dark)
         blurView = UIVisualEffectView(effect: blurEffect)
         blurView.alpha = 0.8
-        blurView.frame = view.frame
+        blurView.frame = view.bounds
         blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         vibrancyView = UIVisualEffectView(effect: UIVibrancyEffect(blurEffect: blurEffect))

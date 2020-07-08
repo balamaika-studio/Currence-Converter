@@ -31,7 +31,7 @@ class CurrencyPairTableViewCell: UITableViewCell {
         let changeImage = UIImage(named: viewModel.change.rawValue)
         currencyRelativeLabel.text = viewModel.relation
         changeImageView.image = changeImage
-        rateLabel.text = "\(viewModel.rate)"
+        rateLabel.text = viewModel.rate
         rateLabel.textColor = rateColor(change: viewModel.change)
         selectionStyle = .none
     }

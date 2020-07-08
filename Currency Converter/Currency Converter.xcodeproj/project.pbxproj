@@ -36,6 +36,7 @@
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
 		7CC4451B72C84DE623FFD9CD /* Pods_Currency_Converter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */; };
 		A3E8168B007F8123B635C16B /* Pods_Currency_ConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */; };
+		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
 		D1130DF5247A8A3700F830BA /* SwipeTabBarTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */; };
 		D115608C244A1DA1000EB5E9 /* RelativeExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */; };
 		D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */; };
@@ -203,6 +204,7 @@
 		9A69F0144CE382400E931EEA /* Pods-Currency ConverterTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.debug.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FDFD26C6F25AA25CE6D9B09 /* Pods-Currency ConverterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency ConverterTests.release.xcconfig"; path = "Target Support Files/Pods-Currency ConverterTests/Pods-Currency ConverterTests.release.xcconfig"; sourceTree = "<group>"; };
 		C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartYValueFormatter.swift; sourceTree = "<group>"; };
 		D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTabBarTransition.swift; sourceTree = "<group>"; };
 		D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeExchangeView.swift; sourceTree = "<group>"; };
 		D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelativeExchangeView.xib; sourceTree = "<group>"; };
@@ -649,6 +651,7 @@
 			children = (
 				D1A68840248BD59200286372 /* Cell Reorder */,
 				D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */,
+				D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */,
 				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
 				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
 				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
@@ -1157,6 +1160,7 @@
 				D125731C24536AA8005F8332 /* EdgeInsetLabel.swift in Sources */,
 				D188554A2436080600476EB3 /* RealmStorageContext.swift in Sources */,
 				D163AFF3244E352B00014800 /* AppearanceOptions.swift in Sources */,
+				D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */,
 				D163AFE4244E312800014800 /* SettingsRouter.swift in Sources */,
 				5968111F2420E8CE00426968 /* ChoiceInteractor.swift in Sources */,
 				D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */,
@@ -1364,7 +1368,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1386,7 +1390,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -36,10 +36,10 @@ struct CurrencyRatesViewModel: CurrencyPairViewModel {
     var realmId: String
     var relation: String
     var change: Change
-    var rate: Double
+    var rate: String
     var isSelected: Bool
     
-    init(relation: String, change: Change, rate: Double) {
+    init(relation: String, change: Change, rate: String) {
         self.relation = relation
         self.change = change
         self.rate = rate

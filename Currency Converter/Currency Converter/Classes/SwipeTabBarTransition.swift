@@ -11,6 +11,7 @@ import UIKit
 class SwipeTabBarTransition: NSObject, UIViewControllerAnimatedTransitioning {
     let viewControllers: [UIViewController]?
     let transitionDuration: Double = 0.2
+    var isTransitionFinished: Bool = false
     
     init(viewControllers: [UIViewController]?) {
         self.viewControllers = viewControllers
@@ -40,13 +41,15 @@ class SwipeTabBarTransition: NSObject, UIViewControllerAnimatedTransitioning {
         toView.frame = toFrameStart
         
         DispatchQueue.main.async {
+            self.isTransitionFinished = false
             transitionContext.containerView.addSubview(toView)
             UIView.animate(withDuration: self.transitionDuration, animations: {
                 fromView.frame = fromFrameEnd
                 toView.frame = frame
-            }, completion: {success in
+            }, completion: { success in
                 fromView.removeFromSuperview()
                 transitionContext.completeTransition(success)
+                self.isTransitionFinished = success
             })
         }
     }

@@ -67,7 +67,7 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
                 cell.switchState = SwitchState(rawValue: isFieldClearEnable)
                 
             case .accuracy:
-                let accuracy = Accuracy(rawValue: AccuracyManager.shared.accurancy)
+                let accuracy = Accuracy(rawValue: AccuracyManager.shared.accuracy)
                 cell.detailTextLabel?.text = accuracy?.description
                 
             case .theme:

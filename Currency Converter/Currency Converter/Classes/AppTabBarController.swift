@@ -9,6 +9,8 @@
 import UIKit
 
 class AppTabBarController: UITabBarController {
+    private var swipeTransition: SwipeTabBarTransition?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
@@ -53,11 +55,12 @@ class AppTabBarController: UITabBarController {
 // MARK: - UITabBarControllerDelegate
 extension AppTabBarController: UITabBarControllerDelegate  {
     func tabBarController(_ tabBarController: UITabBarController, animationControllerForTransitionFrom fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return SwipeTabBarTransition(viewControllers: tabBarController.viewControllers)
+        swipeTransition = SwipeTabBarTransition(viewControllers: tabBarController.viewControllers)
+        return swipeTransition
     }
     
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
-        return true
+        return swipeTransition?.isTransitionFinished ?? true
     }
 }
 

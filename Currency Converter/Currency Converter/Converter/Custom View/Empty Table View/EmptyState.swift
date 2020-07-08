@@ -18,12 +18,14 @@ class EmptyState: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         loadViewFromNib()
+        setupView()
         setUpTheming()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         loadViewFromNib()
+        setupView()
         setUpTheming()
     }
     
@@ -39,6 +41,10 @@ class EmptyState: UIView {
             view.topAnchor.constraint(equalTo: topAnchor),
             view.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+    }
+    
+    private func setupView() {
+        titleLabel.text = R.string.localizable.emptyStateTitle()
     }
 
 }

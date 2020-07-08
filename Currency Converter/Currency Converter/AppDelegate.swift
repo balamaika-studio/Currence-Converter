@@ -129,7 +129,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func restoreAccuracySettings() {
         guard let _ = UserDefaults.standard.value(forKey: "accuracy") else {
-            AccuracyManager.shared.accurancy = Accuracy.defaultAccurancy.rawValue
+            AccuracyManager.shared.accuracy = Accuracy.defaultAccurancy.rawValue
             return
         }
     }

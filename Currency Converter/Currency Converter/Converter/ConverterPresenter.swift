@@ -89,21 +89,23 @@ class ConverterPresenter: ConverterPresentationLogic {
     private func buildConverterViewModel(_ first: Currency, _ second: Currency) -> ConverterViewModel {
         let firstRate = Double(first.rate)
         let secondRate = Double(second.rate)
-        
-        let firstExchangeRate = AccuracyManager.shared.formatNumber(secondRate / firstRate)
-        let secondExchangeRate = AccuracyManager.shared.formatNumber(firstRate / secondRate)
-        
+
+        let firstExchangeRate = secondRate / firstRate
+        let secondExchangeRate = firstRate / secondRate
+        let firstRoundedRate = AccuracyManager.shared.formatNumber(firstExchangeRate)
+        let secondRoundedRate = AccuracyManager.shared.formatNumber(secondExchangeRate)
+
         let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? "Error"
         let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? "Error"
         
         let firstExchange = Exchange(currency: first.currency,
                              rate: firstRate,
                              exchangeRate: firstExchangeRate,
-                             regardingRate: "\(aSymbol)1=\(bSymbol)\(firstExchangeRate)")
+                             regardingRate: "\(aSymbol)1=\(bSymbol)\(firstRoundedRate)")
         let secondExchange = Exchange(currency: second.currency,
                               rate: secondRate,
                               exchangeRate: secondExchangeRate,
-                              regardingRate: "\(bSymbol)1=\(aSymbol)\(secondExchangeRate)")
+                              regardingRate: "\(bSymbol)1=\(aSymbol)\(secondRoundedRate)")
         
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         let updatedTitle = buildUpdatedTitle(from: timestamp)

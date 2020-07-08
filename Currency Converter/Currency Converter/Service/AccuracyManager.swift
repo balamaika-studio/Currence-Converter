@@ -12,7 +12,7 @@ class AccuracyManager {
     static let shared = AccuracyManager()
     private let defaultAccuracy: Accuracy
     
-    var accurancy: Int {
+    var accuracy: Int {
         get {
             guard let accuracyData = UserDefaults.standard.value(forKey: "accuracy") as? Data,
                 let accuracy = Accuracy.decode(data: accuracyData) else {
@@ -23,7 +23,7 @@ class AccuracyManager {
         
         set {
             guard let newAccurancy = Accuracy(rawValue: newValue) else {
-                self.accurancy = defaultAccuracy.rawValue
+                self.accuracy = defaultAccuracy.rawValue
                 return
             }
             let accurancyData = Accuracy.encode(value: newAccurancy)
@@ -35,8 +35,7 @@ class AccuracyManager {
         defaultAccuracy = .defaultAccurancy
     }
     
-    func formatNumber(_ number: Double) -> Double {
-        let accuracy = Double(accurancy)
-        return round(number * pow(10, accuracy)) / pow(10, accuracy)
+    func formatNumber(_ number: Double) -> String {
+        return String(format: "%.\(accuracy)f", number)
     }
 }
