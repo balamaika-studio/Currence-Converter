@@ -128,8 +128,9 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         router?.showChoiceViewController()
     }
     
-    private func swapCurrencyTapped(baseCurrency: Currency) {
-        interactor?.makeRequest(request: .updateBaseCurrency(base: baseCurrency))
+    private func swapCurrencyTapped(converter model: ConverterViewModel) {
+        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
+        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
     

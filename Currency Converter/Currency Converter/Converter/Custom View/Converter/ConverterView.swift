@@ -19,7 +19,7 @@ class ConverterView: UIView {
     
     // MARK: - Properties
     var changeCurrencyTapped: ((ExchangeView) -> Void)?
-    var swapCurrencyTapped: ((Currency) -> Void)?
+    var swapCurrencyTapped: ((ConverterViewModel) -> Void)?
     var topCurrencyTotal: ((Double) -> Void)?
     var replacingView: ExchangeView!
     
@@ -46,7 +46,7 @@ class ConverterView: UIView {
                                        secondExchange: topCurrency.viewModel,
                                        updated: updatedLabel.text!)
         updateWith(model)
-        swapCurrencyTapped?(topCurrency.viewModel)
+        swapCurrencyTapped?(model)
     }
 
     // MARK: - Private Methods

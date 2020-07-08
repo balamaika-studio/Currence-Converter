@@ -136,6 +136,15 @@ extension ExchangeView: UITextFieldDelegate {
         // get the current text, or use an empty string if that failed
         let currentText = textField.text ?? ""
         
+        // only one point supported
+        if currentText.contains(".") && string == "," { return false }
+        
+        // prohibits the entry of zeros before a number
+        if (currentText.hasPrefix("0") && string != ",") && string != "" {
+            return currentText.hasPrefix("0.")
+        }
+        
+        // replace comma with point
         if string == "," {
             textField.text = currentText + "."
             return false
