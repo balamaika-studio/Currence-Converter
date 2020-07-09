@@ -161,6 +161,7 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         xAxis.labelTextColor = .gray
         xAxis.drawAxisLineEnabled = false
         xAxis.drawGridLinesEnabled = false
+        xAxis.avoidFirstLastClippingEnabled = true
         xAxis.granularity = 1
         
         converterView.changeCurrencyTapped = self.showChoiceViewController
