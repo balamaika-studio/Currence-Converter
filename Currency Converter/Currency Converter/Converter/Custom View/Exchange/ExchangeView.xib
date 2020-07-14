@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ExchangeView" customModule="Currency_Converter" customModuleProvider="target">
+            <connections>
+                <outlet property="changeCurrencyIcon" destination="TQV-Hf-tCc" id="Jks-qI-loK"/>
+                <outlet property="countTextField" destination="1L9-ZQ-RRh" id="7ef-wX-rto"/>
+                <outlet property="currencyLabel" destination="cKU-XL-9Su" id="454-ME-SUN"/>
+                <outlet property="flagImageView" destination="j57-ow-yJc" id="5bu-l9-dkV"/>
+                <outlet property="rateLabel" destination="CkW-Tg-zlG" id="skq-Er-EDF"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="341" height="80"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="emptyFlag" translatesAutoresizingMaskIntoConstraints="NO" id="j57-ow-yJc">
+                    <rect key="frame" x="20" y="20" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="j57-ow-yJc" secondAttribute="height" multiplier="1:1" id="RbK-D7-U2a"/>
+                        <constraint firstAttribute="width" constant="40" id="rja-1G-jWF"/>
+                    </constraints>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="BKz-hU-MQG">
+                    <rect key="frame" x="70" y="20" width="49" height="21.666666666666671"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cKU-XL-9Su">
+                            <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="21.666666666666668"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="TQV-Hf-tCc">
+                            <rect key="frame" x="40.666666666666671" y="0.0" width="8.3333333333333357" height="21.666666666666668"/>
+                        </imageView>
+                    </subviews>
+                </stackView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="$1=€0.8879" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CkW-Tg-zlG">
+                    <rect key="frame" x="70" y="43" width="80.666666666666686" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <color key="textColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.80392156862745101" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" textAlignment="right" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1L9-ZQ-RRh">
+                    <rect key="frame" x="223.66666666666666" y="12" width="102.33333333333334" height="56"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" keyboardType="decimalPad"/>
+                    <connections>
+                        <action selector="textFieldEditingDidChange:" destination="-1" eventType="editingChanged" id="HUU-7E-lBb"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="CkW-Tg-zlG" firstAttribute="leading" secondItem="j57-ow-yJc" secondAttribute="trailing" constant="10" id="4GZ-fo-Fti"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="j57-ow-yJc" secondAttribute="bottom" constant="20" id="84c-SD-YIZ"/>
+                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="CkW-Tg-zlG" secondAttribute="trailing" constant="16" id="8kP-vk-mv4"/>
+                <constraint firstItem="BKz-hU-MQG" firstAttribute="leading" secondItem="j57-ow-yJc" secondAttribute="trailing" constant="10" id="Kg0-3G-iNK"/>
+                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="width" relation="greaterThanOrEqual" secondItem="iN0-l3-epB" secondAttribute="width" multiplier="0.3" id="NLL-4W-eym"/>
+                <constraint firstItem="j57-ow-yJc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="WKw-Rv-7rR"/>
+                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="cfz-jc-fHm"/>
+                <constraint firstItem="j57-ow-yJc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="20" id="gCO-lu-NTN"/>
+                <constraint firstItem="1L9-ZQ-RRh" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="12" id="jwi-cQ-euX"/>
+                <constraint firstItem="BKz-hU-MQG" firstAttribute="top" secondItem="j57-ow-yJc" secondAttribute="top" id="ljQ-Y1-abV"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1L9-ZQ-RRh" secondAttribute="bottom" constant="12" id="omc-Nh-54E"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="1L9-ZQ-RRh" secondAttribute="trailing" constant="15" id="p5f-gQ-jTF"/>
+                <constraint firstItem="CkW-Tg-zlG" firstAttribute="bottom" secondItem="j57-ow-yJc" secondAttribute="bottom" id="ucN-go-oN3"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <point key="canvasLocation" x="294.92753623188406" y="-365.21739130434787"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="changeCurrencyLight" width="8.3333330154418945" height="5.3333334922790527"/>
+        <image name="emptyFlag" width="512" height="512"/>
+    </resources>
+</document>
