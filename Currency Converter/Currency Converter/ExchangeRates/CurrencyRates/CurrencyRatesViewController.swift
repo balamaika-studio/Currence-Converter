@@ -110,6 +110,8 @@ extension CurrencyRatesViewController: UITableViewDataSource {
 extension CurrencyRatesViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let id = ExchangeRatesHeader.reuseId
-        return tableView.dequeueReusableHeaderFooterView(withIdentifier: id)
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? ExchangeRatesHeader else { return nil }
+        header.changePairsLabel()
+        return header
     }
 }

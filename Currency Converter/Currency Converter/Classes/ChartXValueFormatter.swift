@@ -20,7 +20,9 @@ class ChartXValueFormatter: IAxisValueFormatter {
     
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         var result = String()
-        let currentDate = dates[Int(value)]
+        let value = Int(value)
+        guard value >= 0, value < dates.count else { return result }
+        let currentDate = dates[value]
         
         if previousDate != currentDate {
             result = currentDate

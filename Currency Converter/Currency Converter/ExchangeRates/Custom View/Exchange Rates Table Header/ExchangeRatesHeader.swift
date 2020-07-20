@@ -15,7 +15,7 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 16)
-        label.text = R.string.localizable.pairs()
+        label.text = R.string.localizable.availablePairs()
         return label
     }()
     
@@ -39,6 +39,10 @@ class ExchangeRatesHeader: UITableViewHeaderFooterView {
     
     func hideRateLabel() {
         rateLabel.isHidden = true
+    }
+    
+    func changePairsLabel() {
+        pairsLabel.text = R.string.localizable.pairs()
     }
     
     private func configureContents() {

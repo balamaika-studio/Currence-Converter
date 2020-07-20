@@ -23,10 +23,11 @@
 
 // segmented controll
 "Rates" = "Rates";
-"Choice of currencies" = "Choice of currencies";
+"Choice of currencies" = "List of currencies";
 
 // table header
-"Pairs" = "Main pairs";
+"Available pairs" = "Available pairs";
+"Pairs" = "Pairs";
 "Rate" = "Rate";
 
 // MARK: - Graph
@@ -60,7 +61,7 @@
 "Decimal places" = "decimal places";
 
 // Clear fileds
-"Clear amount" = "Clear amount when recruiting";
+"Clear amount" = "Clear preceding values";
 
 // theme
 "Theme" = "Enable dark theme";

@@ -12,7 +12,7 @@ import GoogleMobileAds
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    private let adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    private let adUnitID = "ca-app-pub-5773099160082927/4750121114"
     
     var window: UIWindow?
     var tabBarViewController: UITabBarController!
@@ -48,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupAds() {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        print(kGADAdSizeBanner.size.height)
         addBanner(bannerView)
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController

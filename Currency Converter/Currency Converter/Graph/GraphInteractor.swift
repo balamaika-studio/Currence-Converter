@@ -54,7 +54,27 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
     }
     
     private func buildGraphRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {
-        let startInterval = period.interval
+        var startInterval = period.interval
+        let testRange = Period.week.range(to: .halfMonth)
+        
+        if testRange.contains(startInterval) {
+            let calendar = Calendar.current
+            var availableDaysCount = 0
+            var currentInterval = 0
+            
+            let myPeriod = Period(rawValue: startInterval) ?? .month
+            let dayCount = myPeriod.availableDayCount
+
+            while availableDaysCount < dayCount {
+                let date = Date(timeIntervalSinceNow: TimeInterval(-currentInterval))
+                if !calendar.isDateInWeekend(date) {
+                    availableDaysCount += 1
+                }
+                currentInterval += 86400
+            }
+            startInterval = currentInterval
+        }
+        
         let startDate = Date(timeIntervalSinceNow: TimeInterval(-startInterval))
         let endDate = Date()
         let dateFormatter = DateFormatter()

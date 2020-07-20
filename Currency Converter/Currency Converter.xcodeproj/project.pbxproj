@@ -41,6 +41,7 @@
 		D115608C244A1DA1000EB5E9 /* RelativeExchangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */; };
 		D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */; };
 		D1156092244A4376000EB5E9 /* PeriodService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1156091244A4376000EB5E9 /* PeriodService.swift */; };
+		D119C3C624C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D119C3C524C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift */; };
 		D11F8BB32452345E0074D293 /* SettingsTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB22452345E0074D293 /* SettingsTableViewDataSource.swift */; };
 		D11F8BB5245237980074D293 /* SwitchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB4245237980074D293 /* SwitchState.swift */; };
 		D11F8BB8245239730074D293 /* Accuracy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11F8BB7245239730074D293 /* Accuracy.swift */; };
@@ -210,6 +211,7 @@
 		D115608B244A1DA1000EB5E9 /* RelativeExchangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeExchangeView.swift; sourceTree = "<group>"; };
 		D115608D244A1DB6000EB5E9 /* RelativeExchangeView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RelativeExchangeView.xib; sourceTree = "<group>"; };
 		D1156091244A4376000EB5E9 /* PeriodService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeriodService.swift; sourceTree = "<group>"; };
+		D119C3C524C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoOverlappingLabelsXAxisRenderer.swift; sourceTree = "<group>"; };
 		D11F8BB22452345E0074D293 /* SettingsTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewDataSource.swift; sourceTree = "<group>"; };
 		D11F8BB4245237980074D293 /* SwitchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchState.swift; sourceTree = "<group>"; };
 		D11F8BB7245239730074D293 /* Accuracy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accuracy.swift; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 				D1A68840248BD59200286372 /* Cell Reorder */,
 				D167E44D24620BEA0069683A /* ChartXValueFormatter.swift */,
 				D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */,
+				D119C3C524C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift */,
 				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
 				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
 				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
@@ -1082,6 +1085,7 @@
 				D125731624534243005F8332 /* ExchangeRatesApi.swift in Sources */,
 				D1DDE934243F45CB0023E789 /* ExchangeRatesInteractor.swift in Sources */,
 				D1EF9A29242394F400DD328C /* Router.swift in Sources */,
+				D119C3C624C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift in Sources */,
 				D130B3B624B61D6C00068D20 /* ValidateService.swift in Sources */,
 				D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */,
 				D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */,
@@ -1372,7 +1376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1394,7 +1398,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

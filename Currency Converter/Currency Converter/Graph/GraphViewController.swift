@@ -161,8 +161,12 @@ class GraphViewController: UIViewController, GraphDisplayLogic {
         xAxis.labelTextColor = .gray
         xAxis.drawAxisLineEnabled = false
         xAxis.drawGridLinesEnabled = false
-        xAxis.avoidFirstLastClippingEnabled = true
-        xAxis.granularity = 1
+        chartView.setExtraOffsets(left: 20, top: 0, right: 0, bottom: 0)
+        
+        let xAxisRender = NoOverlappingLabelsXAxisRenderer(viewPortHandler: chartView.viewPortHandler,
+                                                           xAxis: xAxis,
+                                                           transformer: chartView.xAxisRenderer.transformer)
+        chartView.xAxisRenderer = xAxisRender
         
         converterView.changeCurrencyTapped = self.showChoiceViewController
         converterView.updateCurrenciesLabel = self.updateCurrenciesRateLabel

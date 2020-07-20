@@ -38,6 +38,24 @@ enum Period: Int {
     case halfYear = 15778462
     case nineMonths = 23667694
     case year = 31556925
+    
+    func range(to: Self) -> ClosedRange<Int> {
+        return self.rawValue...to.rawValue
+    }
+    
+    var availableDayCount: Int {
+        var result: Int
+        switch self {
+        case .week: result = 5
+        case .halfMonth: result = 15
+        case .month: result = 30
+        case .threeMonths: result = 90
+        case .halfYear: result = 180
+        case .nineMonths: result = 270
+        case .year: result = 360
+        }
+        return result
+    }
 }
 
 extension Period: CustomStringConvertible {

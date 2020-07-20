@@ -26,7 +26,8 @@
 "Choice of currencies" = "Выбор валют";
 
 // table header
-"Pairs" = "Основные пары";
+"Available pairs" = "Основные пары";
+"Pairs" = "Пары";
 "Rate" = "Курс";
 
 // MARK: - Graph
