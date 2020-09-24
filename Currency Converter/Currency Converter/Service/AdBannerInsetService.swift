@@ -18,7 +18,9 @@ struct AdBannerInsetService: TableInset {
     static let shared = AdBannerInsetService()
     
     var bannerHeight: CGFloat {
-        return kGADAdSizeBanner.size.height
+        let height = UserDefaults.standard.float(forKey: "bannerInset")
+        print(height)
+        return CGFloat(height)
     }
     
     var tableInset: UIEdgeInsets {

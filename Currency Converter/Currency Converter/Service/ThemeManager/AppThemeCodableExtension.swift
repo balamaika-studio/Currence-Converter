@@ -32,6 +32,10 @@ extension AppTheme: Codable {
         case searchTextFieldColor
         case segmentedControlTintColor
         case separatorColor
+        
+        case purchaseCellColor
+        case purchaseButtonColor
+        case restoreBorderColor
     }
     
     // MARK: - Decoder
@@ -67,6 +71,10 @@ extension AppTheme: Codable {
             forKey: .segmentedControlTintColor).color
         separatorColor = try container.decode(CodableColor.self,
                                               forKey: .separatorColor).color
+        
+        purchaseCellColor = try container.decode(CodableColor.self, forKey: .purchaseCellColor).color
+        purchaseButtonColor = try container.decode(CodableColor.self, forKey: .purchaseButtonColor).color
+        restoreBorderColor = try container.decode(CodableColor.self, forKey: .restoreBorderColor).color
     }
     
     // MARK: - Encoder
@@ -110,5 +118,12 @@ extension AppTheme: Codable {
                              forKey: .segmentedControlTintColor)
         try container.encode(CodableColor(color: separatorColor),
                              forKey: .separatorColor)
+        
+        try container.encode(CodableColor(color: purchaseCellColor),
+                             forKey: .purchaseCellColor)
+        try container.encode(CodableColor(color: purchaseButtonColor),
+                             forKey: .purchaseButtonColor)
+        try container.encode(CodableColor(color: restoreBorderColor),
+                             forKey: .restoreBorderColor)
     }
 }

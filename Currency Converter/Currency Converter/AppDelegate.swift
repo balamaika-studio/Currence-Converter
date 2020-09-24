@@ -40,12 +40,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
+                                               name: .IAPHelperPurchaseNotification,
+                                               object: nil)
         checkInternetConnection()
         setupAds()
         return true
     }
     
     func setupAds() {
+        let adsProductId = ConverterProducts.SwiftShopping
+        let height = tabBarViewController.tabBar.frame.size.height / 2
+        UserDefaults.standard.set(height, forKey: "bannerInset")
+        return
+        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBanner(bannerView)
@@ -55,24 +63,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func addBanner(_ bannerView: GADBannerView) {
+        let height = tabBarViewController.tabBar.frame.size.height / 2
+        UserDefaults.standard.set(height, forKey: "bannerInset")
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
         tabBarViewController.view.addConstraints([
             NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: tabBarViewController.tabBar,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: tabBarViewController.view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-       ])
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: tabBarViewController.tabBar,
+                               attribute: .top,
+                               multiplier: 1,
+                               constant: 0),
+            NSLayoutConstraint(item: bannerView,
+                               attribute: .centerX,
+                               relatedBy: .equal,
+                               toItem: tabBarViewController.view,
+                               attribute: .centerX,
+                               multiplier: 1,
+                               constant: 0)
+        ])
+        UserDefaults.standard.set(kGADAdSizeBanner.size.height, forKey: "bannerInset")
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -83,6 +94,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
                 self.updateQuotes(quotes, in: self.storage)
             }
+        }
+    }
+    
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        guard let productID = notification.object as? String else { return }
+        if ConverterProducts.SwiftShopping == productID {
+            bannerView.removeFromSuperview()
+            let height = tabBarViewController.tabBar.frame.size.height / 2
+            UserDefaults.standard.set(height, forKey: "bannerInset")
         }
     }
     

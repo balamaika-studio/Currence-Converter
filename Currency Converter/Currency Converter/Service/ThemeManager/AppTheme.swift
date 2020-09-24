@@ -31,6 +31,10 @@ struct AppTheme {
     var searchTextFieldColor: UIColor
     var segmentedControlTintColor: UIColor
     var separatorColor: UIColor
+    
+    var purchaseCellColor: UIColor
+    var purchaseButtonColor: UIColor
+    var restoreBorderColor: UIColor
 }
 
 extension AppTheme: Equatable {
@@ -61,7 +65,10 @@ extension AppTheme {
         searchTextColor: #colorLiteral(red: 0.4196078431, green: 0.4196078431, blue: 0.4196078431, alpha: 1),
         searchTextFieldColor: #colorLiteral(red: 0.8745098039, green: 0.8901960784, blue: 0.9294117647, alpha: 1),
         segmentedControlTintColor: #colorLiteral(red: 0.4078431373, green: 0.4941176471, blue: 0.9960784314, alpha: 1),
-        separatorColor: #colorLiteral(red: 0.8549019608, green: 0.8784313725, blue: 0.9294117647, alpha: 1)
+        separatorColor: #colorLiteral(red: 0.8549019608, green: 0.8784313725, blue: 0.9294117647, alpha: 1),
+        purchaseCellColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1),
+        purchaseButtonColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
+        restoreBorderColor: .black
     )
 
     static let dark = AppTheme(
@@ -85,6 +92,9 @@ extension AppTheme {
         searchTextColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),
         searchTextFieldColor: #colorLiteral(red: 0.262745098, green: 0.2705882353, blue: 0.4392156863, alpha: 1),
         segmentedControlTintColor: #colorLiteral(red: 0.3803921569, green: 0.5176470588, blue: 1, alpha: 1),
-        separatorColor: #colorLiteral(red: 0.3294117647, green: 0.3333333333, blue: 0.4784313725, alpha: 1)
+        separatorColor: #colorLiteral(red: 0.3294117647, green: 0.3333333333, blue: 0.4784313725, alpha: 1),
+        purchaseCellColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
+        purchaseButtonColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1),
+        restoreBorderColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1)
     )
 }

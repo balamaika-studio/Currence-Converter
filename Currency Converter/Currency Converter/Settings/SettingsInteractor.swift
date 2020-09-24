@@ -15,11 +15,16 @@ protocol SettingsBusinessLogic {
 class SettingsInteractor: SettingsBusinessLogic {
     
     var presenter: SettingsPresentationLogic?
-    var service: SettingsService?
     
     func makeRequest(request: Settings.Model.Request.RequestType) {
-        if service == nil {
-            service = SettingsService()
+        switch request {
+        case .purchases:
+            ConverterProducts.store.requestProducts{ [weak self] success, products in
+                guard let self = self else { return }
+                if success {
+                    self.presenter?.presentData(response: .products(products ?? []))
+                }
+            }
         }
     }
     

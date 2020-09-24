@@ -52,6 +52,11 @@
 "Network section title" = "Network";
 "Automatic update" = "Automatic update";
 
+// MARK: Ads
+"Ads title" = "Advertising";
+"Remove ads" = "Remove advertising";
+"Restore purchases" = "Restore purchases";
+
 // Mark: appearance
 "Appearance section title" = "Appearance";
 

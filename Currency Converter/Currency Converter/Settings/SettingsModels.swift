@@ -7,23 +7,24 @@
 //
 
 import UIKit
+import StoreKit
 
 enum Settings {
     
     enum Model {
         struct Request {
             enum RequestType {
-                case some
+                case purchases
             }
         }
         struct Response {
             enum ResponseType {
-                case some
+                case products(_ products: [SKProduct])
             }
         }
         struct ViewModel {
             enum ViewModelData {
-                case some
+                case products(_ products: [SKProduct])
             }
         }
     }

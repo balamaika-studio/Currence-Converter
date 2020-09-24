@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import StoreKit
 
 class SettingsTableViewDataSource: NSObject {
+    var products: [SKProduct] = []
+    
     private func autoUpdate(_ state: Bool) {
         UserDefaults.standard.set(state, forKey: "autoUpdate")
     }
@@ -25,7 +28,6 @@ class SettingsTableViewDataSource: NSObject {
 }
 
 extension SettingsTableViewDataSource: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return SettingsSection.allCases.count
     }
@@ -35,36 +37,52 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
         switch section {
         case .network: return NetworkOptions.allCases.count
         case .appearance: return AppearanceOptions.allCases.count
+        case .purchases:
+            let availableProducts = products.filter { !ConverterProducts.store.isProductPurchased($0.productIdentifier) }
+            return availableProducts.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellId = SettingsTableViewCell.cellId
-        guard
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellId,
-                                                     for: indexPath) as? SettingsTableViewCell,
-            let section = SettingsSection(rawValue: indexPath.section) else {
-                return UITableViewCell()
+        var cell = UITableViewCell()
+        guard let section = SettingsSection(rawValue: indexPath.section) else {
+            return cell
         }
         
         switch section {
         case .network:
+            guard let settingCell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.cellId,
+                                                                  for: indexPath) as? SettingsTableViewCell else { break }
             let network = NetworkOptions(rawValue: indexPath.row)
-            cell.sectionType = network
-            cell.autoUpdateChanged = self.autoUpdate
+            settingCell.sectionType = network
+            settingCell.autoUpdateChanged = self.autoUpdate
             cell.selectionStyle = .none
             let isAutoUpdateEnable = UserDefaults.standard.bool(forKey: "autoUpdate")
-            cell.switchState = SwitchState(rawValue: isAutoUpdateEnable)
+            settingCell.switchState = SwitchState(rawValue: isAutoUpdateEnable)
+            cell = settingCell
+            
+        case .purchases:
+            let purchaseCellId = R.reuseIdentifier.settingsPurchaseCell
+            guard let purchaseCell = tableView.dequeueReusableCell(withIdentifier: purchaseCellId,
+                                                                   for: indexPath) else { break }
+            purchaseCell.product = products[indexPath.row]
+            purchaseCell.buyButtonHandler = { product in
+                ConverterProducts.store.buyProduct(product)
+            }
+            cell = purchaseCell
             
         case .appearance:
-            guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
-            cell.sectionType = appearance
+            guard
+                let settingCell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.cellId,
+                                                                for: indexPath) as? SettingsTableViewCell,
+                let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
+            settingCell.sectionType = appearance
             switch appearance {
             case .clearField:
-                cell.clearFieldChnaged = self.clearField
+                settingCell.clearFieldChnaged = self.clearField
                 cell.selectionStyle = .none
                 let isFieldClearEnable = AppFieldClearManager.shared.isClear
-                cell.switchState = SwitchState(rawValue: isFieldClearEnable)
+                settingCell.switchState = SwitchState(rawValue: isFieldClearEnable)
                 
             case .accuracy:
                 let accuracy = Accuracy(rawValue: AccuracyManager.shared.accuracy)
@@ -72,10 +90,11 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
                 
             case .theme:
                 let switchState = AppThemeManager.shared.currentTheme == .dark ? true : false
-                cell.themeChanged = self.updateTheme
-                cell.selectionStyle = .none
-                cell.switchState = SwitchState(rawValue: switchState)
+                settingCell.themeChanged = self.updateTheme
+                settingCell.selectionStyle = .none
+                settingCell.switchState = SwitchState(rawValue: switchState)
             }
+            cell = settingCell
         }
         
         return cell

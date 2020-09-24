@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StoreKit
 
 protocol SettingsDisplayLogic: class {
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData)
@@ -22,19 +23,27 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     var accuracyPicker: UIPickerView!
     var blurView: UIVisualEffectView!
     var vibrancyView: UIVisualEffectView!
-    var tableViewDataSource: UITableViewDataSource!
+    var tableViewDataSource: SettingsTableViewDataSource!
     
     var selectedCell: UITableViewCell?
     var selectedAccuracy: Accuracy?
+    var products: [SKProduct] {
+        didSet {
+            tableViewDataSource.products = products
+            tableView.reloadData()
+        }
+    }
     
     // MARK: Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        products = []
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
+        products = []
         super.init(coder: aDecoder)
         setup()
     }
@@ -57,6 +66,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        interactor?.makeRequest(request: .purchases)
         createPickerView()
         setupTableView()
         setUpTheming()
@@ -68,7 +78,10 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     }
     
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData) {
-        
+        switch viewModel {
+        case .products(let products):
+            self.products = products
+        }
     }
     
     // MARK: - Private Methods
@@ -117,18 +130,34 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         removeBlure()
     }
     
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        guard
+            let productID = notification.object as? String,
+            let index = products.firstIndex(where: { $0.productIdentifier == productID })
+            else { return }
+        tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .fade)
+    }
+    
     private func setupTableView() {
+        let footerFrame = CGRect(x: 0, y: 0,
+                                 width: tableView.frame.width,
+                                 height: 75)
         tableViewDataSource = SettingsTableViewDataSource()
         tableView.delegate = self
         tableView.dataSource = tableViewDataSource
-        tableView.sectionHeaderHeight = 40
-        tableView.rowHeight = 60
         tableView.sectionFooterHeight = 0.5
-        tableView.tableFooterView = UIView()
+        tableView.contentInset = AdBannerInsetService.shared.tableInset
+        
+        tableView.tableFooterView = RestorePurchasesFooterView(frame: footerFrame)
         tableView.register(SettingsTableViewHeader.self,
                            forHeaderFooterViewReuseIdentifier: SettingsTableViewHeader.reuseId)
+        tableView.register(R.nib.settingsPurchaseCell)
         tableView.register(SettingsTableViewCell.self,
                            forCellReuseIdentifier: SettingsTableViewCell.cellId)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
+                                               name: .IAPHelperPurchaseNotification,
+                                               object: nil)
     }
     
     private func deselectDecimaPlacesCell() {
@@ -194,6 +223,33 @@ extension SettingsViewController: UITableViewDelegate {
         return header
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        var height: CGFloat = 0
+        guard let section = SettingsSection(rawValue: section) else {
+            return height
+        }
+        switch section {
+        case .purchases:
+            height = 0
+        default:
+            height = 40
+        }
+        return height
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        var height: CGFloat = 0
+        guard let section = SettingsSection(rawValue: indexPath.section) else {
+            return height
+        }
+        switch section {
+        case .purchases:
+            height = 100
+        default:
+            height = 60
+        }
+        return height
+    }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let separatorFrame = CGRect(x: 0, y: 0,

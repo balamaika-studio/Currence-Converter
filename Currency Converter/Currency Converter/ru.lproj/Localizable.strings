@@ -52,6 +52,11 @@
 "Network section title" = "Сеть";
 "Automatic update" = "Автоматическое обновление";
 
+// MARK: Ads
+"Ads title" = "Реклама";
+"Remove ads" = "Отключить рекламу";
+"Restore purchases" = "Восстановить покупки";
+
 // Mark: appearance
 "Appearance section title" = "Вид";
 
