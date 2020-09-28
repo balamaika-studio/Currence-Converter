@@ -25,7 +25,7 @@
 			<string>Maksim.Haroshka.CurrencyConverter</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>your_url_scheme</string>
+				<string>currconverter</string>
 			</array>
 		</dict>
 	</array>
