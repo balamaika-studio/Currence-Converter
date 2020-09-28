@@ -7,6 +7,11 @@
 //
 
 import Foundation
+import AppsFlyerLib
+
+public protocol EventTracker {
+    func trackPurchase(id: String, productIdentifier: String, revenue: Float)
+}
 
 public struct ConverterProducts {
     
@@ -14,9 +19,46 @@ public struct ConverterProducts {
     
     private static let productIdentifiers: Set<ProductIdentifier> = [ConverterProducts.SwiftShopping]
     
-    public static let store = IAPHelper(productIds: ConverterProducts.productIdentifiers)
+    public static let store = IAPHelper(productIds: ConverterProducts.productIdentifiers, eventTracker: AppsFlyerEventTracker())
+    
+    fileprivate static let subscriptionsProductIdentifiers: Set<ProductIdentifier> = []
 }
 
 func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
     return productIdentifier.components(separatedBy: ".").last
+}
+
+struct AppsFlyerEventTracker: EventTracker {
+    func trackPurchase(id: String, productIdentifier: String, revenue: Float) {
+        // AppsFlyer
+        let event = ConverterProducts.subscriptionsProductIdentifiers.contains(productIdentifier) ? AFEventSubscribe : AFEventPurchase
+
+        print("ID: \(id)")
+        print("PROD: \(productIdentifier)")
+
+        let receiptString: String
+
+        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+                receiptString = receiptData.base64EncodedString(options: [])
+            }
+            catch {
+                receiptString = ""
+            }
+        } else {
+            receiptString = ""
+        }
+
+        AppsFlyerTracker.shared().trackEvent(event,
+                                         withValues: [
+                                            AFEventParamOrderId: id,
+                                            AFEventParamContentId: productIdentifier,
+                                            AFEventParamRevenue: revenue,
+                                            AFEventParamCurrency:"USD",
+                                            "af_purchase_token": receiptString
+        ]);
+    }
 }

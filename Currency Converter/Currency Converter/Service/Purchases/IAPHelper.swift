@@ -20,8 +20,10 @@ open class IAPHelper: NSObject {
     private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
     private var productsRequest: SKProductsRequest?
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
+    private var prices: [String: Float] = [:]
+    private let eventTracker: EventTracker
     
-    public init(productIds: Set<ProductIdentifier>) {
+    public init(productIds: Set<ProductIdentifier>, eventTracker: EventTracker) {
         productIdentifiers = productIds
         for productIdentifier in productIds {
             let purchased = UserDefaults.standard.bool(forKey: productIdentifier)
@@ -32,6 +34,9 @@ open class IAPHelper: NSObject {
                 print("Not purchased: \(productIdentifier)")
             }
         }
+        
+        self.eventTracker = eventTracker
+        
         super.init()
         SKPaymentQueue.default().add(self)
     }
@@ -99,6 +104,15 @@ extension IAPHelper: SKPaymentTransactionObserver {
         print("complete...")
         deliverPurchaseNotificationFor(identifier: transaction.payment.productIdentifier)
         SKPaymentQueue.default().finishTransaction(transaction)
+        
+        if let transactionIdentifier = transaction.transactionIdentifier {
+            let productIdentifier = transaction.payment.productIdentifier
+            let price = prices[productIdentifier] ?? 0.0
+            
+            eventTracker.trackPurchase(id: transactionIdentifier,
+                                       productIdentifier: productIdentifier,
+                                       revenue: price)
+        }
     }
     
     private func restore(transaction: SKPaymentTransaction) {

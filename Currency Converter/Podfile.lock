@@ -1,4 +1,5 @@
 PODS:
+  - AppsFlyerFramework (5.2.0)
   - Charts (3.4.0):
     - Charts/Core (= 3.4.0)
   - Charts/Core (3.4.0)
@@ -46,6 +47,7 @@ PODS:
     - Realm (= 4.4.0)
 
 DEPENDENCIES:
+  - AppsFlyerFramework
   - Charts
   - Google-Mobile-Ads-SDK
   - JJFloatingActionButton
@@ -56,6 +58,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppsFlyerFramework
     - Charts
     - Google-Mobile-Ads-SDK
     - GoogleAppMeasurement
@@ -71,6 +74,7 @@ SPEC REPOS:
     - RealmSwift
 
 SPEC CHECKSUMS:
+  AppsFlyerFramework: 9b2a932d826a278413dab7d59ffbe104a972132b
   Charts: 74c9f256eaf0460c0c416522d1cf8c634ea6b286
   Google-Mobile-Ads-SDK: d70efb31e7ea19fe99d466dc5d4788966b6914f8
   GoogleAppMeasurement: 137afe68bfa406c3f4221b9395253d9e5d4654cf
@@ -85,6 +89,6 @@ SPEC CHECKSUMS:
   Realm: e125f464884cda953ebefe70c671b75b03b81b9b
   RealmSwift: 33656a42bd300959a081fc13347376bc478071af
 
-PODFILE CHECKSUM: 84845354e6a2c632b91b20db8f13049d566aca68
+PODFILE CHECKSUM: c6875a474b7485575694ad9faf5351e95173e250
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

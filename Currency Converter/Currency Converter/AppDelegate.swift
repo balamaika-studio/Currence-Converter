@@ -8,6 +8,7 @@
 
 import UIKit
 import GoogleMobileAds
+import AppsFlyerLib
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,6 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                object: nil)
         checkInternetConnection()
         setupAds()
+        configureAppsFlyer()
+        
         return true
     }
     
@@ -60,6 +63,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
         bannerView.load(GADRequest())
+    }
+    
+    private func configureAppsFlyer() {
+        let aft = AppsFlyerTracker.shared()
+        aft.appsFlyerDevKey = "your_key"
+        aft.appleAppID = "your_app_id"
+        aft.delegate = self
+
+        #if DEBUG
+        aft.isDebug = true
+        #endif
     }
     
     func addBanner(_ bannerView: GADBannerView) {
@@ -95,7 +109,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.updateQuotes(quotes, in: self.storage)
             }
         }
+        
+        AppsFlyerTracker.shared().trackAppLaunch()
     }
+    
+        func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+            AppsFlyerTracker.shared().handleOpen(url, options: options)
+            return true
+        }
+    
+        func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+            AppsFlyerTracker.shared().continue(userActivity, restorationHandler: nil)
+            return true
+        }
+
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
@@ -151,6 +178,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AccuracyManager.shared.accuracy = Accuracy.defaultAccurancy.rawValue
             return
         }
+    }
+}
+
+extension AppDelegate: AppsFlyerTrackerDelegate {
+    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
+        
+    }
+    
+    func onConversionDataFail(_ error: Error) {
+        
     }
 }
 
