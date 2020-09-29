@@ -44,6 +44,8 @@ class SettingsPurchaseCell: UITableViewCell {
             bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: contentSpace),
         ])
         
+        titleLabel.text = R.string.localizable.adsTitle()
+        buyButton.setTitle(R.string.localizable.removeAds(), for: .normal)
         selectionStyle = .none
         contentView.layer.cornerRadius = contentView.frame.height / 10
         buyButton.layer.cornerRadius = buyButton.frame.height / 10

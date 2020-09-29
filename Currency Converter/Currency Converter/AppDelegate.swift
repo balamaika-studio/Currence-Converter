@@ -51,12 +51,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func setupAds() {
+    private func setupAds() {
         let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
         let height = tabBarViewController.tabBar.frame.size.height / 2
         UserDefaults.standard.set(height, forKey: "bannerInset")
-        return
-        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
         addBanner(bannerView)

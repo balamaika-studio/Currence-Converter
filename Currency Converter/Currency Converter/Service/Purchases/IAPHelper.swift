@@ -149,8 +149,11 @@ extension IAPHelper: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         print("Loaded list of products...")
         let products = response.products
-        productsRequestCompletionHandler?(true, products)
-        clearRequestAndHandler()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.productsRequestCompletionHandler?(true, products)
+            self.clearRequestAndHandler()
+        }
         
         for product in products {
             print("Found product: \(product.productIdentifier) \(product.localizedTitle) \(product.price.floatValue)")
@@ -160,8 +163,11 @@ extension IAPHelper: SKProductsRequestDelegate {
     public func request(_ request: SKRequest, didFailWithError error: Error) {
         print("Failed to load list of products.")
         print("Error: \(error.localizedDescription)")
-        productsRequestCompletionHandler?(false, nil)
-        clearRequestAndHandler()
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            self.productsRequestCompletionHandler?(false, nil)
+            self.clearRequestAndHandler()
+        }
     }
     
     private func clearRequestAndHandler() {

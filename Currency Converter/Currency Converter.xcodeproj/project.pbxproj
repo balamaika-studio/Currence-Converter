@@ -34,7 +34,6 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
-		7CC4451B72C84DE623FFD9CD /* Pods_Currency_Converter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */; };
 		A3E8168B007F8123B635C16B /* Pods_Currency_ConverterTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C584C95896CE3637A9053C1B /* Pods_Currency_ConverterTests.framework */; };
 		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
 		D1130DF5247A8A3700F830BA /* SwipeTabBarTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */; };
@@ -82,7 +81,6 @@
 		D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188554F243608B500476EB3 /* RealmCurrency.swift */; };
 		D18855522436090900476EB3 /* RealmStorageContext+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18855512436090900476EB3 /* RealmStorageContext+Operations.swift */; };
 		D188555424362ACC00476EB3 /* CurrenciesInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D188555324362ACC00476EB3 /* CurrenciesInfoService.swift */; };
-		D18DF03D2502501C00D21C71 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D18DF03C2502501C00D21C71 /* StoreKit.framework */; };
 		D18DF03F250250F000D21C71 /* ConverterProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18DF03E250250F000D21C71 /* ConverterProducts.swift */; };
 		D18DF0422502515800D21C71 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18DF0412502515800D21C71 /* IAPHelper.swift */; };
 		D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A9366242CF64000DDCEA9 /* FavoritePresenter.swift */; };
@@ -163,6 +161,7 @@
 		D1F5FAA4244F46FD00604B38 /* SettingsTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5FAA3244F46FD00604B38 /* SettingsTableViewHeader.swift */; };
 		D1FEFAD5243CB5EF004664C6 /* EmptyState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1FEFAD4243CB5EF004664C6 /* EmptyState.swift */; };
 		D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1FEFAD6243CB5FD004664C6 /* EmptyState.xib */; };
+		F68BCEF5BBB9BEC7ABF1F9C1 /* Pods_Currency_Converter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2699A85CC1508B48C6303D /* Pods_Currency_Converter.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -351,8 +350,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7CC4451B72C84DE623FFD9CD /* Pods_Currency_Converter.framework in Frameworks */,
-				D18DF03D2502501C00D21C71 /* StoreKit.framework in Frameworks */,
+				F68BCEF5BBB9BEC7ABF1F9C1 /* Pods_Currency_Converter.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1419,7 +1417,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1442,7 +1440,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
