@@ -67,8 +67,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func configureAppsFlyer() {
         let aft = AppsFlyerTracker.shared()
-        aft.appsFlyerDevKey = "your_key"
-        aft.appleAppID = "your_app_id"
+        aft.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
+        aft.appleAppID = "1512175521"
         aft.delegate = self
 
         #if DEBUG
