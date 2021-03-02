@@ -30,7 +30,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>GADApplicationIdentifier</key>
 	<string>IMS: world currency converterca-app-pub-5773099160082927~7228110641</string>
 	<key>GADIsAdManagerApp</key>

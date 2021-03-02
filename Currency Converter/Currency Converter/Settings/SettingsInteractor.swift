@@ -19,10 +19,13 @@ class SettingsInteractor: SettingsBusinessLogic {
     func makeRequest(request: Settings.Model.Request.RequestType) {
         switch request {
         case .purchases:
-            ConverterProducts.store.requestProducts{ [weak self] success, products in
+            ConverterProducts.store.requestProducts{ [weak self] helper, success, products in
                 guard let self = self else { return }
-                if success {
-                    self.presenter?.presentData(response: .products(products ?? []))
+                let products = products ?? []
+                
+                if success  {
+                    self.presenter?.presentData(response: .products(products))
+                    helper.update(products: products)
                 }
             }
         }

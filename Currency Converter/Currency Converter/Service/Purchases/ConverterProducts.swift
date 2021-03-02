@@ -10,7 +10,7 @@ import Foundation
 import AppsFlyerLib
 
 public protocol EventTracker {
-    func trackPurchase(id: String, productIdentifier: String, revenue: Float)
+    func trackPurchase(id: String, productIdentifier: String, revenue: Float, currency: String)
 }
 
 public struct ConverterProducts {
@@ -29,12 +29,9 @@ func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
 }
 
 struct AppsFlyerEventTracker: EventTracker {
-    func trackPurchase(id: String, productIdentifier: String, revenue: Float) {
+    func trackPurchase(id: String, productIdentifier: String, revenue: Float, currency: String) {
         // AppsFlyer
         let event = ConverterProducts.subscriptionsProductIdentifiers.contains(productIdentifier) ? AFEventSubscribe : AFEventPurchase
-
-        print("ID: \(id)")
-        print("PROD: \(productIdentifier)")
 
         let receiptString: String
 
@@ -51,14 +48,20 @@ struct AppsFlyerEventTracker: EventTracker {
         } else {
             receiptString = ""
         }
+        
+//        print("ID: \(id)")
+//        print("PROD: \(productIdentifier)")
+//        print("Event: \(event.description)")
+//        print("Revenue: \(revenue) currency: \(currency)")
+//        print("REC: \(receiptString)")
 
         AppsFlyerTracker.shared().trackEvent(event,
                                          withValues: [
                                             AFEventParamOrderId: id,
                                             AFEventParamContentId: productIdentifier,
                                             AFEventParamRevenue: revenue,
-                                            AFEventParamCurrency:"USD",
-                                            "af_purchase_token": receiptString
+                                            AFEventParamCurrency: currency/*,
+                                            "af_purchase_token": receiptString*/
         ]);
     }
 }

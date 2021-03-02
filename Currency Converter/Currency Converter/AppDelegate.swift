@@ -12,7 +12,7 @@ import AppsFlyerLib
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     private let adUnitID = "ca-app-pub-5773099160082927/4750121114"
     
     var window: UIWindow?
@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var bannerView: GADBannerView!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         storage = try! RealmStorageContext()
         networkManager = NetworkManager()
@@ -44,6 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
                                                name: .IAPHelperPurchaseNotification,
                                                object: nil)
+        
+        ConverterProducts.store.requestProducts { helper, success, products in
+            if success == true, let products = products {
+                helper.update(products: products)
+            }
+        }
+        
         checkInternetConnection()
         setupAds()
         configureAppsFlyer()
@@ -125,10 +133,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
-        if ConverterProducts.SwiftShopping == productID {
-            bannerView.removeFromSuperview()
-            let height = tabBarViewController.tabBar.frame.size.height / 2
-            UserDefaults.standard.set(height, forKey: "bannerInset")
+        DispatchQueue.main.async {
+            if ConverterProducts.SwiftShopping == productID, let bannerView = self.bannerView {
+                bannerView.removeFromSuperview()
+                let height = self.tabBarViewController.tabBar.frame.size.height / 2
+                UserDefaults.standard.set(height, forKey: "bannerInset")
+            }
         }
     }
     

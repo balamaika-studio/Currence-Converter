@@ -9,7 +9,7 @@
 import StoreKit
 
 public typealias ProductIdentifier = String
-public typealias ProductsRequestCompletionHandler = (_ success: Bool, _ products: [SKProduct]?) -> Void
+public typealias ProductsRequestCompletionHandler = (_ helper: IAPHelper, _ success: Bool, _ products: [SKProduct]?) -> Void
 
 extension Notification.Name {
     static let IAPHelperPurchaseNotification = Notification.Name("IAPHelperPurchaseNotification")
@@ -20,7 +20,7 @@ open class IAPHelper: NSObject {
     private var purchasedProductIdentifiers: Set<ProductIdentifier> = []
     private var productsRequest: SKProductsRequest?
     private var productsRequestCompletionHandler: ProductsRequestCompletionHandler?
-    private var prices: [String: Float] = [:]
+    private var products: [SKProduct] = []
     private let eventTracker: EventTracker
     
     public init(productIds: Set<ProductIdentifier>, eventTracker: EventTracker) {
@@ -40,6 +40,11 @@ open class IAPHelper: NSObject {
         super.init()
         SKPaymentQueue.default().add(self)
     }
+    
+    public func update(products: [SKProduct]) {
+        self.products = products
+    }
+
 }
 
 // MARK: - StoreKit API
@@ -107,11 +112,15 @@ extension IAPHelper: SKPaymentTransactionObserver {
         
         if let transactionIdentifier = transaction.transactionIdentifier {
             let productIdentifier = transaction.payment.productIdentifier
-            let price = prices[productIdentifier] ?? 0.0
+            let product = products.first { $0.productIdentifier == productIdentifier }
             
-            eventTracker.trackPurchase(id: transactionIdentifier,
-                                       productIdentifier: productIdentifier,
-                                       revenue: price)
+            if let price = product?.price, let currency = product?.priceLocale.currencyCode {
+                eventTracker.trackPurchase(id: transactionIdentifier,
+                                           productIdentifier: productIdentifier,
+                                           revenue: price.floatValue,
+                                           currency: currency)
+
+            }
         }
     }
     
@@ -149,9 +158,10 @@ extension IAPHelper: SKProductsRequestDelegate {
     public func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         print("Loaded list of products...")
         let products = response.products
+        
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.productsRequestCompletionHandler?(true, products)
+            self.productsRequestCompletionHandler?(self, true, products)
             self.clearRequestAndHandler()
         }
         
@@ -165,7 +175,7 @@ extension IAPHelper: SKProductsRequestDelegate {
         print("Error: \(error.localizedDescription)")
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.productsRequestCompletionHandler?(false, nil)
+            self.productsRequestCompletionHandler?(self, false, nil)
             self.clearRequestAndHandler()
         }
     }

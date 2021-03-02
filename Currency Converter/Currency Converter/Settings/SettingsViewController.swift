@@ -133,9 +133,10 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard
             let productID = notification.object as? String,
-            let index = products.firstIndex(where: { $0.productIdentifier == productID })
+            products.contains(where: { $0.productIdentifier == productID }) == true
             else { return }
-        tableView.reloadRows(at: [IndexPath(row: index, section: 1)], with: .fade)
+        
+        tableView.reloadSections(IndexSet(integer: 1), with: .fade)
     }
     
     private func setupTableView() {
