@@ -55,13 +55,11 @@ struct AppsFlyerEventTracker: EventTracker {
 //        print("Revenue: \(revenue) currency: \(currency)")
 //        print("REC: \(receiptString)")
 
-        AppsFlyerTracker.shared().trackEvent(event,
-                                         withValues: [
-                                            AFEventParamOrderId: id,
-                                            AFEventParamContentId: productIdentifier,
-                                            AFEventParamRevenue: revenue,
-                                            AFEventParamCurrency: currency/*,
-                                            "af_purchase_token": receiptString*/
-        ]);
+        AppsFlyerLib.shared().logEvent(event, withValues: [
+            AFEventParamOrderId: id,
+            AFEventParamContentId: productIdentifier,
+            AFEventParamRevenue: revenue,
+            AFEventParamCurrency: currency
+        ])
     }
 }

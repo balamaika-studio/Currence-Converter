@@ -73,13 +73,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func configureAppsFlyer() {
-        let aft = AppsFlyerTracker.shared()
-        aft.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
-        aft.appleAppID = "1512175521"
-        aft.delegate = self
+        let appsFlyer = AppsFlyerLib.shared()
+        appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
+        appsFlyer.appleAppID = "6sG9tvthbLbQdohMzWSCy4"
+        appsFlyer.delegate = self
 
         #if DEBUG
-        aft.isDebug = true
+        appsFlyer.isDebug = true
         #endif
     }
     
@@ -117,18 +117,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-        AppsFlyerTracker.shared().trackAppLaunch()
+        AppsFlyerLib.shared().start()
     }
     
-        func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-            AppsFlyerTracker.shared().handleOpen(url, options: options)
-            return true
-        }
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        AppsFlyerLib.shared().handleOpen(url, options: options)
+        return true
+    }
     
-        func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-            AppsFlyerTracker.shared().continue(userActivity, restorationHandler: nil)
-            return true
-        }
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
+        return true
+    }
 
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
@@ -190,13 +190,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-extension AppDelegate: AppsFlyerTrackerDelegate {
-    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
-        
-    }
-    
+extension AppDelegate: AppsFlyerLibDelegate {
     func onConversionDataFail(_ error: Error) {
         
     }
+    
+    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
+        
+    }
 }
-
