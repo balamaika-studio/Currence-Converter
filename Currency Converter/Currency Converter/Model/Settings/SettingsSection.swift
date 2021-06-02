@@ -10,6 +10,7 @@ import Foundation
 
 enum SettingsSection: Int, CaseIterable {
     case network
+    case purchases
     case appearance
 }
 
@@ -18,6 +19,7 @@ extension SettingsSection: CustomStringConvertible {
         switch self {
         case .network: return R.string.localizable.networkSectionTitle()
         case .appearance: return R.string.localizable.appearanceSectionTitle()
+        case .purchases: return String()
         }
     }
 }

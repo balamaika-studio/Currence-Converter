@@ -26,7 +26,8 @@
 "Choice of currencies" = "Выбор валют";
 
 // table header
-"Pairs" = "Основные пары";
+"Available pairs" = "Основные пары";
+"Pairs" = "Пары";
 "Rate" = "Курс";
 
 // MARK: - Graph
@@ -50,6 +51,11 @@
 // Mark: network
 "Network section title" = "Сеть";
 "Automatic update" = "Автоматическое обновление";
+
+// MARK: Ads
+"Ads title" = "Реклама";
+"Remove ads" = "Отключить рекламу";
+"Restore purchases" = "Восстановить покупки";
 
 // Mark: appearance
 "Appearance section title" = "Вид";

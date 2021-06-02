@@ -108,9 +108,9 @@ extension CurrencySelectionViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let id = ExchangeRatesHeader.reuseId
-        guard let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? ExchangeRatesHeader else { return nil }
-        view.hideRateLabel()
-        return view
+        guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? ExchangeRatesHeader else { return nil }
+        header.hideRateLabel()
+        return header
     }
 }
 

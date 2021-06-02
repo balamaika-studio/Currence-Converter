@@ -56,7 +56,7 @@ class SettingsTableViewCell: UITableViewCell {
     // MARK: - Private Methods
     private func setupView() {
         backgroundColor = .clear
-        addSubview(switchControl)
+        contentView.addSubview(switchControl)
         NSLayoutConstraint.activate([
             switchControl.centerYAnchor.constraint(equalTo: centerYAnchor),
             trailingAnchor.constraint(equalTo: switchControl.trailingAnchor, constant: 16)
@@ -89,11 +89,13 @@ class SettingsTableViewCell: UITableViewCell {
         
         detailTextLabel?.text = result
     }
+    
 }
 
 extension SettingsTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         textLabel?.textColor = theme.textColor
         detailTextLabel?.textColor = theme.subtitleColor
+        backgroundColor = theme.specificBackgroundColor
     }
 }

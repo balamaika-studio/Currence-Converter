@@ -8,11 +8,14 @@
 
 import UIKit
 import GoogleMobileAds
+import AppsFlyerLib
+import AppTrackingTransparency
+import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-    private let adUnitID = "ca-app-pub-3940256099942544/2934735716"
+    
+    private let adUnitID = "ca-app-pub-5773099160082927/4750121114"
     
     var window: UIWindow?
     var tabBarViewController: UITabBarController!
@@ -21,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private var bannerView: GADBannerView!
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         storage = try! RealmStorageContext()
         networkManager = NetworkManager()
@@ -40,40 +44,81 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window?.rootViewController = tabBarViewController
         window?.makeKeyAndVisible()
+        NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
+                                               name: .IAPHelperPurchaseNotification,
+                                               object: nil)
+        
+        ConverterProducts.store.requestProducts { helper, success, products in
+            if success == true, let products = products {
+                helper.update(products: products)
+            }
+        }
+        
         checkInternetConnection()
-        setupAds()
+        requestIDFA()
+        configureAppsFlyer()
+        
         return true
     }
     
-    func setupAds() {
+    private func requestIDFA() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.setupAds()
+                }
+            }
+        } else {
+            setupAds()
+        }
+    }
+    
+    private func setupAds() {
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
+        let height = tabBarViewController.tabBar.frame.size.height / 2
+        UserDefaults.standard.set(height, forKey: "bannerInset")
         GADMobileAds.sharedInstance().start(completionHandler: nil)
         bannerView = GADBannerView(adSize: kGADAdSizeBanner)
-        print(kGADAdSizeBanner.size.height)
         addBanner(bannerView)
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
         bannerView.load(GADRequest())
     }
     
+    private func configureAppsFlyer() {
+        let appsFlyer = AppsFlyerLib.shared()
+        appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
+        appsFlyer.appleAppID = "6sG9tvthbLbQdohMzWSCy4"
+        appsFlyer.delegate = self
+
+        #if DEBUG
+        appsFlyer.isDebug = true
+        #endif
+    }
+    
     func addBanner(_ bannerView: GADBannerView) {
+        let height = tabBarViewController.tabBar.frame.size.height / 2
+        UserDefaults.standard.set(height, forKey: "bannerInset")
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
         tabBarViewController.view.addConstraints([
             NSLayoutConstraint(item: bannerView,
-                                attribute: .bottom,
-                                relatedBy: .equal,
-                                toItem: tabBarViewController.tabBar,
-                                attribute: .top,
-                                multiplier: 1,
-                                constant: 0),
-             NSLayoutConstraint(item: bannerView,
-                                attribute: .centerX,
-                                relatedBy: .equal,
-                                toItem: tabBarViewController.view,
-                                attribute: .centerX,
-                                multiplier: 1,
-                                constant: 0)
-       ])
+                               attribute: .bottom,
+                               relatedBy: .equal,
+                               toItem: tabBarViewController.tabBar,
+                               attribute: .top,
+                               multiplier: 1,
+                               constant: 0),
+            NSLayoutConstraint(item: bannerView,
+                               attribute: .centerX,
+                               relatedBy: .equal,
+                               toItem: tabBarViewController.view,
+                               attribute: .centerX,
+                               multiplier: 1,
+                               constant: 0)
+        ])
+        UserDefaults.standard.set(kGADAdSizeBanner.size.height, forKey: "bannerInset")
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -83,6 +128,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 guard let quotes = response?.quotes else { return }
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
                 self.updateQuotes(quotes, in: self.storage)
+            }
+        }
+        
+        AppsFlyerLib.shared().start()
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        AppsFlyerLib.shared().handleOpen(url, options: options)
+        return true
+    }
+    
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
+        return true
+    }
+
+    
+    @objc func handlePurchaseNotification(_ notification: Notification) {
+        guard let productID = notification.object as? String else { return }
+        DispatchQueue.main.async {
+            if ConverterProducts.SwiftShopping == productID, let bannerView = self.bannerView {
+                bannerView.removeFromSuperview()
+                let height = self.tabBarViewController.tabBar.frame.size.height / 2
+                UserDefaults.standard.set(height, forKey: "bannerInset")
             }
         }
     }
@@ -135,3 +204,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
+extension AppDelegate: AppsFlyerLibDelegate {
+    func onConversionDataFail(_ error: Error) {
+        
+    }
+    
+    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
+        
+    }
+}

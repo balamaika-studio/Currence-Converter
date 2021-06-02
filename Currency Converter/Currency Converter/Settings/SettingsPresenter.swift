@@ -16,7 +16,10 @@ class SettingsPresenter: SettingsPresentationLogic {
     weak var viewController: SettingsDisplayLogic?
     
     func presentData(response: Settings.Model.Response.ResponseType) {
-        
+        switch response {
+        case .products(let products):
+            viewController?.displayData(viewModel: .products(products))
+        }
     }
     
 }
