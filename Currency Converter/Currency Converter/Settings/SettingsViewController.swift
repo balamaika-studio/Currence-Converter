@@ -208,6 +208,7 @@ extension SettingsViewController: Themed {
             hiddenTextField.inputAccessoryView?.backgroundColor = theme.specificBackgroundColor
         }
         view.backgroundColor = theme.specificBackgroundColor
+        tableView.backgroundColor = theme.specificBackgroundColor
         hiddenTextField.inputView?.backgroundColor = theme.backgroundColor
     }
 }

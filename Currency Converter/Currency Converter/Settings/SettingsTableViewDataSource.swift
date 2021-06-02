@@ -56,7 +56,7 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
             let network = NetworkOptions(rawValue: indexPath.row)
             settingCell.sectionType = network
             settingCell.autoUpdateChanged = self.autoUpdate
-            cell.selectionStyle = .none
+            settingCell.selectionStyle = .none
             let isAutoUpdateEnable = UserDefaults.standard.bool(forKey: "autoUpdate")
             settingCell.switchState = SwitchState(rawValue: isAutoUpdateEnable)
             cell = settingCell
@@ -80,7 +80,7 @@ extension SettingsTableViewDataSource: UITableViewDataSource {
             switch appearance {
             case .clearField:
                 settingCell.clearFieldChnaged = self.clearField
-                cell.selectionStyle = .none
+                settingCell.selectionStyle = .none
                 let isFieldClearEnable = AppFieldClearManager.shared.isClear
                 settingCell.switchState = SwitchState(rawValue: isFieldClearEnable)
                 
