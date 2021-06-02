@@ -12,7 +12,7 @@ target 'Currency Converter' do
   pod 'ReachabilitySwift'
   pod 'JJFloatingActionButton'
   pod 'Google-Mobile-Ads-SDK'
-  pod "LongPressReorder"
+  pod 'LongPressReorder', git: 'https://github.com/sivu22/LongPressReorder.git', commit: 'HEAD'
   pod 'AppsFlyerFramework'
 
   target 'Currency ConverterTests' do

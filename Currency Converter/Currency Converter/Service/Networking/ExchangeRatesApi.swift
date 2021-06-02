@@ -15,7 +15,7 @@ enum ExchangeRatesApi {
 
 extension ExchangeRatesApi: EndPointType {
     var basePath: String {
-        return "https://api.exchangeratesapi.io/"
+        return "https://api.exchangerate.host/"
     }
     
     var baseURL: URL {
@@ -27,7 +27,7 @@ extension ExchangeRatesApi: EndPointType {
     
     var path: String {
         switch self {
-        case .timeFrame: return "history"
+        case .timeFrame: return "timeseries"
         }
     }
     
@@ -43,8 +43,8 @@ extension ExchangeRatesApi: EndPointType {
                                           bodyEncoding: .urlEncoding,
                                           urlParameters: ["base": base,
                                                           "symbols": currenciesString,
-                                                          "start_at": start,
-                                                          "end_at": end])
+                                                          "start_date": start,
+                                                          "end_date": end])
         }
     }
     
