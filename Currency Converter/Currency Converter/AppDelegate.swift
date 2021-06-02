@@ -9,6 +9,8 @@
 import UIKit
 import GoogleMobileAds
 import AppsFlyerLib
+import AppTrackingTransparency
+import AdSupport
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -53,10 +55,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         checkInternetConnection()
-        setupAds()
+        requestIDFA()
         configureAppsFlyer()
         
         return true
+    }
+    
+    private func requestIDFA() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.setupAds()
+                }
+            }
+        } else {
+            setupAds()
+        }
     }
     
     private func setupAds() {
