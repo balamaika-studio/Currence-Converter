@@ -15,33 +15,31 @@ public typealias RouterCompletionData = (
 )
 
 struct NetworkManager {
-    let currencyLayeRouter = Router<CurrencyLayerApi>()
     let exchangeRatesRouter = Router<ExchangeRatesApi>()
     private let baseCurrency = "EUR"
-    static let currencyAPIKey = "53777a00fe92ea3eb514eed3b2e0ed24"
     
-    func getQuotes(completion: @escaping (_ response: CurrencyLayerResponse?, _ error: String?) -> Void) {
-        currencyLayeRouter.request(.live(source: baseCurrency)) { data, response, error in
-            self.build(CurrencyLayerResponse.self,
+    func getQuotes(completion: @escaping (_ response: ExchangeRatesHistoryResponse?, _ error: String?) -> Void) {
+        exchangeRatesRouter.request(.live(base: baseCurrency)) { data, response, error in
+            self.build(ExchangeRatesHistoryResponse.self,
                        with: (data, response, error),
                        callback: completion)
         }
     }
     
-    func getQuotes(date: String,
-                   completion: @escaping (_ response: CurrencyLayerResponse?,_ error: String?) -> Void) {
-        currencyLayeRouter.request(.historical(date: date)) { data, response, error in
-            self.build(CurrencyLayerResponse.self,
+    func getQuotes(date: Date,
+                   completion: @escaping (_ response: ExchangeRatesHistoryResponse?,_ error: String?) -> Void) {
+        exchangeRatesRouter.request(.historical(date: date)) { data, response, error in
+            self.build(ExchangeRatesHistoryResponse.self,
                         with: (data, response, error),
                         callback: completion)
         }
     }
     
     func getQuotes(base: String, currencies: [String], start: String, end: String,
-                   completion: @escaping (_ response: ExchangeRatesResponse?,_ error: String?) -> Void) {
+                   completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
         exchangeRatesRouter
             .request(.timeFrame(base: base, currencies: currencies, start: start, end: end)) { data, response, error in
-            self.build(ExchangeRatesResponse.self,
+            self.build(ExchangeRatesTimeSeriesResponse.self,
                        with: (data, response, error),
                        callback: completion)
         }

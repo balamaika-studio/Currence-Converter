@@ -126,12 +126,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         var date = Date(timeIntervalSince1970: TimeInterval(timestamp))
         date.addTimeInterval(-TimeInterval(dayInSec))
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let stringDate = dateFormatter.string(from: date)
-
-        networkManager.getQuotes(date: stringDate) { response, errorMessageerrorMessage in
+        networkManager.getQuotes(date: date) { response, errorMessageerrorMessage in
             guard let quotes = response?.quotes else { return }
             self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ?

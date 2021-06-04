@@ -8,12 +8,22 @@
 
 import Foundation
 
+extension DateFormatter {
+    static let exchangeRateGeneralDateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        return df
+    }()
+}
 
 enum ExchangeRatesApi {
     case timeFrame(base: String, currencies: [String], start: String, end: String)
+    case live(base: String)
+    case historical(date: Date)
 }
 
 extension ExchangeRatesApi: EndPointType {
+    
     var basePath: String {
         return "https://api.exchangerate.host/"
     }
@@ -28,6 +38,8 @@ extension ExchangeRatesApi: EndPointType {
     var path: String {
         switch self {
         case .timeFrame: return "timeseries"
+        case .historical(let date): return DateFormatter.exchangeRateGeneralDateFormatter.string(from: date)
+        case .live: return "latest"
         }
     }
     
@@ -45,6 +57,11 @@ extension ExchangeRatesApi: EndPointType {
                                                           "symbols": currenciesString,
                                                           "start_date": start,
                                                           "end_date": end])
+        case .live(let base):
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["base" : base])
+        case .historical: return .request
         }
     }
     

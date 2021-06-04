@@ -1,5 +1,5 @@
 //
-//  ExchangeRatesResponse.swift
+//  ExchangeRatesTimeSeriesResponse.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/24/20.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ExchangeRatesResponse: Decodable {
+struct ExchangeRatesTimeSeriesResponse: Decodable {
     let base: String
     private let rates: [String: [String: Double]]
     
