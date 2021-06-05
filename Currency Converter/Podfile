@@ -14,6 +14,7 @@ target 'Currency Converter' do
   pod 'Google-Mobile-Ads-SDK'
   pod 'LongPressReorder', git: 'https://github.com/sivu22/LongPressReorder.git', commit: 'HEAD'
   pod 'AppsFlyerFramework'
+  pod 'Firebase/Performance'
 
   target 'Currency ConverterTests' do
     inherit! :search_paths
