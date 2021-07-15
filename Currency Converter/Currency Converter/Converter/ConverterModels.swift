@@ -41,6 +41,10 @@ enum Converter {
     }
 }
 
+enum CurrencyType {
+    case general, cript
+}
+
 protocol ExchangeCurrency: Currency {
     var exchangeRate: Double { get set }
     var regardingRate: String { get set }
@@ -59,9 +63,11 @@ struct ConverterViewModel {
     let updated: String
 }
 
+protocol ConverterCellModelProtocol {
+    <#requirements#>
+}
 
-// MARK: - Favorite View Model
-struct FavoriteConverterViewModel: Currency {
+struct ConverterCellViewModel: Currency {
     var currency: String
     let title: String
     let total: String

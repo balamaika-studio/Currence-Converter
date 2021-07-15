@@ -8,7 +8,8 @@
 
 import UIKit
 
-class ConverterCurrencyTableViewCell: UITableViewCell {
+final class ConverterCurrencyTableViewCell: UITableViewCell {
+    
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
@@ -27,10 +28,6 @@ class ConverterCurrencyTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         setUpTheming()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {

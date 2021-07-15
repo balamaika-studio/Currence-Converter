@@ -14,7 +14,8 @@ protocol ConverterDisplayLogic: class {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
 }
 
-class ConverterViewController: UIViewController, ConverterDisplayLogic {
+final class ConverterViewController: UIViewController, ConverterDisplayLogic {
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var converterView: ConverterView!
     
@@ -215,6 +216,12 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .updateCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
+    
+    // MARK: - LongPressReorder Delegate
+    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
+        let currency = favoriteCurrencies.remove(at: initialIndex.row)
+        favoriteCurrencies.insert(currency, at: finalIndex.row)
+    }
 }
 
 // MARK: - Themed
@@ -272,22 +279,16 @@ extension ConverterViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let currency = favoriteCurrencies[indexPath.row]
         interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
 }
 
-// MARK: - LongPressReorder Delegate
-extension ConverterViewController {
-    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
-        let currency = favoriteCurrencies.remove(at: initialIndex.row)
-        favoriteCurrencies.insert(currency, at: finalIndex.row)
-    }
-}
-
 // MARK: - UIViewControllerTransitioningDelegate
 extension ConverterViewController: UIViewControllerTransitioningDelegate {
+    
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
     }
