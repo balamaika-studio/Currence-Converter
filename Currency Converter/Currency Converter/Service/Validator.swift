@@ -1,5 +1,5 @@
 //
-//  ValidateService.swift
+//  Validator.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 7/8/20.
@@ -8,13 +8,9 @@
 
 import Foundation
 
-protocol Validating {
-    func isConverterFieldCorrect(text: String) -> Bool
-}
-
-class ValidateService: Validating {
+final class Validator {
     /// valid formats: [1000.0, 001, .001]
-    func isConverterFieldCorrect(text: String) -> Bool {
+    static func isConverterFieldCorrect(text: String) -> Bool {
         if text.isEmpty || text == "," { return true }
         let regEx = "^\\d*\\.?\\d+$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regEx)

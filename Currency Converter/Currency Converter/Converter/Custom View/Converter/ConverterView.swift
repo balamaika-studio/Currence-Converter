@@ -82,10 +82,10 @@ class ConverterView: UIView {
 }
 
 extension ConverterView: ExchangeViewDeleagte {
+    
     func convert(exchangeView sender: ExchangeView, total: Double) {
         let converterResult = AccuracyManager.shared.formatNumber(total * sender.viewModel.exchangeRate)
-        let activeCurrency = topCurrency.isEqual(sender) ? bottomCurrency : topCurrency
-        activeCurrency?.countTextField.text = "\(converterResult)"
+        sender.countTextField.text = "\(converterResult)"
         topCurrencyTotal?(topCurrency.total)
     }
     

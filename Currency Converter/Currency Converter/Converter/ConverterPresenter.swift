@@ -12,7 +12,8 @@ protocol ConverterPresentationLogic {
     func presentData(response: Converter.Model.Response.ResponseType)
 }
 
-class ConverterPresenter: ConverterPresentationLogic {
+final class ConverterPresenter: ConverterPresentationLogic {
+    
     weak var viewController: ConverterDisplayLogic?
     
     private var baseCurrency: Currency!
@@ -54,11 +55,9 @@ class ConverterPresenter: ConverterPresentationLogic {
         let ordered = FavoriteOrderService.shared.fetchOrder()
         
         favorite.forEach { fav in
-            if ordered.contains(where: { $0.currency == fav.currency }) {
-                let orderIndex = ordered.firstIndex { $0.currency == fav.currency }
-                let favoriteIndex = favoriteCopy.firstIndex { $0.currency == fav.currency }
-                favoriteCopy.swapAt(orderIndex!, favoriteIndex!)
-            }
+            guard let orderIndex = ordered.firstIndex(where: { $0.currency == fav.currency }) else { return }
+            guard let favoriteIndex = favoriteCopy.firstIndex(where: { $0.currency == fav.currency }) else { return }
+            if orderIndex != favoriteIndex { favoriteCopy.swapAt(orderIndex, favoriteIndex) }
         }
         return favoriteCopy
     }
@@ -71,14 +70,11 @@ class ConverterPresenter: ConverterPresentationLogic {
             let rate = currency.rate / baseCurrency.rate
             let totalSum = rate * total
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
-            let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
+            let symbol = CurrenciesInfoService.shared.getSymbol(forCurrencyCode: currency.currency) ?? ""
             let stringSum = "\(roundedSum) \(symbol)"
-                        
-            let currenciesInfo = CurrenciesInfoService.shared.fetch()
-            let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
-            
+            guard let title = CurrenciesInfoService.shared.getInfo(by: currency)?.title else { return }
             let viewModel = FavoriteConverterViewModel(currency: currency.currency,
-                                                       title: title.title,
+                                                       title: title,
                                                        total: stringSum,
                                                        rate: currency.rate)
             viewModels.append(viewModel)
@@ -95,8 +91,8 @@ class ConverterPresenter: ConverterPresentationLogic {
         let firstRoundedRate = AccuracyManager.shared.formatNumber(firstExchangeRate)
         let secondRoundedRate = AccuracyManager.shared.formatNumber(secondExchangeRate)
 
-        let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? "Error"
-        let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? "Error"
+        let aSymbol = CurrenciesInfoService.shared.getSymbol(forCurrencyCode: first.currency) ?? "Error"
+        let bSymbol = CurrenciesInfoService.shared.getSymbol(forCurrencyCode: second.currency) ?? "Error"
         
         let firstExchange = Exchange(currency: first.currency,
                              rate: firstRate,
@@ -113,15 +109,6 @@ class ConverterPresenter: ConverterPresentationLogic {
         return ConverterViewModel(firstExchange: firstExchange,
                                   secondExchange: secondExchange,
                                   updated: updatedTitle)
-    }
-    
-    private func getSymbol(forCurrencyCode code: String) -> String? {
-        let locale = NSLocale(localeIdentifier: code)
-        if locale.displayName(forKey: .currencySymbol, value: code) == code {
-            let newlocale = NSLocale(localeIdentifier: code.dropLast() + "_en")
-            return newlocale.displayName(forKey: .currencySymbol, value: code)
-        }
-        return locale.displayName(forKey: .currencySymbol, value: code)
     }
     
     private func buildUpdatedTitle(from timestamp: Int) -> String {

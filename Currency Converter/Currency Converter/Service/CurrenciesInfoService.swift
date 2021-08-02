@@ -8,7 +8,9 @@
 
 import Foundation
 
-class CurrenciesInfoService {
+//TODO: - Нужно отказаться от файла с валютами, в нем нет необходимости: название валюты можно получить из локали, а код и так есть.
+
+final class CurrenciesInfoService {
     static let shared = CurrenciesInfoService()
     
     private var currencyInfo: [CurrencyInfo]!
@@ -68,6 +70,15 @@ class CurrenciesInfoService {
         let relative = ChoiceCurrencyViewModel(currency: relativeInfo.abbreviation,
                                                title: relativeInfo.title)
         return GraphConverterViewModel(base: base, relative: relative)
+    }
+    
+    func getSymbol(forCurrencyCode code: String) -> String? {
+        let locale = NSLocale(localeIdentifier: code)
+        if locale.displayName(forKey: .currencySymbol, value: code) == code {
+            let newlocale = NSLocale(localeIdentifier: code.dropLast() + "_en")
+            return newlocale.displayName(forKey: .currencySymbol, value: code)
+        }
+        return locale.displayName(forKey: .currencySymbol, value: code)
     }
     
     // MARK: Private Methods

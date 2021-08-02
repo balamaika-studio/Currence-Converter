@@ -15,7 +15,6 @@
 		595FC0D1241FA40600B4EEE4 /* Currency_ConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0D0241FA40600B4EEE4 /* Currency_ConverterTests.swift */; };
 		595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0DC241FA72F00B4EEE4 /* R.generated.swift */; };
 		595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E1241FABDB00B4EEE4 /* ConverterPresenter.swift */; };
-		595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E2241FABDB00B4EEE4 /* ConverterWorker.swift */; };
 		595FC0EA241FABDB00B4EEE4 /* ConverterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E3241FABDB00B4EEE4 /* ConverterRouter.swift */; };
 		595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */; };
 		595FC0EC241FABDB00B4EEE4 /* ConverterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */; };
@@ -35,6 +34,7 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		5E71D7CF26B8950200997AC4 /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */; };
 		9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9464EB75266BA15100EA1660 /* GoogleService-Info.plist */; };
 		94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */; };
 		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
@@ -52,7 +52,7 @@
 		D125731A245343BC005F8332 /* ExchangeRatesTimeSeriesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1257319245343BC005F8332 /* ExchangeRatesTimeSeriesResponse.swift */; };
 		D125731C24536AA8005F8332 /* EdgeInsetLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */; };
 		D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12E04EC245311DB005B68A4 /* AccuracyManager.swift */; };
-		D130B3B624B61D6C00068D20 /* ValidateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D130B3B524B61D6C00068D20 /* ValidateService.swift */; };
+		D130B3B624B61D6C00068D20 /* Validator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D130B3B524B61D6C00068D20 /* Validator.swift */; };
 		D13E2BE5247995BC0048E334 /* FavoriteOrderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13E2BE4247995BC0048E334 /* FavoriteOrderService.swift */; };
 		D142C03E24461D7300737C8B /* CurrencyPairViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */; };
 		D14E0F142510DD6F007C28BF /* SettingsPurchaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14E0F122510DD6F007C28BF /* SettingsPurchaseCell.swift */; };
@@ -187,7 +187,6 @@
 		595FC0D2241FA40600B4EEE4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		595FC0DC241FA72F00B4EEE4 /* R.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = R.generated.swift; sourceTree = "<group>"; };
 		595FC0E1241FABDB00B4EEE4 /* ConverterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterPresenter.swift; sourceTree = "<group>"; };
-		595FC0E2241FABDB00B4EEE4 /* ConverterWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterWorker.swift; sourceTree = "<group>"; };
 		595FC0E3241FABDB00B4EEE4 /* ConverterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterRouter.swift; sourceTree = "<group>"; };
 		595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterModels.swift; sourceTree = "<group>"; };
 		595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +206,7 @@
 		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
 		66E241F1B336BA06085DB9A6 /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7866CE52FF1937999B06A7F8 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
 		8B6C5E122520918800174AF6 /* Currency Converter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Currency Converter.entitlements"; sourceTree = "<group>"; };
@@ -228,7 +228,7 @@
 		D1257319245343BC005F8332 /* ExchangeRatesTimeSeriesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRatesTimeSeriesResponse.swift; sourceTree = "<group>"; };
 		D125731B24536AA8005F8332 /* EdgeInsetLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdgeInsetLabel.swift; sourceTree = "<group>"; };
 		D12E04EC245311DB005B68A4 /* AccuracyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccuracyManager.swift; sourceTree = "<group>"; };
-		D130B3B524B61D6C00068D20 /* ValidateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateService.swift; sourceTree = "<group>"; };
+		D130B3B524B61D6C00068D20 /* Validator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validator.swift; sourceTree = "<group>"; };
 		D13E2BE4247995BC0048E334 /* FavoriteOrderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteOrderService.swift; sourceTree = "<group>"; };
 		D142C03D24461D7200737C8B /* CurrencyPairViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPairViewModel.swift; sourceTree = "<group>"; };
 		D14E0F122510DD6F007C28BF /* SettingsPurchaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPurchaseCell.swift; sourceTree = "<group>"; };
@@ -393,6 +393,7 @@
 			children = (
 				8B6C5E122520918800174AF6 /* Currency Converter.entitlements */,
 				D1BBC92724543ED700985B9B /* Classes */,
+				5E71D7CD26B894BE00997AC4 /* Extensions */,
 				D1CEB83C2423838800988B53 /* Service */,
 				D1CEB83F24238B8400988B53 /* Model */,
 				595FC0E0241FABC700B4EEE4 /* Converter */,
@@ -426,9 +427,8 @@
 			children = (
 				595FC0F1241FAC8800B4EEE4 /* Custom View */,
 				595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */,
-				595FC0E6241FABDB00B4EEE4 /* ConverterInteractor.swift */,
 				595FC0E1241FABDB00B4EEE4 /* ConverterPresenter.swift */,
-				595FC0E2241FABDB00B4EEE4 /* ConverterWorker.swift */,
+				595FC0E6241FABDB00B4EEE4 /* ConverterInteractor.swift */,
 				595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */,
 				595FC0E3241FABDB00B4EEE4 /* ConverterRouter.swift */,
 				D1BBC9302454517100985B9B /* ConverterViewController.xib */,
@@ -496,6 +496,14 @@
 				596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */,
 			);
 			path = ChoiceCurrencyTableCell;
+			sourceTree = "<group>";
+		};
+		5E71D7CD26B894BE00997AC4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		BC4E34592E1250332CF277CB /* Pods */ = {
@@ -717,7 +725,7 @@
 				D17A1E422473F7CB00C5E2E6 /* ConnectionManager.swift */,
 				D13E2BE4247995BC0048E334 /* FavoriteOrderService.swift */,
 				D151A555248BE91700162CAB /* AdBannerInsetService.swift */,
-				D130B3B524B61D6C00068D20 /* ValidateService.swift */,
+				D130B3B524B61D6C00068D20 /* Validator.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1124,7 +1132,7 @@
 				D1DDE934243F45CB0023E789 /* ExchangeRatesInteractor.swift in Sources */,
 				D1EF9A29242394F400DD328C /* Router.swift in Sources */,
 				D119C3C624C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift in Sources */,
-				D130B3B624B61D6C00068D20 /* ValidateService.swift in Sources */,
+				D130B3B624B61D6C00068D20 /* Validator.swift in Sources */,
 				D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */,
 				D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */,
 				D1E4ED162451CDB300ECE03F /* AppThemeManager.swift in Sources */,
@@ -1147,7 +1155,6 @@
 				D1A2A2932477ACF0001949BD /* OfflineWorker.swift in Sources */,
 				D1E1A7612449F5240051E51D /* GraphWorker.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
-				595FC0E9241FABDB00B4EEE4 /* ConverterWorker.swift in Sources */,
 				D18DF0422502515800D21C71 /* IAPHelper.swift in Sources */,
 				D1DDE943243F4A7C0023E789 /* CurrencyRatesInteractor.swift in Sources */,
 				D1A2A2952477ACF0001949BD /* OfflineModels.swift in Sources */,
@@ -1188,6 +1195,7 @@
 				D1CEB84124238E9F00988B53 /* Quote.swift in Sources */,
 				D18855522436090900476EB3 /* RealmStorageContext+Operations.swift in Sources */,
 				D19A936E242CF64000DDCEA9 /* FavoriteWorker.swift in Sources */,
+				5E71D7CF26B8950200997AC4 /* UITextFieldExtensions.swift in Sources */,
 				D114D7892510E1EC001BE233 /* PurchaseOptions.swift in Sources */,
 				D11F8BB32452345E0074D293 /* SettingsTableViewDataSource.swift in Sources */,
 				D1DDE94E243F4AD30023E789 /* CurrencySelectionWorker.swift in Sources */,

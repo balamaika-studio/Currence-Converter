@@ -57,8 +57,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         checkInternetConnection()
-        requestIDFA()
         configureAppsFlyer()
+        requestIDFA()
         
         return true
     }
@@ -93,6 +93,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
         appsFlyer.appleAppID = "6sG9tvthbLbQdohMzWSCy4"
         appsFlyer.delegate = self
+        if #available(iOS 14, *) {
+            appsFlyer.waitForATTUserAuthorization(timeoutInterval: 30)
+        }
 
         #if DEBUG
         appsFlyer.isDebug = true
@@ -144,6 +147,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
+    }
+    
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        AppsFlyerLib.shared().handlePushNotification(userInfo)
+        completionHandler(.noData)
     }
 
     

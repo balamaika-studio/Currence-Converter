@@ -26,7 +26,6 @@ class ExchangeView: UIView {
     private var contentView: UIView!
     private let tapGesture = UITapGestureRecognizer()
     private let maxLength = 8
-    private var validateService: Validating?
     weak var delegate: ExchangeViewDeleagte?
     
     var currencyName: String {
@@ -85,30 +84,8 @@ class ExchangeView: UIView {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         contentView.addGestureRecognizer(tapGesture)
         countTextField.delegate = self
-        validateService = ValidateService()
-        addDoneButtonOnKeyboard()
+        countTextField.addAccessoryViewWithDoneButton()
         setUpClearSetting()
-    }
-    
-    private func addDoneButtonOnKeyboard(){
-        let width = UIScreen.main.bounds.width
-        let doneToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: width, height: 50))
-        doneToolbar.barStyle = .default
-        
-        let flexSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
-                                        target: nil, action: nil)
-        let done: UIBarButtonItem = UIBarButtonItem(title: R.string.localizable.done(),
-                                                    style: .done,
-                                                    target: self,
-                                                    action: #selector(self.doneButtonAction))
-        let items = [flexSpace, done]
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        countTextField.inputAccessoryView = doneToolbar
-    }
-    
-    @objc func doneButtonAction(){
-        countTextField.resignFirstResponder()
     }
     
     @IBAction func textFieldEditingDidChange(_ sender: UITextField) {
@@ -139,7 +116,7 @@ extension ExchangeView: UITextFieldDelegate {
         let currentText = textField.text ?? ""
         
         // checks data validity
-        let validateResult = validateService?.isConverterFieldCorrect(text: string) ?? false
+        let validateResult = Validator.isConverterFieldCorrect(text: string)
         if !validateResult { return false }
                 
         // only one point supported

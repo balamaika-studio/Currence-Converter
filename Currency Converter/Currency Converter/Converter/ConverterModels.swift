@@ -63,11 +63,44 @@ struct ConverterViewModel {
     let updated: String
 }
 
-protocol ConverterCellModelProtocol {
-    <#requirements#>
-}
+//protocol ConverterCellModelProtocol {
+//    var value: BehaviorRelay<Double> { get }
+//    var image: UIImage { get }
+//    var title: String { get }
+//    var subtitle: String { get }
+//}
+//
+//struct ConverterCellModel: ConverterCellModelProtocol {
+//
+//    let value: BehaviorRelay<Double>
+//    let image: UIImage
+//    let abbriviation: String
+//    let fullName: String
+//    let symbol: String
+//
+//    init(value: Double, image: UIImage, fullName: String, abbriviation: String, symbol: String) {
+//        self.value = .init(value: value)
+//        self.image = image
+//        self.abbriviation = abbriviation
+//        self.fullName = fullName
+//        self.symbol = symbol
+//    }
+//}
+//
+//extension ConverterCellModel {
+//
+//    init(currency: Currency, baseCurrencyRate: Double, baseCurrencyValue: Double, accuracyManager: AccuracyManager, infoService: CurrenciesInfoService) {
+//        let rate = currency.rate / baseCurrencyRate
+//        let totalSum = rate * baseCurrencyValue
+//        let roundedSum = accuracyManager.formatNumber(totalSum)
+//        let symbol = infoService.getSymbol(forCurrencyCode: currency.currency) ?? ""
+//        let stringSum = "\(roundedSum) \(symbol)"
+//        guard let title = CurrenciesInfoService.shared.getInfo(by: currency)?.title else { return }
+//        self.init(value: <#T##Double#>, image: <#T##UIImage#>, fullName: <#T##String#>, abbriviation: <#T##String#>, symbol: <#T##String#>)
+//    }
+//}
 
-struct ConverterCellViewModel: Currency {
+struct FavoriteConverterViewModel: Currency {
     var currency: String
     let title: String
     let total: String

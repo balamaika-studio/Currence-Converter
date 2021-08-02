@@ -13,7 +13,8 @@ protocol ConverterRoutingLogic {
     func showFavoriteViewController()
 }
 
-class ConverterRouter: ChoiceDataPassing {
+final class ConverterRouter: ChoiceDataPassing {
+    
     weak var viewController: ConverterViewController?
     var dataStore: ChoiceDataStore?
     

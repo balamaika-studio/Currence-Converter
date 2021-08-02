@@ -16,7 +16,8 @@ protocol ConverterDataStore {
     var selectedCurrency: Currency? { get set }
 }
 
-class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
+final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
+    
     var selectedCurrency: Currency?
     
     var presenter: ConverterPresentationLogic?

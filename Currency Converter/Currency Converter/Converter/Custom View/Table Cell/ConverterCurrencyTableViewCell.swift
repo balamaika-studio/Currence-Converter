@@ -14,6 +14,13 @@ final class ConverterCurrencyTableViewCell: UITableViewCell {
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
     @IBOutlet weak var currencyRateLabel: UILabel!
+    @IBOutlet weak var countTextField: UITextField!
+    
+    var onChangeValue: ((Double)->Void)?
+    
+    var value: Double {
+        return Double(countTextField.text ?? "0") ?? 0
+    }
     
     /// get reoder control image view
     var reorderControlImageView: UIImageView? {
@@ -24,6 +31,7 @@ final class ConverterCurrencyTableViewCell: UITableViewCell {
     }
     
     private var myReorderImage: UIImage? = nil
+    private let maxLength = 8
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,6 +50,11 @@ final class ConverterCurrencyTableViewCell: UITableViewCell {
         imageView.tintColor = themeProvider.currentTheme.textColor
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        onChangeValue = nil
+    }
+    
     func configure(with viewModel: FavoriteConverterViewModel) {
         let emptyFlag = R.image.emptyFlag()
         let image = UIImage(named: viewModel.currency.lowercased()) ?? emptyFlag
@@ -50,6 +63,11 @@ final class ConverterCurrencyTableViewCell: UITableViewCell {
         currencyTitleLabel.text = viewModel.title
         currencyRateLabel.text = viewModel.total
         selectionStyle = .none
+    }
+    
+    @IBAction private func textFieldEditingDidChange(_ sender: UITextField) {
+        //delegate?.convert(exchangeView: self, total: total)
+        onChangeValue?(value)
     }
 }
 
@@ -66,5 +84,46 @@ extension UIImageView {
     func tint(color: UIColor) {
         self.image = self.image?.withRenderingMode(.alwaysTemplate)
         self.tintColor = color
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension ConverterCurrencyTableViewCell: UITextFieldDelegate {
+    // textfiled max length
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // get the current text, or use an empty string if that failed
+        let currentText = textField.text ?? ""
+        
+        // checks data validity
+        let validateResult = Validator.isConverterFieldCorrect(text: string)
+        if !validateResult { return false }
+                
+        // only one point supported
+        if currentText.contains(".") && string == "," { return false }
+        
+        // prohibits the entry of zeros before a number
+        if (currentText.hasPrefix("0") && string != ",") && string != "" {
+            return currentText.hasPrefix("0.")
+        }
+        
+        // replace comma with point
+        if string == "," {
+            textField.text = currentText + "."
+            return false
+        }
+        
+        // attempt to read the range they are trying to change, or exit if we can't
+        guard let stringRange = Range(range, in: currentText) else { return false }
+        // add their new text to the existing text
+        let updatedText = currentText.replacingCharacters(in: stringRange, with: string)
+        
+        // remove symbol tapped
+        if updatedText.count < currentText.count { return true }
+        // make sure the result is under max length
+        return updatedText.count <= maxLength
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        return true
     }
 }
