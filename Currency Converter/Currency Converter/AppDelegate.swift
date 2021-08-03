@@ -91,12 +91,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func configureAppsFlyer() {
         let appsFlyer = AppsFlyerLib.shared()
         appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
-        appsFlyer.appleAppID = "6sG9tvthbLbQdohMzWSCy4"
+        appsFlyer.appleAppID = "1512175521"
+
         appsFlyer.delegate = self
         if #available(iOS 14, *) {
             appsFlyer.waitForATTUserAuthorization(timeoutInterval: 30)
         }
-
         #if DEBUG
         appsFlyer.isDebug = true
         #endif
@@ -148,12 +148,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
     }
-    
-    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        AppsFlyerLib.shared().handlePushNotification(userInfo)
-        completionHandler(.noData)
-    }
 
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+            AppsFlyerLib.shared().handlePushNotification(userInfo)
+            completionHandler(.noData)
+        }
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
