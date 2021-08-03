@@ -92,7 +92,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appsFlyer = AppsFlyerLib.shared()
         appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
         appsFlyer.appleAppID = "1512175521"
-
         appsFlyer.delegate = self
         if #available(iOS 14, *) {
             appsFlyer.waitForATTUserAuthorization(timeoutInterval: 30)
@@ -103,27 +102,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func addBanner(_ bannerView: GADBannerView) {
-        let height = tabBarViewController.tabBar.frame.size.height / 2
-        UserDefaults.standard.set(height, forKey: "bannerInset")
+        let height = kGADAdSizeBanner.size.height
+        tabBarViewController.additionalSafeAreaInsets.bottom += height
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
-        tabBarViewController.view.addConstraints([
-            NSLayoutConstraint(item: bannerView,
-                               attribute: .bottom,
-                               relatedBy: .equal,
-                               toItem: tabBarViewController.tabBar,
-                               attribute: .top,
-                               multiplier: 1,
-                               constant: 0),
-            NSLayoutConstraint(item: bannerView,
-                               attribute: .centerX,
-                               relatedBy: .equal,
-                               toItem: tabBarViewController.view,
-                               attribute: .centerX,
-                               multiplier: 1,
-                               constant: 0)
-        ])
-        UserDefaults.standard.set(kGADAdSizeBanner.size.height, forKey: "bannerInset")
+        bannerView.bottomAnchor.constraint(equalTo: tabBarViewController.view.bottomAnchor).isActive = true
+       bannerView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        bannerView.leadingAnchor.constraint(equalTo: tabBarViewController.view.leadingAnchor).isActive = true
+        bannerView.trailingAnchor.constraint(equalTo: tabBarViewController.view.trailingAnchor).isActive = true
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
