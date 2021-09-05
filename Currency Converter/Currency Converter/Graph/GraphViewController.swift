@@ -13,7 +13,7 @@ protocol GraphDisplayLogic: class {
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData)
 }
 
-class GraphViewController: UIViewController, GraphDisplayLogic {
+final class GraphViewController: UIViewController, GraphDisplayLogic {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var converterView: RelativeExchangeView!
