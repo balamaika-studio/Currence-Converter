@@ -16,7 +16,7 @@ final class ConverterPresenter: ConverterPresentationLogic {
     
     weak var viewController: ConverterDisplayLogic?
     
-    private var baseCurrency: Currency!
+    //private var baseCurrency: Currency!
     
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -32,17 +32,19 @@ final class ConverterPresenter: ConverterPresentationLogic {
     
     func presentData(response: Converter.Model.Response.ResponseType) {
         switch response {
-        case .converterCurrencies(let first, let second):
-            baseCurrency = first
-            let viewModel = buildConverterViewModel(first, second)
-            viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
-            
-        case .favoriteCurrencies(let currencies, let total):
-            let viewModel = buildFavoriteViewModel(currencies, total: total)
+        case .updateLocalFavoriteCurrencies(let baseCount):
+            viewController?.displayData(viewModel: .updateLocalFavoriteCurrencies(baseCount: baseCount))
+//        case .converterCurrencies(let first, let second):
+//            baseCurrency = first
+//            let viewModel = buildConverterViewModel(first, second)
+//            viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
+//
+        case .favoriteCurrencies(let currencies, let baseCount):
+            let viewModel = buildFavoriteViewModel(currencies, baseCount: baseCount)
             viewController?.displayData(viewModel: .showFavoriteViewModel(viewModel))
             
-        case .updateBaseCurrency(let base):
-            baseCurrency = base
+//        case .updateBaseCurrency(let base):
+//            baseCurrency = base
             
         case .error(let message):
             guard let message = message else { break }
@@ -62,13 +64,13 @@ final class ConverterPresenter: ConverterPresentationLogic {
         return favoriteCopy
     }
     
-    private func buildFavoriteViewModel(_ favorite: [Currency], total: Double) -> [FavoriteConverterViewModel] {
+    private func buildFavoriteViewModel(_ favorite: [Currency], baseCount: Double) -> [FavoriteConverterViewModel] {
         var viewModels = [FavoriteConverterViewModel]()
         let orderedCurrencies = restoreOrder(for: favorite)
         
         orderedCurrencies.forEach { currency in
-            let rate = currency.rate / baseCurrency.rate
-            let totalSum = rate * total
+            //let rate = currency.rate / baseCurrency.rate
+            let totalSum = currency.rate * baseCount
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
             let symbol = CurrenciesInfoService.shared.getSymbol(forCurrencyCode: currency.currency) ?? ""
             let stringSum = "\(roundedSum) \(symbol)"

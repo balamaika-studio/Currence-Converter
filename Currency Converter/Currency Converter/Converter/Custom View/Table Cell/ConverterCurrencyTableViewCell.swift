@@ -8,12 +8,12 @@
 
 import UIKit
 
-final class ConverterCurrencyTableViewCell: UITableViewCell {
+final class ConverterCurrencyTableViewCell: BaseCell {
     
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
-    @IBOutlet weak var currencyRateLabel: UILabel!
+    //@IBOutlet weak var currencyRateLabel: UILabel!
     @IBOutlet weak var countTextField: UITextField!
     
     var onChangeValue: ((Double)->Void)?
@@ -55,13 +55,20 @@ final class ConverterCurrencyTableViewCell: UITableViewCell {
         onChangeValue = nil
     }
     
+    override func setupUI() {
+        super.setupUI()
+        let content = R.nib.converterCellContentView(owner: self)!
+        cellContentView.addSubview(content)
+        content.ec.edges.constraintsToSuperview(with: .zero)
+    }
+    
     func configure(with viewModel: FavoriteConverterViewModel) {
         let emptyFlag = R.image.emptyFlag()
         let image = UIImage(named: viewModel.currency.lowercased()) ?? emptyFlag
         currencyImageView.image = image
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
-        currencyRateLabel.text = viewModel.total
+        //currencyRateLabel.text = viewModel.total
         selectionStyle = .none
     }
     
@@ -75,7 +82,7 @@ extension ConverterCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
-        currencyRateLabel.textColor = theme.textColor
+        //currencyRateLabel.textColor = theme.textColor
         reorderControlImageView?.tint(color: theme.textColor)
     }
 }

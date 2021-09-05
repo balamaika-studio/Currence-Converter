@@ -23,10 +23,11 @@ final class CurrenciesInfoService {
     private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
     private let graphDefaultCurrencies = ["USD", "EUR"]
     
-    private init() { }
+    private init() { _ = fetch() }
     
     /// load data from json
     func fetch() -> [CurrencyInfo] {
+        guard currencyInfo == nil else { return currencyInfo }
         let path = Bundle.main.path(forResource: "currenciesNames", ofType: ".json")!
         let fileUrl = URL(fileURLWithPath: path)
         let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)

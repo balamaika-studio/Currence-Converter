@@ -24,7 +24,6 @@
 		595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0F8241FBDE700B4EEE4 /* ConverterView.xib */; };
 		595FC0FB241FC56E00B4EEE4 /* ConverterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0FA241FC56E00B4EEE4 /* ConverterView.swift */; };
 		595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 595FC0FD241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift */; };
-		595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */; };
 		5968111A2420E8CE00426968 /* ChoicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811132420E8CE00426968 /* ChoicePresenter.swift */; };
 		5968111B2420E8CE00426968 /* ChoiceWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811142420E8CE00426968 /* ChoiceWorker.swift */; };
 		5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811152420E8CE00426968 /* ChoiceRouter.swift */; };
@@ -35,6 +34,22 @@
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
 		5E71D7CF26B8950200997AC4 /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */; };
+		5ED0390226C908D9003B0140 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F826C908D9003B0140 /* Lato-Regular.ttf */; };
+		5ED0390326C908D9003B0140 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F926C908D9003B0140 /* Lato-Thin.ttf */; };
+		5ED0390426C908D9003B0140 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FA26C908D9003B0140 /* Lato-BoldItalic.ttf */; };
+		5ED0390526C908D9003B0140 /* Lato-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FB26C908D9003B0140 /* Lato-Black.ttf */; };
+		5ED0390626C908D9003B0140 /* Lato-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FC26C908D9003B0140 /* Lato-BlackItalic.ttf */; };
+		5ED0390726C908D9003B0140 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FD26C908D9003B0140 /* Lato-LightItalic.ttf */; };
+		5ED0390826C908D9003B0140 /* Lato-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FE26C908D9003B0140 /* Lato-ThinItalic.ttf */; };
+		5ED0390926C908D9003B0140 /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FF26C908D9003B0140 /* Lato-Light.ttf */; };
+		5ED0390A26C908D9003B0140 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED0390026C908D9003B0140 /* Lato-Italic.ttf */; };
+		5ED0390B26C908D9003B0140 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED0390126C908D9003B0140 /* Lato-Bold.ttf */; };
+		5ED0390D26C91405003B0140 /* ConverterCellContentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5ED0390C26C91405003B0140 /* ConverterCellContentView.xib */; };
+		5ED0391126C91B7F003B0140 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391026C91B7E003B0140 /* BaseCell.swift */; };
+		5ED0391426C91BB9003B0140 /* CALayer+RoundCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391326C91BB9003B0140 /* CALayer+RoundCorners.swift */; };
+		5ED0391626C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391526C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift */; };
+		5ED0391B26C93144003B0140 /* EaseConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391A26C93144003B0140 /* EaseConstraints.swift */; };
+		5ED0391D26C93785003B0140 /* EaseConstraints+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */; };
 		9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9464EB75266BA15100EA1660 /* GoogleService-Info.plist */; };
 		94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */; };
 		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
@@ -196,7 +211,6 @@
 		595FC0F8241FBDE700B4EEE4 /* ConverterView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterView.xib; sourceTree = "<group>"; };
 		595FC0FA241FC56E00B4EEE4 /* ConverterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterView.swift; sourceTree = "<group>"; };
 		595FC0FD241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterCurrencyTableViewCell.swift; sourceTree = "<group>"; };
-		595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterCurrencyTableViewCell.xib; sourceTree = "<group>"; };
 		596811132420E8CE00426968 /* ChoicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoicePresenter.swift; sourceTree = "<group>"; };
 		596811142420E8CE00426968 /* ChoiceWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceWorker.swift; sourceTree = "<group>"; };
 		596811152420E8CE00426968 /* ChoiceRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceRouter.swift; sourceTree = "<group>"; };
@@ -207,6 +221,40 @@
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
 		5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
+		5ED038E526C90880003B0140 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
+		5ED038E626C90880003B0140 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		5ED038E726C90880003B0140 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		5ED038E826C90880003B0140 /* Poppins-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Light.ttf"; sourceTree = "<group>"; };
+		5ED038E926C90880003B0140 /* Poppins-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLight.ttf"; sourceTree = "<group>"; };
+		5ED038EA26C90880003B0140 /* Poppins-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBold.ttf"; sourceTree = "<group>"; };
+		5ED038EB26C90880003B0140 /* Poppins-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		5ED038EC26C90880003B0140 /* Poppins-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BoldItalic.ttf"; sourceTree = "<group>"; };
+		5ED038ED26C90880003B0140 /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		5ED038EE26C90880003B0140 /* Poppins-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-BlackItalic.ttf"; sourceTree = "<group>"; };
+		5ED038EF26C90880003B0140 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		5ED038F026C90880003B0140 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		5ED038F126C90880003B0140 /* Poppins-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Black.ttf"; sourceTree = "<group>"; };
+		5ED038F226C90880003B0140 /* Poppins-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Thin.ttf"; sourceTree = "<group>"; };
+		5ED038F326C90880003B0140 /* Poppins-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		5ED038F426C90880003B0140 /* Poppins-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-MediumItalic.ttf"; sourceTree = "<group>"; };
+		5ED038F526C90880003B0140 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		5ED038F626C90880003B0140 /* Poppins-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-LightItalic.ttf"; sourceTree = "<group>"; };
+		5ED038F826C908D9003B0140 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		5ED038F926C908D9003B0140 /* Lato-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Thin.ttf"; sourceTree = "<group>"; };
+		5ED038FA26C908D9003B0140 /* Lato-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BoldItalic.ttf"; sourceTree = "<group>"; };
+		5ED038FB26C908D9003B0140 /* Lato-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Black.ttf"; sourceTree = "<group>"; };
+		5ED038FC26C908D9003B0140 /* Lato-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-BlackItalic.ttf"; sourceTree = "<group>"; };
+		5ED038FD26C908D9003B0140 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
+		5ED038FE26C908D9003B0140 /* Lato-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-ThinItalic.ttf"; sourceTree = "<group>"; };
+		5ED038FF26C908D9003B0140 /* Lato-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Light.ttf"; sourceTree = "<group>"; };
+		5ED0390026C908D9003B0140 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
+		5ED0390126C908D9003B0140 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		5ED0390C26C91405003B0140 /* ConverterCellContentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterCellContentView.xib; sourceTree = "<group>"; };
+		5ED0391026C91B7E003B0140 /* BaseCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		5ED0391326C91BB9003B0140 /* CALayer+RoundCorners.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CALayer+RoundCorners.swift"; sourceTree = "<group>"; };
+		5ED0391526C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EaseConstraints+UIEdgesInsets.swift"; sourceTree = "<group>"; };
+		5ED0391A26C93144003B0140 /* EaseConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseConstraints.swift; sourceTree = "<group>"; };
+		5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EaseConstraints+Size.swift"; sourceTree = "<group>"; };
 		66E241F1B336BA06085DB9A6 /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7866CE52FF1937999B06A7F8 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
 		8B6C5E122520918800174AF6 /* Currency Converter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Currency Converter.entitlements"; sourceTree = "<group>"; };
@@ -391,6 +439,7 @@
 		595FC0B8241FA40400B4EEE4 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				5ED0390E26C91B57003B0140 /* UIKit */,
 				8B6C5E122520918800174AF6 /* Currency Converter.entitlements */,
 				D1BBC92724543ED700985B9B /* Classes */,
 				5E71D7CD26B894BE00997AC4 /* Extensions */,
@@ -404,8 +453,8 @@
 				596811122420E89C00426968 /* Choice currency */,
 				D1A2A28A2477ACC5001949BD /* Offline */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
+				5ED038BC26C906D9003B0140 /* Resources */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
-				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
 				595FC0C4241FA40600B4EEE4 /* LaunchScreen.storyboard */,
 				595FC0C7241FA40600B4EEE4 /* Info.plist */,
 				D164543224630203009B6E75 /* Localizable.strings */,
@@ -469,7 +518,7 @@
 			isa = PBXGroup;
 			children = (
 				595FC0FD241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift */,
-				595FC0FE241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib */,
+				5ED0390C26C91405003B0140 /* ConverterCellContentView.xib */,
 			);
 			path = "Table Cell";
 			sourceTree = "<group>";
@@ -504,6 +553,102 @@
 				5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5ED038BC26C906D9003B0140 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5ED038BD26C906F5003B0140 /* Fonts */,
+				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5ED038BD26C906F5003B0140 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				5ED038F726C908B0003B0140 /* Lato */,
+				5ED038C026C907CB003B0140 /* Poppins */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		5ED038C026C907CB003B0140 /* Poppins */ = {
+			isa = PBXGroup;
+			children = (
+				5ED038F126C90880003B0140 /* Poppins-Black.ttf */,
+				5ED038EE26C90880003B0140 /* Poppins-BlackItalic.ttf */,
+				5ED038E626C90880003B0140 /* Poppins-Bold.ttf */,
+				5ED038EC26C90880003B0140 /* Poppins-BoldItalic.ttf */,
+				5ED038EA26C90880003B0140 /* Poppins-ExtraBold.ttf */,
+				5ED038F326C90880003B0140 /* Poppins-ExtraBoldItalic.ttf */,
+				5ED038E926C90880003B0140 /* Poppins-ExtraLight.ttf */,
+				5ED038EB26C90880003B0140 /* Poppins-ExtraLightItalic.ttf */,
+				5ED038ED26C90880003B0140 /* Poppins-Italic.ttf */,
+				5ED038E826C90880003B0140 /* Poppins-Light.ttf */,
+				5ED038F626C90880003B0140 /* Poppins-LightItalic.ttf */,
+				5ED038F526C90880003B0140 /* Poppins-Medium.ttf */,
+				5ED038F426C90880003B0140 /* Poppins-MediumItalic.ttf */,
+				5ED038EF26C90880003B0140 /* Poppins-Regular.ttf */,
+				5ED038F026C90880003B0140 /* Poppins-SemiBold.ttf */,
+				5ED038E726C90880003B0140 /* Poppins-SemiBoldItalic.ttf */,
+				5ED038F226C90880003B0140 /* Poppins-Thin.ttf */,
+				5ED038E526C90880003B0140 /* Poppins-ThinItalic.ttf */,
+			);
+			path = Poppins;
+			sourceTree = "<group>";
+		};
+		5ED038F726C908B0003B0140 /* Lato */ = {
+			isa = PBXGroup;
+			children = (
+				5ED038FB26C908D9003B0140 /* Lato-Black.ttf */,
+				5ED038FC26C908D9003B0140 /* Lato-BlackItalic.ttf */,
+				5ED0390126C908D9003B0140 /* Lato-Bold.ttf */,
+				5ED038FA26C908D9003B0140 /* Lato-BoldItalic.ttf */,
+				5ED0390026C908D9003B0140 /* Lato-Italic.ttf */,
+				5ED038FF26C908D9003B0140 /* Lato-Light.ttf */,
+				5ED038FD26C908D9003B0140 /* Lato-LightItalic.ttf */,
+				5ED038F826C908D9003B0140 /* Lato-Regular.ttf */,
+				5ED038F926C908D9003B0140 /* Lato-Thin.ttf */,
+				5ED038FE26C908D9003B0140 /* Lato-ThinItalic.ttf */,
+			);
+			path = Lato;
+			sourceTree = "<group>";
+		};
+		5ED0390E26C91B57003B0140 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				5ED0391226C91B9B003B0140 /* Extensions */,
+				5ED0390F26C91B62003B0140 /* TableCells */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		5ED0390F26C91B62003B0140 /* TableCells */ = {
+			isa = PBXGroup;
+			children = (
+				5ED0391026C91B7E003B0140 /* BaseCell.swift */,
+			);
+			path = TableCells;
+			sourceTree = "<group>";
+		};
+		5ED0391226C91B9B003B0140 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				5ED0391326C91BB9003B0140 /* CALayer+RoundCorners.swift */,
+				5ED0391926C93110003B0140 /* EaseConstraints */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		5ED0391926C93110003B0140 /* EaseConstraints */ = {
+			isa = PBXGroup;
+			children = (
+				5ED0391A26C93144003B0140 /* EaseConstraints.swift */,
+				5ED0391526C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift */,
+				5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */,
+			);
+			path = EaseConstraints;
 			sourceTree = "<group>";
 		};
 		BC4E34592E1250332CF277CB /* Pods */ = {
@@ -991,6 +1136,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				595FC0F5241FAD7F00B4EEE4 /* ExchangeView.xib in Resources */,
+				5ED0390326C908D9003B0140 /* Lato-Thin.ttf in Resources */,
+				5ED0390626C908D9003B0140 /* Lato-BlackItalic.ttf in Resources */,
+				5ED0390926C908D9003B0140 /* Lato-Light.ttf in Resources */,
 				D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */,
 				9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */,
 				595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */,
@@ -999,22 +1147,29 @@
 				595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */,
 				D1DDE953243F4AD30023E789 /* CurrencySelectionViewController.xib in Resources */,
 				D1E1A76C2449F6220051E51D /* PeriodCollectionViewCell.xib in Resources */,
+				5ED0390726C908D9003B0140 /* Lato-LightItalic.ttf in Resources */,
 				596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */,
 				D1DDE944243F4A7C0023E789 /* CurrencyRatesViewController.xib in Resources */,
 				595FC0C1241FA40400B4EEE4 /* Main.storyboard in Resources */,
 				D19A9378242CFF6E00DDCEA9 /* FavoriteTableViewCell.xib in Resources */,
 				D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */,
+				5ED0390A26C908D9003B0140 /* Lato-Italic.ttf in Resources */,
 				D14E0F152510DD6F007C28BF /* SettingsPurchaseCell.xib in Resources */,
 				595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */,
+				5ED0390B26C908D9003B0140 /* Lato-Bold.ttf in Resources */,
 				D164543024630203009B6E75 /* Localizable.strings in Resources */,
 				D1E1A7662449F5240051E51D /* GraphViewController.xib in Resources */,
-				595FC100241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.xib in Resources */,
+				5ED0390826C908D9003B0140 /* Lato-ThinItalic.ttf in Resources */,
+				5ED0390426C908D9003B0140 /* Lato-BoldItalic.ttf in Resources */,
+				5ED0390526C908D9003B0140 /* Lato-Black.ttf in Resources */,
 				D19A9373242CF64000DDCEA9 /* FavoriteViewController.xib in Resources */,
 				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
 				D1BBC9312454517200985B9B /* ConverterViewController.xib in Resources */,
 				D1DDE935243F45CB0023E789 /* ExchangeRatesViewController.xib in Resources */,
+				5ED0390226C908D9003B0140 /* Lato-Regular.ttf in Resources */,
 				D163AFE8244E312800014800 /* SettingsViewController.xib in Resources */,
 				D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */,
+				5ED0390D26C91405003B0140 /* ConverterCellContentView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1187,6 +1342,7 @@
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
 				D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */,
 				D1A2A2962477ACF0001949BD /* OfflineViewController.swift in Sources */,
+				5ED0391626C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				D19A9377242CFF6E00DDCEA9 /* FavoriteTableViewCell.swift in Sources */,
 				94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */,
@@ -1200,6 +1356,7 @@
 				D11F8BB32452345E0074D293 /* SettingsTableViewDataSource.swift in Sources */,
 				D1DDE94E243F4AD30023E789 /* CurrencySelectionWorker.swift in Sources */,
 				D1DDE94F243F4AD30023E789 /* CurrencySelectionRouter.swift in Sources */,
+				5ED0391D26C93785003B0140 /* EaseConstraints+Size.swift in Sources */,
 				D1156092244A4376000EB5E9 /* PeriodService.swift in Sources */,
 				D19A9371242CF64000DDCEA9 /* FavoriteViewController.swift in Sources */,
 				D1DDE952243F4AD30023E789 /* CurrencySelectionInteractor.swift in Sources */,
@@ -1207,9 +1364,11 @@
 				D1DDE92F243F45CB0023E789 /* ExchangeRatesPresenter.swift in Sources */,
 				D1A2A2922477ACF0001949BD /* OfflinePresenter.swift in Sources */,
 				D188555424362ACC00476EB3 /* CurrenciesInfoService.swift in Sources */,
+				5ED0391126C91B7F003B0140 /* BaseCell.swift in Sources */,
 				D1DDE931243F45CB0023E789 /* ExchangeRatesRouter.swift in Sources */,
 				D167E44E24620BEA0069683A /* ChartXValueFormatter.swift in Sources */,
 				D19A9380242D0E4E00DDCEA9 /* HTTPMethod.swift in Sources */,
+				5ED0391B26C93144003B0140 /* EaseConstraints.swift in Sources */,
 				D1DDE93E243F4A7C0023E789 /* CurrencyRatesPresenter.swift in Sources */,
 				D1E1A7642449F5240051E51D /* GraphViewController.swift in Sources */,
 				D1A2A2942477ACF0001949BD /* OfflineRouter.swift in Sources */,
@@ -1224,6 +1383,7 @@
 				D16454352463308B009B6E75 /* PeriodCollectionViewHelper.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,
 				D163AFE7244E312800014800 /* SettingsInteractor.swift in Sources */,
+				5ED0391426C91BB9003B0140 /* CALayer+RoundCorners.swift in Sources */,
 				5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */,
 				595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */,
 				D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */,

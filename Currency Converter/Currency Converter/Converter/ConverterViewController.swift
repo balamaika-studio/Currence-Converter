@@ -17,7 +17,7 @@ protocol ConverterDisplayLogic: class {
 final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var converterView: ConverterView!
+    //@IBOutlet weak var converterView: ConverterView!
     
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
@@ -29,11 +29,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var actionButton: JJFloatingActionButton!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
-    private var favoriteCurrencies: [FavoriteConverterViewModel]! {
-        didSet {
-            interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
-        }
-    }
+    private var favoriteCurrencies: [FavoriteConverterViewModel]!
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
@@ -44,17 +40,11 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }()
     
     var safeBottomAnchor: NSLayoutYAxisAnchor {
-        if #available(iOS 11.0, *) {
-            return view.safeAreaLayoutGuide.bottomAnchor
-        }
-        else {
-            return bottomLayoutGuide.topAnchor
-        }
+        view.safeAreaLayoutGuide.bottomAnchor
     }
     
     var safeArea: UILayoutGuide {
-        if #available(iOS 11.0, *) { return view.safeAreaLayoutGuide}
-        else { return view.layoutMarginsGuide }
+        view.safeAreaLayoutGuide
     }
     
     // MARK: Object lifecycle
@@ -94,8 +84,8 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.makeRequest(request: .loadConverterCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+        //interactor?.makeRequest(request: .loadConverterCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -105,18 +95,27 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
-        case .showConverterViewModel(let converterViewModel):
-            converterView.updateWith(converterViewModel)
+        case .updateLocalFavoriteCurrencies(let baseCount):
+            (0 ..< favoriteCurrencies.count).forEach {
+                let total = favoriteCurrencies[$0].rate * baseCount
+                favoriteCurrencies[$0].total = AccuracyManager.shared.formatNumber(total)
+            }
+            tableView.reloadData()
+        case .showConverterViewModel://(let converterViewModel):
+            //converterView.updateWith(converterViewModel)
             refreshControl.endRefreshing()
             // request updated favorite after changing of main currencies
-            interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+            interactor?.makeRequest(request: .loadFavoriteCurrencies)
             
         case .showFavoriteViewModel(let favoriteViewModel):
+            refreshControl.endRefreshing()
             self.favoriteCurrencies = favoriteViewModel
+            interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
             tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
             tableView.reloadData()
             
         case .showError(let message):
+            refreshControl.endRefreshing()
             // dont show alert over top controller
             if let _ = presentedViewController { break }
             showAlert(with: message, title: R.string.localizable.error())
@@ -125,19 +124,19 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     // MARK: Private Methods
     // MARK: Router
-    private func changeCurrencyTapped(exchangeView: ExchangeView) {
-        router?.showChoiceViewController()
-    }
-    
-    private func swapCurrencyTapped(converter model: ConverterViewModel) {
-        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
-        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
-    }
-    
-    private func updateFavoriteWith(total: Double) {
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
-    }
+//    private func changeCurrencyTapped(exchangeView: ExchangeView) {
+//        router?.showChoiceViewController()
+//    }
+//
+//    private func swapCurrencyTapped(converter model: ConverterViewModel) {
+//        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
+//        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
+//        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+//    }
+//
+//    private func updateFavoriteWith(total: Double) {
+//        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
+//    }
     
     // MARK: Alert
     private func showAlert(with message: String, title: String) {
@@ -145,9 +144,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                       message: message,
                                       preferredStyle: .alert)
         let okAction = UIAlertAction(title: R.string.localizable.oK(),
-                                     style: .default) { [weak self] _ in
-                                        self?.refreshControl.endRefreshing()
-        }
+                                     style: .default) { _ in }
         alert.addAction(okAction)
         self.present(alert, animated: true, completion: nil)
     }
@@ -155,7 +152,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     // MARK: Setup
     private func setupView() {
         
-        tableView.register(R.nib.converterCurrencyTableViewCell)
+        tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -172,9 +169,9 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                  for: .valueChanged)
 
         favoriteCurrencies = []
-        converterView.changeCurrencyTapped = self.changeCurrencyTapped
-        converterView.swapCurrencyTapped = self.swapCurrencyTapped
-        converterView.topCurrencyTotal = self.updateFavoriteWith
+        //converterView.changeCurrencyTapped = self.changeCurrencyTapped
+        //converterView.swapCurrencyTapped = self.swapCurrencyTapped
+        //converterView.topCurrencyTotal = self.updateFavoriteWith
         
         addFAB()
     }
@@ -214,7 +211,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @objc private func refreshCurrencies(_ sender: Any) {
         interactor?.makeRequest(request: .updateCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+        interactor?.makeRequest(request: .loadFavoriteCurrencies)
     }
     
     // MARK: - LongPressReorder Delegate
@@ -240,8 +237,8 @@ extension ConverterViewController: ChoiceBackDataPassing {
     }
     
     func updateControllerWithSelectedCurrency() {
-        let currencyName = converterView.replacingView.currencyName
-        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+        //let currencyName = converterView.replacingView.currencyName
+        //interactor?.makeRequest(request: .changeCurrency(name: currencyName))
     }
 }
 
@@ -252,8 +249,7 @@ extension ConverterViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCell,
-                                                           for: indexPath) else { fatalError() }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "converterCurrencyTableViewCell", for: indexPath) as? ConverterCurrencyTableViewCell else { fatalError() }
         let viewModel = favoriteCurrencies[indexPath.row]
         cell.configure(with: viewModel)
         return cell
@@ -281,8 +277,8 @@ extension ConverterViewController: UITableViewDataSource {
 extension ConverterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currency = favoriteCurrencies[indexPath.row]
-        interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+        //let currency = favoriteCurrencies[indexPath.row]
+        //interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
 }
 

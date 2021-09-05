@@ -13,26 +13,29 @@ enum Converter {
     enum Model {
         struct Request {
             enum RequestType {
-                case changeCurrency(name: String)
+                //case changeCurrency(name: String)
                 case loadConverterCurrencies
-                case loadFavoriteCurrencies(total: Double? = nil)
-                case updateBaseCurrency(base: Currency)
+                case loadFavoriteCurrencies
+                //case updateBaseCurrency(base: Currency)
                 case updateCurrencies
                 case remove(favorite: Currency)
-                case changeBottomCurrency(with: Currency)
+                //case changeBottomCurrency(with: Currency)
                 case saveFavoriteOrder(currencies: [Currency])
+                case updateBaseCount(currency: Currency, count: Double)
             }
         }
         struct Response {
             enum ResponseType {
-                case converterCurrencies(first: Currency, second: Currency)
-                case favoriteCurrencies([Currency], total: Double)
-                case updateBaseCurrency(base: Currency)
+                //case converterCurrencies(first: Currency, second: Currency)
+                case favoriteCurrencies([Currency], baseCount: Double)
+                //case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
+                case updateLocalFavoriteCurrencies(baseCount: Double)
             }
         }
         struct ViewModel {
             enum ViewModelData {
+                case updateLocalFavoriteCurrencies(baseCount: Double)
                 case showError(message: String)
                 case showConverterViewModel(_ viewModel: ConverterViewModel)
                 case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
@@ -103,6 +106,6 @@ struct ConverterViewModel {
 struct FavoriteConverterViewModel: Currency {
     var currency: String
     let title: String
-    let total: String
+    var total: String
     var rate: Double
 }

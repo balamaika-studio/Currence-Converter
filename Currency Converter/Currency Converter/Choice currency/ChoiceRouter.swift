@@ -38,7 +38,7 @@ class ChoiceRouter {
             let destinationVC = destinationViewController,
             var converterDataStore = destinationVC.getRouter().dataStore
         else { fatalError("Fail route to back") }
-        passDataBack(source: choiceDataStore, destination: &converterDataStore)
+        //passDataBack(source: choiceDataStore, destination: &converterDataStore)
         destinationVC.updateControllerWithSelectedCurrency()
         close(choiceVC)
     }
@@ -51,9 +51,9 @@ extension ChoiceRouter: ChoiceRoutingLogic {
     }
 }
 
-// MARK: - Data Passing
-extension ChoiceRouter: ChoiceDataPassing {
-    private func passDataBack(source: ChoiceDataStore, destination: inout ChoiceDataStore) {
-        destination.selectedCurrency = source.selectedCurrency
-    }
-}
+//// MARK: - Data Passing
+//extension ChoiceRouter: ChoiceDataPassing {
+//    private func passDataBack(source: ChoiceDataStore, destination: inout ChoiceDataStore) {
+//        destination.selectedCurrency = source.selectedCurrency
+//    }
+//}

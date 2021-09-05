@@ -13,7 +13,7 @@ protocol ChoiceBusinessLogic {
 }
 
 protocol ChoiceDataStore {
-    var selectedCurrency: Currency? { get set }
+    //var selectedCurrency: Currency? { get set }
 }
 
 class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {

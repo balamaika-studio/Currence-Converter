@@ -12,19 +12,16 @@ import RealmSwift
 /*
  Dummy protocol for Entities
  */
-public protocol Storable {
-}
-extension Object: Storable {
+public protocol Storable: Object {
 }
 
 @objcMembers
 public class RealmCurrency: Object, Currency {
-    dynamic var id: String = UUID().uuidString
-    dynamic var currency: String = ""
-    dynamic var rate: Double = 0.0
-    dynamic var isFavorite: Bool = false
+    @Persisted var currency: String
+    @Persisted var rate: Double
+    @Persisted var isFavorite: Bool = false
     
     public override class func primaryKey() -> String? {
-        return "id"
+        return "currency"
     }
 }

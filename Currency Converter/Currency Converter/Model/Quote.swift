@@ -9,11 +9,25 @@
 import Foundation
 
 protocol Currency {
-    var currency: String { get set }
-    var rate: Double { get set }
+    var currency: String { get }
+    var rate: Double { get }
+    var currencyName: String? { get }
 }
 
-struct Quote: Currency {
+extension Currency {
+    
+    var currencyName: String? {
+        Locale.current.localizedString(forCurrencyCode: currency)
+    }
+}
+
+final class Quote: NSObject, Currency {
+    
     var currency: String
     var rate: Double
+    
+    init(currency: String, rate: Double) {
+        self.currency = currency
+        self.rate = rate
+    }
 }

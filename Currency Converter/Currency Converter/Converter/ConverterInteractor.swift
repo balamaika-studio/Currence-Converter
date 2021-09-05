@@ -18,62 +18,72 @@ protocol ConverterDataStore {
 
 final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
-    var selectedCurrency: Currency?
+    //var selectedCurrency: Currency?
+    var baseCount: Double = 1 {
+        didSet {
+            presenter?.presentData(response: .updateLocalFavoriteCurrencies(baseCount: baseCount))
+        }
+    }
     
     var presenter: ConverterPresentationLogic?
-    var storage: StorageContext!
-    var historicalStorage: StorageContext!
+    var storage: DataStorage!
+    //var historicalStorage: StorageContext!
     var networkManager: NetworkManager!
     
-    var topCurrency: Currency!
-    var bottomCurrency: Currency!
+    //var topCurrency: Currency!
+    //var bottomCurrency: Currency!
     var isFirstLoading = true
-    var lastTotalSum: Double = 1
+    //var lastTotalSum: Double = 1
     
-    init(storage: StorageContext = try! RealmStorageContext()) {
+    init(storage: DataStorage = try! DataStorage(configuration: .defaultConfiguration, queue: .main)) {
         self.storage = storage
-        let config: ConfigurationType = .named(name: "historical")
-        self.historicalStorage = try! RealmStorageContext(configuration: config)
+        //let config: ConfigurationType = .named(name: "historical")
+        //self.historicalStorage = try! RealmStorageContext(configuration: config)
         self.networkManager = NetworkManager()
     }
     
     func makeRequest(request: Converter.Model.Request.RequestType) {
         switch request {
-        case .changeCurrency(let currencyName):
-            guard let newCurrency = selectedCurrency else { break }
-
-            if topCurrency.currency == currencyName {
-                topCurrency = newCurrency
-            } else {
-                bottomCurrency = newCurrency
-            }
-            presenter?.presentData(response:
-                .converterCurrencies(first: topCurrency,
-                                     second: bottomCurrency))
+        
+        case let .updateBaseCount(currency, count):
+            baseCount = currency.rate * count
+//        case .changeCurrency(let currencyName):
+//            guard let newCurrency = selectedCurrency else { break }
+//
+//            if topCurrency.currency == currencyName {
+//                topCurrency = newCurrency
+//            } else {
+//                bottomCurrency = newCurrency
+//            }
+//            presenter?.presentData(response:
+//                .converterCurrencies(first: topCurrency,
+//                                     second: bottomCurrency))
+//
+//        case .updateBaseCurrency(let base):
+//            topCurrency = base
+//            presenter?.presentData(response: .updateBaseCurrency(base: base))
+//
+//        case .changeBottomCurrency(let newCurrency):
+//            guard bottomCurrency.currency != newCurrency.currency else { break }
+//            bottomCurrency = newCurrency
+//            presenter?.presentData(response: .converterCurrencies(first: topCurrency,
+//                                                                  second: bottomCurrency))
             
-        case .updateBaseCurrency(let base):
-            topCurrency = base
-            presenter?.presentData(response: .updateBaseCurrency(base: base))
-            
-        case .changeBottomCurrency(let newCurrency):
-            guard bottomCurrency.currency != newCurrency.currency else { break }
-            bottomCurrency = newCurrency
-            presenter?.presentData(response: .converterCurrencies(first: topCurrency,
-                                                                  second: bottomCurrency))
-            
-        case .loadFavoriteCurrencies(let total):
-            lastTotalSum = total == nil ? lastTotalSum : total!
+        case .loadFavoriteCurrencies:
             let predicate = NSPredicate(format: "isFavorite = true")
             storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
                 presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies,
-                                                                     total: lastTotalSum))
+                                                                     baseCount: baseCount))
             }
             
         case .loadConverterCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
             storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
-                $0.isEmpty ? loadQuotes() : setupConverter(with: $0)
+                if $0.isEmpty {
+                    loadQuotes()
+                }
+                //$0.isEmpty ? loadQuotes() : setupConverter(with: $0)
             }
             
         case .updateCurrencies:
@@ -103,8 +113,9 @@ final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         }
     }
     
-    private func loadQuotes(update: Bool = false) {
-        networkManager.getQuotes { response, errorMessage in            
+    private func loadQuotes() {
+        networkManager.getQuotes { [weak self] response, errorMessage in
+            guard let self = self else { return }
             guard let quotes = response?.quotes else {
                 self.presenter?.presentData(response: .error(errorMessage))
                 return
@@ -118,7 +129,8 @@ final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             case true: self.updateQuotes(quotes, in: self.storage)
             }
             self.loadHistoricalQuotes()
-            self.setupConverter(with: quotes)
+            self.presenter?.presentData(response: .favoriteCurrencies(quotes, baseCount: self.baseCount))
+            //self.setupConverter(with: quotes)
         }
     }
     
@@ -127,7 +139,7 @@ final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         var date = Date(timeIntervalSince1970: TimeInterval(timestamp))
         date.addTimeInterval(-TimeInterval(dayInSec))
-        networkManager.getQuotes(date: date) { response, errorMessageerrorMessage in
+        networkManager.getQuotes(date: date) { response, errorMessage in
             guard let quotes = response?.quotes else { return }
             self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ?
@@ -138,8 +150,8 @@ final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
     
     private func createQuotes(_ quotes: [Quote], in realm: StorageContext) {
-        quotes.forEach { quote in
-            try? realm.create(RealmCurrency.self) { currency in
+        try? realm.create(RealmCurrency.self) { currency in
+            quotes.forEach { quote in
                 currency.currency = quote.currency
                 currency.rate = quote.rate
             }
@@ -147,30 +159,29 @@ final class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
     
     private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
-        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
-            for currency in $0 {
-                let quote = quotes.first { $0.currency == currency.currency }
-                guard let newQuote = quote else { return }
-                try? realm.update {
-                    currency.rate = newQuote.rate
+        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+            try? realm.update {
+                for currency in currencies {
+                    guard let quote = quotes.first(where: { $0.currency == currency.currency }) else { return }
+                    currency.rate = quote.rate
                 }
             }
-            makeRequest(request: .loadFavoriteCurrencies(total: nil))
+            makeRequest(request: .loadFavoriteCurrencies)
         }
     }
 
-    private func setupConverter(with currencies: [Currency]) {
-        if isFirstLoading {
-            let standartCurrencies = currencies
-                .filter { $0.currency == "USD" || $0.currency == "EUR" }
-                .sorted(by: { $0.rate > $1.rate })
-            
-            topCurrency = standartCurrencies.first!
-            bottomCurrency = standartCurrencies.last!
-            isFirstLoading = false
-        }
-        
-        presenter?.presentData(response: .converterCurrencies(first: topCurrency,
-                                                              second: bottomCurrency))
-    }
+//    private func setupConverter(with currencies: [Currency]) {
+//        var _currencies = currencies
+//        if isFirstLoading {
+//            currencies
+//                .filter { $0.currency == "USD" || $0.currency == "EUR" }
+//                .sorted(by: { $0.rate > $1.rate })
+//
+//            //topCurrency = standartCurrencies.first!
+//            //bottomCurrency = standartCurrencies.last!
+//            isFirstLoading = false
+//        }
+//
+//        presenter?.presentData(response: .favoriteCurrencies(standartCurrencies, total: <#T##Double#>))
+//    }
 }
