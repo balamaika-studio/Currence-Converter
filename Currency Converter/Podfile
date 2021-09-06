@@ -15,6 +15,7 @@ target 'Currency Converter' do
   pod 'LongPressReorder', git: 'https://github.com/sivu22/LongPressReorder.git', commit: 'HEAD'
   pod 'AppsFlyerFramework'
   pod 'Firebase/Performance'
+  pod 'Firebase/Analytics'
 
   target 'Currency ConverterTests' do
     inherit! :search_paths
