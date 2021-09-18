@@ -17,6 +17,7 @@ class AppNavigationController: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setUpTheming()
     }
     
