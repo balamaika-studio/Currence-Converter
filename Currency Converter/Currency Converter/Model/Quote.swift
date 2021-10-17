@@ -14,6 +14,10 @@ protocol Currency {
     var currencyName: String? { get }
 }
 
+//protocol <#name#> {
+//    <#requirements#>
+//}
+
 extension Currency {
     
     var currencyName: String? {
@@ -21,7 +25,7 @@ extension Currency {
     }
 }
 
-final class Quote: NSObject, Currency {
+struct Quote: Currency {
     
     var currency: String
     var rate: Double

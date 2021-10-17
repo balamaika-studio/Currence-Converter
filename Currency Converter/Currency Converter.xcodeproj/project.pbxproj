@@ -33,7 +33,14 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		5E3535672711ED8A001B1563 /* AcceptableObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535662711ED8A001B1563 /* AcceptableObserving.swift */; };
+		5E35356A2711EDB3001B1563 /* RxRelay+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535682711EDB3001B1563 /* RxRelay+Infallible.swift */; };
+		5E35356B2711EDB3001B1563 /* RxDriver+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535692711EDB3001B1563 /* RxDriver+Infallible.swift */; };
 		5E71D7CF26B8950200997AC4 /* UITextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */; };
+		5E75F74B2713946B00A28A96 /* FileDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E75F74A2713946B00A28A96 /* FileDataStore.swift */; };
+		5ECF741E271CB973001E2C54 /* ConverterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF741D271CB973001E2C54 /* ConverterViewModel.swift */; };
+		5ECF7420271CD0A2001E2C54 /* ConverterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF741F271CD0A2001E2C54 /* ConverterService.swift */; };
+		5ECF7422271CE9F8001E2C54 /* CachedResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ECF7421271CE9F8001E2C54 /* CachedResult.swift */; };
 		5ED0390226C908D9003B0140 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F826C908D9003B0140 /* Lato-Regular.ttf */; };
 		5ED0390326C908D9003B0140 /* Lato-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F926C908D9003B0140 /* Lato-Thin.ttf */; };
 		5ED0390426C908D9003B0140 /* Lato-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038FA26C908D9003B0140 /* Lato-BoldItalic.ttf */; };
@@ -50,6 +57,7 @@
 		5ED0391626C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391526C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift */; };
 		5ED0391B26C93144003B0140 /* EaseConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391A26C93144003B0140 /* EaseConstraints.swift */; };
 		5ED0391D26C93785003B0140 /* EaseConstraints+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */; };
+		5EFB657426EC038600FD2716 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB657326EC038600FD2716 /* CurrencyService.swift */; };
 		9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9464EB75266BA15100EA1660 /* GoogleService-Info.plist */; };
 		94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */; };
 		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
@@ -220,7 +228,14 @@
 		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		5E3535662711ED8A001B1563 /* AcceptableObserving.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptableObserving.swift; sourceTree = "<group>"; };
+		5E3535682711EDB3001B1563 /* RxRelay+Infallible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxRelay+Infallible.swift"; sourceTree = "<group>"; };
+		5E3535692711EDB3001B1563 /* RxDriver+Infallible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RxDriver+Infallible.swift"; sourceTree = "<group>"; };
 		5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextFieldExtensions.swift; sourceTree = "<group>"; };
+		5E75F74A2713946B00A28A96 /* FileDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileDataStore.swift; sourceTree = "<group>"; };
+		5ECF741D271CB973001E2C54 /* ConverterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterViewModel.swift; sourceTree = "<group>"; };
+		5ECF741F271CD0A2001E2C54 /* ConverterService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterService.swift; sourceTree = "<group>"; };
+		5ECF7421271CE9F8001E2C54 /* CachedResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedResult.swift; sourceTree = "<group>"; };
 		5ED038E526C90880003B0140 /* Poppins-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-ThinItalic.ttf"; sourceTree = "<group>"; };
 		5ED038E626C90880003B0140 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		5ED038E726C90880003B0140 /* Poppins-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
@@ -255,6 +270,7 @@
 		5ED0391526C924C1003B0140 /* EaseConstraints+UIEdgesInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EaseConstraints+UIEdgesInsets.swift"; sourceTree = "<group>"; };
 		5ED0391A26C93144003B0140 /* EaseConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseConstraints.swift; sourceTree = "<group>"; };
 		5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EaseConstraints+Size.swift"; sourceTree = "<group>"; };
+		5EFB657326EC038600FD2716 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
 		66E241F1B336BA06085DB9A6 /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7866CE52FF1937999B06A7F8 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
 		8B6C5E122520918800174AF6 /* Currency Converter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Currency Converter.entitlements"; sourceTree = "<group>"; };
@@ -439,6 +455,7 @@
 		595FC0B8241FA40400B4EEE4 /* Currency Converter */ = {
 			isa = PBXGroup;
 			children = (
+				5E3535632711ECCE001B1563 /* Rx helpers */,
 				5ED0390E26C91B57003B0140 /* UIKit */,
 				8B6C5E122520918800174AF6 /* Currency Converter.entitlements */,
 				D1BBC92724543ED700985B9B /* Classes */,
@@ -474,6 +491,7 @@
 		595FC0E0241FABC700B4EEE4 /* Converter */ = {
 			isa = PBXGroup;
 			children = (
+				5E7181CA271B3A60000DB26B /* NewConverterModule */,
 				595FC0F1241FAC8800B4EEE4 /* Custom View */,
 				595FC0E5241FABDB00B4EEE4 /* ConverterViewController.swift */,
 				595FC0E1241FABDB00B4EEE4 /* ConverterPresenter.swift */,
@@ -481,6 +499,7 @@
 				595FC0E4241FABDB00B4EEE4 /* ConverterModels.swift */,
 				595FC0E3241FABDB00B4EEE4 /* ConverterRouter.swift */,
 				D1BBC9302454517100985B9B /* ConverterViewController.xib */,
+				5ECF741F271CD0A2001E2C54 /* ConverterService.swift */,
 			);
 			path = Converter;
 			sourceTree = "<group>";
@@ -545,6 +564,24 @@
 				596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */,
 			);
 			path = ChoiceCurrencyTableCell;
+			sourceTree = "<group>";
+		};
+		5E3535632711ECCE001B1563 /* Rx helpers */ = {
+			isa = PBXGroup;
+			children = (
+				5E3535662711ED8A001B1563 /* AcceptableObserving.swift */,
+				5E3535692711EDB3001B1563 /* RxDriver+Infallible.swift */,
+				5E3535682711EDB3001B1563 /* RxRelay+Infallible.swift */,
+			);
+			path = "Rx helpers";
+			sourceTree = "<group>";
+		};
+		5E7181CA271B3A60000DB26B /* NewConverterModule */ = {
+			isa = PBXGroup;
+			children = (
+				5ECF741D271CB973001E2C54 /* ConverterViewModel.swift */,
+			);
+			path = NewConverterModule;
 			sourceTree = "<group>";
 		};
 		5E71D7CD26B894BE00997AC4 /* Extensions */ = {
@@ -850,6 +887,7 @@
 				D1BBC932245453F000985B9B /* AppViewController.swift */,
 				D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */,
 				D16AD72724A0F83100D7C9DE /* AdaptiveTableView.swift */,
+				5ECF7421271CE9F8001E2C54 /* CachedResult.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -871,6 +909,8 @@
 				D13E2BE4247995BC0048E334 /* FavoriteOrderService.swift */,
 				D151A555248BE91700162CAB /* AdBannerInsetService.swift */,
 				D130B3B524B61D6C00068D20 /* Validator.swift */,
+				5EFB657326EC038600FD2716 /* CurrencyService.swift */,
+				5E75F74A2713946B00A28A96 /* FileDataStore.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1306,7 +1346,9 @@
 				D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */,
 				596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */,
 				D163AFF1244E341200014800 /* NetworkOptions.swift in Sources */,
+				5E35356A2711EDB3001B1563 /* RxRelay+Infallible.swift in Sources */,
 				D1E1A7652449F5240051E51D /* GraphInteractor.swift in Sources */,
+				5E75F74B2713946B00A28A96 /* FileDataStore.swift in Sources */,
 				D1A2A2932477ACF0001949BD /* OfflineWorker.swift in Sources */,
 				D1E1A7612449F5240051E51D /* GraphWorker.swift in Sources */,
 				595FC0F3241FAD6D00B4EEE4 /* ExchangeView.swift in Sources */,
@@ -1332,12 +1374,16 @@
 				D1A2A2972477ACF0001949BD /* OfflineInteractor.swift in Sources */,
 				D1DDE94D243F4AD30023E789 /* CurrencySelectionPresenter.swift in Sources */,
 				D125731A245343BC005F8332 /* ExchangeRatesTimeSeriesResponse.swift in Sources */,
+				5ECF7420271CD0A2001E2C54 /* ConverterService.swift in Sources */,
+				5ECF7422271CE9F8001E2C54 /* CachedResult.swift in Sources */,
 				D1E4ED142451CD9A00ECE03F /* AppTheme.swift in Sources */,
+				5E35356B2711EDB3001B1563 /* RxDriver+Infallible.swift in Sources */,
 				D13E2BE5247995BC0048E334 /* FavoriteOrderService.swift in Sources */,
 				D1E4ED122451CD8800ECE03F /* Theming.swift in Sources */,
 				D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */,
 				D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */,
 				D1E1A7622449F5240051E51D /* GraphRouter.swift in Sources */,
+				5EFB657426EC038600FD2716 /* CurrencyService.swift in Sources */,
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
 				D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */,
@@ -1346,6 +1392,7 @@
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
 				D19A9377242CFF6E00DDCEA9 /* FavoriteTableViewCell.swift in Sources */,
 				94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */,
+				5ECF741E271CB973001E2C54 /* ConverterViewModel.swift in Sources */,
 				595FC0EB241FABDB00B4EEE4 /* ConverterModels.swift in Sources */,
 				D11F8BB8245239730074D293 /* Accuracy.swift in Sources */,
 				D1CEB84124238E9F00988B53 /* Quote.swift in Sources */,
@@ -1383,6 +1430,7 @@
 				D16454352463308B009B6E75 /* PeriodCollectionViewHelper.swift in Sources */,
 				595FC0DD241FA72F00B4EEE4 /* R.generated.swift in Sources */,
 				D163AFE7244E312800014800 /* SettingsInteractor.swift in Sources */,
+				5E3535672711ED8A001B1563 /* AcceptableObserving.swift in Sources */,
 				5ED0391426C91BB9003B0140 /* CALayer+RoundCorners.swift in Sources */,
 				5968111D2420E8CE00426968 /* ChoiceModels.swift in Sources */,
 				595FC0FF241FC9B500B4EEE4 /* ConverterCurrencyTableViewCell.swift in Sources */,

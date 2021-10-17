@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 final class ConverterCurrencyTableViewCell: BaseCell {
     
@@ -62,12 +64,12 @@ final class ConverterCurrencyTableViewCell: BaseCell {
         content.ec.edges.constraintsToSuperview(with: .zero)
     }
     
-    func configure(with viewModel: FavoriteConverterViewModel) {
+    func configure(with viewModel: ConverterCellModelProtocol) {
         let emptyFlag = R.image.emptyFlag()
-        let image = UIImage(named: viewModel.currency.lowercased()) ?? emptyFlag
+        let image = UIImage(named: viewModel.currencyCode.lowercased()) ?? emptyFlag
         currencyImageView.image = image
-        currencyAbbreviationLabel.text = viewModel.currency
-        currencyTitleLabel.text = viewModel.title
+        currencyAbbreviationLabel.text = viewModel.currencyCode
+        currencyTitleLabel.text = viewModel.currencyName
         //currencyRateLabel.text = viewModel.total
         selectionStyle = .none
     }

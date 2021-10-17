@@ -27,7 +27,7 @@ enum Converter {
         struct Response {
             enum ResponseType {
                 //case converterCurrencies(first: Currency, second: Currency)
-                case favoriteCurrencies([Currency], baseCount: Double)
+                case favoriteCurrencies(DataSource<RealmCurrency>, baseCount: Double)
                 //case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
                 case updateLocalFavoriteCurrencies(baseCount: Double)
@@ -60,17 +60,18 @@ struct Exchange: ExchangeCurrency {
     var regardingRate: String
 }
 
-struct ConverterViewModel {
-    let firstExchange: ExchangeCurrency
-    let secondExchange: ExchangeCurrency
-    let updated: String
-}
+//struct ConverterViewModel {
+//    let firstExchange: ExchangeCurrency
+//    let secondExchange: ExchangeCurrency
+//    let updated: String
+//}
 
 //protocol ConverterCellModelProtocol {
 //    var value: BehaviorRelay<Double> { get }
 //    var image: UIImage { get }
-//    var title: String { get }
-//    var subtitle: String { get }
+//    var abbriviation: String { get }
+//    var fullName: String { get }
+//    var symbol: String { get }
 //}
 //
 //struct ConverterCellModel: ConverterCellModelProtocol {
@@ -89,7 +90,7 @@ struct ConverterViewModel {
 //        self.symbol = symbol
 //    }
 //}
-//
+
 //extension ConverterCellModel {
 //
 //    init(currency: Currency, baseCurrencyRate: Double, baseCurrencyValue: Double, accuracyManager: AccuracyManager, infoService: CurrenciesInfoService) {
@@ -103,9 +104,32 @@ struct ConverterViewModel {
 //    }
 //}
 
-struct FavoriteConverterViewModel: Currency {
-    var currency: String
-    let title: String
-    var total: String
-    var rate: Double
+protocol ConverterCellModelProtocol: Equatable {
+    var currencyName: String { get }
+    var currencyCode: String { get }
+    var formattedCount: String { get }
 }
+
+struct ConverterCellModel: ConverterCellModelProtocol {
+    
+    let currencyName: String
+    let currencyCode: String
+    let formattedCount: String
+    
+    init(currency: Currency, baseCount: Double) {
+        currencyName = currency.currencyName
+        currencyCode = currency.currency
+        formattedCount = AccuracyManager.shared.formatNumber(currency.rate * baseCount)
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.currencyCode == rhs.currencyCode
+    }
+}
+
+//struct FavoriteConverterViewModel: Currency {
+//    let currency: String
+//    let title: String
+//    let count: String
+//    var baseCount: Double
+//}

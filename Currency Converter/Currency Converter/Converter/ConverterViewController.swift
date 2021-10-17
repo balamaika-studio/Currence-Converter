@@ -9,27 +9,37 @@
 import UIKit
 import JJFloatingActionButton
 import LongPressReorder
+import RxDataSources
+import RxCocoa
 
-protocol ConverterDisplayLogic: class {
-    func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
-}
+//protocol ConverterDisplayLogic: class {
+//    func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
+//}
+
 
 final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var converterView: ConverterView!
     
-    var interactor: ConverterBusinessLogic?
-    var router: (ConverterRoutingLogic & ChoiceDataPassing)?
+    //var interactor: ConverterBusinessLogic?
+    //var router: (ConverterRoutingLogic & ChoiceDataPassing)?
     
-    private var horizontalConstraint: NSLayoutConstraint!
-    private var verticalConstraint: NSLayoutConstraint!
+    //private var horizontalConstraint: NSLayoutConstraint!
+    //private var verticalConstraint: NSLayoutConstraint!
     
     private var reorderTableView: LongPressReorderTableView!
     private var actionButton: JJFloatingActionButton!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
-    private var favoriteCurrencies: [FavoriteConverterViewModel]!
+    private let viewModel = ConverterViewModel()
+    private let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ConverterCellModelProtocol>>(configureCell: { _, table, indexPath, item in
+        let cell = table.dequeueReusableCell(withIdentifier: "converterCurrencyTableViewCell", for: indexPath)
+        if let cell = cell as? ConverterCurrencyTableViewCell {
+            cell.configure(with: item)
+        }
+        return cell
+    }, canEditRowAtIndexPath: { _, _ in true })
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
@@ -39,13 +49,13 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
         return EmptyState(frame: frame)
     }()
     
-    var safeBottomAnchor: NSLayoutYAxisAnchor {
-        view.safeAreaLayoutGuide.bottomAnchor
-    }
-    
-    var safeArea: UILayoutGuide {
-        view.safeAreaLayoutGuide
-    }
+//    var safeBottomAnchor: NSLayoutYAxisAnchor {
+//        view.safeAreaLayoutGuide.bottomAnchor
+//    }
+//
+//    var safeArea: UILayoutGuide {
+//        view.safeAreaLayoutGuide
+//    }
     
     // MARK: Object lifecycle
     
@@ -59,20 +69,20 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
         setup()
     }
     
-    // MARK: Setup
-    
-    private func setup() {
-        let viewController        = self
-        let interactor            = ConverterInteractor()
-        let presenter             = ConverterPresenter()
-        let router                = ConverterRouter()
-        viewController.interactor = interactor
-        viewController.router     = router
-        interactor.presenter      = presenter
-        presenter.viewController  = viewController
-        router.viewController     = viewController
-        router.dataStore          = interactor
-    }
+//    // MARK: Setup
+//
+//    private func setup() {
+//        let viewController        = self
+//        let interactor            = ConverterInteractor()
+//        let presenter             = ConverterPresenter()
+//        let router                = ConverterRouter()
+//        viewController.interactor = interactor
+//        viewController.router     = router
+//        interactor.presenter      = presenter
+//        presenter.viewController  = viewController
+//        router.viewController     = viewController
+//        router.dataStore          = interactor
+//    }
     
     // MARK: View lifecycle
     
@@ -82,45 +92,45 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
         setUpTheming()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        //interactor?.makeRequest(request: .loadConverterCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
-    }
-    
-    func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
-        switch viewModel {
-        case .updateLocalFavoriteCurrencies(let baseCount):
-            (0 ..< favoriteCurrencies.count).forEach {
-                let total = favoriteCurrencies[$0].rate * baseCount
-                favoriteCurrencies[$0].total = AccuracyManager.shared.formatNumber(total)
-            }
-            tableView.reloadData()
-        case .showConverterViewModel://(let converterViewModel):
-            //converterView.updateWith(converterViewModel)
-            refreshControl.endRefreshing()
-            // request updated favorite after changing of main currencies
-            interactor?.makeRequest(request: .loadFavoriteCurrencies)
-            
-        case .showFavoriteViewModel(let favoriteViewModel):
-            refreshControl.endRefreshing()
-            self.favoriteCurrencies = favoriteViewModel
-            interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
-            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
-            tableView.reloadData()
-            
-        case .showError(let message):
-            refreshControl.endRefreshing()
-            // dont show alert over top controller
-            if let _ = presentedViewController { break }
-            showAlert(with: message, title: R.string.localizable.error())
-        }
-    }
+//    override func viewWillAppear(_ animated: Bool) {
+//        super.viewWillAppear(animated)
+//        //interactor?.makeRequest(request: .loadConverterCurrencies)
+//        interactor?.makeRequest(request: .loadFavoriteCurrencies)
+//    }
+//
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        //interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
+//    }
+//
+//    func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
+//        switch viewModel {
+//        case .updateLocalFavoriteCurrencies(let baseCount):
+//            (0 ..< favoriteCurrencies.count).forEach {
+//                let total = favoriteCurrencies[$0].rate * baseCount
+//                favoriteCurrencies[$0].total = AccuracyManager.shared.formatNumber(total)
+//            }
+//            tableView.reloadData()
+//        case .showConverterViewModel://(let converterViewModel):
+//            //converterView.updateWith(converterViewModel)
+//            refreshControl.endRefreshing()
+//            // request updated favorite after changing of main currencies
+//            interactor?.makeRequest(request: .loadFavoriteCurrencies)
+//
+//        case .showFavoriteViewModel(let favoriteViewModel):
+//            refreshControl.endRefreshing()
+//            self.favoriteCurrencies = favoriteViewModel
+//            interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
+//            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+//            tableView.reloadData()
+//
+//        case .showError(let message):
+//            refreshControl.endRefreshing()
+//            // dont show alert over top controller
+//            if let _ = presentedViewController { break }
+//            showAlert(with: message, title: R.string.localizable.error())
+//        }
+//    }
     
     // MARK: Private Methods
     // MARK: Router
@@ -151,11 +161,14 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     // MARK: Setup
     private func setupView() {
-        
-        tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
+//        viewModel.items.drive(tableView.rx.items(cellIdentifier: "converterCurrencyTableViewCell", cellType: ConverterCurrencyTableViewCell.self)) { index, model, cell in
+//            cell.configure(with: model)
+//        }
+        //tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
+        //tableView.rx.itemDeleted
         tableView.separatorStyle = .none
-        tableView.delegate = self
-        tableView.dataSource = self
+        //tableView.delegate = self
+        //tableView.dataSource = self
         tableView.refreshControl = refreshControl
         reorderTableView = LongPressReorderTableView(tableView,
                                                      scrollBehaviour: .late,
@@ -209,10 +222,10 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
         view.endEditing(true)
     }
     
-    @objc private func refreshCurrencies(_ sender: Any) {
-        interactor?.makeRequest(request: .updateCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies)
-    }
+//    @objc private func refreshCurrencies(_ sender: Any) {
+//        interactor?.makeRequest(request: .updateCurrencies)
+//        interactor?.makeRequest(request: .loadFavoriteCurrencies)
+//    }
     
     // MARK: - LongPressReorder Delegate
     override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
@@ -243,35 +256,35 @@ extension ConverterViewController: ChoiceBackDataPassing {
 }
 
 // MARK: - UITableViewDataSource
-extension ConverterViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteCurrencies.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "converterCurrencyTableViewCell", for: indexPath) as? ConverterCurrencyTableViewCell else { fatalError() }
-        let viewModel = favoriteCurrencies[indexPath.row]
-        cell.configure(with: viewModel)
-        return cell
-    }
-    
-    // Deleting
-    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        true
-    }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
-            tableView.beginUpdates()
-            let currency = favoriteCurrencies.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .left)
-            tableView.endUpdates()
-            interactor?.makeRequest(request: .remove(favorite: currency))
-        default: return
-        }
-    }
-}
+//extension ConverterViewController: UITableViewDataSource {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        return favoriteCurrencies.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        guard let cell = tableView.dequeueReusableCell(withIdentifier: "converterCurrencyTableViewCell", for: indexPath) as? ConverterCurrencyTableViewCell else { fatalError() }
+//        let viewModel = favoriteCurrencies[indexPath.row]
+//        cell.configure(with: viewModel)
+//        return cell
+//    }
+//
+//    // Deleting
+//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+//        true
+//    }
+//
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        switch editingStyle {
+//        case .delete:
+//            tableView.beginUpdates()
+//            let currency = favoriteCurrencies.remove(at: indexPath.row)
+//            tableView.deleteRows(at: [indexPath], with: .left)
+//            tableView.endUpdates()
+//            interactor?.makeRequest(request: .remove(favorite: currency))
+//        default: return
+//        }
+//    }
+//}
 
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {

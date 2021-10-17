@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ExchangeRatesHistoryResponse: Decodable {
+struct ExchangeRatesHistoryResponse: Codable {
     
     private enum CodingKeys: String, CodingKey {
         case date, base, rates

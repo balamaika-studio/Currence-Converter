@@ -7,10 +7,10 @@
 //
 
 import Foundation
-import RealmSwift
+//import RealmSwift
 
-typealias DataStorage = RealmSwift.Realm
-typealias DataSource<T: Storable> = RealmSwift.Results<T>
+//typealias DataStorage = RealmSwift.Realm
+//typealias DataSource<T: Storable> = RealmSwift.Results<T>
 
 //extension RealmStorageContext {
 //    func create<T: Storable>(_ model: T.Type, completion: @escaping ((T) -> Void)) throws {

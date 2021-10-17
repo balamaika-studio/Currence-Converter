@@ -8,7 +8,6 @@ target 'Currency Converter' do
   # general pods
   pod 'R.swift'
   pod 'Charts'
-  pod 'RealmSwift'
   pod 'ReachabilitySwift'
   pod 'JJFloatingActionButton'
   pod 'Google-Mobile-Ads-SDK'
@@ -16,6 +15,10 @@ target 'Currency Converter' do
   pod 'AppsFlyerFramework'
   pod 'Firebase/Performance'
   pod 'Firebase/Analytics'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'RxDataSources'
+
 
   target 'Currency ConverterTests' do
     inherit! :search_paths
