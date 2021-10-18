@@ -6,13 +6,14 @@
 //  Copyright © 2021 Kiryl Klimiankou. All rights reserved.
 //
 
-import Foundation
 import RxSwift
+import RxRelay
 
 protocol CurrencyServiceProtocol {
     var isPending: Infallible<Bool> { get }
     var currencies: Infallible<CachedResult<ExchangeRatesHistoryResponse>> { get }
     var onFetchCurrencies: AcceptableObserver<Void> { get }
+    var lastValidValue: ExchangeRatesHistoryResponse? { get }
     
     func fetchCurrencies()
 }
@@ -27,8 +28,10 @@ final class CurrencyService: CurrencyServiceProtocol {
     private let _isPending = BehaviorRelay<Bool>(value: false)
     var isPending: Infallible<Bool> { _isPending.asInfallible() }
     
-    private lazy var _currencies = BehaviorRelay<Result>(value: currencyStore.state)
+    private lazy var _currencies = BehaviorRelay<Result>(value: .none)
     var currencies: Infallible<Result> { _currencies.asInfallible() }
+    
+    var lastValidValue: ExchangeRatesHistoryResponse? { _currencies.value.value }
     
     private(set) lazy var onFetchCurrencies = AcceptableObserver<Void> { self.fetchCurrencies() }
     

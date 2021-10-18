@@ -20,3 +20,10 @@
 //        return "id"
 //    }
 //}
+
+struct RealmExchangeRate {
+    var id: String = UUID().uuidString
+    var base: Currency?
+    var relative: Currency?
+    var isSelected: Bool = false
+}

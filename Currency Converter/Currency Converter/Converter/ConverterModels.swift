@@ -116,10 +116,10 @@ struct ConverterCellModel: ConverterCellModelProtocol {
     let currencyCode: String
     let formattedCount: String
     
-    init(currency: Currency, baseCount: Double) {
-        currencyName = currency.currencyName
-        currencyCode = currency.currency
-        formattedCount = AccuracyManager.shared.formatNumber(currency.rate * baseCount)
+    init(item: ConverterServiceItemType) {
+        currencyName = item.currency.currencyName
+        currencyCode = item.currency.currency
+        formattedCount = AccuracyManager.shared.formatNumber(item.count)
     }
     
     static func == (lhs: Self, rhs: Self) -> Bool {

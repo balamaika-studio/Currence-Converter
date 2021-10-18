@@ -18,8 +18,8 @@ enum CurrencyRates {
         }
         struct Response {
             enum ResponseType {
-                case currencies(_ live: [RealmCurrency],
-                                _ historical: [RealmCurrency],
+                case currencies(_ live: [Currency],
+                                _ historical: [Currency],
                                 _ relatives: [RealmExchangeRate])
             }
         }

@@ -11,6 +11,7 @@ import JJFloatingActionButton
 import LongPressReorder
 import RxDataSources
 import RxCocoa
+import RxSwift
 
 //protocol ConverterDisplayLogic: class {
 //    func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
@@ -48,7 +49,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
                            height: tableView.bounds.size.height)
         return EmptyState(frame: frame)
     }()
-    
+    private let disposeBag = DisposeBag()
 //    var safeBottomAnchor: NSLayoutYAxisAnchor {
 //        view.safeAreaLayoutGuide.bottomAnchor
 //    }
@@ -161,6 +162,9 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     // MARK: Setup
     private func setupView() {
+        viewModel.items
+            .drive(tableView.rx.items(dataSource: dataSource))
+            .disposed(by: disposeBag)
 //        viewModel.items.drive(tableView.rx.items(cellIdentifier: "converterCurrencyTableViewCell", cellType: ConverterCurrencyTableViewCell.self)) { index, model, cell in
 //            cell.configure(with: model)
 //        }
@@ -177,9 +181,12 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
         reorderTableView.enableLongPressReorder()
         
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
-        refreshControl.addTarget(self,
-                                 action: #selector(refreshCurrencies),
-                                 for: .valueChanged)
+        refreshControl.rx.controlEvent(.valueChanged)
+            .bind(to: viewModel.onFetcheFavoriteCurrencies)
+            .disposed(by: disposeBag)
+        viewModel.activityIndicator
+            .drive(refreshControl.rx.isRefreshing)
+            .disposed(by: disposeBag)
 
         favoriteCurrencies = []
         //converterView.changeCurrencyTapped = self.changeCurrencyTapped

@@ -11,12 +11,19 @@ import RxCocoa
 
 final class ConverterViewModel {
     
-    private let service: CurrencyServiceProtocol
+    private let service: ConverterServiceProtocol
     
-    private var _items = BehaviorRelay<[Currency]>(value: [])
-    var items: Driver<[Currency]> { _items.asDriver() }
+    //private var _items = BehaviorRelay<[ConverterCellModelProtocol]>(value: [])
+    var items: Driver<[ConverterCellModelProtocol]> {
+        service.currencies.asDriver().map({ ($0.value ?? []).map({ ConverterCellModel(item: $0) }) })
+    }
     
-    init(service: CurrencyServiceProtocol = CurrencyService()) {
+    var onFetcheFavoriteCurrencies: AcceptableObserver<Void> { service.onFetchCurrencies }
+    var onChangeCountForCurrency: AcceptableObserver<(Double, String)> { service.onChangeCountForCurrency }
+    var onAddFavoriteCurrency: AcceptableObserver<String> { service.onAddFavoriteCurrency }
+    var activityIndicator: Driver<Bool> { service.isPending.asDriver() }
+    
+    init(service: ConverterServiceProtocol = ConverterService()) {
         self.service = service
         service.fetchCurrencies()
     }

@@ -16,7 +16,7 @@ enum CachedResult<T> {
 
     var value: T? {
         switch self {
-        case let .error(error, cache): return cache
+        case let .error(_, cache): return cache
         case .success(let value): return value
         case .none: return nil
         }
@@ -32,7 +32,7 @@ enum CachedResult<T> {
     
     func map<N>(transform: (T)->N) -> CachedResult<N> {
         switch self {
-        case let .error(error, cache): return CachedResult<N>.error(error, cache: transform(cache))
+        case let .error(error, cache): return CachedResult<N>.error(error, cache: cache.map({ transform($0) }))
         case .none: return CachedResult<N>.none
         case .success(let model): return CachedResult<N>.success(transform(model))
         }

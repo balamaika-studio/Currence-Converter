@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        UserDefaults.standard.favoriteCurrencies = ["EUR", "USD", "RUB", "UAH", "MDL"]
+        
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         storage = try! RealmStorageContext()
