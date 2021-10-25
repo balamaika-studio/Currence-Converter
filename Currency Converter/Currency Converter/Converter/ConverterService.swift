@@ -11,8 +11,8 @@ import RxRelay
 
 extension UserDefaults {
     
-    private static let converterFavoriteCurrenciesKey = "CurrencyConverter.Converter.favoriteCurrencies"
-    private static let converterBaseCountKey = "CurrencyConverter.Converter.baseCount"
+    fileprivate static let converterFavoriteCurrenciesKey = "CurrencyConverter.Converter.favoriteCurrencies"
+    fileprivate static let converterBaseCountKey = "CurrencyConverter.Converter.baseCount"
     
     var favoriteCurrencies: [String] {
         get { stringArray(forKey: Self.converterFavoriteCurrenciesKey) ?? [] }
@@ -20,8 +20,18 @@ extension UserDefaults {
     }
     
     var converterBaseCount: Double {
-        get { value(forKey: Self.converterBaseCountKey) as? Double ?? 1 }
+        get { object(forKey: Self.converterBaseCountKey) as? Double ?? 1 }
         set { set(newValue, forKey: Self.converterBaseCountKey) }
+    }
+}
+
+extension Currency {
+    
+    private var store: UserDefaults { .standard }
+    
+    var isFavorite: Bool {
+        get { store.favoriteCurrencies.contains(currency) }
+        set { guard newValue != isFavorite else { return }; store.favoriteCurrencies.append(currency) }
     }
 }
 
@@ -60,24 +70,19 @@ final class ConverterService: ConverterServiceProtocol {
     private let currencyService: CurrencyServiceProtocol
     private var baseCount: Double {
         get { UserDefaults.standard.converterBaseCount }
-        set {
-            UserDefaults.standard.converterBaseCount = newValue
-            onChangeCurrencies.accept(())
-        }
+        set { UserDefaults.standard.converterBaseCount = newValue }
     }
     private var favoriteCurrenciesCodes: [String] {
         get { UserDefaults.standard.favoriteCurrencies }
-        set {
-            UserDefaults.standard.favoriteCurrencies = newValue
-            onChangeCurrencies.accept(())
-        }
+        set { UserDefaults.standard.favoriteCurrencies = newValue }
     }
-    
-    private let onChangeCurrencies = PublishRelay<Void>()
+    private let disposeBag = DisposeBag()
     
     private(set) lazy var currencies: Infallible<CachedResult<[ConverterServiceItemType]>> = { [unowned self] in
-        Observable.combineLatest(self.onChangeCurrencies, self.currencyService.currencies.asObservable())
-            .map({ $0.1 })
+        Observable.combineLatest(UserDefaults.standard.rx.observe(Double.self, UserDefaults.converterBaseCountKey),
+                                 UserDefaults.standard.rx.observe([String].self, UserDefaults.converterFavoriteCurrenciesKey),
+                                 self.currencyService.currencies.asObservable())
+            .map({ $0.2 })
             .map({ result in
                 result.map(transform: {
                     self.map(currencyServiceModel: $0)
@@ -92,7 +97,7 @@ final class ConverterService: ConverterServiceProtocol {
     var isPending: Infallible<Bool> { currencyService.isPending }
     
     init(currencyService: CurrencyServiceProtocol = CurrencyService()) {
-        self.currencyService = currencyService
+        self.currencyService = currencyService        
     }
     
     func fetcheFavoriteCurrencies() {

@@ -28,10 +28,10 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
         switch request {
         case .loadCurrencyRateChanges:
             // TODO: - Refactoring
-            liveStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { live in
+            liveStorage.fetch(Currency.self, predicate: nil, sorted: nil) { live in
                 let relativesPredicate = NSPredicate(format: "isSelected = true")
                 liveStorage.fetch(RealmExchangeRate.self, predicate: relativesPredicate, sorted: nil) { relatives in
-                    self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { historical in
+                    self.historicalStorage.fetch(Currency.self, predicate: nil, sorted: nil) { historical in
                         presenter?.presentData(response: .currencies(live,
                                                                      historical,
                                                                      relatives))

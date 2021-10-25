@@ -18,7 +18,7 @@ import RxSwift
 //}
 
 
-final class ConverterViewController: UIViewController, ConverterDisplayLogic {
+final class ConverterViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     //@IBOutlet weak var converterView: ConverterView!
@@ -62,12 +62,12 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        setup()
+        //setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        setup()
+        //setup()
     }
     
 //    // MARK: Setup
@@ -188,7 +188,7 @@ final class ConverterViewController: UIViewController, ConverterDisplayLogic {
             .drive(refreshControl.rx.isRefreshing)
             .disposed(by: disposeBag)
 
-        favoriteCurrencies = []
+        //favoriteCurrencies = []
         //converterView.changeCurrencyTapped = self.changeCurrencyTapped
         //converterView.swapCurrencyTapped = self.swapCurrencyTapped
         //converterView.topCurrencyTotal = self.updateFavoriteWith

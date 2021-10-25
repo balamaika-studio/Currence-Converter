@@ -18,36 +18,59 @@ protocol CurrencyServiceProtocol {
     func fetchCurrencies()
 }
 
-final class CurrencyService: CurrencyServiceProtocol {
+class DataServiceBase<Model: Codable> {
     
-    typealias Result = CachedResult<ExchangeRatesHistoryResponse>
+    typealias Result = CachedResult<Model>
     
     private let networkManager = NetworkManager()
-    private let currencyStore = JSONDataStoreManager.default(for: ExchangeRatesHistoryResponse.self)
+    private let store = JSONDataStoreManager.default(for: Model.self)
     
     private let _isPending = BehaviorRelay<Bool>(value: false)
     var isPending: Infallible<Bool> { _isPending.asInfallible() }
     
-    private lazy var _currencies = BehaviorRelay<Result>(value: .none)
-    var currencies: Infallible<Result> { _currencies.asInfallible() }
+    private lazy var _models = BehaviorRelay<Result>(value: .none)
+    var models: Infallible<Result> { _models.asInfallible() }
     
-    var lastValidValue: ExchangeRatesHistoryResponse? { _currencies.value.value }
+    var lastValidValue: Model? { _models.value.value }
     
-    private(set) lazy var onFetchCurrencies = AcceptableObserver<Void> { self.fetchCurrencies() }
+    private(set) lazy var onFetch = AcceptableObserver<Void> { self.fetch() }
     
-    func fetchCurrencies() {
+    func fetch() {
         guard !_isPending.value else { return }
         _isPending.accept(true)
-        networkManager.getQuotes { [weak self] response, error in
+        loadDataFromNetowrk(with: networkManager) { [weak self] response, error in
             guard let self = self else { return }
             defer { self._isPending.accept(false) }
             if let response = response {
-                self._currencies.accept(.success(response))
-                self.currencyStore.state = response
+                self._models.accept(.success(response))
+                self.store.state = response
             } else {
                 let error = error ?? "unknown error"
-                self._currencies.accept(.error(error, cache: self.currencyStore.state))
+                self._models.accept(.error(error, cache: self.store.state))
             }
         }
     }
+    
+    func loadDataFromNetowrk(with networkManager: NetworkManager, completion: @escaping ((_ response: Model?, _ error: String?)->Void)) {
+        fatalError("This is abstract method, it must be implemented by subclasses")
+    }
+}
+
+final class CurrencyService: DataServiceBase<ExchangeRatesHistoryResponse>, CurrencyServiceProtocol {
+    
+    var currencies: Infallible<CachedResult<ExchangeRatesHistoryResponse>> { models }
+    
+    var onFetchCurrencies: AcceptableObserver<Void> { onFetch }
+    
+    func fetchCurrencies() {
+        fetch()
+    }
+    
+    override func loadDataFromNetowrk(with networkManager: NetworkManager, completion: @escaping ((ExchangeRatesHistoryResponse?, String?) -> Void)) {
+        networkManager.getQuotes(completion: completion)
+    }
+}
+
+final class ExchangeService: DataServiceBase<ExchangeRatesHistoryResponse>, CurrencyServiceProtocol {
+    
 }

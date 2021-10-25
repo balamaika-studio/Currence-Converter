@@ -12,15 +12,17 @@ import AppsFlyerLib
 import AppTrackingTransparency
 import AdSupport
 import Firebase
+import RxSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let adUnitID = "ca-app-pub-5773099160082927/4750121114"
-    
+    private let disposeBag = DisposeBag()
     var window: UIWindow?
     var tabBarViewController: UITabBarController!
-    var storage: StorageContext!
+    //var storage: StorageContext!
+    private let currencyStore = JSONDataStoreManager.default(for: ExchangeRatesHistoryResponse.self)
     var networkManager: NetworkManager!
     private var bannerView: GADBannerView!
     
@@ -30,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
-        storage = try! RealmStorageContext()
+        //storage = try! RealmStorageContext()
         networkManager = NetworkManager()
         restoreAccuracySettings()
         
@@ -117,11 +119,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         if UserDefaults.standard.bool(forKey: "autoUpdate") {
             print("Load Quotes")
-            networkManager.getQuotes { response, errorMessage in
-                guard let quotes = response?.quotes else { return }
-                UserDefaults.standard.set(response!.updated, forKey: "updated")
-                self.updateQuotes(quotes, in: self.storage)
-            }
+            let service = CurrencyService()
+            service.currencies
+                .subscribe(onNext: { response in response.value.map { UserDefaults.standard.set($0.updated, forKey: "updated") } })
+                .disposed(by: disposeBag)
+            service.fetchCurrencies()
         }
         
         AppsFlyerLib.shared().start()
@@ -155,43 +157,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //MARK: - Private Methods
     private func checkInternetConnection() {
-        ConnectionManager.shared.reachability.whenUnreachable = { _ in
-            self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] in
-                guard let self = self else { return }
-                if $0.isEmpty {
-                    // configure modal offline screen
-                    self.tabBarViewController.tabBar.isUserInteractionEnabled = false
-                    let selectedVC = self.tabBarViewController.selectedViewController
-                    let offlineVC = OfflineViewController(nib: R.nib.offlineViewController)
-                    let offlineNavigationVC = AppNavigationController(rootViewController: offlineVC)
-                    offlineNavigationVC.navigationBar.topItem?.title = R.string.localizable.converterTitle()
-                    offlineNavigationVC.modalPresentationStyle = .overCurrentContext
-                    
-                    // offline screen completion
-                    offlineVC.didConnect = { [weak self] in
-                        selectedVC?.viewWillAppear(true)
-                        self?.tabBarViewController.tabBar.isUserInteractionEnabled = true
-                        ConnectionManager.stopNotifier()
-                    }
-                    // show offline screen
-                    selectedVC?.present(offlineNavigationVC, animated: true, completion: nil)
+        ConnectionManager.shared.reachability.whenUnreachable = { [weak self] _ in
+            guard let self = self else { return }
+            if self.currencyStore.state == nil || self.currencyStore.state!.quotes.isEmpty {
+                // configure modal offline screen
+                self.tabBarViewController.tabBar.isUserInteractionEnabled = false
+                let selectedVC = self.tabBarViewController.selectedViewController
+                let offlineVC = OfflineViewController(nib: R.nib.offlineViewController)
+                let offlineNavigationVC = AppNavigationController(rootViewController: offlineVC)
+                offlineNavigationVC.navigationBar.topItem?.title = R.string.localizable.converterTitle()
+                offlineNavigationVC.modalPresentationStyle = .overCurrentContext
+                
+                // offline screen completion
+                offlineVC.didConnect = { [weak self] in
+                    selectedVC?.viewWillAppear(true)
+                    self?.tabBarViewController.tabBar.isUserInteractionEnabled = true
+                    ConnectionManager.stopNotifier()
                 }
+                // show offline screen
+                selectedVC?.present(offlineNavigationVC, animated: true, completion: nil)
             }
         }
     }
     
     
-    private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
-        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
-            for currency in $0 {
-                let quote = quotes.first { $0.currency == currency.currency }
-                guard let newQuote = quote else { return }
-                try? realm.update {
-                    currency.rate = newQuote.rate
-                }
-            }
-        }
-    }
+//    private func updateQuotes(_ quotes: [Quote]) {
+//        realm.fetch(Currency.self, predicate: nil, sorted: nil) {
+//            for currency in $0 {
+//                let quote = quotes.first { $0.currency == currency.currency }
+//                guard let newQuote = quote else { return }
+//                try? realm.update {
+//                    currency.rate = newQuote.rate
+//                }
+//            }
+//        }
+//    }
     
     private func restoreAccuracySettings() {
         guard let _ = UserDefaults.standard.value(forKey: "accuracy") else {

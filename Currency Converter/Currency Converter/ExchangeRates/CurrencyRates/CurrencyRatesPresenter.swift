@@ -24,8 +24,8 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
     }
     
     
-    private func buildViewModels(_ live: [RealmCurrency],
-                                 _ historical: [RealmCurrency],
+    private func buildViewModels(_ live: [Currency],
+                                 _ historical: [Currency],
                                  _ exchangeRates: [RealmExchangeRate]) -> [CurrencyRatesViewModel] {
         var result = [CurrencyRatesViewModel]()
         guard live.count == historical.count else { return result }
@@ -49,7 +49,7 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
     }
     
     private func calculateChange(exchangeRate: RealmExchangeRate,
-                                 historical: [RealmCurrency]) -> Change {
+                                 historical: [Currency]) -> Change {
         var change: Change = .stay
         guard let base = exchangeRate.base,
             let relative = exchangeRate.relative else { fatalError() }

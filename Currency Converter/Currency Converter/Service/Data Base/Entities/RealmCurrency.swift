@@ -1,5 +1,5 @@
 //
-//  RealmCurrency.swift
+//  Currency.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/2/20.
@@ -16,7 +16,7 @@
 //}
 //
 //@objcMembers
-//public class RealmCurrency: Object, Currency, Storable {
+//public class Currency: Object, Currency, Storable {
 //    @Persisted var currency: String
 //    @Persisted var rate: Double
 //    @Persisted var isFavorite: Bool = false

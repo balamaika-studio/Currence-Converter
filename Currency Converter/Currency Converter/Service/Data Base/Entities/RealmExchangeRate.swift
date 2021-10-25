@@ -6,14 +6,14 @@
 //  Copyright © 2020 Kiryl Klimiankou. All rights reserved.
 //
 
-//import Foundation
+import Foundation
 //import RealmSwift
 //
 //@objcMembers
 //public class RealmExchangeRate: Object {
 //    dynamic var id: String = UUID().uuidString
-//    dynamic var base: RealmCurrency? = nil
-//    dynamic var relative: RealmCurrency? = nil
+//    dynamic var base: Currency? = nil
+//    dynamic var relative: Currency? = nil
 //    dynamic var isSelected: Bool = false
 //    
 //    public override class func primaryKey() -> String? {
@@ -22,8 +22,8 @@
 //}
 
 struct RealmExchangeRate {
-    var id: String = UUID().uuidString
-    var base: Currency?
-    var relative: Currency?
+    let id: String = UUID().uuidString
+    var base: Currency
+    var relative: Currency
     var isSelected: Bool = false
 }

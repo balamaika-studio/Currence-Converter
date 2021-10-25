@@ -18,14 +18,14 @@ final class ConverterViewModel {
         service.currencies.asDriver().map({ ($0.value ?? []).map({ ConverterCellModel(item: $0) }) })
     }
     
-    var onFetcheFavoriteCurrencies: AcceptableObserver<Void> { service.onFetchCurrencies }
+    var onFetcheFavoriteCurrencies: AcceptableObserver<Void> { service.onFetcheFavoriteCurrencies }
     var onChangeCountForCurrency: AcceptableObserver<(Double, String)> { service.onChangeCountForCurrency }
     var onAddFavoriteCurrency: AcceptableObserver<String> { service.onAddFavoriteCurrency }
     var activityIndicator: Driver<Bool> { service.isPending.asDriver() }
     
     init(service: ConverterServiceProtocol = ConverterService()) {
         self.service = service
-        service.fetchCurrencies()
+        service.fetcheFavoriteCurrencies()
     }
     
     

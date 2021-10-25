@@ -8,41 +8,41 @@
 
 import UIKit
 
-enum Converter {
-    
-    enum Model {
-        struct Request {
-            enum RequestType {
-                //case changeCurrency(name: String)
-                case loadConverterCurrencies
-                case loadFavoriteCurrencies
-                //case updateBaseCurrency(base: Currency)
-                case updateCurrencies
-                case remove(favorite: Currency)
-                //case changeBottomCurrency(with: Currency)
-                case saveFavoriteOrder(currencies: [Currency])
-                case updateBaseCount(currency: Currency, count: Double)
-            }
-        }
-        struct Response {
-            enum ResponseType {
-                //case converterCurrencies(first: Currency, second: Currency)
-                case favoriteCurrencies(DataSource<RealmCurrency>, baseCount: Double)
-                //case updateBaseCurrency(base: Currency)
-                case error(_ message: String?)
-                case updateLocalFavoriteCurrencies(baseCount: Double)
-            }
-        }
-        struct ViewModel {
-            enum ViewModelData {
-                case updateLocalFavoriteCurrencies(baseCount: Double)
-                case showError(message: String)
-                case showConverterViewModel(_ viewModel: ConverterViewModel)
-                case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
-            }
-        }
-    }
-}
+//enum Converter {
+//
+//    enum Model {
+//        struct Request {
+//            enum RequestType {
+//                //case changeCurrency(name: String)
+//                case loadConverterCurrencies
+//                case loadFavoriteCurrencies
+//                //case updateBaseCurrency(base: Currency)
+//                case updateCurrencies
+//                case remove(favorite: Currency)
+//                //case changeBottomCurrency(with: Currency)
+//                case saveFavoriteOrder(currencies: [Currency])
+//                case updateBaseCount(currency: Currency, count: Double)
+//            }
+//        }
+//        struct Response {
+//            enum ResponseType {
+//                //case converterCurrencies(first: Currency, second: Currency)
+//                case favoriteCurrencies(DataSource<Currency>, baseCount: Double)
+//                //case updateBaseCurrency(base: Currency)
+//                case error(_ message: String?)
+//                case updateLocalFavoriteCurrencies(baseCount: Double)
+//            }
+//        }
+//        struct ViewModel {
+//            enum ViewModelData {
+//                case updateLocalFavoriteCurrencies(baseCount: Double)
+//                case showError(message: String)
+//                case showConverterViewModel(_ viewModel: ConverterViewModel)
+//                case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
+//            }
+//        }
+//    }
+//}
 
 enum CurrencyType {
     case general, cript
@@ -104,7 +104,7 @@ struct Exchange: ExchangeCurrency {
 //    }
 //}
 
-protocol ConverterCellModelProtocol: Equatable {
+protocol ConverterCellModelProtocol {
     var currencyName: String { get }
     var currencyCode: String { get }
     var formattedCount: String { get }
@@ -117,7 +117,7 @@ struct ConverterCellModel: ConverterCellModelProtocol {
     let formattedCount: String
     
     init(item: ConverterServiceItemType) {
-        currencyName = item.currency.currencyName
+        currencyName = item.currency.currencyName ?? ""
         currencyCode = item.currency.currency
         formattedCount = AccuracyManager.shared.formatNumber(item.count)
     }

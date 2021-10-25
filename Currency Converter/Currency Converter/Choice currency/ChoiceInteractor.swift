@@ -33,7 +33,7 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
         
         switch request {
         case .loadCurrencies(let isGraphCurrencies):
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+            storage.fetch(Currency.self, predicate: nil, sorted: nil) { currencies in
                 self.currencies = isGraphCurrencies == true ?
                     filterGraphCurrencies(from: currencies) :
                     currencies

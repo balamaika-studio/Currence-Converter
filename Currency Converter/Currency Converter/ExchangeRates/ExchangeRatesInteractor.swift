@@ -8,59 +8,62 @@
 
 import UIKit
 
+private extension UserDefaults {
+    
+    private static let exchangePairsKey = "CurrencyConverter.ExchangePairs"
+    private static let selectedExchangePairsKey = "CurrencyConverter.SelectedExchangePairs"
+    
+    var exchangePairs: [String] {
+        get { UserDefaults.standard.object(forKey: Self.exchangePairsKey) as? [String] ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Self.exchangePairsKey) }
+    }
+    
+    var selectedExchangePairs: [String] {
+        get { UserDefaults.standard.object(forKey: Self.selectedExchangePairsKey) as? [String] ?? [] }
+        set { UserDefaults.standard.set(newValue, forKey: Self.selectedExchangePairsKey) }
+    }
+}
+
 protocol ExchangeRatesBusinessLogic {
     func makeRequest(request: ExchangeRates.Model.Request.RequestType)
 }
 
-class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
+final class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
     
     var presenter: ExchangeRatesPresentationLogic?
-    var storage: StorageContext!
+    let currencyStore = JSONDataStoreManager.default(for: ExchangeRatesHistoryResponse.self)
     
-    var currencies: [RealmCurrency]!
-    
-    init(storage: StorageContext = try! RealmStorageContext()) {
-        self.storage = storage
-    }
+    var currencies = [Currency]()
     
     func makeRequest(request: ExchangeRates.Model.Request.RequestType) {
+        
         let defaultRelatives = ["EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF",
                     "AUD/USD", "USD/CAD", "NZD/USD", "EUR/JPY",
                     "USD/RUB", "EUR/RUB"]
         
         switch request {
         case .configureExchangeRates:
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
-                self.currencies = $0
-            }
+            currencies = currencyStore.state?.quotes ?? []
             
-            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
-                if rates.isEmpty {
-                    defaultRelatives.forEach { stringRelative in
-                        let model = buildRelative(stringRelative)
-                        let base = currencies.first { $0.currency == model.base }!
-                        let relative = currencies.first { $0.currency == model.relative }!
-                        
-                        try? storage.create(RealmExchangeRate.self) { rate in
-                            rate.base = base
-                            rate.relative = relative
-                            rate.isSelected = model.isSelected
-                        }
-                    }
-                }
+            //storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
+            let rates = UserDefaults.standard.exchangePairs
+            if rates.isEmpty {
+                UserDefaults.standard.exchangePairs = defaultRelatives
+                UserDefaults.standard.selectedExchangePairs = ["EUR/USD", "GBP/USD", "USD/CHF", "NZD/USD"]
             }
+        //}
         }
     }
     
-    private func buildRelative(_ stringRelative: String) -> Relative {
-        let defaultSelectedRelatives = ["EUR/USD", "GBP/USD", "USD/CHF", "NZD/USD",]
-        let relatives = stringRelative.split(separator: "/").map { String($0) }
-        
-        let base = relatives.first!
-        let relative = relatives.last!
-        let isSelected = defaultSelectedRelatives.contains(stringRelative)
-        return Relative(base: base, relative: relative, isSelected: isSelected)
-    }
+//    private func buildRelative(_ stringRelative: String) -> Relative {
+//        let defaultSelectedRelatives = ["EUR/USD", "GBP/USD", "USD/CHF", "NZD/USD"]
+//        let relatives = stringRelative.split(separator: "/").map { String($0) }
+//
+//        let base = relatives.first!
+//        let relative = relatives.last!
+//        let isSelected = defaultSelectedRelatives.contains(stringRelative)
+//        return Relative(base: base, relative: relative, isSelected: isSelected)
+//    }
 }
 
 struct Relative {
