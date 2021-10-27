@@ -27,15 +27,28 @@ final class JSONDataStoreManager {
     private static var stores = [String : AnyObject]()
     
     static func `default`<T: Codable>(for type: T.Type) -> AnyJSONDataStore<T> {
-        let key = String(describing: T.self)
-        if stores[key] == nil {
-            stores[key] = FileDataStore<T>()
-        }
-        return AnyJSONDataStore(dataStore: stores[key] as! FileDataStore<T>)
+        let name = String(describing: T.self)
+        return store(with: name, type: type)
     }
     
     static func `default`<T: Codable>() -> AnyJSONDataStore<T> {
         Self.default(for: T.self)
+    }
+    
+    static func named<T: Codable>(_ name: String, for type: T.Type) -> AnyJSONDataStore<T> {
+        let fullName = String(describing: T.self) + "_" + name
+        return store(with: fullName, type: type)
+    }
+    
+    static func named<T: Codable>(_ name: String) -> AnyJSONDataStore<T> {
+        Self.named(name, for: T.self)
+    }
+    
+    private static func store<T: Codable>(with fullName: String, type: T.Type) -> AnyJSONDataStore<T> {
+        if stores[fullName] == nil {
+            stores[fullName] = FileDataStore<T>(fileName: fullName)
+        }
+        return AnyJSONDataStore(dataStore: stores[fullName] as! FileDataStore<T>)
     }
 }
 
@@ -75,18 +88,21 @@ class FileDataStore<T: Codable>: JSONDataStoreProtocol {
             self.save(state: newValue)
         } }
     }
-    let name = String(describing: T.self)
+    let fileName: String
+    var name: String { fileName }
     let manager = FileManager.default
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
     
     private(set) lazy var path: URL? = {
         guard let path = manager.urls(for: .documentDirectory, in: .userDomainMask).first else { return nil }
-        let fullPath = path.appendingPathComponent(name).appendingPathExtension("json")
+        let fullPath = path.appendingPathComponent(fileName).appendingPathExtension("json")
         return fullPath
     }()
     
-    fileprivate init() { }
+    fileprivate init(fileName: String) {
+        self.fileName = fileName
+    }
     
     func load() -> T? {
         guard let path = path, let data = try? Data(contentsOf: path), let model = try? decoder.decode(T.self, from: data) else { return nil }

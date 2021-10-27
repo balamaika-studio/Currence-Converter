@@ -24,19 +24,20 @@ class CurrencySelectionPresenter: CurrencySelectionPresentationLogic {
     }
     
     private func buildCurrencySelectionViewModels(exchangeRates: [RealmExchangeRate]) -> [CurrencySelectionViewModel] {
-        var result = [CurrencySelectionViewModel]()
-        
-        for exchangeRate in exchangeRates {
-            guard let base = exchangeRate.base,
-                let relative = exchangeRate.relative else { continue }
-            
-            let relation = "\(base.currency)/\(relative.currency)"
-            let viewModel = CurrencySelectionViewModel(id: exchangeRate.id,
-                                                       relation: relation,
-                                                       isSelected: exchangeRate.isSelected)
-            result.append(viewModel)
-        }
-        return result
+        exchangeRates.map { .init(id: $0.id, relation: $0.rawValue, isSelected: $0.isSelected) }
+//        var result = [CurrencySelectionViewModel]()
+//
+//        for exchangeRate in exchangeRates {
+//            guard let base = exchangeRate.base,
+//                let relative = exchangeRate.relative else { continue }
+//
+//            let relation = "\(base.currency)/\(relative.currency)"
+//            let viewModel = CurrencySelectionViewModel(id: exchangeRate.id,
+//                                                       relation: relation,
+//                                                       isSelected: exchangeRate.isSelected)
+//            result.append(viewModel)
+//        }
+//        return result
     }
     
 }

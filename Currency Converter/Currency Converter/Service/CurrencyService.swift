@@ -22,8 +22,8 @@ class DataServiceBase<Model: Codable> {
     
     typealias Result = CachedResult<Model>
     
-    private let networkManager = NetworkManager()
-    private let store = JSONDataStoreManager.default(for: Model.self)
+    private let networkManager: NetworkManager
+    private let store: AnyJSONDataStore<Model>
     
     private let _isPending = BehaviorRelay<Bool>(value: false)
     var isPending: Infallible<Bool> { _isPending.asInfallible() }
@@ -34,6 +34,11 @@ class DataServiceBase<Model: Codable> {
     var lastValidValue: Model? { _models.value.value }
     
     private(set) lazy var onFetch = AcceptableObserver<Void> { self.fetch() }
+    
+    init(networkManager: NetworkManager, store: AnyJSONDataStore<Model>) {
+        self.networkManager = networkManager
+        self.store = store
+    }
     
     func fetch() {
         guard !_isPending.value else { return }
@@ -62,6 +67,10 @@ final class CurrencyService: DataServiceBase<ExchangeRatesHistoryResponse>, Curr
     
     var onFetchCurrencies: AcceptableObserver<Void> { onFetch }
     
+    init() {
+        super.init(networkManager: NetworkManager(), store: JSONDataStoreManager.default())
+    }
+    
     func fetchCurrencies() {
         fetch()
     }
@@ -71,6 +80,29 @@ final class CurrencyService: DataServiceBase<ExchangeRatesHistoryResponse>, Curr
     }
 }
 
-final class ExchangeService: DataServiceBase<ExchangeRatesHistoryResponse>, CurrencyServiceProtocol {
+final class YesterdayCurrencyService: DataServiceBase<ExchangeRatesHistoryResponse>, CurrencyServiceProtocol {
     
+    var currencies: Infallible<CachedResult<ExchangeRatesHistoryResponse>> { models }
+    
+    var onFetchCurrencies: AcceptableObserver<Void> { onFetch }
+    
+    init() {
+        super.init(networkManager: NetworkManager(), store: JSONDataStoreManager.historycalExchangeRatesStore)
+    }
+    
+    func fetchCurrencies() {
+        fetch()
+    }
+    
+    override func loadDataFromNetowrk(with networkManager: NetworkManager, completion: @escaping ((ExchangeRatesHistoryResponse?, String?) -> Void)) {
+        let yesterday = Date(timeInterval: -86400, since: Date())
+        networkManager.getQuotes(date: yesterday, completion: completion)
+    }
+}
+
+extension JSONDataStoreManager {
+    
+    static var historycalExchangeRatesStore: AnyJSONDataStore<ExchangeRatesHistoryResponse> {
+        JSONDataStoreManager.named("historical")
+    }
 }

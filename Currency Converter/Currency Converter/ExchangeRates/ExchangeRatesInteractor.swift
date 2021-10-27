@@ -8,7 +8,7 @@
 
 import UIKit
 
-private extension UserDefaults {
+extension UserDefaults {
     
     private static let exchangePairsKey = "CurrencyConverter.ExchangePairs"
     private static let selectedExchangePairsKey = "CurrencyConverter.SelectedExchangePairs"

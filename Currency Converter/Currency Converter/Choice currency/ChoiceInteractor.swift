@@ -21,11 +21,7 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
     var selectedCurrency: Currency?
     
     var presenter: ChoicePresentationLogic?
-    var storage: StorageContext!
-    
-    init(storage: StorageContext = try! RealmStorageContext()) {
-        self.storage = storage
-    }
+    private let store = JSONDataStoreManager.default(for: ExchangeRatesHistoryResponse.self)
     
     var currencies: [Currency]!
     
@@ -33,15 +29,17 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
         
         switch request {
         case .loadCurrencies(let isGraphCurrencies):
-            storage.fetch(Currency.self, predicate: nil, sorted: nil) { currencies in
-                self.currencies = isGraphCurrencies == true ?
-                    filterGraphCurrencies(from: currencies) :
-                    currencies
-                
-                let currenciesInfo = CurrenciesInfoService.shared.fetch()
-                self.presenter?.presentData(response: .currencies(self.currencies,
-                                                                  currenciesInfo))
-            }
+            let currencies = store.state?.quotes ?? []
+            presenter?.presentData(response: .currencies(isGraphCurrencies ? filterGraphCurrencies(from: currencies) : currencies))
+//            storage.fetch(Currency.self, predicate: nil, sorted: nil) { currencies in
+//                self.currencies = isGraphCurrencies == true ?
+//                    filterGraphCurrencies(from: currencies) :
+//                    currencies
+//
+//                let currenciesInfo = CurrenciesInfoService.shared.fetch()
+//                self.presenter?.presentData(response: .currencies(self.currencies,
+//                                                                  currenciesInfo))
+//            }
             
         case .chooseCurrency(let viewModel):
             selectedCurrency = currencies.first { $0.currency == viewModel.currency }

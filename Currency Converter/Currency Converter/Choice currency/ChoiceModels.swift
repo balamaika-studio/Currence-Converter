@@ -19,7 +19,7 @@ enum Choice {
         }
         struct Response {
             enum ResponseType {
-                case currencies([Currency], [CurrencyInfo])
+                case currencies([Currency])
             }
         }
         struct ViewModel {

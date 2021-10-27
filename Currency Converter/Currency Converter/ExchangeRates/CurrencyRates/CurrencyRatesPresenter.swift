@@ -28,11 +28,11 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
                                  _ historical: [Currency],
                                  _ exchangeRates: [RealmExchangeRate]) -> [CurrencyRatesViewModel] {
         var result = [CurrencyRatesViewModel]()
-        guard live.count == historical.count else { return result }
+        guard live.count == historical.count else { return [] }
         
         for exchangeRate in exchangeRates {
-            guard let base = exchangeRate.base,
-                let relative = exchangeRate.relative else { continue }
+            let base = exchangeRate.base
+            let relative = exchangeRate.relative
             
             let relation = "\(base.currency)/\(relative.currency)"
             let change = calculateChange(exchangeRate: exchangeRate,
@@ -51,8 +51,8 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
     private func calculateChange(exchangeRate: RealmExchangeRate,
                                  historical: [Currency]) -> Change {
         var change: Change = .stay
-        guard let base = exchangeRate.base,
-            let relative = exchangeRate.relative else { fatalError() }
+        let base = exchangeRate.base
+        let relative = exchangeRate.relative
         
         let currentRate = base.rate / relative.rate
         
