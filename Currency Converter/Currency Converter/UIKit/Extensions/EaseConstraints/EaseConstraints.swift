@@ -38,6 +38,27 @@ extension UIView.EaseConstraints {
         case view(UIView)
         case layoutGuide(UILayoutGuide)
     }
+    
+    struct Constraint {
+        
+        let rawConstraint: NSLayoutConstraint
+        
+        init(constraint: NSLayoutConstraint) {
+            self.rawConstraint = constraint
+        }
+        
+        @discardableResult
+        func priority(_ priority: UILayoutPriority) -> Constraint {
+            rawConstraint.priority = priority
+            return self
+        }
+        
+        @discardableResult
+        func value(_ value: CGFloat) -> Constraint {
+            rawConstraint.constant = value
+            return self
+        }
+    }
 }
 
 extension UIView.EaseConstraints.ConstraintTarget {

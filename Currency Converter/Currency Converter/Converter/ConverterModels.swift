@@ -6,7 +6,7 @@
 //  Copyright (c) 2020 Kiryl Klimiankou. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 //enum Converter {
 //
@@ -104,28 +104,14 @@ struct Exchange: ExchangeCurrency {
 //    }
 //}
 
-protocol ConverterCellModelProtocol {
-    var currencyName: String { get }
-    var currencyCode: String { get }
-    var formattedCount: String { get }
-}
+//extension IdentifiableType where Self: Equatable {
+//
+//    static func == (lhs: Self, rhs: Self) -> Bool {
+//        lhs.identity == rhs.identity
+//    }
+//}
 
-struct ConverterCellModel: ConverterCellModelProtocol {
-    
-    let currencyName: String
-    let currencyCode: String
-    let formattedCount: String
-    
-    init(item: ConverterServiceItemType) {
-        currencyName = item.currency.currencyName ?? ""
-        currencyCode = item.currency.currency
-        formattedCount = AccuracyManager.shared.formatNumber(item.count)
-    }
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.currencyCode == rhs.currencyCode
-    }
-}
+
 
 //struct FavoriteConverterViewModel: Currency {
 //    let currency: String

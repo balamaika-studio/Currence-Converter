@@ -33,6 +33,24 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		5E0D8D7F272F6805007E6CD1 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038E826C90880003B0140 /* Poppins-Light.ttf */; };
+		5E0D8D80272F6805007E6CD1 /* Poppins-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038E926C90880003B0140 /* Poppins-ExtraLight.ttf */; };
+		5E0D8D81272F6805007E6CD1 /* Poppins-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038EB26C90880003B0140 /* Poppins-ExtraLightItalic.ttf */; };
+		5E0D8D82272F6805007E6CD1 /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038ED26C90880003B0140 /* Poppins-Italic.ttf */; };
+		5E0D8D83272F6805007E6CD1 /* Poppins-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F326C90880003B0140 /* Poppins-ExtraBoldItalic.ttf */; };
+		5E0D8D84272F6805007E6CD1 /* Poppins-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F126C90880003B0140 /* Poppins-Black.ttf */; };
+		5E0D8D85272F6805007E6CD1 /* Poppins-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038EA26C90880003B0140 /* Poppins-ExtraBold.ttf */; };
+		5E0D8D86272F6805007E6CD1 /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F526C90880003B0140 /* Poppins-Medium.ttf */; };
+		5E0D8D87272F6805007E6CD1 /* Poppins-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038EE26C90880003B0140 /* Poppins-BlackItalic.ttf */; };
+		5E0D8D88272F6805007E6CD1 /* Poppins-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038E526C90880003B0140 /* Poppins-ThinItalic.ttf */; };
+		5E0D8D89272F6805007E6CD1 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038E626C90880003B0140 /* Poppins-Bold.ttf */; };
+		5E0D8D8A272F6805007E6CD1 /* Poppins-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038EC26C90880003B0140 /* Poppins-BoldItalic.ttf */; };
+		5E0D8D8B272F6805007E6CD1 /* Poppins-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F426C90880003B0140 /* Poppins-MediumItalic.ttf */; };
+		5E0D8D8C272F6805007E6CD1 /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038EF26C90880003B0140 /* Poppins-Regular.ttf */; };
+		5E0D8D8D272F6805007E6CD1 /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F026C90880003B0140 /* Poppins-SemiBold.ttf */; };
+		5E0D8D8E272F6805007E6CD1 /* Poppins-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038E726C90880003B0140 /* Poppins-SemiBoldItalic.ttf */; };
+		5E0D8D8F272F6805007E6CD1 /* Poppins-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F626C90880003B0140 /* Poppins-LightItalic.ttf */; };
+		5E0D8D90272F6805007E6CD1 /* Poppins-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5ED038F226C90880003B0140 /* Poppins-Thin.ttf */; };
 		5E3535672711ED8A001B1563 /* AcceptableObserving.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535662711ED8A001B1563 /* AcceptableObserving.swift */; };
 		5E35356A2711EDB3001B1563 /* RxRelay+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535682711EDB3001B1563 /* RxRelay+Infallible.swift */; };
 		5E35356B2711EDB3001B1563 /* RxDriver+Infallible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E3535692711EDB3001B1563 /* RxDriver+Infallible.swift */; };
@@ -1176,14 +1194,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				595FC0F5241FAD7F00B4EEE4 /* ExchangeView.xib in Resources */,
+				5E0D8D8B272F6805007E6CD1 /* Poppins-MediumItalic.ttf in Resources */,
+				5E0D8D8C272F6805007E6CD1 /* Poppins-Regular.ttf in Resources */,
 				5ED0390326C908D9003B0140 /* Lato-Thin.ttf in Resources */,
+				5E0D8D81272F6805007E6CD1 /* Poppins-ExtraLightItalic.ttf in Resources */,
 				5ED0390626C908D9003B0140 /* Lato-BlackItalic.ttf in Resources */,
 				5ED0390926C908D9003B0140 /* Lato-Light.ttf in Resources */,
 				D1FEFAD7243CB5FD004664C6 /* EmptyState.xib in Resources */,
+				5E0D8D8A272F6805007E6CD1 /* Poppins-BoldItalic.ttf in Resources */,
+				5E0D8D86272F6805007E6CD1 /* Poppins-Medium.ttf in Resources */,
 				9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */,
 				595FC0C6241FA40600B4EEE4 /* LaunchScreen.storyboard in Resources */,
 				D1DDE95A243F61490023E789 /* CurrencyPairTableViewCell.xib in Resources */,
 				D1A2A2982477ACF0001949BD /* OfflineViewController.xib in Resources */,
+				5E0D8D85272F6805007E6CD1 /* Poppins-ExtraBold.ttf in Resources */,
 				595FC0C3241FA40600B4EEE4 /* Assets.xcassets in Resources */,
 				D1DDE953243F4AD30023E789 /* CurrencySelectionViewController.xib in Resources */,
 				D1E1A76C2449F6220051E51D /* PeriodCollectionViewCell.xib in Resources */,
@@ -1191,23 +1215,35 @@
 				596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */,
 				D1DDE944243F4A7C0023E789 /* CurrencyRatesViewController.xib in Resources */,
 				595FC0C1241FA40400B4EEE4 /* Main.storyboard in Resources */,
+				5E0D8D80272F6805007E6CD1 /* Poppins-ExtraLight.ttf in Resources */,
 				D19A9378242CFF6E00DDCEA9 /* FavoriteTableViewCell.xib in Resources */,
 				D115608E244A1DB6000EB5E9 /* RelativeExchangeView.xib in Resources */,
 				5ED0390A26C908D9003B0140 /* Lato-Italic.ttf in Resources */,
+				5E0D8D7F272F6805007E6CD1 /* Poppins-Light.ttf in Resources */,
+				5E0D8D8F272F6805007E6CD1 /* Poppins-LightItalic.ttf in Resources */,
 				D14E0F152510DD6F007C28BF /* SettingsPurchaseCell.xib in Resources */,
 				595FC0F9241FBDE700B4EEE4 /* ConverterView.xib in Resources */,
+				5E0D8D83272F6805007E6CD1 /* Poppins-ExtraBoldItalic.ttf in Resources */,
 				5ED0390B26C908D9003B0140 /* Lato-Bold.ttf in Resources */,
 				D164543024630203009B6E75 /* Localizable.strings in Resources */,
 				D1E1A7662449F5240051E51D /* GraphViewController.xib in Resources */,
 				5ED0390826C908D9003B0140 /* Lato-ThinItalic.ttf in Resources */,
+				5E0D8D84272F6805007E6CD1 /* Poppins-Black.ttf in Resources */,
+				5E0D8D87272F6805007E6CD1 /* Poppins-BlackItalic.ttf in Resources */,
 				5ED0390426C908D9003B0140 /* Lato-BoldItalic.ttf in Resources */,
 				5ED0390526C908D9003B0140 /* Lato-Black.ttf in Resources */,
+				5E0D8D8E272F6805007E6CD1 /* Poppins-SemiBoldItalic.ttf in Resources */,
 				D19A9373242CF64000DDCEA9 /* FavoriteViewController.xib in Resources */,
 				596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */,
+				5E0D8D89272F6805007E6CD1 /* Poppins-Bold.ttf in Resources */,
 				D1BBC9312454517200985B9B /* ConverterViewController.xib in Resources */,
+				5E0D8D82272F6805007E6CD1 /* Poppins-Italic.ttf in Resources */,
 				D1DDE935243F45CB0023E789 /* ExchangeRatesViewController.xib in Resources */,
 				5ED0390226C908D9003B0140 /* Lato-Regular.ttf in Resources */,
+				5E0D8D8D272F6805007E6CD1 /* Poppins-SemiBold.ttf in Resources */,
 				D163AFE8244E312800014800 /* SettingsViewController.xib in Resources */,
+				5E0D8D88272F6805007E6CD1 /* Poppins-ThinItalic.ttf in Resources */,
+				5E0D8D90272F6805007E6CD1 /* Poppins-Thin.ttf in Resources */,
 				D16E45D82423C048005D99E9 /* currenciesNames.json in Resources */,
 				5ED0390D26C91405003B0140 /* ConverterCellContentView.xib in Resources */,
 			);

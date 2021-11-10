@@ -19,14 +19,20 @@ extension UIView.EaseConstraints {
 
 extension UIView.EaseConstraints.Size {
     
-    func constraint(height: CGFloat) {
+    @discardableResult
+    func constraint(height: CGFloat) -> UIView.EaseConstraints.Constraint {
         owner.translatesAutoresizingMaskIntoConstraints = false
-        owner.heightAnchor.constraint(equalToConstant: height).isActive = true
+        let c = owner.heightAnchor.constraint(equalToConstant: height)
+        c.isActive = true
+        return .init(constraint: c)
     }
     
-    func constraint(width: CGFloat) {
+    @discardableResult
+    func constraint(width: CGFloat) -> UIView.EaseConstraints.Constraint {
         owner.translatesAutoresizingMaskIntoConstraints = false
-        owner.widthAnchor.constraint(equalToConstant: width).isActive = true
+        let c = owner.widthAnchor.constraint(equalToConstant: width)
+        c.isActive = true
+        return .init(constraint: c)
     }
     
     func constraint(size: CGSize) {

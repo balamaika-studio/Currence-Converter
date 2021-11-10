@@ -29,12 +29,12 @@ final class ConverterViewController: UIViewController {
     //private var horizontalConstraint: NSLayoutConstraint!
     //private var verticalConstraint: NSLayoutConstraint!
     
-    private var reorderTableView: LongPressReorderTableView!
+    //private var reorderTableView: LongPressReorderTableView!
     private var actionButton: JJFloatingActionButton!
-    private var longPressGesture: UILongPressGestureRecognizer!
-    private var gestureRecognizer: UITapGestureRecognizer!
+    //private var longPressGesture: UILongPressGestureRecognizer!
+    //private var gestureRecognizer: UITapGestureRecognizer!
     private let viewModel = ConverterViewModel()
-    private let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, ConverterCellModelProtocol>>(configureCell: { _, table, indexPath, item in
+    private let dataSource = RxTableViewSectionedReloadDataSource<SectionModel<String, AnyConverterCellModel>>(configureCell: { _, table, indexPath, item in
         let cell = table.dequeueReusableCell(withIdentifier: "converterCurrencyTableViewCell", for: indexPath)
         if let cell = cell as? ConverterCurrencyTableViewCell {
             cell.configure(with: item)
@@ -57,18 +57,18 @@ final class ConverterViewController: UIViewController {
 //    var safeArea: UILayoutGuide {
 //        view.safeAreaLayoutGuide
 //    }
-    
-    // MARK: Object lifecycle
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        //setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        //setup()
-    }
+//
+//    // MARK: Object lifecycle
+//
+//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//        //setup()
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        super.init(coder: aDecoder)
+//        //setup()
+//    }
     
 //    // MARK: Setup
 //
@@ -162,23 +162,23 @@ final class ConverterViewController: UIViewController {
     
     // MARK: Setup
     private func setupView() {
-        viewModel.items
+        tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
+        viewModel.sections
             .drive(tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
 //        viewModel.items.drive(tableView.rx.items(cellIdentifier: "converterCurrencyTableViewCell", cellType: ConverterCurrencyTableViewCell.self)) { index, model, cell in
 //            cell.configure(with: model)
 //        }
-        //tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
         //tableView.rx.itemDeleted
         tableView.separatorStyle = .none
         //tableView.delegate = self
         //tableView.dataSource = self
         tableView.refreshControl = refreshControl
-        reorderTableView = LongPressReorderTableView(tableView,
-                                                     scrollBehaviour: .late,
-                                                     selectedRowScale: .big)
-        reorderTableView.delegate = self
-        reorderTableView.enableLongPressReorder()
+//        reorderTableView = LongPressReorderTableView(tableView,
+//                                                     scrollBehaviour: .late,
+//                                                     selectedRowScale: .big)
+//        reorderTableView.delegate = self
+//        reorderTableView.enableLongPressReorder()
         
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.rx.controlEvent(.valueChanged)
@@ -200,13 +200,13 @@ final class ConverterViewController: UIViewController {
         actionButton = JJFloatingActionButton()
         actionButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(actionButton)
-        horizontalConstraint = safeArea.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 31)
+        view.safeAreaLayoutGuide.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 31).isActive = true
         let bottomInset = AdBannerInsetService.shared.bannerHeight + 8
-        verticalConstraint = safeBottomAnchor.constraint(equalTo: actionButton.bottomAnchor,
-                                                         constant: bottomInset)
+        view.safeAreaLayoutGuide.bottomAnchor.constraint(equalTo: actionButton.bottomAnchor,
+                                            constant: bottomInset).isActive = true
         
-        horizontalConstraint.isActive = true
-        verticalConstraint.isActive = true
+        //horizontalConstraint.isActive = true
+        //verticalConstraint.isActive = true
         
         actionButton.handleSingleActionDirectly = true
         actionButton.buttonDiameter = 56
@@ -219,10 +219,10 @@ final class ConverterViewController: UIViewController {
         actionButton.layer.shadowRadius = 8
         
         // action handler
-        actionButton.addItem(title: nil, image: nil) { [weak self] _ in
-            guard let self = self else { return }
-            self.router?.showFavoriteViewController()
-        }
+//        actionButton.addItem(title: nil, image: nil) { [weak self] _ in
+//            guard let self = self else { return }
+//            self.router?.showFavoriteViewController()
+//        }
     }
   
     @objc private func closeKeyboard() {
@@ -234,11 +234,11 @@ final class ConverterViewController: UIViewController {
 //        interactor?.makeRequest(request: .loadFavoriteCurrencies)
 //    }
     
-    // MARK: - LongPressReorder Delegate
-    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
-        let currency = favoriteCurrencies.remove(at: initialIndex.row)
-        favoriteCurrencies.insert(currency, at: finalIndex.row)
-    }
+//    // MARK: - LongPressReorder Delegate
+//    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
+//        let currency = favoriteCurrencies.remove(at: initialIndex.row)
+//        favoriteCurrencies.insert(currency, at: finalIndex.row)
+//    }
 }
 
 // MARK: - Themed
@@ -250,17 +250,17 @@ extension ConverterViewController: Themed {
     }
 }
 
-// MARK: - ChoiceBackDataPassing
-extension ConverterViewController: ChoiceBackDataPassing {
-    func getRouter() -> ChoiceDataPassing {
-        return router!
-    }
-    
-    func updateControllerWithSelectedCurrency() {
-        //let currencyName = converterView.replacingView.currencyName
-        //interactor?.makeRequest(request: .changeCurrency(name: currencyName))
-    }
-}
+//// MARK: - ChoiceBackDataPassing
+//extension ConverterViewController: ChoiceBackDataPassing {
+//    func getRouter() -> ChoiceDataPassing {
+//        return router!
+//    }
+//
+//    func updateControllerWithSelectedCurrency() {
+//        //let currencyName = converterView.replacingView.currencyName
+//        //interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+//    }
+//}
 
 // MARK: - UITableViewDataSource
 //extension ConverterViewController: UITableViewDataSource {

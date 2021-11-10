@@ -21,15 +21,10 @@ class AppNavigationController: UINavigationController {
         setUpTheming()
     }
     
-    func getImageFrom(gradientLayer: CAGradientLayer) -> UIImage? {
-        var gradientImage: UIImage?
-        UIGraphicsBeginImageContext(gradientLayer.frame.size)
-        if let context = UIGraphicsGetCurrentContext() {
-            gradientLayer.render(in: context)
-            gradientImage = UIGraphicsGetImageFromCurrentImageContext()?.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch)
+    func getImageFrom(gradientLayer: CAGradientLayer) -> UIImage {
+        UIGraphicsImageRenderer(size: gradientLayer.frame.size).image { context in
+            gradientLayer.render(in: context.cgContext)
         }
-        UIGraphicsEndImageContext()
-        return gradientImage
     }
 }
 
@@ -58,10 +53,26 @@ extension AppNavigationController: Themed {
         gradient.colors = [startColor.cgColor, endColor.cgColor]
         gradient.startPoint = CGPoint(x: 0, y: 0)
         gradient.endPoint = CGPoint(x: 0, y: 1)
-        if let image = getImageFrom(gradientLayer: gradient) {
-            navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
+        let titleTextAttrs = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        //let image = getImageFrom(gradientLayer: gradient)
+        let image = UIGraphicsImageRenderer(size: .init(width: 1, height: 1)).image {
+            UIColor.blue.set()
+            $0.fill(.init(origin: .zero, size: .init(width: 1, height: 1)))
         }
+            if #available(iOS 13.0, *) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.titleTextAttributes = titleTextAttrs
+//                appearance.backgroundColor = .white
+//                appearance.shadowColor = .white
+//                appearance.shadowImage = UIImage.color(.white)
+                appearance.backgroundImage = image
+                navigationController?.navigationBar.standardAppearance = appearance
+                navigationController?.navigationBar.scrollEdgeAppearance = appearance
+            } else {
+                navigationBar.setBackgroundImage(image, for: .default)
+                navigationBar.titleTextAttributes = titleTextAttrs
+            }
         themedStatusBarStyle = .lightContent
-        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }

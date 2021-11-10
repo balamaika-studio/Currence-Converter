@@ -22,9 +22,9 @@ extension UIView.EaseConstraints.Edges {
         owner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             owner.topAnchor.constraint(equalTo: target.factory.topAnchor, constant: insets.top),
-            owner.bottomAnchor.constraint(equalTo: target.factory.bottomAnchor, constant: insets.bottom),
+            owner.bottomAnchor.constraint(equalTo: target.factory.bottomAnchor, constant: -insets.bottom),
             owner.leadingAnchor.constraint(equalTo: target.factory.leadingAnchor, constant: insets.left),
-            owner.trailingAnchor.constraint(equalTo: target.factory.trailingAnchor, constant: insets.right)
+            owner.trailingAnchor.constraint(equalTo: target.factory.trailingAnchor, constant: -insets.right)
         ])
     }
     

@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-final class ConverterCurrencyTableViewCell: BaseCell {
+final class ConverterCurrencyTableViewCell: BaseTableCell {
     
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
@@ -24,33 +24,45 @@ final class ConverterCurrencyTableViewCell: BaseCell {
         return Double(countTextField.text ?? "0") ?? 0
     }
     
-    /// get reoder control image view
-    var reorderControlImageView: UIImageView? {
-        let reorderControl = self.subviews.first {
-            $0.classForCoder.description() == "UITableViewCellReorderControl"
-        }
-        return reorderControl?.subviews.first { $0 is UIImageView } as? UIImageView
-    }
+    //override var cellHeight: CGFloat? { 60 }
     
-    private var myReorderImage: UIImage? = nil
+//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//        setup()
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        super.init(coder: coder)
+//        setup()
+//    }
+//
+//    private func setup() {
+//
+//        setUpTheming()
+//    }
+    
+//    /// get reoder control image view
+//    var reorderControlImageView: UIImageView? {
+//        let reorderControl = self.subviews.first {
+//            $0.classForCoder.description() == "UITableViewCellReorderControl"
+//        }
+//        return reorderControl?.subviews.first { $0 is UIImageView } as? UIImageView
+//    }
+    
+    //private var myReorderImage: UIImage? = nil
     private let maxLength = 8
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setUpTheming()
-    }
 
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        // Change reorder control image color
-        guard let imageView = reorderControlImageView else { return }
-        if myReorderImage == nil {
-            let reorderImage = imageView.image
-            myReorderImage = reorderImage?.withRenderingMode(.alwaysTemplate)
-        }
-        imageView.image = myReorderImage
-        imageView.tintColor = themeProvider.currentTheme.textColor
-    }
+//    override func setEditing(_ editing: Bool, animated: Bool) {
+//        super.setEditing(editing, animated: animated)
+//        // Change reorder control image color
+//        guard let imageView = reorderControlImageView else { return }
+//        if myReorderImage == nil {
+//            let reorderImage = imageView.image
+//            myReorderImage = reorderImage?.withRenderingMode(.alwaysTemplate)
+//        }
+//        imageView.image = myReorderImage
+//        imageView.tintColor = themeProvider.currentTheme.textColor
+//    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -60,11 +72,14 @@ final class ConverterCurrencyTableViewCell: BaseCell {
     override func setupUI() {
         super.setupUI()
         let content = R.nib.converterCellContentView(owner: self)!
-        cellContentView.addSubview(content)
+        containerView.addSubview(content)
         content.ec.edges.constraintsToSuperview(with: .zero)
+        setUpTheming()
+        separatorColor = .clear
+        separatorHeight = 15
     }
     
-    func configure(with viewModel: ConverterCellModelProtocol) {
+    func configure<T: ConverterCellModelProtocol>(with viewModel: T) {
         let emptyFlag = R.image.emptyFlag()
         let image = UIImage(named: viewModel.currencyCode.lowercased()) ?? emptyFlag
         currencyImageView.image = image
@@ -82,10 +97,10 @@ final class ConverterCurrencyTableViewCell: BaseCell {
 
 extension ConverterCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
-        currencyAbbreviationLabel.textColor = theme.textColor
-        currencyTitleLabel.textColor = theme.subtitleColor
+        //currencyAbbreviationLabel.textColor = theme.textColor
+        //currencyTitleLabel.textColor = theme.subtitleColor
         //currencyRateLabel.textColor = theme.textColor
-        reorderControlImageView?.tint(color: theme.textColor)
+        //reorderControlImageView?.tint(color: theme.textColor)
     }
 }
 

@@ -8,14 +8,69 @@
 
 import Foundation
 import RxCocoa
+import Differentiator
+
+protocol ConverterCellModelProtocol: Equatable {
+    var currencyName: String { get }
+    var currencyCode: String { get }
+    var formattedCount: String { get }
+}
+
+extension ConverterCellModelProtocol {
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.currencyCode == rhs.currencyCode
+    }
+}
+
+private struct ConverterCellModel: ConverterCellModelProtocol {
+    
+    let currencyName: String
+    let currencyCode: String
+    let formattedCount: String
+    
+    init(item: ConverterServiceItemType) {
+        currencyName = item.currency.currencyName ?? ""
+        currencyCode = item.currency.currency
+        formattedCount = AccuracyManager.shared.formatNumber(item.count)
+    }
+}
+
+struct AnyConverterCellModel: ConverterCellModelProtocol {
+    
+    private let getCurrencyName: ()->String
+    var currencyName: String {
+        getCurrencyName()
+    }
+    
+    private let getCurrencyCode: ()->String
+    var currencyCode: String {
+        getCurrencyCode()
+    }
+    
+    let getFormattedCount: ()->String
+    var formattedCount: String {
+        getFormattedCount()
+    }
+    
+    init<T: ConverterCellModelProtocol>(model: T) {
+        getCurrencyName = { model.currencyName }
+        getCurrencyCode = { model.currencyCode }
+        getFormattedCount = { model.formattedCount }
+    }
+}
 
 final class ConverterViewModel {
     
     private let service: ConverterServiceProtocol
     
-    //private var _items = BehaviorRelay<[ConverterCellModelProtocol]>(value: [])
-    var items: Driver<[ConverterCellModelProtocol]> {
-        service.currencies.asDriver().map({ ($0.value ?? []).map({ ConverterCellModel(item: $0) }) })
+    var sections: Driver<[SectionModel<String, AnyConverterCellModel>]> {
+        service.currencies
+            .asDriver()
+            .map({
+                let items = ($0.value ?? []).map({ AnyConverterCellModel(model: ConverterCellModel(item: $0)) })
+                return [SectionModel(model: "", items: items)]
+            })
     }
     
     var onFetcheFavoriteCurrencies: AcceptableObserver<Void> { service.onFetcheFavoriteCurrencies }
@@ -30,5 +85,3 @@ final class ConverterViewModel {
     
     
 }
-
-//final class

@@ -7,7 +7,8 @@
 //
 
 import UIKit
-class AdaptiveTableView: UITableView {
+
+class AdaptiveTableView: TableView {
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         setup()
