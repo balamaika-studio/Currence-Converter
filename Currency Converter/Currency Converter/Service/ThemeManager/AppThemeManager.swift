@@ -12,6 +12,7 @@ final class AppThemeManager: ThemeManager {
     static let shared: AppThemeManager = .init()
 
     private var theme: SubscribableValue<AppTheme>
+    private var navBarThemeManager: NavBarThemeManager!
 
     var currentTheme: AppTheme {
         get {
@@ -23,9 +24,9 @@ final class AppThemeManager: ThemeManager {
         }
     }
 
-    init() {
-        guard let themeData = UserDefaults.standard.value(forKey: "theme") as? Data,
-        let savedTheme = try? JSONDecoder().decode(AppTheme.self, from: themeData) else {
+    private init() {
+        defer { navBarThemeManager = NavBarThemeManager(appThemeManager: self) }
+        guard let themeData = UserDefaults.standard.value(forKey: "theme") as? Data, let savedTheme = try? JSONDecoder().decode(AppTheme.self, from: themeData) else {
             theme = SubscribableValue<AppTheme>(value: .light)
             return
         }

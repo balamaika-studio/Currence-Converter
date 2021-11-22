@@ -46,7 +46,7 @@ extension AppTheme: Equatable {
 extension AppTheme {
     static let light = AppTheme(
         themeId: "light",
-        barTintColor: #colorLiteral(red: 0.3803921569, green: 0.5490196078, blue: 0.9843137255, alpha: 1),
+        barTintColor: UIColor(red: 0.19, green: 0.4, blue: 0.98, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1),
         barBackgroundColor: #colorLiteral(red: 0.9764705882, green: 0.9843137255, blue: 1, alpha: 1),
         

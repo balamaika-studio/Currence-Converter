@@ -15,11 +15,11 @@ enum AppViewController {
     case settings
     
     var viewController: UIViewController {
-        var navigationController = AppNavigationController()
+        var navigationController = UINavigationController()
         switch self {
         case .converter:
             let converterViewController = ConverterViewController(nib: R.nib.converterViewController)
-            navigationController = AppNavigationController(rootViewController: converterViewController)
+            navigationController = UINavigationController(rootViewController: converterViewController)
             navigationController.navigationBar.topItem?.title = R.string.localizable.converterTitle()
             
             let tabItem = UITabBarItem(title: R.string.localizable.converterTabBarItem(),
@@ -29,7 +29,7 @@ enum AppViewController {
             
         case .exchangeRates:
             let exchangeRatesViewController = ExchangeRatesViewController(nib: R.nib.exchangeRatesViewController)
-            navigationController = AppNavigationController(rootViewController: exchangeRatesViewController)
+            navigationController = UINavigationController(rootViewController: exchangeRatesViewController)
             navigationController.navigationBar.topItem?.title = R.string.localizable.exchangesTitle()
             
             let tabItem = UITabBarItem(title: R.string.localizable.exchangesTabBarItem(),
@@ -39,7 +39,7 @@ enum AppViewController {
             
         case .graph:
             let graphViewController = GraphViewController(nib: R.nib.graphViewController)
-            navigationController = AppNavigationController(rootViewController: graphViewController)
+            navigationController = UINavigationController(rootViewController: graphViewController)
             navigationController.navigationBar.topItem?.title = R.string.localizable.graphTitle()
             
             let tabItem = UITabBarItem(title: R.string.localizable.graphTabBarItem(),
@@ -49,7 +49,7 @@ enum AppViewController {
             
         case .settings:
             let settingsViewController = SettingsViewController(nib: R.nib.settingsViewController)
-            navigationController = AppNavigationController(rootViewController: settingsViewController)
+            navigationController = UINavigationController(rootViewController: settingsViewController)
             navigationController.navigationBar.topItem?.title = R.string.localizable.settingsTitle()
             
             let tabItem = UITabBarItem(title: R.string.localizable.settingsTabBarItem(),

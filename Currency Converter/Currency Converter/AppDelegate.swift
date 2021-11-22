@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         UserDefaults.standard.favoriteCurrencies = ["EUR", "USD", "RUB", "UAH", "MDL"]
-        
+        _ = AppThemeManager.shared
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         //storage = try! RealmStorageContext()
@@ -164,7 +164,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.tabBarViewController.tabBar.isUserInteractionEnabled = false
                 let selectedVC = self.tabBarViewController.selectedViewController
                 let offlineVC = OfflineViewController(nib: R.nib.offlineViewController)
-                let offlineNavigationVC = AppNavigationController(rootViewController: offlineVC)
+                let offlineNavigationVC = UINavigationController(rootViewController: offlineVC)
                 offlineNavigationVC.navigationBar.topItem?.title = R.string.localizable.converterTitle()
                 offlineNavigationVC.modalPresentationStyle = .overCurrentContext
                 
