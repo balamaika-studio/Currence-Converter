@@ -154,7 +154,6 @@
 		D1BA9E88251130B400B7C6B7 /* RestorePurchasesFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BA9E87251130B400B7C6B7 /* RestorePurchasesFooterView.swift */; };
 		D1BBC92924543F0B00985B9B /* HalfSizePresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */; };
 		D1BBC92B24543FA600985B9B /* AppTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92A24543FA600985B9B /* AppTabBarController.swift */; };
-		D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */; };
 		D1BBC92F2454481A00985B9B /* AppThemeCodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */; };
 		D1BBC9312454517200985B9B /* ConverterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D1BBC9302454517100985B9B /* ConverterViewController.xib */; };
 		D1BBC933245453F000985B9B /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1BBC932245453F000985B9B /* AppViewController.swift */; };
@@ -376,7 +375,6 @@
 		D1BA9E87251130B400B7C6B7 /* RestorePurchasesFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePurchasesFooterView.swift; sourceTree = "<group>"; };
 		D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HalfSizePresentationController.swift; sourceTree = "<group>"; };
 		D1BBC92A24543FA600985B9B /* AppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBarController.swift; sourceTree = "<group>"; };
-		D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		D1BBC92E2454481A00985B9B /* AppThemeCodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppThemeCodableExtension.swift; sourceTree = "<group>"; };
 		D1BBC9302454517100985B9B /* ConverterViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConverterViewController.xib; sourceTree = "<group>"; };
 		D1BBC932245453F000985B9B /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
@@ -903,7 +901,6 @@
 				D119C3C524C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift */,
 				D1BBC92824543F0B00985B9B /* HalfSizePresentationController.swift */,
 				D1BBC92A24543FA600985B9B /* AppTabBarController.swift */,
-				D1BBC92C24543FCB00985B9B /* AppNavigationController.swift */,
 				D1BBC932245453F000985B9B /* AppViewController.swift */,
 				D1130DF4247A8A3700F830BA /* SwipeTabBarTransition.swift */,
 				D16AD72724A0F83100D7C9DE /* AdaptiveTableView.swift */,
@@ -1403,7 +1400,6 @@
 				D1DDE93F243F4A7C0023E789 /* CurrencyRatesWorker.swift in Sources */,
 				D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */,
 				D1130DF5247A8A3700F830BA /* SwipeTabBarTransition.swift in Sources */,
-				D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */,
 				D19A9382242D119500DDCEA9 /* HTTPTask.swift in Sources */,
 				D1DDE940243F4A7C0023E789 /* CurrencyRatesRouter.swift in Sources */,
 				5968111C2420E8CE00426968 /* ChoiceRouter.swift in Sources */,

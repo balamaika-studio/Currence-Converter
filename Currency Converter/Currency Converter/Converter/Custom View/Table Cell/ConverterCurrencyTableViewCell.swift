@@ -85,6 +85,7 @@ final class ConverterCurrencyTableViewCell: BaseTableCell {
         currencyImageView.image = image
         currencyAbbreviationLabel.text = viewModel.currencyCode
         currencyTitleLabel.text = viewModel.currencyName
+        countTextField.text = viewModel.formattedCount
         //currencyRateLabel.text = viewModel.total
         selectionStyle = .none
     }
