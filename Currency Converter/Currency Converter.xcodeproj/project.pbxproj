@@ -35,6 +35,7 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		5EDF21E52774BD560074D885 /* FullScreenAdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EDF21E42774BD560074D885 /* FullScreenAdController.swift */; };
 		9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9464EB75266BA15100EA1660 /* GoogleService-Info.plist */; };
 		94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */; };
 		D103CB1C24B4BAF100D44637 /* ChartYValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D103CB1B24B4BAF100D44637 /* ChartYValueFormatter.swift */; };
@@ -207,6 +208,7 @@
 		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		5EDF21E42774BD560074D885 /* FullScreenAdController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenAdController.swift; sourceTree = "<group>"; };
 		66E241F1B336BA06085DB9A6 /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7866CE52FF1937999B06A7F8 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
 		8B6C5E122520918800174AF6 /* Currency Converter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Currency Converter.entitlements"; sourceTree = "<group>"; };
@@ -402,6 +404,7 @@
 				D163AFDA244E30FE00014800 /* Settings */,
 				596811122420E89C00426968 /* Choice currency */,
 				D1A2A28A2477ACC5001949BD /* Offline */,
+				5EDF21E32774BD040074D885 /* FullScreenAd */,
 				595FC0B9241FA40400B4EEE4 /* AppDelegate.swift */,
 				595FC0BF241FA40400B4EEE4 /* Main.storyboard */,
 				595FC0C2241FA40600B4EEE4 /* Assets.xcassets */,
@@ -496,6 +499,14 @@
 				596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */,
 			);
 			path = ChoiceCurrencyTableCell;
+			sourceTree = "<group>";
+		};
+		5EDF21E32774BD040074D885 /* FullScreenAd */ = {
+			isa = PBXGroup;
+			children = (
+				5EDF21E42774BD560074D885 /* FullScreenAdController.swift */,
+			);
+			path = FullScreenAd;
 			sourceTree = "<group>";
 		};
 		BC4E34592E1250332CF277CB /* Pods */ = {
@@ -1159,6 +1170,7 @@
 				D1DDE955243F57110023E789 /* RealmExchangeRate.swift in Sources */,
 				D1DDE93F243F4A7C0023E789 /* CurrencyRatesWorker.swift in Sources */,
 				D1B6A61B244F261500B4DDE9 /* SettingsTableViewCell.swift in Sources */,
+				5EDF21E52774BD560074D885 /* FullScreenAdController.swift in Sources */,
 				D1130DF5247A8A3700F830BA /* SwipeTabBarTransition.swift in Sources */,
 				D1BBC92D24543FCB00985B9B /* AppNavigationController.swift in Sources */,
 				D19A9382242D119500DDCEA9 /* HTTPTask.swift in Sources */,
@@ -1411,20 +1423,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z6FP9BG3A5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.5;
+				MARKETING_VERSION = 1.9.7;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Tomashevsky;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1436,20 +1448,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Z6FP9BG3A5;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.9.5;
+				MARKETING_VERSION = 1.9.7;
 				PRODUCT_BUNDLE_IDENTIFIER = Maksim.Haroshka.CurrencyConverter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = Tomashevsky;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

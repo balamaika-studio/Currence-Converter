@@ -86,6 +86,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
         bannerView.load(GADRequest())
+        setupInterstitialAd()
+    }
+    
+    private func setupInterstitialAd() {
+        Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { _ in
+            let vc = FullScreenAdController()
+            vc.onDismissed = { [weak self] in self?.setupInterstitialAd() }
+            vc.loadInterstitialAd(id: "ca-app-pub-5773099160082927/1278122807") { [weak self, weak vc] in
+                guard $0, let self = self, let vc = vc else { return }
+                self.window?.rootViewController?.present(vc, animated: true)
+            }
+        }
     }
     
     private func configureAppsFlyer() {
