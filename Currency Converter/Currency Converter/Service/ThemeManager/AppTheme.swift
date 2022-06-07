@@ -75,7 +75,7 @@ extension AppTheme {
         themeId: "dark",
         barTintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),
-        barBackgroundColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
+        barBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
 
         backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
         specificBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
