@@ -69,7 +69,9 @@ final class ConverterViewModel {
             .asDriver()
             .map({
                 let items = ($0.value ?? []).map({ AnyConverterCellModel(model: ConverterCellModel(item: $0)) })
-                return [SectionModel(model: "", items: items)]
+                let date = Date().toString()
+
+                return [SectionModel(model: date, items: items)]
             })
     }
     
@@ -82,6 +84,4 @@ final class ConverterViewModel {
         self.service = service
         service.fetcheFavoriteCurrencies()
     }
-    
-    
 }

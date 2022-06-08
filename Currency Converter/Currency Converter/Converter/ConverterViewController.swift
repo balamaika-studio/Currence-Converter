@@ -40,7 +40,10 @@ final class ConverterViewController: UIViewController {
             cell.configure(with: item)
         }
         return cell
-    }, canEditRowAtIndexPath: { _, _ in true })
+    }, titleForHeaderInSection: { dataSource, sectionIndex in
+        return dataSource[sectionIndex].model
+    }, canEditRowAtIndexPath: { _, _ in true }
+    )
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
@@ -169,10 +172,41 @@ final class ConverterViewController: UIViewController {
 //        viewModel.items.drive(tableView.rx.items(cellIdentifier: "converterCurrencyTableViewCell", cellType: ConverterCurrencyTableViewCell.self)) { index, model, cell in
 //            cell.configure(with: model)
 //        }
-        //tableView.rx.itemDeleted
+        _ = tableView.rx.delegate.methodInvoked(#selector(tableView.delegate?.tableView(_:willDisplayHeaderView:forSection:)))
+            .take(until:tableView.rx.deallocated)
+            .subscribe(onNext: { event in
+                guard let headerView = event[1] as? UITableViewHeaderFooterView else { return }
+
+                for view in headerView.subviews {
+                    view.backgroundColor = .clear
+                }
+
+                let fullString = NSMutableAttributedString(attributedString: headerView.textLabel?.attributedText ?? NSAttributedString())
+
+                let whiteSpace = NSAttributedString(string: "  ")
+                let image1Attachment = NSTextAttachment()
+                image1Attachment.image = UIImage(named: "ic_update.pdf")
+                if let image = image1Attachment.image{
+                    image1Attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height).integral
+
+                }
+                // wrap the attachment in its own attributed string so we can append it
+                let image1String = NSAttributedString(attachment: image1Attachment)
+                fullString.append(whiteSpace)
+                fullString.append(image1String)
+                headerView.textLabel?.attributedText = NSAttributedString()
+                let label = UILabel(frame: CGRect(x: 15, y: 0, width: 170, height: 20))
+                label.backgroundColor = .clear
+                label.attributedText = fullString
+                label.textColor = #colorLiteral(red: 0.7450980392, green: 0.7450980392, blue: 0.7450980392, alpha: 1)
+                label.font = R.font.poppinsRegular(size: 15)
+                headerView.addSubview(label)
+            })
+        tableView
+            .rx.setDelegate(self)
+            .disposed(by: disposeBag)
         tableView.separatorStyle = .none
-        //tableView.delegate = self
-        //tableView.dataSource = self
+//        tableView.delegate = self
         tableView.refreshControl = refreshControl
 //        reorderTableView = LongPressReorderTableView(tableView,
 //                                                     scrollBehaviour: .late,
@@ -195,7 +229,7 @@ final class ConverterViewController: UIViewController {
         
         addFAB()
     }
-    
+
     private func addFAB() {
         actionButton = JJFloatingActionButton()
         actionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -299,6 +333,18 @@ extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let currency = favoriteCurrencies[indexPath.row]
         //interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return nil
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 40
+    }
+
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        return 40
     }
 }
 
