@@ -173,6 +173,15 @@ final class ConverterViewController: UIViewController {
 
         return label
     }
+
+    @objc private func handleLongPress(sender: UILongPressGestureRecognizer) {
+        if sender.state == .began {
+            let touchPoint = sender.location(in: tableView)
+            if let _ = tableView.indexPathForRow(at: touchPoint) {
+                tableView.isEditing = !tableView.isEditing
+            }
+        }
+    }
     
     // MARK: Alert
     private func showAlert(with message: String, title: String) {
@@ -187,6 +196,8 @@ final class ConverterViewController: UIViewController {
     
     // MARK: Setup
     private func setupView() {
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(sender:)))
+        tableView.addGestureRecognizer(longPress)
         tableView.register(ConverterCurrencyTableViewCell.self, forCellReuseIdentifier: "converterCurrencyTableViewCell")
         viewModel.sections
             .drive(tableView.rx.items(dataSource: dataSource))
@@ -345,6 +356,14 @@ extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let currency = favoriteCurrencies[indexPath.row]
         //interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+    }
+
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
