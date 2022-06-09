@@ -151,6 +151,28 @@ final class ConverterViewController: UIViewController {
 //    private func updateFavoriteWith(total: Double) {
 //        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
 //    }
+
+    private func addUpdateTimeLabel(_ attrString: NSAttributedString?) -> UILabel {
+        let fullString = NSMutableAttributedString(attributedString: attrString ?? NSAttributedString())
+
+        let whiteSpace = NSAttributedString(string: "  ")
+        let image1Attachment = NSTextAttachment()
+        image1Attachment.image = UIImage(named: "ic_update.pdf")
+        if let image = image1Attachment.image {
+            image1Attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height).integral
+        }
+        let image1String = NSAttributedString(attachment: image1Attachment)
+        fullString.append(whiteSpace)
+        fullString.append(image1String)
+
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: 170, height: 20))
+        label.backgroundColor = .clear
+        label.attributedText = fullString
+        label.textColor = #colorLiteral(red: 0.7450980392, green: 0.7450980392, blue: 0.7450980392, alpha: 1)
+        label.font = R.font.poppinsRegular(size: 15)
+
+        return label
+    }
     
     // MARK: Alert
     private func showAlert(with message: String, title: String) {
@@ -174,33 +196,23 @@ final class ConverterViewController: UIViewController {
 //        }
         _ = tableView.rx.delegate.methodInvoked(#selector(tableView.delegate?.tableView(_:willDisplayHeaderView:forSection:)))
             .take(until:tableView.rx.deallocated)
-            .subscribe(onNext: { event in
+            .subscribe(onNext: { [weak self] event in
                 guard let headerView = event[1] as? UITableViewHeaderFooterView else { return }
 
                 for view in headerView.subviews {
                     view.backgroundColor = .clear
                 }
 
-                let fullString = NSMutableAttributedString(attributedString: headerView.textLabel?.attributedText ?? NSAttributedString())
-
-                let whiteSpace = NSAttributedString(string: "  ")
-                let image1Attachment = NSTextAttachment()
-                image1Attachment.image = UIImage(named: "ic_update.pdf")
-                if let image = image1Attachment.image{
-                    image1Attachment.bounds = CGRect(x: 0, y: -2, width: image.size.width, height: image.size.height).integral
-
+                let label = self?.addUpdateTimeLabel(headerView.textLabel?.attributedText)
+                if let subviews = headerView.textLabel?.subviews {
+                    for labelView in subviews {
+                        labelView.removeFromSuperview()
+                    }
                 }
-                // wrap the attachment in its own attributed string so we can append it
-                let image1String = NSAttributedString(attachment: image1Attachment)
-                fullString.append(whiteSpace)
-                fullString.append(image1String)
                 headerView.textLabel?.attributedText = NSAttributedString()
-                let label = UILabel(frame: CGRect(x: 15, y: 0, width: 170, height: 20))
-                label.backgroundColor = .clear
-                label.attributedText = fullString
-                label.textColor = #colorLiteral(red: 0.7450980392, green: 0.7450980392, blue: 0.7450980392, alpha: 1)
-                label.font = R.font.poppinsRegular(size: 15)
-                headerView.addSubview(label)
+                if let label = label {
+                    headerView.textLabel?.addSubview(label)
+                }
             })
         tableView
             .rx.setDelegate(self)
