@@ -12,12 +12,13 @@ import RxCocoa
 
 final class ConverterCurrencyTableViewCell: BaseTableCell {
     
-    @IBOutlet weak var currencyImageView: UIImageView!
-    @IBOutlet weak var currencyAbbreviationLabel: UILabel!
-    @IBOutlet weak var currencyTitleLabel: UILabel!
+    @IBOutlet private weak var currencyImageView: UIImageView!
+    @IBOutlet private weak var currencyAbbreviationLabel: UILabel!
+    @IBOutlet private weak var currencyTitleLabel: UILabel!
     //@IBOutlet weak var currencyRateLabel: UILabel!
-    @IBOutlet weak var countTextField: UITextField!
-    
+    @IBOutlet private weak var countTextField: UITextField!
+    @IBOutlet private weak var mainView: UIView!
+
     var onChangeValue: ((Double)->Void)?
     
     var value: Double {
@@ -71,12 +72,22 @@ final class ConverterCurrencyTableViewCell: BaseTableCell {
     
     override func setupUI() {
         super.setupUI()
+        bgView.backgroundColor = .clear
         let content = R.nib.converterCellContentView(owner: self)!
         containerView.addSubview(content)
         content.ec.edges.constraintsToSuperview(with: .zero)
+        containerView.backgroundColor = .clear
         setUpTheming()
         separatorColor = .clear
-        separatorHeight = 15
+        separatorHeight = 0
+        mainView.layer.cornerRadius = 10
+
+        mainView.clipsToBounds = true
+        mainView.layer.masksToBounds = false
+        mainView.layer.shadowRadius = 7
+        mainView.layer.shadowOpacity = 0.6
+        mainView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        mainView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
     }
     
     func configure<T: ConverterCellModelProtocol>(with viewModel: T) {
