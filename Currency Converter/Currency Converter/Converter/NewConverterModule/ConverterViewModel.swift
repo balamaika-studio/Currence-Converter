@@ -8,6 +8,7 @@
 
 import Foundation
 import RxCocoa
+import RxSwift
 import Differentiator
 
 protocol ConverterCellModelProtocol: Equatable {
@@ -62,8 +63,8 @@ struct AnyConverterCellModel: ConverterCellModelProtocol {
 
 final class ConverterViewModel {
     
-    private let service: ConverterServiceProtocol
-    
+    let service: ConverterServiceProtocol
+
     var sections: Driver<[SectionModel<String, AnyConverterCellModel>]> {
         service.currencies
             .asDriver()

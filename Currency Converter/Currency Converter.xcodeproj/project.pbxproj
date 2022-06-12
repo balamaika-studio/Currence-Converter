@@ -77,6 +77,7 @@
 		5ED0391B26C93144003B0140 /* EaseConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391A26C93144003B0140 /* EaseConstraints.swift */; };
 		5ED0391D26C93785003B0140 /* EaseConstraints+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */; };
 		5EFB657426EC038600FD2716 /* CurrencyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFB657326EC038600FD2716 /* CurrencyService.swift */; };
+		6017EDDD2855FFE1000282AD /* UITableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6017EDDC2855FFE1000282AD /* UITableViewExtensions.swift */; };
 		601A11A52850FA3400A2F8E9 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601A11A42850FA3400A2F8E9 /* DateExtension.swift */; };
 		9464EB76266BA15100EA1660 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9464EB75266BA15100EA1660 /* GoogleService-Info.plist */; };
 		94A8920C266A866100A19769 /* ExchangeRatesHistoryResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */; };
@@ -291,6 +292,7 @@
 		5ED0391A26C93144003B0140 /* EaseConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EaseConstraints.swift; sourceTree = "<group>"; };
 		5ED0391C26C93785003B0140 /* EaseConstraints+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EaseConstraints+Size.swift"; sourceTree = "<group>"; };
 		5EFB657326EC038600FD2716 /* CurrencyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyService.swift; sourceTree = "<group>"; };
+		6017EDDC2855FFE1000282AD /* UITableViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITableViewExtensions.swift; sourceTree = "<group>"; };
 		601A11A42850FA3400A2F8E9 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		66E241F1B336BA06085DB9A6 /* Pods_Currency_ConverterTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Currency_ConverterTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7866CE52FF1937999B06A7F8 /* Pods-Currency Converter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Currency Converter.release.xcconfig"; path = "Target Support Files/Pods-Currency Converter/Pods-Currency Converter.release.xcconfig"; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 			children = (
 				5E71D7CE26B8950200997AC4 /* UITextFieldExtensions.swift */,
 				601A11A42850FA3400A2F8E9 /* DateExtension.swift */,
+				6017EDDC2855FFE1000282AD /* UITableViewExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1418,6 +1421,7 @@
 				D1E4ED142451CD9A00ECE03F /* AppTheme.swift in Sources */,
 				5E35356B2711EDB3001B1563 /* RxDriver+Infallible.swift in Sources */,
 				D13E2BE5247995BC0048E334 /* FavoriteOrderService.swift in Sources */,
+				6017EDDD2855FFE1000282AD /* UITableViewExtensions.swift in Sources */,
 				D1E4ED122451CD8800ECE03F /* Theming.swift in Sources */,
 				D19A9388242D1BEC00DDCEA9 /* JSONParameterEncoder.swift in Sources */,
 				D1885550243608B500476EB3 /* RealmCurrency.swift in Sources */,

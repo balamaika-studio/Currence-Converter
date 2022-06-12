@@ -63,6 +63,8 @@ protocol ConverterServiceProtocol: AnyObject {
     func set(count: Double, for currency: String)
     func set(position: Int, ofCurrency code: String)
     func add(favoriteCurrency code: String)
+    func getFavouriteCurrency() -> [String]
+    func remove(position: Int)
 }
 
 final class ConverterService: ConverterServiceProtocol {
@@ -116,6 +118,17 @@ final class ConverterService: ConverterServiceProtocol {
         codes.insert(code, at: position)
         favoriteCurrenciesCodes = codes
     }
+
+    func getFavouriteCurrency() -> [String] {
+        return favoriteCurrenciesCodes
+    }
+
+    func remove(position: Int) {
+        var codes = favoriteCurrenciesCodes
+        codes.remove(at: position)
+        favoriteCurrenciesCodes = codes
+    }
+
     
     func add(favoriteCurrency code: String) {
         guard !favoriteCurrenciesCodes.contains(code) else { return }

@@ -77,6 +77,7 @@
 "Close" = "Close";
 "Error" = "Error";
 "OK" = "OK";
+"Delete" = "Delete";
 
 // MARK: - Network Errors
 "Network connection" = "Please check your network connection.";

@@ -79,9 +79,9 @@ class BaseTableCell: UITableViewCell, DisplayableCell, ReusableTableViewCell {
         return view
     }()
     
-    var cellInsets: UIEdgeInsets { UIEdgeInsets(top: 0, left: 15.0, bottom: 0, right: 15.0) }
+    var cellInsets: UIEdgeInsets { UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0) }
     
-    var contentInsets: UIEdgeInsets { UIEdgeInsets(top: 10, left: 15.0, bottom: 10, right: 15.0) }
+    var contentInsets: UIEdgeInsets { UIEdgeInsets(top: 10, left: 15, bottom: 10, right: 15) }
     
     var cellHeight: CGFloat? { nil }
     

@@ -225,12 +225,26 @@ final class ConverterViewController: UIViewController {
                     headerView.textLabel?.addSubview(label)
                 }
             })
+        _ = tableView.rx.delegate.methodInvoked(#selector(tableView.delegate?.tableView(_:willBeginEditingRowAt:)))
+            .take(until:tableView.rx.deallocated)
+            .subscribe(onNext: { [weak self] event in
+                self?.tableView.setSwipeActionFont(R.font.poppinsRegular(size: 15)!, withTintColor: .red)
+            })
         tableView
             .rx.setDelegate(self)
             .disposed(by: disposeBag)
         tableView.separatorStyle = .none
 //        tableView.delegate = self
         tableView.refreshControl = refreshControl
+
+        tableView.rx.itemMoved
+            .subscribe(onNext: { indexPaths in
+                print(indexPaths)
+                self.viewModel.service.set(
+                    position: indexPaths.destinationIndex.row,
+                    ofCurrency: self.viewModel.service.getFavouriteCurrency()[indexPaths.sourceIndex.row]
+                )
+            }).disposed(by:disposeBag)
 //        reorderTableView = LongPressReorderTableView(tableView,
 //                                                     scrollBehaviour: .late,
 //                                                     selectedRowScale: .big)
@@ -358,8 +372,16 @@ extension ConverterViewController: UITableViewDelegate {
         //interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
 
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: R.string.localizable.delete()) { (_, _, completionHandler) in
+            self.viewModel.service.remove(position: indexPath.row)
+            self.viewModel.service.fetcheFavoriteCurrencies()
+            completionHandler(true)
+        }
+        deleteAction.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1)
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
     }
 
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
