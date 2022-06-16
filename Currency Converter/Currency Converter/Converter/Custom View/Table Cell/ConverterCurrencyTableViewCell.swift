@@ -64,10 +64,3 @@ extension ConverterCurrencyTableViewCell: Themed {
         reorderControlImageView?.tint(color: theme.textColor)
     }
 }
-
-extension UIImageView {
-    func tint(color: UIColor) {
-        self.image = self.image?.withRenderingMode(.alwaysTemplate)
-        self.tintColor = color
-    }
-}

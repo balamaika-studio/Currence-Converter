@@ -33,6 +33,9 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
         }
     }
+
+    private var exchangedCurrencies: ConverterViewModel!
+
     private let refreshControl = UIRefreshControl()
     private lazy var emptyStateView: UIView = {
         let frame = CGRect(x: tableView.center.x,
@@ -105,6 +108,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
+            self.exchangedCurrencies = converterViewModel
             converterView.updateWith(converterViewModel)
             refreshControl.endRefreshing()
             // request updated favorite after changing of main currencies
@@ -154,7 +158,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     // MARK: Setup
     private func setupView() {
         
-        tableView.register(R.nib.converterCurrencyTableViewCell)
+        tableView.register(R.nib.converterCurrencyTableViewCellType2)
+        tableView.register(UINib(nibName: R.nib.type2SectionHeaderView.name, bundle: nil), forHeaderFooterViewReuseIdentifier: R.nib.type2SectionHeaderView.name)
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -245,7 +250,7 @@ extension ConverterViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCell,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCellType2,
                                                            for: indexPath) else { fatalError() }
         let viewModel = favoriteCurrencies[indexPath.row]
         cell.configure(with: viewModel)
@@ -256,17 +261,41 @@ extension ConverterViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         true
     }
-    
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        switch editingStyle {
-        case .delete:
+
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+    -> UISwipeActionsConfiguration? {
+        let deleteAction = UIContextualAction(style: .destructive, title: R.string.localizable.delete()) { (_, _, completionHandler) in
             tableView.beginUpdates()
-            let currency = favoriteCurrencies.remove(at: indexPath.row)
+            let currency = self.favoriteCurrencies.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
             tableView.endUpdates()
-            interactor?.makeRequest(request: .remove(favorite: currency))
-        default: return
+            self.interactor?.makeRequest(request: .remove(favorite: currency))
+            completionHandler(true)
         }
+        deleteAction.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1)
+        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+        return configuration
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        75
+    }
+
+    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
+        self.tableView.setSwipeActionFont(R.font.poppinsRegular(size: 15)!, withTintColor: .red)
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45.5
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Type2SectionHeaderView") as! Type2SectionHeaderView
+        view.updateTitle(Date().toString())
+
+        return view
+
     }
 }
 

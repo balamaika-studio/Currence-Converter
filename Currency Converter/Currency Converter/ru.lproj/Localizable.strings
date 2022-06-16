@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   Currency Converter
 
@@ -77,6 +77,7 @@
 "Close" = "Закрыть";
 "Error" = "Ошибка";
 "OK" = "OK";
+"Delete" = "Удалить";
 
 // MARK: - Network Errors
 "Network connection" = "Пожалуйста, проверьте ваше сетевое соединение.";

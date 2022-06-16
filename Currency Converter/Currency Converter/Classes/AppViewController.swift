@@ -24,7 +24,7 @@ enum AppViewController {
             
             let tabItem = UITabBarItem(title: R.string.localizable.converterTabBarItem(),
                          image: R.image.converterDeselected(),
-                         selectedImage: R.image.converterSelected())
+                         selectedImage: R.image.converterDeselected())
             navigationController.tabBarItem = tabItem
             
         case .exchangeRates:
@@ -34,7 +34,7 @@ enum AppViewController {
             
             let tabItem = UITabBarItem(title: R.string.localizable.exchangesTabBarItem(),
             image: R.image.exchangesDeselected(),
-            selectedImage: R.image.exchangesSelected())
+            selectedImage: R.image.exchangesDeselected())
             navigationController.tabBarItem = tabItem
             
         case .graph:
@@ -44,7 +44,7 @@ enum AppViewController {
             
             let tabItem = UITabBarItem(title: R.string.localizable.graphTabBarItem(),
             image: R.image.graphDeselected(),
-            selectedImage: R.image.graphSelected())
+            selectedImage: R.image.graphDeselected())
             navigationController.tabBarItem = tabItem
             
         case .settings:
@@ -54,7 +54,7 @@ enum AppViewController {
             
             let tabItem = UITabBarItem(title: R.string.localizable.settingsTabBarItem(),
             image: R.image.settingsDeselected(),
-            selectedImage: R.image.settingsSelected())
+            selectedImage: R.image.settingsDeselected())
             navigationController.tabBarItem = tabItem
         }
         

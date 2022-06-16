@@ -20,9 +20,9 @@ class ConverterPresenter: ConverterPresentationLogic {
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         if Locale.current.identifier.starts(with: "ru") {
-            dateFormatter.dateFormat = "LLL dd, yyyy, HH:mm"
+            dateFormatter.dateFormat = "d.MM.YYYY, hh:mm"
         } else {
-            dateFormatter.dateFormat = "LLL dd, yyyy, HH:mm a"
+            dateFormatter.dateFormat = "d.MM.YYYY, hh:mm a"
             dateFormatter.amSymbol = "AM"
             dateFormatter.pmSymbol = "PM"
         }
@@ -71,15 +71,13 @@ class ConverterPresenter: ConverterPresentationLogic {
             let rate = currency.rate / baseCurrency.rate
             let totalSum = rate * total
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
-            let symbol = getSymbol(forCurrencyCode: currency.currency) ?? ""
-            let stringSum = "\(roundedSum) \(symbol)"
                         
             let currenciesInfo = CurrenciesInfoService.shared.fetch()
             let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
             
             let viewModel = FavoriteConverterViewModel(currency: currency.currency,
                                                        title: title.title,
-                                                       total: stringSum,
+                                                       total: roundedSum,
                                                        rate: currency.rate)
             viewModels.append(viewModel)
         }

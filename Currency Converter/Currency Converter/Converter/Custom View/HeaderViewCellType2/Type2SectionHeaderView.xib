@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="Type2SectionHeaderView" id="iN0-l3-epB" customClass="Type2SectionHeaderView" customModule="Currency_Converter" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="quX-ok-Mvb">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPm-jE-9dw">
+                            <rect key="frame" x="15" y="15" width="40" height="34.5"/>
+                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                            <color key="textColor" red="0.74509803921568629" green="0.74509803921568629" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_update" translatesAutoresizingMaskIntoConstraints="NO" id="fdM-Jy-wMH">
+                            <rect key="frame" x="60" y="24.5" width="16" height="16"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="fdM-Jy-wMH" secondAttribute="height" multiplier="1:1" id="un4-qQ-AYW"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="fdM-Jy-wMH" firstAttribute="leading" secondItem="yPm-jE-9dw" secondAttribute="trailing" constant="5" id="1JD-gf-kPR"/>
+                        <constraint firstItem="fdM-Jy-wMH" firstAttribute="centerY" secondItem="yPm-jE-9dw" secondAttribute="centerY" id="Pxj-RQ-zMo"/>
+                        <constraint firstItem="yPm-jE-9dw" firstAttribute="top" secondItem="quX-ok-Mvb" secondAttribute="top" constant="15" id="kSd-sC-coh"/>
+                        <constraint firstItem="yPm-jE-9dw" firstAttribute="leading" secondItem="quX-ok-Mvb" secondAttribute="leading" constant="15" id="oig-hC-ofZ"/>
+                        <constraint firstAttribute="bottom" secondItem="yPm-jE-9dw" secondAttribute="bottom" constant="7.5" id="yWX-RU-lxJ"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="quX-ok-Mvb" secondAttribute="trailing" id="RNE-bT-Vfy"/>
+                <constraint firstItem="quX-ok-Mvb" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="q3B-X1-MKu"/>
+                <constraint firstAttribute="bottom" secondItem="quX-ok-Mvb" secondAttribute="bottom" id="tNY-Zh-ENr"/>
+                <constraint firstItem="quX-ok-Mvb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ymt-WU-BUc"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="boolean" keyPath="isSkeletonable" value="YES"/>
+            </userDefinedRuntimeAttributes>
+            <connections>
+                <outlet property="titleLabel" destination="yPm-jE-9dw" id="7Od-BN-deH"/>
+            </connections>
+            <point key="canvasLocation" x="105.79710144927537" y="-28.459821428571427"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="ic_update" width="16" height="16"/>
+    </resources>
+</document>

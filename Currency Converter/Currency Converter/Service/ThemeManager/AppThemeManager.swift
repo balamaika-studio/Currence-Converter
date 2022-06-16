@@ -12,6 +12,7 @@ final class AppThemeManager: ThemeManager {
     static let shared: AppThemeManager = .init()
 
     private var theme: SubscribableValue<AppTheme>
+    private var navBarThemeManager: NavBarThemeManager!
 
     var currentTheme: AppTheme {
         get {
@@ -23,9 +24,9 @@ final class AppThemeManager: ThemeManager {
         }
     }
 
-    init() {
-        guard let themeData = UserDefaults.standard.value(forKey: "theme") as? Data,
-        let savedTheme = try? JSONDecoder().decode(AppTheme.self, from: themeData) else {
+    private init() {
+        defer { navBarThemeManager = NavBarThemeManager(appThemeManager: self) }
+        guard let themeData = UserDefaults.standard.value(forKey: "theme") as? Data, let savedTheme = try? JSONDecoder().decode(AppTheme.self, from: themeData) else {
             theme = SubscribableValue<AppTheme>(value: .light)
             return
         }
@@ -35,7 +36,7 @@ final class AppThemeManager: ThemeManager {
     private func setNewTheme(_ newTheme: AppTheme) {
         guard let appDelegateWindow = UIApplication.shared.delegate?.window,
             let window = appDelegateWindow else { return }
-        
+
         UIView.transition(
             with: window,
             duration: 0.3,
@@ -50,12 +51,11 @@ final class AppThemeManager: ThemeManager {
     func subscribeToChanges(_ object: AnyObject, handler: @escaping (AppTheme) -> Void) {
         theme.subscribe(object, using: handler)
     }
-    
+
     private func save(theme: Theme) {
         let themeData = try? JSONEncoder().encode(theme)
         UserDefaults.standard.set(themeData, forKey: "theme")
     }
-    
 }
 
 extension Themed where Self: AnyObject {
