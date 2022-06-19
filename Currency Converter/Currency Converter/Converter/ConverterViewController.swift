@@ -7,8 +7,11 @@
 //
 
 import UIKit
-import JJFloatingActionButton
 import LongPressReorder
+
+protocol ConverterUpdateViewDelegate: AnyObject {
+    func updateView()
+}
 
 protocol ConverterDisplayLogic: class {
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData)
@@ -25,7 +28,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var verticalConstraint: NSLayoutConstraint!
     
     private var reorderTableView: LongPressReorderTableView!
-    private var actionButton: JJFloatingActionButton!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]! {
@@ -180,36 +182,17 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         converterView.swapCurrencyTapped = self.swapCurrencyTapped
         converterView.topCurrencyTotal = self.updateFavoriteWith
         
-        addFAB()
+        setupNavBar()
     }
     
-    private func addFAB() {
-        actionButton = JJFloatingActionButton()
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(actionButton)
-        horizontalConstraint = safeArea.trailingAnchor.constraint(equalTo: actionButton.trailingAnchor, constant: 31)
-        let bottomInset = AdBannerInsetService.shared.bannerHeight + 8
-        verticalConstraint = safeBottomAnchor.constraint(equalTo: actionButton.bottomAnchor,
-                                                         constant: bottomInset)
-        
-        horizontalConstraint.isActive = true
-        verticalConstraint.isActive = true
-        
-        actionButton.handleSingleActionDirectly = true
-        actionButton.buttonDiameter = 56
-        actionButton.buttonColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9882352941, alpha: 1)
+    private func setupNavBar() {
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
 
-        // shadow
-        actionButton.layer.shadowColor = UIColor.black.cgColor
-        actionButton.layer.shadowOffset = CGSize(width: 0, height: actionButton.buttonDiameter / 10)
-        actionButton.layer.shadowOpacity = 0.3
-        actionButton.layer.shadowRadius = 8
-        
-        // action handler
-        actionButton.addItem(title: nil, image: nil) { [weak self] _ in
-            guard let self = self else { return }
-            self.router?.showFavoriteViewController()
-        }
+        navigationItem.rightBarButtonItems = [add]
+    }
+    
+    @objc private func addTapped() {
+        router?.showFavoriteViewController()
     }
   
     @objc private func closeKeyboard() {
@@ -319,5 +302,13 @@ extension ConverterViewController {
 extension ConverterViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+// MARK: - ConverterUpdateViewDelegate
+extension ConverterViewController: ConverterUpdateViewDelegate {
+    func updateView() {
+        interactor?.makeRequest(request: .updateCurrencies)
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
 }

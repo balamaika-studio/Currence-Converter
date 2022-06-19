@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoriteCurrencyViewController" customModule="Currency_Converter" customModuleProvider="target">
+            <connections>
+                <outlet property="buttonsContainerView" destination="Jd8-qY-rpg" id="bko-Um-IHb"/>
+                <outlet property="cancelButton" destination="ZsQ-nL-Gmc" id="CxG-Og-vNv"/>
+                <outlet property="confirmButton" destination="iFd-vj-Lz0" id="QSw-6J-Xdz"/>
+                <outlet property="searchBar" destination="npH-1g-KBF" id="IPh-vr-rLU"/>
+                <outlet property="tableView" destination="wl3-Uk-epu" id="Vrs-Uc-fZp"/>
+                <outlet property="view" destination="iN0-l3-epB" id="T2C-zL-GX5"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <searchBar contentMode="redraw" searchBarStyle="prominent" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="npH-1g-KBF">
+                    <rect key="frame" x="10" y="52" width="370" height="51"/>
+                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                </searchBar>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wl3-Uk-epu" customClass="AdaptiveTableView" customModule="Currency_Converter" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="103" width="390" height="671"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jd8-qY-rpg">
+                    <rect key="frame" x="0.0" y="774" width="390" height="70"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Fvx-N2-Cll">
+                            <rect key="frame" x="16" y="15" width="358" height="40"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZsQ-nL-Gmc">
+                                    <rect key="frame" x="0.0" y="0.0" width="171.66666666666666" height="40"/>
+                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Button">
+                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="cancelButtonAction:" destination="-1" eventType="touchUpInside" id="x4Y-uj-fSw"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFd-vj-Lz0">
+                                    <rect key="frame" x="186.66666666666663" y="0.0" width="171.33333333333337" height="40"/>
+                                    <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="Button"/>
+                                    <connections>
+                                        <action selector="confirmButtonAction:" destination="-1" eventType="touchUpInside" id="ORt-om-MoE"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="ZsQ-nL-Gmc" firstAttribute="width" secondItem="iFd-vj-Lz0" secondAttribute="width" id="SJV-ue-MRq"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="Fvx-N2-Cll" firstAttribute="top" secondItem="Jd8-qY-rpg" secondAttribute="top" constant="15" id="3WR-4v-ccv"/>
+                        <constraint firstAttribute="bottom" secondItem="Fvx-N2-Cll" secondAttribute="bottom" constant="15" id="933-GD-EKl"/>
+                        <constraint firstAttribute="height" constant="70" id="KuH-pL-qE1"/>
+                        <constraint firstAttribute="trailing" secondItem="Fvx-N2-Cll" secondAttribute="trailing" constant="16" id="OEL-JL-psj"/>
+                        <constraint firstItem="Fvx-N2-Cll" firstAttribute="leading" secondItem="Jd8-qY-rpg" secondAttribute="leading" constant="16" id="Xop-0S-hbY"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="Nzj-bd-fat"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="wl3-Uk-epu" secondAttribute="trailing" id="A2n-zP-Fj0"/>
+                <constraint firstItem="Jd8-qY-rpg" firstAttribute="top" secondItem="wl3-Uk-epu" secondAttribute="bottom" id="ZON-BG-fyH"/>
+                <constraint firstItem="wl3-Uk-epu" firstAttribute="leading" secondItem="Nzj-bd-fat" secondAttribute="leading" id="aDy-Tb-VkC"/>
+                <constraint firstItem="wl3-Uk-epu" firstAttribute="top" secondItem="npH-1g-KBF" secondAttribute="bottom" id="gao-on-Ij7"/>
+                <constraint firstItem="npH-1g-KBF" firstAttribute="top" secondItem="Nzj-bd-fat" secondAttribute="top" constant="8" id="pDF-1j-ugD"/>
+                <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="npH-1g-KBF" secondAttribute="trailing" constant="10" id="rSo-C2-n39"/>
+                <constraint firstItem="npH-1g-KBF" firstAttribute="leading" secondItem="Nzj-bd-fat" secondAttribute="leading" constant="10" id="swd-09-GWV"/>
+                <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="Jd8-qY-rpg" secondAttribute="trailing" id="uea-dZ-lZZ"/>
+                <constraint firstItem="Jd8-qY-rpg" firstAttribute="leading" secondItem="Nzj-bd-fat" secondAttribute="leading" id="xXO-f5-zSn"/>
+                <constraint firstAttribute="bottom" secondItem="Jd8-qY-rpg" secondAttribute="bottom" id="xl3-s5-oNO"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <point key="canvasLocation" x="452.30769230769226" y="368.2464454976303"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

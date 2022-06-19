@@ -16,6 +16,9 @@
 "Favorite title" = "Избранное";
 "Search placeholder" = "Поиск";
 "Favorite tabBar item" = "Избранное";
+"Favourite currency segment title" = "Валюта";
+"Favourite cryptocurrency segment title" = "Криптовалюта";
+"Favourite add currency title" = "Добавить валюту";
 
 // MARK: - Exchanges
 "Exchanges title" = "Курс валют";
@@ -78,6 +81,8 @@
 "Error" = "Ошибка";
 "OK" = "OK";
 "Delete" = "Удалить";
+"Cancel" = "Отмена";
+"Add" = "Добавить";
 
 // MARK: - Network Errors
 "Network connection" = "Пожалуйста, проверьте ваше сетевое соединение.";

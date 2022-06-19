@@ -16,6 +16,9 @@
 "Favorite title" = "Favorite";
 "Search placeholder" = "Search";
 "Favorite tabBar item" = "Favorite";
+"Favourite currency segment title" = "Currency";
+"Favourite cryptocurrency segment title" = "Сryptocurrency";
+"Favourite add currency title" = "Add currency";
 
 // MARK: - Exchanges
 "Exchanges title" = "Exchange rates";
@@ -78,6 +81,8 @@
 "Error" = "Error";
 "OK" = "OK";
 "Delete" = "Delete";
+"Cancel" = "Cancel";
+"Add" = "Add";
 
 // MARK: - Network Errors
 "Network connection" = "Please check your network connection.";

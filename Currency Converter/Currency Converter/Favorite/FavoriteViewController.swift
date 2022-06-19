@@ -9,17 +9,25 @@
 import UIKit
 
 protocol FavoriteDisplayLogic: class {
-    func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData)
 }
 
 class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     
-    private var quotes = [FavoriteViewModel]()
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var navbarView: UIView!
+    @IBOutlet weak var navbarTitleLabel: UILabel!
+    @IBOutlet weak var containerView: UIView!
+    
+    private lazy var favouriteCurrencyVC: FavoriteCurrencyViewController = {
+        var viewController = FavoriteCurrencyViewController(nib: R.nib.favoriteCurrencyViewController)
+        add(asChildViewController: viewController)
+        return viewController
+    }()
     
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic)?
+    weak var delegate: ConverterUpdateViewDelegate?
     
     // MARK: Object lifecycle
     
@@ -57,133 +65,110 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.makeRequest(request: .loadCurrencies)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        searchBar.text = String()
-        searchBar(self.searchBar, textDidChange: String())
+        delegate?.updateView()
     }
     
-    func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData) {
-        switch viewModel {
-        case .showCurrencies(let quotes):
-            self.quotes = quotes
-            self.tableView.reloadData()
-        }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        
+        setupMainView()
+    }
+    
+    // MARK: - Private Methods
+    
+    private func setupMainView() {
+        mainView.layer.cornerRadius = 14
+        mainView.clipsToBounds = true
+    }
+    
+    private func setNavbarLabelTitle() {
+        navbarTitleLabel.text = R.string.localizable.favouriteAddCurrencyTitle()
     }
     
     private func setupView() {
-        title = R.string.localizable.favoriteTitle()
-        let rootViewControoler = navigationController?.viewControllers.first
-        let rootVCTitle = rootViewControoler?.navigationController?.navigationBar.topItem?.title
-        navigationController?.navigationBar.topItem?.title = rootVCTitle
-        
-        searchBar.backgroundImage = UIImage()
-        searchBar.placeholder = setPlaceHolder(placeholder: R.string.localizable.searchPlaceholder())
-        searchBar.delegate = self
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.register(R.nib.favoriteTableViewCell)
-        tableView.separatorStyle = .none
-        tableView.allowsMultipleSelection = true
-        tableView.rowHeight = 62
+        setNavbarLabelTitle()
+        setupSegmentedControl()
+        updateView(selectedIndex: segmentedControl.selectedSegmentIndex)
     }
     
-    private func setPlaceHolder(placeholder: String) -> String {
-        let text = placeholder
-        if text.last! != " " {
-            let maxSize = CGSize(width: UIScreen.main.bounds.size.width - 97, height: 40)
-            // get the size of the text
-            let widthText = text.boundingRect(with: maxSize,
-                                              options: .usesLineFragmentOrigin,
-                                              attributes: nil,
-                                              context: nil).size.width
-            // get the size of one space
-            let widthSpace = " ".boundingRect(with: maxSize,
-                                              options: .usesLineFragmentOrigin,
-                                              attributes: nil,
-                                              context: nil).size.width
-            let spaces = floor((maxSize.width - widthText) / widthSpace)
-            // add the spaces
-            let newText = text + ((Array(repeating: " ",
-                                         count: Int(spaces)).joined(separator: "")))
-            // apply the new text if nescessary
-            if newText != text {
-                return newText
-            }
+    private func setupSegmentedControl() {
+        // Configure Segmented Control
+        segmentedControl.removeAllSegments()
+        segmentedControl.insertSegment(withTitle: R.string.localizable.favouriteCurrencySegmentTitle(),
+                                       at: 0, animated: false)
+        segmentedControl.insertSegment(withTitle: R.string.localizable.favouriteCryptocurrencySegmentTitle(),
+                                       at: 1, animated: false)
+        segmentedControl.addTarget(self,
+                                   action: #selector(selectionDidChange(_:)),
+                                   for: .valueChanged)
+        
+        // Select First Segment
+        segmentedControl.selectedSegmentIndex = 0
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
+                                                for: .selected)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)],
+                                                for: .normal)
+        segmentedControl.layer.cornerRadius = 10
+        segmentedControl.layer.borderWidth = 1
+        segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+    }
+    
+    @objc private func selectionDidChange(_ sender: UISegmentedControl) {
+        updateView(selectedIndex: sender.selectedSegmentIndex)
+    }
+
+    private func updateView(selectedIndex: Int) {
+        switch selectedIndex {
+        case 0:
+            remove(asChildViewController: favouriteCurrencyVC)
+            add(asChildViewController: favouriteCurrencyVC)
+        case 1:
+            remove(asChildViewController: favouriteCurrencyVC)
+            add(asChildViewController: favouriteCurrencyVC)
+        default:
+            break
         }
-        return placeholder;
+    }
+    
+    private func add(asChildViewController viewController: UIViewController) {
+        // Add Child View Controller
+        addChild(viewController)
+        
+        // Add Child View as Subview
+        containerView.addSubview(viewController.view)
+        
+        // Configure Child View
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+        
+        // Notify Child View Controller
+        viewController.didMove(toParent: self)
+    }
+    
+    private func remove(asChildViewController viewController: UIViewController) {
+        // Notify Child View Controller
+        viewController.willMove(toParent: nil)
+        
+        // Remove Child View From Superview
+        viewController.view.removeFromSuperview()
+        
+        // Notify Child View Controller
+        viewController.removeFromParent()
     }
 }
 
 // MARK: - Themed
 extension FavoriteViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        var searchTextField: UITextField?
-        let searchIcon = theme == .light ?
-            R.image.searchLight() :
-            R.image.searchDark()
-        
-        if #available(iOS 13.0, *) {
-            searchTextField = searchBar.searchTextField
-        } else {
-            searchTextField = searchBar.value(forKey: "_searchField") as? UITextField
-        }
-        
-        searchBar.barTintColor = theme.specificBackgroundColor
-        searchBar.setImage(searchIcon, for: .search, state: .normal)
-        searchTextField?.textColor = theme.searchTextColor
-        searchTextField?.backgroundColor = theme.searchTextFieldColor
-        view.backgroundColor = theme.specificBackgroundColor
-        tableView.backgroundColor = .clear
-        tableView.reloadData()
-    }
-}
-
-// MARK: - UITableViewDelegate
-extension FavoriteViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewModel = quotes[indexPath.row]
-        interactor?.makeRequest(request: .addFavorite(viewModel))
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        let viewModel = quotes[indexPath.row]
-        interactor?.makeRequest(request: .removeFavorite(viewModel))
-    }
-}
-
-// MARK: - UITableViewDataSource
-extension FavoriteViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return quotes.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let id = R.reuseIdentifier.favoriteTableViewCell
-        guard let
-            cell = tableView.dequeueReusableCell(withIdentifier: id, for: indexPath) else {
-                fatalError()
-        }
-        
-        let quote = quotes[indexPath.row]
-        cell.configure(with: quote)
-        if quote.isSelected {
-            tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        }
-        return cell
-    }
-}
-
-// MARK: - UISearchBarDelegate
-extension FavoriteViewController: UISearchBarDelegate {
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        interactor?.makeRequest(request: .filter(title: searchText))
-    }
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder()
+        navbarTitleLabel.textColor = .white
     }
 }

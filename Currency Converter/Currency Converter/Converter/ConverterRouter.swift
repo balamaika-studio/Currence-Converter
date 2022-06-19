@@ -27,12 +27,13 @@ class ConverterRouter: ChoiceDataPassing {
     }
     
     func showFavoriteViewController() {
-        guard let viewController = viewController,
-            let navigationController = viewController.navigationController else {
+        guard let viewController = viewController else {
                 fatalError("Fail route to second")
         }
         let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
-        navigationController.pushViewController(favoriteViewController, animated: true)
+        favoriteViewController.modalPresentationStyle = .overFullScreen
+        favoriteViewController.delegate = viewController
+        viewController.present(favoriteViewController, animated: true, completion: nil)
     }
 }
 
