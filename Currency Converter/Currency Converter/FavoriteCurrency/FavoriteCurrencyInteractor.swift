@@ -53,7 +53,7 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     
     private func fetchCurrencies() {
         storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-            let currenciesInfo = CurrenciesInfoService.shared.fetch()
+            var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
             self.presenter?.presentData(response: .currencies(currencies, currenciesInfo))
         }
     }

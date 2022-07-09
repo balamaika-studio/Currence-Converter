@@ -72,7 +72,9 @@ class ConverterPresenter: ConverterPresentationLogic {
             let totalSum = rate * total
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
                         
-            let currenciesInfo = CurrenciesInfoService.shared.fetch()
+            var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
+            let cryptoCurrency =  CurrenciesInfoService.shared.fetchCrypto()
+            currenciesInfo.append(contentsOf: cryptoCurrency)
             let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
             
             let viewModel = FavoriteConverterViewModel(currency: currency.currency,
@@ -93,8 +95,8 @@ class ConverterPresenter: ConverterPresentationLogic {
         let firstRoundedRate = AccuracyManager.shared.formatNumber(firstExchangeRate)
         let secondRoundedRate = AccuracyManager.shared.formatNumber(secondExchangeRate)
 
-        let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? "Error"
-        let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? "Error"
+        let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? first.currency
+        let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? second.currency
         
         let firstExchange = Exchange(currency: first.currency,
                              rate: firstRate,

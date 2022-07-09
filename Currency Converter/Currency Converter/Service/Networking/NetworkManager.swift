@@ -18,8 +18,8 @@ struct NetworkManager {
     let exchangeRatesRouter = Router<ExchangeRatesApi>()
     private let baseCurrency = "EUR"
     
-    func getQuotes(completion: @escaping (_ response: ExchangeRatesHistoryResponse?, _ error: String?) -> Void) {
-        exchangeRatesRouter.request(.live(base: baseCurrency)) { data, response, error in
+    func getQuotes(exchangeType: ExchangeType, completion: @escaping (_ response: ExchangeRatesHistoryResponse?, _ error: String?) -> Void) {
+        exchangeRatesRouter.request(.live(base: baseCurrency, type: exchangeType)) { data, response, error in
             self.build(ExchangeRatesHistoryResponse.self,
                        with: (data, response, error),
                        callback: completion)

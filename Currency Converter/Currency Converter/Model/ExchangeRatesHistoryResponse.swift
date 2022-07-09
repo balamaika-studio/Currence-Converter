@@ -11,17 +11,16 @@ import Foundation
 struct ExchangeRatesHistoryResponse: Decodable {
     
     private enum CodingKeys: String, CodingKey {
-        case date, base, rates
+        case info, response
     }
+
+    private let info: infoModel
+    private let response: [String: String]
     
-    let base: String
-    private let date: String
-    private let rates: [String: Double]
-    
-    var quotes: [Quote] { rates.map { Quote(currency: $0, rate: $1) } }
+    var quotes: [Quote] { response.map { Quote(currency: $0, rate: Double($1) ?? 0) } }
     
     var updated: Int {
-        guard let date = DateFormatter.exchangeRateGeneralDateFormatter.date(from: self.date) else { return 0 }
+        guard let date = DateFormatter.exchangeRateGeneralDateFormatter.date(from: self.info.server_time) else { return 0 }
         return Int(date.timeIntervalSince1970)
     }
 }

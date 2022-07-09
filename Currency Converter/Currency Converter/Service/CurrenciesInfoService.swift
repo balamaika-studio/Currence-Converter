@@ -24,7 +24,7 @@ class CurrenciesInfoService {
     private init() { }
     
     /// load data from json
-    func fetch() -> [CurrencyInfo] {
+    func fetchCurrency() -> [CurrencyInfo] {
         let path = Bundle.main.path(forResource: "currenciesNames", ofType: ".json")!
         let fileUrl = URL(fileURLWithPath: path)
         let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)
@@ -34,6 +34,21 @@ class CurrenciesInfoService {
         json.forEach { code, _ in
             guard let title = getTitle(for: code) else { return }
             let model = CurrencyInfo(abbreviation: code, title: title)
+            result.append(model)
+        }
+        currencyInfo = result
+        return currencyInfo
+    }
+
+    func fetchCrypto() -> [CurrencyInfo] {
+        let path = Bundle.main.path(forResource: "cryptocurrenciesNames", ofType: ".json")!
+        let fileUrl = URL(fileURLWithPath: path)
+        let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)
+        let json = try! JSONSerialization.jsonObject(with: data, options: []) as! [String: String]
+
+        var result = [CurrencyInfo]()
+        json.forEach { code, name in
+            let model = CurrencyInfo(abbreviation: code, title: name)
             result.append(model)
         }
         currencyInfo = result
@@ -53,7 +68,7 @@ class CurrenciesInfoService {
     }
     
     func getGraphDefaultCurrencies() -> GraphConverterViewModel {
-        let info = currencyInfo == nil ? fetch() : currencyInfo!
+        let info = currencyInfo == nil ? fetchCurrency() : currencyInfo!
         guard let baseCode = graphDefaultCurrencies.first,
             let relativeCode = graphDefaultCurrencies.last,
             let baseInfo = info.first(where: { $0.abbreviation == baseCode }),

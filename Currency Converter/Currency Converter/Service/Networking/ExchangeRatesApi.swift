@@ -11,21 +11,28 @@ import Foundation
 extension DateFormatter {
     static let exchangeRateGeneralDateFormatter: DateFormatter = {
         let df = DateFormatter()
-        df.dateFormat = "yyyy-MM-dd"
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss zzz"
         return df
     }()
 }
 
 enum ExchangeRatesApi {
     case timeFrame(base: String, currencies: [String], start: String, end: String)
-    case live(base: String)
+    case live(base: String, type: ExchangeType)
     case historical(date: Date)
 }
 
+enum ExchangeType: String {
+    case forex = "forex"
+    case crypto = "crypto"
+}
+
 extension ExchangeRatesApi: EndPointType {
+
+    var apiKey: String { "dgBArJjhnOMS5yt88X2TSJwSW" }
     
     var basePath: String {
-        return "https://api.exchangerate.host/"
+        return "https://fcsapi.com/api-v3/forex/"
     }
     
     var baseURL: URL {
@@ -39,7 +46,7 @@ extension ExchangeRatesApi: EndPointType {
         switch self {
         case .timeFrame: return "timeseries"
         case .historical(let date): return DateFormatter.exchangeRateGeneralDateFormatter.string(from: date)
-        case .live: return "latest"
+        case .live: return "base_latest"
         }
     }
     
@@ -57,10 +64,12 @@ extension ExchangeRatesApi: EndPointType {
                                                           "symbols": currenciesString,
                                                           "start_date": start,
                                                           "end_date": end])
-        case .live(let base):
+        case .live(let base, let type):
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["base" : base])
+                                          urlParameters: ["symbol": base,
+                                                          "type": type,
+                                                          "access_key": apiKey])
         case .historical: return .request
         }
     }

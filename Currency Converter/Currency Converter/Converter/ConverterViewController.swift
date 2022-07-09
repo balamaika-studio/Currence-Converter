@@ -99,6 +99,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadConverterCurrencies)
+        interactor?.makeRequest(request: .loadCryptoCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
     
@@ -201,6 +202,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     @objc private func refreshCurrencies(_ sender: Any) {
         interactor?.makeRequest(request: .updateCurrencies)
+        interactor?.makeRequest(request: .updateCrypto)
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
 }

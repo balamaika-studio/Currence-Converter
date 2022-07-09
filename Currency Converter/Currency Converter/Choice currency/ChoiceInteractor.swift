@@ -38,7 +38,9 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
                     filterGraphCurrencies(from: currencies) :
                     currencies
                 
-                let currenciesInfo = CurrenciesInfoService.shared.fetch()
+                var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
+                let cryptoCurrency =  CurrenciesInfoService.shared.fetchCrypto()
+                currenciesInfo.append(contentsOf: cryptoCurrency)
                 self.presenter?.presentData(response: .currencies(self.currencies,
                                                                   currenciesInfo))
             }

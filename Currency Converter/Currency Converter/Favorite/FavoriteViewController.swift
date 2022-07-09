@@ -24,6 +24,12 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         add(asChildViewController: viewController)
         return viewController
     }()
+
+    private lazy var favouriteCryptocurrencyVC: FavoriteCryptocurrencyViewController = {
+        var viewController = FavoriteCryptocurrencyViewController(nib: R.nib.favoriteCryptocurrencyViewController)
+        add(asChildViewController: viewController)
+        return viewController
+    }()
     
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic)?
@@ -124,11 +130,11 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     private func updateView(selectedIndex: Int) {
         switch selectedIndex {
         case 0:
-            remove(asChildViewController: favouriteCurrencyVC)
+            remove(asChildViewController: favouriteCryptocurrencyVC)
             add(asChildViewController: favouriteCurrencyVC)
         case 1:
             remove(asChildViewController: favouriteCurrencyVC)
-            add(asChildViewController: favouriteCurrencyVC)
+            add(asChildViewController: favouriteCryptocurrencyVC)
         default:
             break
         }

@@ -18,6 +18,6 @@ protocol CurrencyPairViewModel {
 
 enum Change: String, RawRepresentable {
     case increase
-    case drop
+    case down
     case stay
 }

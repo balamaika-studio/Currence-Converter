@@ -64,7 +64,7 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
         if currentRate > historicalRate {
             change = .increase
         } else if currentRate < historicalRate {
-            change = .drop
+            change = .down
         }
         return change
     }

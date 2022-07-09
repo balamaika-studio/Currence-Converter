@@ -68,16 +68,26 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
                                                                      total: lastTotalSum))
             }
             
-        case .loadConverterCurrencies:
+        case .loadCryptoCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
             storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
-                $0.isEmpty ? loadQuotes() : setupConverter(with: $0)
+                $0.isEmpty ? loadQuotes(exchangeType: .crypto) : setupConverter(with: $0)
+            }
+
+        case .loadConverterCurrencies:
+            // if there are saved currencies, load them from DB
+            // else load USD -> BTC from net
+            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+                $0.isEmpty ? loadQuotes(exchangeType: .forex) : setupConverter(with: $0)
             }
             
         case .updateCurrencies:
-            loadQuotes(update: true)
-            
+            loadQuotes(update: true, exchangeType: .forex)
+
+        case .updateCrypto:
+            loadQuotes(update: true, exchangeType: .crypto)
+
         case .remove(let favoriteCurrency):
             update(favoriteCurrency, isFavorite: false)
             
@@ -102,8 +112,8 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         }
     }
     
-    private func loadQuotes(update: Bool = false) {
-        networkManager.getQuotes { response, errorMessage in            
+    private func loadQuotes(update: Bool = false, exchangeType: ExchangeType) {
+        networkManager.getQuotes(exchangeType: exchangeType) { response, errorMessage in
             guard let quotes = response?.quotes else {
                 self.presenter?.presentData(response: .error(errorMessage))
                 return

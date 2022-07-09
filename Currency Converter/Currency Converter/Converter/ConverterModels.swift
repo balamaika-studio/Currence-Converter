@@ -15,9 +15,11 @@ enum Converter {
             enum RequestType {
                 case changeCurrency(name: String)
                 case loadConverterCurrencies
+                case loadCryptoCurrencies
                 case loadFavoriteCurrencies(total: Double? = nil)
                 case updateBaseCurrency(base: Currency)
                 case updateCurrencies
+                case updateCrypto
                 case remove(favorite: Currency)
                 case changeBottomCurrency(with: Currency)
                 case saveFavoriteOrder(currencies: [Currency])

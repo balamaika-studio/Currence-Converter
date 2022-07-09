@@ -38,13 +38,13 @@ class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
                 if rates.isEmpty {
                     defaultRelatives.forEach { stringRelative in
                         let model = buildRelative(stringRelative)
-                        let base = currencies.first { $0.currency == model.base }!
-                        let relative = currencies.first { $0.currency == model.relative }!
-                        
-                        try? storage.create(RealmExchangeRate.self) { rate in
-                            rate.base = base
-                            rate.relative = relative
-                            rate.isSelected = model.isSelected
+                        if let base = currencies.first(where: { $0.currency == model.base }),
+                           let relative = currencies.first(where: { $0.currency == model.relative }) {
+                            try? storage.create(RealmExchangeRate.self) { rate in
+                                rate.base = base
+                                rate.relative = relative
+                                rate.isSelected = model.isSelected
+                            }
                         }
                     }
                 }

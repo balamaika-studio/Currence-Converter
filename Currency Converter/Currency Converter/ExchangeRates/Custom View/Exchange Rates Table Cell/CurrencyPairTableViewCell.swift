@@ -44,7 +44,7 @@ class CurrencyPairTableViewCell: UITableViewCell {
     private func rateColor(change: Change) -> UIColor {
         var color: UIColor
         switch change {
-        case .drop: color = #colorLiteral(red: 0.8705882353, green: 0.08235294118, blue: 0.08235294118, alpha: 1)
+        case .down: color = #colorLiteral(red: 0.8705882353, green: 0.08235294118, blue: 0.08235294118, alpha: 1)
         case .increase: color = #colorLiteral(red: 0.01176470588, green: 0.6745098039, blue: 0.262745098, alpha: 1)
         case .stay: color = .darkText
         }

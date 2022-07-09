@@ -115,7 +115,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         if UserDefaults.standard.bool(forKey: "autoUpdate") {
             print("Load Quotes")
-            networkManager.getQuotes { response, errorMessage in
+            networkManager.getQuotes(exchangeType: .forex) { response, errorMessage in
+                guard let quotes = response?.quotes else { return }
+                UserDefaults.standard.set(response!.updated, forKey: "updated")
+                self.updateQuotes(quotes, in: self.storage)
+            }
+
+            networkManager.getQuotes(exchangeType: .crypto) { response, errorMessage in
                 guard let quotes = response?.quotes else { return }
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
                 self.updateQuotes(quotes, in: self.storage)
