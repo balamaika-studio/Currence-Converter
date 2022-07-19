@@ -39,8 +39,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let graphViewController = AppViewController.graph.viewController
         let settingsViewController = AppViewController.settings.viewController
         
-        tabBarViewController.viewControllers = [exchangeRatesViewController,
-                                                converterViewController,
+        tabBarViewController.viewControllers = [converterViewController,
+                                                exchangeRatesViewController,
                                                 graphViewController,
                                                 settingsViewController]
         
