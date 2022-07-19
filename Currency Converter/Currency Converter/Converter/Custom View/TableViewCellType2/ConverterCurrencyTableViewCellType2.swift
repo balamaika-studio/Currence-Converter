@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ConverterCurrencyTableViewCellType2Deleagte: class {
-    func changeCurrencyTapped(exchangeView view: UITableViewCell)
+    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: String)
     func convert(exchangeView sender: UITableViewCell, total: Double)
 }
 
@@ -23,6 +23,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     private let maxLength = 8
     private var validateService: Validating?
     weak var delegate: ConverterCurrencyTableViewCellType2Deleagte?
+    var model: FavoriteConverterViewModel?
 
     var total: Double {
         return Double(countTextField.text ?? "0") ?? 0
@@ -50,6 +51,14 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
         countTextField.addAccessoryViewWithDoneButton()
         setUpClearSetting()
         countTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
+        countTextField.addTarget(self, action: #selector(self.textFieldDidBeginEditing(_:)), for: .editingDidBegin)
+    }
+
+    @objc func textFieldDidBeginEditing(_ textField: UITextField) {
+        guard let currency = model?.currency else {
+            return
+        }
+        delegate?.changeCurrencyTapped(exchangeView: self, currencyName: currency)
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -91,6 +100,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
         currencyTitleLabel.text = viewModel.title
         countTextField.text = viewModel.total
         selectionStyle = .none
+        model = viewModel
     }
 }
 

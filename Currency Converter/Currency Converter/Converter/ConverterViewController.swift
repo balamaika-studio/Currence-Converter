@@ -19,7 +19,6 @@ protocol ConverterDisplayLogic: class {
 
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var converterView: ConverterView!
     
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
@@ -112,7 +111,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
             self.exchangedCurrencies = converterViewModel
-            converterView.updateWith(converterViewModel)
+//            converterView.updateWith(converterViewModel)
             refreshControl.endRefreshing()
             // request updated favorite after changing of main currencies
             interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
@@ -136,8 +135,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     private func swapCurrencyTapped(converter model: ConverterViewModel) {
-        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
-        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
+//        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
+//        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
     
@@ -179,10 +178,10 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                  for: .valueChanged)
 
         favoriteCurrencies = []
-        converterView.changeCurrencyTapped = self.changeCurrencyTapped
-        converterView.swapCurrencyTapped = self.swapCurrencyTapped
-        converterView.topCurrencyTotal = self.updateFavoriteWith
-        
+//        converterView.changeCurrencyTapped = self.changeCurrencyTapped
+//        converterView.swapCurrencyTapped = self.swapCurrencyTapped
+//        converterView.topCurrencyTotal = self.updateFavoriteWith
+
         setupNavBar()
     }
     
@@ -223,8 +222,8 @@ extension ConverterViewController: ChoiceBackDataPassing {
     }
     
     func updateControllerWithSelectedCurrency() {
-        let currencyName = converterView.replacingView.currencyName
-        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+//        let currencyName = converterView.replacingView.currencyName
+//        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
     }
 }
 
@@ -238,6 +237,7 @@ extension ConverterViewController: UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.converterCurrencyTableViewCellType2,
                                                            for: indexPath) else { fatalError() }
         let viewModel = favoriteCurrencies[indexPath.row]
+        cell.delegate = self
         cell.configure(with: viewModel)
         return cell
     }
@@ -312,5 +312,16 @@ extension ConverterViewController: ConverterUpdateViewDelegate {
     func updateView() {
         interactor?.makeRequest(request: .updateCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+    }
+}
+
+extension ConverterViewController: ConverterCurrencyTableViewCellType2Deleagte {
+    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: String) {
+        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+    }
+
+    func convert(exchangeView sender: UITableViewCell, total: Double) {
+        // MARK: - TODO
+//        updateFavoriteWith(total: total)
     }
 }
