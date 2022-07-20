@@ -35,6 +35,7 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		60AC45F62888421C00484451 /* UISegmentControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC45F52888421C00484451 /* UISegmentControlExtension.swift */; };
 		60C1FB4A285B7F3000AEA522 /* NavBarThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C1FB49285B7F3000AEA522 /* NavBarThemeManager.swift */; };
 		60C1FB6A285B7F9800AEA522 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C1FB4D285B7F9800AEA522 /* Lato-Italic.ttf */; };
 		60C1FB6B285B7F9800AEA522 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C1FB4E285B7F9800AEA522 /* Lato-LightItalic.ttf */; };
@@ -254,6 +255,7 @@
 		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		60AC45F52888421C00484451 /* UISegmentControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControlExtension.swift; sourceTree = "<group>"; };
 		60C1FB49285B7F3000AEA522 /* NavBarThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarThemeManager.swift; sourceTree = "<group>"; };
 		60C1FB4D285B7F9800AEA522 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		60C1FB4E285B7F9800AEA522 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -673,6 +675,7 @@
 				60C1FB8F285B8E1100AEA522 /* DateExtension.swift */,
 				60C1FB8D285B8DFD00AEA522 /* UITextFieldExtensions.swift */,
 				60C1FB9B285B98AA00AEA522 /* UITableViewExtension.swift */,
+				60AC45F52888421C00484451 /* UISegmentControlExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1373,6 +1376,7 @@
 				D1EF9A29242394F400DD328C /* Router.swift in Sources */,
 				60C1FB8B285B884F00AEA522 /* ConverterCurrencyTableViewCellType2.swift in Sources */,
 				D119C3C624C5E29C006793C3 /* NoOverlappingLabelsXAxisRenderer.swift in Sources */,
+				60AC45F62888421C00484451 /* UISegmentControlExtension.swift in Sources */,
 				D130B3B624B61D6C00068D20 /* ValidateService.swift in Sources */,
 				D19A936D242CF64000DDCEA9 /* FavoritePresenter.swift in Sources */,
 				D163AFEF244E33C300014800 /* SectionCellType.swift in Sources */,

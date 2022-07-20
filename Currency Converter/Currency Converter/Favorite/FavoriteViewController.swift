@@ -121,6 +121,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         segmentedControl.layer.cornerRadius = 10
         segmentedControl.layer.borderWidth = 1
         segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+        segmentedControl.setClearBackgroundSegmentControl()
     }
     
     @objc private func selectionDidChange(_ sender: UISegmentedControl) {
