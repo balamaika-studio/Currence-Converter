@@ -32,7 +32,7 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
             
         case .removeFavorite(let model):
             update(model, isFavorite: false)
-            let currency = Quote(currency: model.currency, rate: 0)
+            let currency = Quote(currency: model.currency, rate: 0, index: 0)
             FavoriteOrderService.shared.removeFromOrder(currency)
             presenter?.presentData(response: .update(viewModel: model, isSelected: false))
             

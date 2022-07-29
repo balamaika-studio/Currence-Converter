@@ -16,6 +16,7 @@ class ConverterPresenter: ConverterPresentationLogic {
     weak var viewController: ConverterDisplayLogic?
     
     private var baseCurrency: Currency!
+    private var indexPathes: [IndexPath] = []
     
     private lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -36,10 +37,29 @@ class ConverterPresenter: ConverterPresentationLogic {
             let viewModel = buildConverterViewModel(first, second)
             viewController?.displayData(viewModel: .showConverterViewModel(viewModel))
             
-        case .favoriteCurrencies(let currencies, let total):
-            let viewModel = buildFavoriteViewModel(currencies, total: total)
+        case .favoriteCurrencies(let currencies, let total, let totalIndex):
+            var viewModel = buildFavoriteViewModel(currencies, total: total, totalIndex: totalIndex)
+            viewModel.enumerated().forEach {
+                if $0.element.index != totalIndex {
+                    viewModel[$0.offset].setSelected(false)
+                } else {
+                    viewModel[$0.offset].setSelected(true)
+                }
+            }
             viewController?.displayData(viewModel: .showFavoriteViewModel(viewModel))
-            
+
+        case .favoriteCurrenciesPartUpdate(let currencies, let total, let totalIndex):
+            var viewModel = buildFavoriteViewModel(currencies, total: total, totalIndex: totalIndex)
+            indexPathes.removeAll()
+            viewModel.enumerated().forEach {
+                if $0.element.index != totalIndex {
+                    viewModel[$0.offset].setSelected(false)
+                    indexPathes.append(IndexPath(row: $0.element.index, section: 0))
+                } else {
+                    viewModel[$0.offset].setSelected(true)
+                }
+            }
+            viewController?.displayData(viewModel: .updateFavoriteViewModel(viewModel, indexPathes: indexPathes))
         case .updateBaseCurrency(let base):
             baseCurrency = base
             
@@ -63,24 +83,28 @@ class ConverterPresenter: ConverterPresentationLogic {
         return favoriteCopy
     }
     
-    private func buildFavoriteViewModel(_ favorite: [Currency], total: Double) -> [FavoriteConverterViewModel] {
+    private func buildFavoriteViewModel(_ favorite: [Currency], total: Double, totalIndex: Int) -> [FavoriteConverterViewModel] {
         var viewModels = [FavoriteConverterViewModel]()
         let orderedCurrencies = restoreOrder(for: favorite)
         
-        orderedCurrencies.forEach { currency in
-            let rate = currency.rate / baseCurrency.rate
+        orderedCurrencies.enumerated().forEach { currency in
+            let rate = currency.element.rate / baseCurrency.rate
             let totalSum = rate * total
             let roundedSum = AccuracyManager.shared.formatNumber(totalSum)
-                        
             var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
             let cryptoCurrency =  CurrenciesInfoService.shared.fetchCrypto()
             currenciesInfo.append(contentsOf: cryptoCurrency)
-            let title = currenciesInfo.first { $0.abbreviation == currency.currency }!
+            let title = currenciesInfo.first { $0.abbreviation == currency.element.currency }!
+            let isSelected = currency.offset == totalIndex
             
-            let viewModel = FavoriteConverterViewModel(currency: currency.currency,
-                                                       title: title.title,
-                                                       total: roundedSum,
-                                                       rate: currency.rate)
+            let viewModel = FavoriteConverterViewModel(
+                currency: currency.element.currency,
+                title: title.title,
+                total: roundedSum,
+                rate: currency.element.rate,
+                isSelected: isSelected,
+                index: currency.offset
+            )
             viewModels.append(viewModel)
         }
         return viewModels
@@ -97,19 +121,19 @@ class ConverterPresenter: ConverterPresentationLogic {
 
         let aSymbol = getSymbol(forCurrencyCode: first.currency) ?? first.currency
         let bSymbol = getSymbol(forCurrencyCode: second.currency) ?? second.currency
-        
-        let firstExchange = Exchange(currency: first.currency,
+
+        let firstExchange = Exchange(index: 0, currency: first.currency,
                              rate: firstRate,
                              exchangeRate: firstExchangeRate,
                              regardingRate: "\(aSymbol)1=\(bSymbol)\(firstRoundedRate)")
-        let secondExchange = Exchange(currency: second.currency,
+        let secondExchange = Exchange(index: 0, currency: second.currency,
                               rate: secondRate,
                               exchangeRate: secondExchangeRate,
                               regardingRate: "\(bSymbol)1=\(aSymbol)\(secondRoundedRate)")
-        
+
         let timestamp = UserDefaults.standard.integer(forKey: "updated")
         let updatedTitle = buildUpdatedTitle(from: timestamp)
-        
+
         return ConverterViewModel(firstExchange: firstExchange,
                                   secondExchange: secondExchange,
                                   updated: updatedTitle)

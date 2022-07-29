@@ -11,9 +11,11 @@ import Foundation
 protocol Currency {
     var currency: String { get set }
     var rate: Double { get set }
+    var index: Int { get set }
 }
 
 struct Quote: Currency {
     var currency: String
     var rate: Double
+    var index: Int
 }

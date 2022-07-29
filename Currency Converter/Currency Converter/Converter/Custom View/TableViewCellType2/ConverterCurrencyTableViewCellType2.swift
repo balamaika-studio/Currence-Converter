@@ -9,8 +9,8 @@
 import UIKit
 
 protocol ConverterCurrencyTableViewCellType2Deleagte: class {
-    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: String)
-    func convert(exchangeView sender: UITableViewCell, total: Double)
+    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: Currency)
+    func convert(exchangeView sender: UITableViewCell, total: Double, index: Int)
 }
 
 class ConverterCurrencyTableViewCellType2: UITableViewCell {
@@ -55,14 +55,13 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     }
 
     @objc func textFieldDidBeginEditing(_ textField: UITextField) {
-        guard let currency = model?.currency else {
-            return
-        }
-        delegate?.changeCurrencyTapped(exchangeView: self, currencyName: currency)
+        let currencyModel = Quote(currency: model?.currency ?? "", rate: model?.rate ?? 0, index: model?.index ?? 0)
+        delegate?.changeCurrencyTapped(exchangeView: self, currencyName: currencyModel)
+        delegate?.convert(exchangeView: self, total: total, index: model?.index ?? 0)
     }
 
     @objc func textFieldDidChange(_ textField: UITextField) {
-        delegate?.convert(exchangeView: self, total: total)
+        delegate?.convert(exchangeView: self, total: total, index: model?.index ?? 0)
     }
 
     override func layoutSubviews() {
@@ -77,7 +76,13 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+        if selected {
+            mainView.layer.borderWidth = 1.5
+            mainView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.7)
+        } else {
+            mainView.layer.borderWidth = 0
+            mainView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+        }
     }
 
     override func setEditing(_ editing: Bool, animated: Bool) {

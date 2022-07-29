@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CurrencyInfo: Codable {
+struct CurrencyInfo: Codable, Hashable {
     let abbreviation: String
     let title: String
 }

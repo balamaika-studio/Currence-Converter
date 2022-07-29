@@ -15,7 +15,7 @@ struct ExchangeRatesTimeSeriesResponse: Decodable {
     var quotes: [TimeFrameQuote] {
         return rates.flatMap { date, quote -> [TimeFrameQuote] in
             return quote.compactMap { currency, rate -> TimeFrameQuote in
-                return TimeFrameQuote(currency: currency, rate: rate, date: date)
+                return TimeFrameQuote(currency: currency, rate: rate, date: date, index: 0)
             }
         }
     }
@@ -34,6 +34,7 @@ struct TimeFrameQuote: Currency, Dateble {
     var currency: String
     var rate: Double
     var date: String
+    var index: Int
 }
 
 extension TimeFrameQuote: Comparable {

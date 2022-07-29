@@ -28,8 +28,13 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
             let validCurrencies = currencies.filter { currency in
                 return info.contains { $0.abbreviation == currency.currency }
             }
+
+            var currentValidCurrencies: [RealmCurrency] = []
+            currentValidCurrencies.appendDistinct(contentsOf: validCurrencies, where: { (cur1, cur2) -> Bool in
+                    return cur1.currency != cur2.currency
+            })
             
-            validCurrencies.forEach { value in
+            currentValidCurrencies.forEach { value in
                 let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
                 let viewModel = FavoriteViewModel(currency: value.currency,
                                                 title: currencyTitle,

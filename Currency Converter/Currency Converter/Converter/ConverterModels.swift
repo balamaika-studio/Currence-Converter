@@ -16,7 +16,8 @@ enum Converter {
                 case changeCurrency(name: String)
                 case loadConverterCurrencies
                 case loadCryptoCurrencies
-                case loadFavoriteCurrencies(total: Double? = nil)
+                case loadFavoriteCurrenciesFirst(total: Double? = nil, index: Int = 0)
+                case loadFavoriteCurrencies(total: Double? = nil, index: Int = 0)
                 case updateBaseCurrency(base: Currency)
                 case updateCurrencies
                 case updateCrypto
@@ -28,7 +29,8 @@ enum Converter {
         struct Response {
             enum ResponseType {
                 case converterCurrencies(first: Currency, second: Currency)
-                case favoriteCurrencies([Currency], total: Double)
+                case favoriteCurrencies([Currency], total: Double, totalIndex: Int)
+                case favoriteCurrenciesPartUpdate([Currency], total: Double, totalIndex: Int)
                 case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
             }
@@ -38,6 +40,7 @@ enum Converter {
                 case showError(message: String)
                 case showConverterViewModel(_ viewModel: ConverterViewModel)
                 case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
+                case updateFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel], indexPathes: [IndexPath])
             }
         }
     }
@@ -49,6 +52,7 @@ protocol ExchangeCurrency: Currency {
 }
 
 struct Exchange: ExchangeCurrency {
+    var index: Int
     var currency: String
     var rate: Double
     var exchangeRate: Double
@@ -63,9 +67,19 @@ struct ConverterViewModel {
 
 
 // MARK: - Favorite View Model
-struct FavoriteConverterViewModel: Currency {
+public struct FavoriteConverterViewModel: Currency {
     var currency: String
     let title: String
     let total: String
     var rate: Double
+    var isSelected: Bool
+    var index: Int
+
+    public mutating func setSelected(_ isSelected: Bool) {
+        self.isSelected = isSelected
+    }
+
+    public mutating func setIndex(_ index: Int) {
+        self.index = index
+    }
 }

@@ -50,7 +50,7 @@ extension AppNavigationController: Themed {
             endColor = theme.backgroundColor
         default: break
         }
-        
+
         let gradient = CAGradientLayer()
         var bounds = navigationBar.bounds
         bounds.size.height += statusBarHeight

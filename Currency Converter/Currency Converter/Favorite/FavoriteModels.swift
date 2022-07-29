@@ -35,7 +35,7 @@ enum Favorite {
     
 }
 
-struct FavoriteViewModel {
+struct FavoriteViewModel: Hashable {
     let currency: String
     let title: String
     var isSelected: Bool

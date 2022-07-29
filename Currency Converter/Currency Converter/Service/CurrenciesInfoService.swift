@@ -60,11 +60,19 @@ class CurrenciesInfoService {
     }
     
     func getGraphSupportedCurrencies() -> [Currency] {
-        return graphSupportedSymbols.map { Quote(currency: $0, rate: 0) }
+        return zip(graphSupportedSymbols.indices, graphSupportedSymbols).map { Quote(
+            currency: $1,
+            rate: 0,
+            index: $0
+        ) }
     }
     
     func getPopularCurrencies() -> [Currency] {
-        return popularCurrencies.map { Quote(currency: $0, rate: 0) }
+        return zip(popularCurrencies.indices, popularCurrencies).map { Quote(
+            currency: $1,
+            rate: 0,
+            index: $0
+        ) }
     }
     
     func getGraphDefaultCurrencies() -> GraphConverterViewModel {
@@ -88,5 +96,12 @@ class CurrenciesInfoService {
     // MARK: Private Methods
     private func getTitle(for code: String) -> String? {
         return Locale.current.localizedString(forCurrencyCode: code)?.capitalized
+    }
+}
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
     }
 }

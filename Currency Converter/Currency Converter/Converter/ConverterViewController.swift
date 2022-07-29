@@ -99,28 +99,36 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadCryptoCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+        interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
+        closeKeyboard()
     }
     
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
-            self.exchangedCurrencies = converterViewModel
-//            converterView.updateWith(converterViewModel)
+//            self.exchangedCurrencies = converterViewModel
             refreshControl.endRefreshing()
             // request updated favorite after changing of main currencies
-            interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+            interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
             
         case .showFavoriteViewModel(let favoriteViewModel):
             self.favoriteCurrencies = favoriteViewModel
             tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
             tableView.reloadData()
-            
+
+        case .updateFavoriteViewModel(let favoriteViewModel, let indexPathes):
+            self.favoriteCurrencies = favoriteViewModel
+            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+            tableView.reloadRows(at: indexPathes, with: .none)
+            indexPathes.forEach {
+                tableView.deselectRow(at: $0, animated: true)
+            }
+
         case .showError(let message):
             // dont show alert over top controller
             if let _ = presentedViewController { break }
@@ -134,14 +142,14 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         router?.showChoiceViewController()
     }
     
-    private func swapCurrencyTapped(converter model: ConverterViewModel) {
+//    private func swapCurrencyTapped(converter model: ConverterViewModel) {
 //        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
 //        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
-    }
+//        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+//    }
     
-    private func updateFavoriteWith(total: Double) {
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total))
+    private func updateFavoriteWith(total: Double, index: Int) {
+        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total, index: index))
     }
     
     // MARK: Alert
@@ -178,9 +186,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
                                  for: .valueChanged)
 
         favoriteCurrencies = []
-//        converterView.changeCurrencyTapped = self.changeCurrencyTapped
-//        converterView.swapCurrencyTapped = self.swapCurrencyTapped
-//        converterView.topCurrencyTotal = self.updateFavoriteWith
 
         setupNavBar()
     }
@@ -202,7 +207,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     @objc private func refreshCurrencies(_ sender: Any) {
         interactor?.makeRequest(request: .updateCurrencies)
         interactor?.makeRequest(request: .updateCrypto)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
+        interactor?.makeRequest(request: .loadFavoriteCurrencies())
     }
 }
 
@@ -280,15 +285,23 @@ extension ConverterViewController: UITableViewDataSource {
         view.updateTitle(Date().toString())
 
         return view
+    }
 
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let viewModel = favoriteCurrencies[indexPath.row]
+        if viewModel.isSelected {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: false)
+        }
     }
 }
 
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let currency = favoriteCurrencies[indexPath.row]
-        interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
+//        let currency = favoriteCurrencies[indexPath.row]
+//        interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
 }
 
@@ -311,17 +324,17 @@ extension ConverterViewController: UIViewControllerTransitioningDelegate {
 extension ConverterViewController: ConverterUpdateViewDelegate {
     func updateView() {
         interactor?.makeRequest(request: .updateCurrencies)
-        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
     }
 }
 
 extension ConverterViewController: ConverterCurrencyTableViewCellType2Deleagte {
-    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: String) {
-        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
+    func changeCurrencyTapped(exchangeView view: UITableViewCell, currencyName: Currency) {
+        interactor?.makeRequest(request: .updateBaseCurrency(base: currencyName))
+        view.setSelected(true, animated: true)
     }
 
-    func convert(exchangeView sender: UITableViewCell, total: Double) {
-        // MARK: - TODO
-//        updateFavoriteWith(total: total)
+    func convert(exchangeView sender: UITableViewCell, total: Double, index: Int) {
+        updateFavoriteWith(total: total, index: index)
     }
 }
+

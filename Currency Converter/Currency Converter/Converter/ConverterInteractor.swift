@@ -49,23 +49,33 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             presenter?.presentData(response:
                 .converterCurrencies(first: topCurrency,
                                      second: bottomCurrency))
-            
+
         case .updateBaseCurrency(let base):
             topCurrency = base
             presenter?.presentData(response: .updateBaseCurrency(base: base))
             
         case .changeBottomCurrency(let newCurrency):
-            guard bottomCurrency.currency != newCurrency.currency else { break }
-            bottomCurrency = newCurrency
-            presenter?.presentData(response: .converterCurrencies(first: topCurrency,
-                                                                  second: bottomCurrency))
+            break
+//            guard bottomCurrency.currency != newCurrency.currency else { break }
+//            bottomCurrency = newCurrency
+//            presenter?.presentData(response: .converterCurrencies(first: topCurrency,
+//                                                                  second: bottomCurrency))
             
-        case .loadFavoriteCurrencies(let total):
+        case .loadFavoriteCurrenciesFirst(let total, let index):
             lastTotalSum = total == nil ? lastTotalSum : total!
             let predicate = NSPredicate(format: "isFavorite = true")
             storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
                 presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies,
-                                                                     total: lastTotalSum))
+                                                                     total: lastTotalSum,
+                                                                     totalIndex: index))
+            }
+        case .loadFavoriteCurrencies(let total, let index):
+            lastTotalSum = total == nil ? lastTotalSum : total!
+            let predicate = NSPredicate(format: "isFavorite = true")
+            storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
+                presenter?.presentData(response: .favoriteCurrenciesPartUpdate(favoriteCurrencies,
+                                                                     total: lastTotalSum,
+                                                                     totalIndex: index))
             }
             
         case .loadCryptoCurrencies:
@@ -151,6 +161,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             try? realm.create(RealmCurrency.self) { currency in
                 currency.currency = quote.currency
                 currency.rate = quote.rate
+                currency.index = quote.index
             }
         }
     }
@@ -162,6 +173,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
                 guard let newQuote = quote else { return }
                 try? realm.update {
                     currency.rate = newQuote.rate
+                    currency.index = newQuote.index
                 }
             }
             makeRequest(request: .loadFavoriteCurrencies(total: nil))

@@ -17,7 +17,13 @@ struct ExchangeRatesHistoryResponse: Decodable {
     private let info: infoModel
     private let response: [String: String]
     
-    var quotes: [Quote] { response.map { Quote(currency: $0, rate: Double($1) ?? 0) } }
+    var quotes: [Quote] {
+        response.map { Quote(
+            currency: $0,
+            rate: Double($1) ?? 0,
+            index: 0
+        ) }
+    }
     
     var updated: Int {
         guard let date = DateFormatter.exchangeRateGeneralDateFormatter.date(from: self.info.server_time) else { return 0 }

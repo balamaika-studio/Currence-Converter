@@ -103,7 +103,7 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
         
         for date in days {
             let formattedDate = dateFormatter.string(from: date)
-            let quote = TimeFrameQuote(currency: symbol, rate: 1.0, date: formattedDate)
+            let quote = TimeFrameQuote(currency: symbol, rate: 1.0, date: formattedDate, index: 0)
             quotes.append(quote)
         }
         return quotes

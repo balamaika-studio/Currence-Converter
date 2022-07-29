@@ -40,7 +40,10 @@ class FavoriteOrderService: FavoriteOrder {
         guard let codes = defaults.stringArray(forKey: key) else {
             return [Currency]()
         }
-        return codes.map { Quote(currency: $0, rate: 0) }
+        return zip(codes.indices, codes).map { Quote(
+            currency: $1,
+            rate: 0,
+            index: $0
+        ) }
     }
-    
 }
