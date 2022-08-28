@@ -13,10 +13,9 @@ protocol ExchangeRatesPresentationLogic {
 }
 
 class ExchangeRatesPresenter: ExchangeRatesPresentationLogic {
-    weak var viewController: ExchangeRatesDisplayLogic?
+    weak var viewController: UIViewController?
     
     func presentData(response: ExchangeRates.Model.Response.ResponseType) {
         
     }
-    
 }

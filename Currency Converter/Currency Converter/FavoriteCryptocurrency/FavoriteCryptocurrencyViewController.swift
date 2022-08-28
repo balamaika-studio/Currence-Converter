@@ -23,6 +23,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     
     var interactor: FavoriteCryptocurrencyBusinessLogic?
     var router: (NSObjectProtocol & FavoriteCryptocurrencyRoutingLogic)?
+    weak var delegate: ExchangeRatesDelegate?
     
     // MARK: Object lifecycle
     
@@ -60,7 +61,11 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.makeRequest(request: .loadCurrencies)
+        if delegate == nil {
+            interactor?.makeRequest(request: .loadCurrenciesConverter)
+        } else {
+            interactor?.makeRequest(request: .loadCurrenciesExchange)
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -90,7 +95,11 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
         tableView.delegate = self
         tableView.register(R.nib.favoriteTableViewCell)
         tableView.separatorStyle = .none
-        tableView.allowsMultipleSelection = true
+        if delegate == nil {
+            tableView.allowsMultipleSelection = true
+        } else {
+            tableView.allowsMultipleSelection = false
+        }
         tableView.rowHeight = 62
         configureButton()
     }
@@ -135,14 +144,19 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     }
     
     @IBAction func confirmButtonAction(_ sender: Any) {
-        quotes.forEach {
-            if $0.isSelected {
-                interactor?.makeRequest(request: .addFavorite($0))
-            } else {
-                interactor?.makeRequest(request: .removeFavorite($0))
+        if delegate == nil {
+            quotes.forEach {
+                if $0.isSelected {
+                    interactor?.makeRequest(request: .addFavorite($0))
+                } else {
+                    interactor?.makeRequest(request: .removeFavorite($0))
+                }
             }
+            router?.dismiss()
+        } else {
+            delegate?.applySelectedCurrencies()
+            router?.dismiss()
         }
-        router?.dismiss()
     }
 }
 
@@ -178,11 +192,25 @@ extension FavoriteCryptocurrencyViewController: Themed {
 // MARK: - UITableViewDelegate
 extension FavoriteCryptocurrencyViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       quotes[indexPath.row].isSelected = true
+        if delegate == nil {
+            quotes[indexPath.row].isSelected = true
+        } else {
+            var currencyQuotes: [FavoriteViewModel] = []
+            quotes.forEach {
+                var q = $0
+                q.isSelected = false
+                currencyQuotes.append(q)
+            }
+            currencyQuotes[indexPath.row].isSelected = true
+            quotes = currencyQuotes
+            delegate?.setSelectedCurrency(model: currencyQuotes[indexPath.row])
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        quotes[indexPath.row].isSelected = false
+        if delegate == nil {
+            quotes[indexPath.row].isSelected = false
+        }
     }
 }
 

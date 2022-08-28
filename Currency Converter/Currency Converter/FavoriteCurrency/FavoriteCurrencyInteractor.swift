@@ -23,8 +23,11 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     
     func makeRequest(request: Favorite.Model.Request.RequestType) {
         switch request {
-        case .loadCurrencies:
-            fetchCurrencies()
+        case .loadCurrenciesConverter:
+            fetchCurrenciesConverter()
+
+        case .loadCurrenciesExchange:
+            fetchCurrenciesExchange()
             
         case .addFavorite(let model):
             update(model, isFavorite: true)
@@ -51,10 +54,17 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
         }
     }
     
-    private func fetchCurrencies() {
+    private func fetchCurrenciesConverter() {
         storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-            var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self.presenter?.presentData(response: .currencies(currencies, currenciesInfo))
+            let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
+            self.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo))
+        }
+    }
+
+    private func fetchCurrenciesExchange() {
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+            let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
+            self.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo))
         }
     }
 }

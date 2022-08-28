@@ -14,6 +14,8 @@ enum CurrencyRates {
         struct Request {
             enum RequestType {
                 case loadCurrencyRateChanges
+                case addRelative(CurrencyPairViewModel)
+                case removeRelative(CurrencyPairViewModel)
             }
         }
         struct Response {
@@ -21,6 +23,7 @@ enum CurrencyRates {
                 case currencies(_ live: [RealmCurrency],
                                 _ historical: [RealmCurrency],
                                 _ relatives: [RealmExchangeRate])
+                case createViewModel(_ response: [CandleResponse])
             }
         }
         struct ViewModel {
@@ -34,13 +37,15 @@ enum CurrencyRates {
 
 struct CurrencyRatesViewModel: CurrencyPairViewModel {
     var realmId: String
-    var relation: String
+    var leftCurrency: String
+    var rightCurrency: String
     var change: Change
     var rate: String
     var isSelected: Bool
     
-    init(relation: String, change: Change, rate: String) {
-        self.relation = relation
+    init(leftCurrency: String,rightCurrency: String , change: Change, rate: String) {
+        self.leftCurrency = leftCurrency
+        self.rightCurrency = rightCurrency
         self.change = change
         self.rate = rate
         realmId = String()

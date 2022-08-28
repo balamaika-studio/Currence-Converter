@@ -12,22 +12,33 @@ protocol ExchangeRatesDisplayLogic: class {
     func displayData(viewModel: ExchangeRates.Model.ViewModel.ViewModelData)
 }
 
-class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
+protocol ExchangeRatesDelegate: AnyObject {
+    func setSelectedCurrency(model: FavoriteViewModel)
+    func applySelectedCurrencies()
+}
+
+class ExchangeRatesViewController: UIViewController {
     
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
-    
+    @IBOutlet weak var mainView: UIView!
+    @IBOutlet weak var topCurrenciesView: ExchangeCurrenciesViews!
+
     var interactor: ExchangeRatesBusinessLogic?
     var router: (NSObjectProtocol & ExchangeRatesRoutingLogic)?
+    weak var delegate: CurrencyRatesDelegate?
     
-    private lazy var currencyRatesVC: CurrencyRatesViewController = {
-        var viewController = CurrencyRatesViewController(nib: R.nib.currencyRatesViewController)
+    private lazy var cryptoCurrencyRatesVC: FavoriteCryptocurrencyViewController = {
+        var viewController = FavoriteCryptocurrencyViewController(nib: R.nib.favoriteCryptocurrencyViewController)
+        viewController.delegate = self
         add(asChildViewController: viewController)
         return viewController
     }()
 
-    private lazy var currencySelectionVC: CurrencySelectionViewController = {
-        var viewController = CurrencySelectionViewController(nib: R.nib.currencySelectionViewController)
+    private lazy var currencySelectionVC: FavoriteCurrencyViewController = {
+        var viewController = FavoriteCurrencyViewController(nib: R.nib.favoriteCurrencyViewController)
+        viewController.delegate = self
         add(asChildViewController: viewController)
         return viewController
     }()
@@ -64,25 +75,29 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
         super.viewDidLoad()
         interactor?.makeRequest(request: .configureExchangeRates)
         setupView()
+        setupMainView()
         setUpTheming()
-    }
-    
-    func displayData(viewModel: ExchangeRates.Model.ViewModel.ViewModelData) {
-        
     }
     
     // MARK: - Private Methods
     private func setupView() {
         setupSegmentedControl()
         updateView(selectedIndex: segmentedControl.selectedSegmentIndex)
+        topCurrenciesView.configureView()
+    }
+
+    private func setupMainView() {
+        mainView.layer.cornerRadius = 14
+        mainView.clipsToBounds = true
+        titleLabel.text =  R.string.localizable.addPair()
     }
     
     private func setupSegmentedControl() {
         // Configure Segmented Control
         segmentedControl.removeAllSegments()
-        segmentedControl.insertSegment(withTitle: R.string.localizable.rates(),
+        segmentedControl.insertSegment(withTitle: R.string.localizable.favouriteCurrencySegmentTitle(),
                                        at: 0, animated: false)
-        segmentedControl.insertSegment(withTitle: R.string.localizable.choiceOfCurrencies(),
+        segmentedControl.insertSegment(withTitle: R.string.localizable.favouriteCryptocurrencySegmentTitle(),
                                        at: 1, animated: false)
         segmentedControl.addTarget(self,
                                    action: #selector(selectionDidChange(_:)),
@@ -92,6 +107,12 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
                                                 for: .selected)
+        segmentedControl.setTitleTextAttributes([.foregroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)],
+                                                for: .normal)
+        segmentedControl.layer.cornerRadius = 10
+        segmentedControl.layer.borderWidth = 1
+        segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+        segmentedControl.setClearBackgroundSegmentControl()
     }
     
     @objc private func selectionDidChange(_ sender: UISegmentedControl) {
@@ -101,11 +122,11 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
     private func updateView(selectedIndex: Int) {
         switch selectedIndex {
         case 0:
-            remove(asChildViewController: currencySelectionVC)
-            add(asChildViewController: currencyRatesVC)
-        case 1:
-            remove(asChildViewController: currencyRatesVC)
+            remove(asChildViewController: cryptoCurrencyRatesVC)
             add(asChildViewController: currencySelectionVC)
+        case 1:
+            remove(asChildViewController: currencySelectionVC)
+            add(asChildViewController: cryptoCurrencyRatesVC)
         default:
             break
         }
@@ -143,13 +164,24 @@ class ExchangeRatesViewController: UIViewController, ExchangeRatesDisplayLogic {
     }
 }
 
+// MARK: - Themed
 extension ExchangeRatesViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        view.backgroundColor = theme.backgroundColor
-        segmentedControl.backgroundColor = theme.backgroundColor
-        segmentedControl.tintColor = theme.segmentedControlTintColor
-        let normalColor = theme.segmentedControlTintColor
-        segmentedControl.setTitleTextAttributes([.foregroundColor: normalColor],
-                                                for: .normal)
+        titleLabel.textColor = .white
+    }
+}
+
+// MARK: - ExchangeRatesDelegate
+extension ExchangeRatesViewController: ExchangeRatesDelegate {
+
+    public func setSelectedCurrency(model: FavoriteViewModel) {
+        topCurrenciesView.setCurrency(viewModel: model)
+    }
+
+    public func applySelectedCurrencies() {
+        if let relative = topCurrenciesView.getCurrencies() {
+            interactor?.makeRequest(request: .saveSelectedExchangeRates(relative))
+            delegate?.reloadData()
+        }
     }
 }

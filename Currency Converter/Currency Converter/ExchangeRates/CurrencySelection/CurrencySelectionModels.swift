@@ -34,14 +34,16 @@ enum CurrencySelection {
 
 struct CurrencySelectionViewModel: CurrencyPairViewModel {
     var realmId: String
-    var relation: String
+    var leftCurrency: String
+    var rightCurrency: String
     var change: Change
     var rate: String
     var isSelected: Bool
     
-    init(id: String, relation: String, isSelected: Bool) {
+    init(id: String, leftCurrency: String, rightCurrency: String, isSelected: Bool) {
         self.realmId = id
-        self.relation = relation
+        self.leftCurrency = leftCurrency
+        self.rightCurrency = rightCurrency
         self.isSelected = isSelected
         change = .stay
         rate = ""

@@ -10,7 +10,7 @@ import UIKit
 
 enum AppViewController {
     case converter
-    case exchangeRates
+    case currencyRates
     case graph
     case settings
     
@@ -27,12 +27,12 @@ enum AppViewController {
                          selectedImage: R.image.converterDeselected())
             navigationController.tabBarItem = tabItem
             
-        case .exchangeRates:
-            let exchangeRatesViewController = ExchangeRatesViewController(nib: R.nib.exchangeRatesViewController)
-            navigationController = AppNavigationController(rootViewController: exchangeRatesViewController)
-            navigationController.navigationBar.topItem?.title = R.string.localizable.exchangesTitle()
+        case .currencyRates:
+            let currencyRatesViewController = CurrencyRatesViewController(nib: R.nib.currencyRatesViewController)
+            navigationController = AppNavigationController(rootViewController: currencyRatesViewController)
+            navigationController.navigationBar.topItem?.title = R.string.localizable.currencyRatesTitle()
             
-            let tabItem = UITabBarItem(title: R.string.localizable.exchangesTabBarItem(),
+            let tabItem = UITabBarItem(title: R.string.localizable.currencyRatesTabBarItem(),
             image: R.image.exchangesDeselected(),
             selectedImage: R.image.exchangesDeselected())
             navigationController.tabBarItem = tabItem

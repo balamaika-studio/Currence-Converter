@@ -10,7 +10,8 @@ import Foundation
 
 protocol CurrencyPairViewModel {
     var realmId: String { get set }
-    var relation: String { get set }
+    var leftCurrency: String { get set }
+    var rightCurrency: String { get set }
     var change: Change { get set }
     var rate: String { get set }
     var isSelected: Bool { get set }

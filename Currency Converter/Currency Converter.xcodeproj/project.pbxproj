@@ -35,8 +35,12 @@
 		596811202420E8CE00426968 /* ChoiceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811192420E8CE00426968 /* ChoiceViewController.xib */; };
 		596811242420FA6700426968 /* ChoiceCurrencyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */; };
 		596811252420FA6700426968 /* ChoiceCurrencyTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */; };
+		60176E5728A68A6F005F001E /* ExchangeCurrenciesViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60176E5528A68A6F005F001E /* ExchangeCurrenciesViews.swift */; };
+		60176E5828A68A6F005F001E /* ExchangeCurrenciesViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 60176E5628A68A6F005F001E /* ExchangeCurrenciesViews.xib */; };
+		601CAC7828984EA8007502CF /* LastCandleArrayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601CAC7728984EA8007502CF /* LastCandleArrayResponse.swift */; };
 		6029D4202893B74B00E1F74F /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6029D41F2893B74B00E1F74F /* ArrayExtension.swift */; };
 		60AC45F62888421C00484451 /* UISegmentControlExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60AC45F52888421C00484451 /* UISegmentControlExtension.swift */; };
+		60B16CBF28A78C5000DBDA0F /* UIColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B16CBE28A78C5000DBDA0F /* UIColorExtensions.swift */; };
 		60C1FB4A285B7F3000AEA522 /* NavBarThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C1FB49285B7F3000AEA522 /* NavBarThemeManager.swift */; };
 		60C1FB6A285B7F9800AEA522 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C1FB4D285B7F9800AEA522 /* Lato-Italic.ttf */; };
 		60C1FB6B285B7F9800AEA522 /* Lato-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60C1FB4E285B7F9800AEA522 /* Lato-LightItalic.ttf */; };
@@ -256,8 +260,12 @@
 		596811192420E8CE00426968 /* ChoiceViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceViewController.xib; sourceTree = "<group>"; };
 		596811222420FA6700426968 /* ChoiceCurrencyTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChoiceCurrencyTableViewCell.swift; sourceTree = "<group>"; };
 		596811232420FA6700426968 /* ChoiceCurrencyTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChoiceCurrencyTableViewCell.xib; sourceTree = "<group>"; };
+		60176E5528A68A6F005F001E /* ExchangeCurrenciesViews.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExchangeCurrenciesViews.swift; sourceTree = "<group>"; };
+		60176E5628A68A6F005F001E /* ExchangeCurrenciesViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ExchangeCurrenciesViews.xib; sourceTree = "<group>"; };
+		601CAC7728984EA8007502CF /* LastCandleArrayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LastCandleArrayResponse.swift; sourceTree = "<group>"; };
 		6029D41F2893B74B00E1F74F /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
 		60AC45F52888421C00484451 /* UISegmentControlExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISegmentControlExtension.swift; sourceTree = "<group>"; };
+		60B16CBE28A78C5000DBDA0F /* UIColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColorExtensions.swift; sourceTree = "<group>"; };
 		60C1FB49285B7F3000AEA522 /* NavBarThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarThemeManager.swift; sourceTree = "<group>"; };
 		60C1FB4D285B7F9800AEA522 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		60C1FB4E285B7F9800AEA522 /* Lato-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -602,6 +610,38 @@
 			path = ChoiceCurrencyTableCell;
 			sourceTree = "<group>";
 		};
+		60176E5128A689DA005F001E /* ExchangeRates */ = {
+			isa = PBXGroup;
+			children = (
+				60176E5328A68A36005F001E /* CustomViews */,
+				D1DDE92C243F45CB0023E789 /* ExchangeRatesViewController.swift */,
+				D1DDE92D243F45CB0023E789 /* ExchangeRatesInteractor.swift */,
+				D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */,
+				D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */,
+				D1DDE92B243F45CB0023E789 /* ExchangeRatesModels.swift */,
+				D1DDE92A243F45CB0023E789 /* ExchangeRatesRouter.swift */,
+				D1DDE92E243F45CB0023E789 /* ExchangeRatesViewController.xib */,
+			);
+			path = ExchangeRates;
+			sourceTree = "<group>";
+		};
+		60176E5328A68A36005F001E /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				60176E5428A68A42005F001E /* ExchangeCurrenciesViews */,
+			);
+			path = CustomViews;
+			sourceTree = "<group>";
+		};
+		60176E5428A68A42005F001E /* ExchangeCurrenciesViews */ = {
+			isa = PBXGroup;
+			children = (
+				60176E5528A68A6F005F001E /* ExchangeCurrenciesViews.swift */,
+				60176E5628A68A6F005F001E /* ExchangeCurrenciesViews.xib */,
+			);
+			path = ExchangeCurrenciesViews;
+			sourceTree = "<group>";
+		};
 		60C1FB4B285B7F9800AEA522 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -679,6 +719,7 @@
 				60C1FB9B285B98AA00AEA522 /* UITableViewExtension.swift */,
 				60AC45F52888421C00484451 /* UISegmentControlExtension.swift */,
 				6029D41F2893B74B00E1F74F /* ArrayExtension.swift */,
+				60B16CBE28A78C5000DBDA0F /* UIColorExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -948,6 +989,7 @@
 				94A8920B266A866100A19769 /* ExchangeRatesHistoryResponse.swift */,
 				D16E45D92423C2E6005D99E9 /* CurrencyInfo.swift */,
 				60FF864328796578002F1473 /* infoModel.swift */,
+				601CAC7728984EA8007502CF /* LastCandleArrayResponse.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -979,16 +1021,10 @@
 		D1DDE927243F454F0023E789 /* ExchangeRates */ = {
 			isa = PBXGroup;
 			children = (
+				60176E5128A689DA005F001E /* ExchangeRates */,
 				D142C03C24461D0800737C8B /* Custom View */,
 				D1DDE945243F4AB60023E789 /* CurrencySelection */,
 				D1DDE936243F4A550023E789 /* CurrencyRates */,
-				D1DDE92C243F45CB0023E789 /* ExchangeRatesViewController.swift */,
-				D1DDE92D243F45CB0023E789 /* ExchangeRatesInteractor.swift */,
-				D1DDE928243F45CB0023E789 /* ExchangeRatesPresenter.swift */,
-				D1DDE929243F45CB0023E789 /* ExchangeRatesWorker.swift */,
-				D1DDE92B243F45CB0023E789 /* ExchangeRatesModels.swift */,
-				D1DDE92A243F45CB0023E789 /* ExchangeRatesRouter.swift */,
-				D1DDE92E243F45CB0023E789 /* ExchangeRatesViewController.xib */,
 			);
 			path = ExchangeRates;
 			sourceTree = "<group>";
@@ -1215,6 +1251,7 @@
 				8F81D6D3285EF45B00C466DD /* FavoriteCurrencyViewController.xib in Resources */,
 				D1DDE95A243F61490023E789 /* CurrencyPairTableViewCell.xib in Resources */,
 				D1A2A2982477ACF0001949BD /* OfflineViewController.xib in Resources */,
+				60176E5828A68A6F005F001E /* ExchangeCurrenciesViews.xib in Resources */,
 				60C1FB6F285B7F9800AEA522 /* Lato-Regular.ttf in Resources */,
 				60C1FB75285B7F9800AEA522 /* Poppins-ThinItalic.ttf in Resources */,
 				60C1FB78285B7F9800AEA522 /* Poppins-Light.ttf in Resources */,
@@ -1373,6 +1410,7 @@
 				D12E04ED245311DB005B68A4 /* AccuracyManager.swift in Sources */,
 				D120C9EA242B4D3E00E6D78B /* NetworkManager.swift in Sources */,
 				D188554E2436085F00476EB3 /* StorageContext.swift in Sources */,
+				60176E5728A68A6F005F001E /* ExchangeCurrenciesViews.swift in Sources */,
 				D1E1A7632449F5240051E51D /* GraphModels.swift in Sources */,
 				D125731624534243005F8332 /* ExchangeRatesApi.swift in Sources */,
 				D1DDE934243F45CB0023E789 /* ExchangeRatesInteractor.swift in Sources */,
@@ -1437,6 +1475,7 @@
 				D1E1A7622449F5240051E51D /* GraphRouter.swift in Sources */,
 				595FC0ED241FABDB00B4EEE4 /* ConverterInteractor.swift in Sources */,
 				595FC0E8241FABDB00B4EEE4 /* ConverterPresenter.swift in Sources */,
+				601CAC7828984EA8007502CF /* LastCandleArrayResponse.swift in Sources */,
 				D1863CB32440FF200011F215 /* ExchangeRatesHeader.swift in Sources */,
 				D1A2A2962477ACF0001949BD /* OfflineViewController.swift in Sources */,
 				595FC0BA241FA40400B4EEE4 /* AppDelegate.swift in Sources */,
@@ -1487,6 +1526,7 @@
 				D1DDE930243F45CB0023E789 /* ExchangeRatesWorker.swift in Sources */,
 				D11F8BB5245237980074D293 /* SwitchState.swift in Sources */,
 				D163AFE6244E312800014800 /* SettingsViewController.swift in Sources */,
+				60B16CBF28A78C5000DBDA0F /* UIColorExtensions.swift in Sources */,
 				60C1FB9C285B98AA00AEA522 /* UITableViewExtension.swift in Sources */,
 				D1DDE959243F61490023E789 /* CurrencyPairTableViewCell.swift in Sources */,
 				D1E4ED212451F0A400ECE03F /* AppFieldClearManager.swift in Sources */,
@@ -1681,7 +1721,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z6FP9BG3A5;
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1706,7 +1746,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = Z6FP9BG3A5;
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

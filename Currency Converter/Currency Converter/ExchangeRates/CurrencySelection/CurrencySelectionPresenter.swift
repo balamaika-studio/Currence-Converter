@@ -30,9 +30,10 @@ class CurrencySelectionPresenter: CurrencySelectionPresentationLogic {
             guard let base = exchangeRate.base,
                 let relative = exchangeRate.relative else { continue }
             
-            let relation = "\(base.currency)/\(relative.currency)"
+//            let relation = "\(base.currency)/\(relative.currency)"
             let viewModel = CurrencySelectionViewModel(id: exchangeRate.id,
-                                                       relation: relation,
+                                                       leftCurrency: base.currency,
+                                                       rightCurrency: relative.currency,
                                                        isSelected: exchangeRate.isSelected)
             result.append(viewModel)
         }

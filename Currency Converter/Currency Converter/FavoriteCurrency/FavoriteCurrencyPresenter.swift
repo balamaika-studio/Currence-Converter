@@ -23,7 +23,7 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
         // TODO: - Replace to functions
         
         switch response {
-        case .currencies(let currencies, let info):
+        case .currenciesConverter(let currencies, let info):
             var result = [FavoriteViewModel]()
             let validCurrencies = currencies.filter { currency in
                 return info.contains { $0.abbreviation == currency.currency }
@@ -39,6 +39,28 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
                 let viewModel = FavoriteViewModel(currency: value.currency,
                                                 title: currencyTitle,
                                                 isSelected: value.isFavorite)
+                result.append(viewModel)
+            }
+            let sortedQuotes = result.sorted { $0.title < $1.title }
+            quotes = sortedQuotes
+            viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
+
+        case .currenciesExchange(let currencies, let info):
+            var result = [FavoriteViewModel]()
+            let validCurrencies = currencies.filter { currency in
+                return info.contains { $0.abbreviation == currency.currency }
+            }
+
+            var currentValidCurrencies: [RealmCurrency] = []
+            currentValidCurrencies.appendDistinct(contentsOf: validCurrencies, where: { (cur1, cur2) -> Bool in
+                    return cur1.currency != cur2.currency
+            })
+
+            currentValidCurrencies.forEach { value in
+                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let viewModel = FavoriteViewModel(currency: value.currency,
+                                                title: currencyTitle,
+                                                isSelected: false)
                 result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }

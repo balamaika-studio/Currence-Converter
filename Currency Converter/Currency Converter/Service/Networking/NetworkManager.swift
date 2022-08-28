@@ -44,6 +44,46 @@ struct NetworkManager {
                        callback: completion)
         }
     }
+
+    func getLastChangeForex(
+        type: ExchangeType,
+        currencies: [String],
+        completion: @escaping (
+            _ response: LastCandleArrayResponse?,
+            _ error: String?
+        ) -> Void
+    ) {
+        exchangeRatesRouter.request(.lastCandleForex(
+            symbols: currencies,
+            period: .oneDay
+        )) { data, response, error in
+            self.build(
+                LastCandleArrayResponse.self,
+                with: (data, response, error),
+                callback: completion
+            )
+        }
+    }
+
+    func getLastChangeCrypto(
+        type: ExchangeType,
+        currencies: [String],
+        completion: @escaping (
+            _ response: LastCandleArrayResponse?,
+            _ error: String?
+        ) -> Void
+    ) {
+        exchangeRatesRouter.request(.lastCandleCrypto(
+            symbols: currencies,
+            period: .oneDay
+        )) { data, response, error in
+            self.build(
+                LastCandleArrayResponse.self,
+                with: (data, response, error),
+                callback: completion
+            )
+        }
+    }
     
     // MARK: - Private Methods
     private func build<T: Decodable>(_ type: T.Type,

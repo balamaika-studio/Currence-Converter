@@ -13,7 +13,8 @@ enum Favorite {
     enum Model {
         struct Request {
             enum RequestType {
-                case loadCurrencies
+                case loadCurrenciesConverter
+                case loadCurrenciesExchange
                 case addFavorite(FavoriteViewModel)
                 case removeFavorite(FavoriteViewModel)
                 case filter(title: String)
@@ -21,7 +22,8 @@ enum Favorite {
         }
         struct Response {
             enum ResponseType {
-                case currencies([RealmCurrency], [CurrencyInfo])
+                case currenciesConverter([RealmCurrency], [CurrencyInfo])
+                case currenciesExchange([RealmCurrency], [CurrencyInfo])
                 case filter(title: String)
                 case update(viewModel: FavoriteViewModel, isSelected: Bool)
             }

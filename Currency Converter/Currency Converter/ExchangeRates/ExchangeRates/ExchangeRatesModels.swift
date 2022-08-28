@@ -14,6 +14,7 @@ enum ExchangeRates {
         struct Request {
             enum RequestType {
                 case configureExchangeRates
+                case saveSelectedExchangeRates(Relative)
             }
         }
         struct Response {

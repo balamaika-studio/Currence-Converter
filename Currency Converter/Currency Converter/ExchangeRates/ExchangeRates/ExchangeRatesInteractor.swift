@@ -24,28 +24,39 @@ class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
     }
     
     func makeRequest(request: ExchangeRates.Model.Request.RequestType) {
-        let defaultRelatives = ["EUR/USD", "GBP/USD", "USD/JPY", "USD/CHF",
-                    "AUD/USD", "USD/CAD", "NZD/USD", "EUR/JPY",
-                    "USD/RUB", "EUR/RUB"]
-        
         switch request {
         case .configureExchangeRates:
+            break
+//            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+//                self.currencies = $0
+//            }
+//
+//            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
+//                if rates.isEmpty {
+//                    defaultRelatives.forEach { stringRelative in
+//                        let model = buildRelative(stringRelative)
+//                        if let base = currencies.first(where: { $0.currency == model.base }),
+//                           let relative = currencies.first(where: { $0.currency == model.relative }) {
+//                            try? storage.create(RealmExchangeRate.self) { rate in
+//                                rate.base = base
+//                                rate.relative = relative
+//                                rate.isSelected = model.isSelected
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+        case .saveSelectedExchangeRates(let rate):
             storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
                 self.currencies = $0
             }
-            
             storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
-                if rates.isEmpty {
-                    defaultRelatives.forEach { stringRelative in
-                        let model = buildRelative(stringRelative)
-                        if let base = currencies.first(where: { $0.currency == model.base }),
-                           let relative = currencies.first(where: { $0.currency == model.relative }) {
-                            try? storage.create(RealmExchangeRate.self) { rate in
-                                rate.base = base
-                                rate.relative = relative
-                                rate.isSelected = model.isSelected
-                            }
-                        }
+                if let base = currencies.first(where: { $0.currency == rate.base }),
+                   let relative = currencies.first(where: { $0.currency == rate.relative }) {
+                    try? storage.create(RealmExchangeRate.self) { rate in
+                        rate.base = base
+                        rate.relative = relative
+                        rate.isSelected = true
                     }
                 }
             }

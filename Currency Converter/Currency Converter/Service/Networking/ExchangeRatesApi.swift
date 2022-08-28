@@ -20,6 +20,8 @@ enum ExchangeRatesApi {
     case timeFrame(base: String, currencies: [String], start: String, end: String)
     case live(base: String, type: ExchangeType)
     case historical(date: Date)
+    case lastCandleForex(symbols: [String], period: PeriodType)
+    case lastCandleCrypto(symbols: [String], period: PeriodType)
 }
 
 enum ExchangeType: String {
@@ -27,12 +29,18 @@ enum ExchangeType: String {
     case crypto = "crypto"
 }
 
+enum PeriodType: String {
+    case oneHour = "1h"
+    case oneDay = "1d"
+    case oneWeek = "1w"
+}
+
 extension ExchangeRatesApi: EndPointType {
 
     var apiKey: String { "dgBArJjhnOMS5yt88X2TSJwSW" }
     
     var basePath: String {
-        return "https://fcsapi.com/api-v3/forex/"
+        return "https://fcsapi.com/api-v3/"
     }
     
     var baseURL: URL {
@@ -46,7 +54,9 @@ extension ExchangeRatesApi: EndPointType {
         switch self {
         case .timeFrame: return "timeseries"
         case .historical(let date): return DateFormatter.exchangeRateGeneralDateFormatter.string(from: date)
-        case .live: return "base_latest"
+        case .live: return "forex/base_latest"
+        case .lastCandleForex: return "forex/candle"
+        case .lastCandleCrypto: return "crypto/candle"
         }
     }
     
@@ -71,6 +81,20 @@ extension ExchangeRatesApi: EndPointType {
                                                           "type": type,
                                                           "access_key": apiKey])
         case .historical: return .request
+        case .lastCandleForex(let symbols, let period):
+            let currenciesString = symbols.joined(separator: ",")
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["symbol": currenciesString,
+                                                          "period": period.rawValue,
+                                                          "access_key": apiKey])
+        case .lastCandleCrypto(let symbols, let period):
+            let currenciesString = symbols.joined(separator: ",")
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["symbol": currenciesString,
+                                                          "period": period.rawValue,
+                                                          "access_key": apiKey])
         }
     }
     

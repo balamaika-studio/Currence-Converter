@@ -70,8 +70,8 @@ class CurrencySelectionViewController: UIViewController, CurrencySelectionDispla
         tableView.register(ExchangeRatesHeader.self,
                            forHeaderFooterViewReuseIdentifier: ExchangeRatesHeader.reuseId)
         
-        tableView.rowHeight = 44
-        tableView.sectionHeaderHeight = 50
+        tableView.rowHeight = 75
+//        tableView.sectionHeaderHeight = 50
         tableView.contentInset = AdBannerInsetService.shared.tableInset
         relatives = []
     }
@@ -99,7 +99,7 @@ extension CurrencySelectionViewController: UITableViewDataSource {
         
         let relative = relatives[indexPath.row]
         cell.configure(with: relative)
-        cell.configureForSelection()
+//        cell.configureForSelection()
         if relative.isSelected {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         }
@@ -111,6 +111,10 @@ extension CurrencySelectionViewController: UITableViewDataSource {
         guard let header = tableView.dequeueReusableHeaderFooterView(withIdentifier: id) as? ExchangeRatesHeader else { return nil }
         header.hideRateLabel()
         return header
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        75
     }
 }
 

@@ -20,9 +20,9 @@
 "Favourite cryptocurrency segment title" = "Криптовалюта";
 "Favourite add currency title" = "Добавить валюту";
 
-// MARK: - Exchanges
-"Exchanges title" = "Курс валют";
-"Exchanges tabBar item" = "Курс валют";
+// MARK: - currencyRates
+"Currency Rates title" = "Курсы валют";
+"Currency Rates tabBar item" = "Курсы";
 
 // segmented controll
 "Rates" = "Курсы";
@@ -96,3 +96,6 @@
 // MARK: - Offline Screen
 "Offline title" = "Нет соединения с интернетом";
 "Offline description" = "Пожалуйста, проверьте подключение еще раз или подключитесь к Wi-Fi";
+
+// MARK: - ExchangeRate
+"Add pair" = "Добавить пару";

@@ -20,9 +20,9 @@
 "Favourite cryptocurrency segment title" = "Сryptocurrency";
 "Favourite add currency title" = "Add currency";
 
-// MARK: - Exchanges
-"Exchanges title" = "Exchange rates";
-"Exchanges tabBar item" = "Exchange rates";
+// MARK: - currencyRates
+"Currency Rates title" = "Exchange rates";
+"Currency Rates tabBar item" = "Exchange rates";
 
 // segmented controll
 "Rates" = "Rates";
@@ -96,3 +96,6 @@
 // MARK: - Offline Screen
 "Offline title" = "No internet connection";
 "Offline description" = "Please check your connection again, or connect to Wi-Fi";
+
+// MARK: - ExchangeRate
+"Add pair" = "Add couple";
