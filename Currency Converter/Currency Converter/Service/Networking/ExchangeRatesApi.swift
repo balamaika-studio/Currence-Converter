@@ -17,7 +17,8 @@ extension DateFormatter {
 }
 
 enum ExchangeRatesApi {
-    case timeFrame(base: String, currencies: [String], start: String, end: String)
+    case timeFrameForex(base: String, related: String, start: String, end: String)
+    case timeFrameCrypto(base: String, related: String, start: String, end: String)
     case live(base: String, type: ExchangeType)
     case historical(date: Date)
     case lastCandleForex(symbols: [String], period: PeriodType)
@@ -52,7 +53,8 @@ extension ExchangeRatesApi: EndPointType {
     
     var path: String {
         switch self {
-        case .timeFrame: return "timeseries"
+        case .timeFrameForex: return "forex/history"
+        case .timeFrameCrypto: return "crypto/history"
         case .historical(let date): return DateFormatter.exchangeRateGeneralDateFormatter.string(from: date)
         case .live: return "forex/base_latest"
         case .lastCandleForex: return "forex/candle"
@@ -66,14 +68,28 @@ extension ExchangeRatesApi: EndPointType {
     
     var task: HTTPTask {
         switch self {
-        case .timeFrame(let base, let currencies, let start, let end):
-            let currenciesString = currencies.joined(separator: ",")
+        case .timeFrameForex(let base, let related, let start, let end):
+            let currenciesString = "\(base)/\(related)"
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["base": base,
-                                                          "symbols": currenciesString,
-                                                          "start_date": start,
-                                                          "end_date": end])
+                                          urlParameters: ["symbol": currenciesString,
+                                                          "from": start,
+                                                          "to": end,
+                                                          "period": PeriodType.oneDay.rawValue,
+                                                          "level": "3",
+                                                          "access_key": apiKey])
+
+        case .timeFrameCrypto(let base, let related, let start, let end):
+            let currenciesString = "\(base)/\(related)"
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["symbol": currenciesString,
+                                                          "from": start,
+                                                          "to": end,
+                                                          "period": PeriodType.oneDay.rawValue,
+                                                          "level": "3",
+                                                          "access_key": apiKey])
+
         case .live(let base, let type):
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,

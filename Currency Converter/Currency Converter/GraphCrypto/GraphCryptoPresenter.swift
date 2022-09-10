@@ -1,5 +1,5 @@
 //
-//  GraphPresenter.swift
+//  GraphCryptoPresenter.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/17/20.
@@ -8,45 +8,46 @@
 
 import UIKit
 
-protocol GraphPresentationLogic {
-    func presentData(response: Graph.Model.Response.ResponseType)
+protocol GraphCryptoPresentationLogic {
+    func presentData(response: GraphCrypto.Model.Response.ResponseType)
 }
 
-class GraphPresenter: GraphPresentationLogic {
-    weak var viewController: GraphDisplayLogic?
-    private var graphPeriod: GraphPeriod!
+class GraphCryptoPresenter: GraphCryptoPresentationLogic {
+    weak var viewController: GraphCryptoDisplayLogic?
+    private var GraphCryptoPeriod: GraphPeriod!
     
-    func presentData(response: Graph.Model.Response.ResponseType) {
+    func presentData(response: GraphCrypto.Model.Response.ResponseType) {
         switch response {
-        case .graphPeriods(let periods):
-            viewController?.displayData(viewModel: .showGraphPeriods(periods))
+        case .GraphCryptoPeriods(let periods):
+            viewController?.displayData(viewModel: .showGraphCryptoPeriods(periods))
             
         case .defaultConverter(let converterModel):
-            viewController?.displayData(viewModel: .showGraphConverter(converterModel))
+            viewController?.displayData(viewModel: .showGraphCryptoConverter(converterModel))
             
         case .newConverterCurrency(let currency):
             guard let model = buildNewModel(with: currency) else { break }
             viewController?.displayData(viewModel: .updateConverter(newModel: model))
             
-        case .graphData(let timeframeQuotes, let graphPeriod):
-            self.graphPeriod = graphPeriod
-            let viewModel = buildGraphViewModel(timeframeQuotes)
-            viewController?.displayData(viewModel: .showGraphData(viewModel))
+        case .GraphCryptoData(let timeframeQuotes, let GraphCryptoPeriod):
+            self.GraphCryptoPeriod = GraphCryptoPeriod
+            let viewModel = buildGraphCryptoViewModel(timeframeQuotes)
+            viewController?.displayData(viewModel: .showGraphCryptoData(viewModel))
         }
     }
     
     private func buildNewModel(with currency: Currency) -> ChoiceCurrencyViewModel? {
+        _ = CurrenciesInfoService.shared.fetchCrypto()
         guard let info = CurrenciesInfoService.shared.getInfo(by: currency) else {
             return nil
         }
         return ChoiceCurrencyViewModel(currency: info.abbreviation, title: info.title)
     }
     
-    private func buildGraphViewModel(_ quotes: [TimeFrameQuote]) -> GraphViewModel {
-        guard let period = Period(rawValue: graphPeriod.interval) else {
+    private func buildGraphCryptoViewModel(_ quotes: [TimeFrameQuote]) -> GraphViewModel {
+        guard let period = Period(rawValue: GraphCryptoPeriod.interval) else {
             fatalError()
         }
-
+        
         var dates = [String]()
         let data = quotes.map { $0.rate }
         let dateFormatter = DateFormatter()
@@ -54,7 +55,7 @@ class GraphPresenter: GraphPresentationLogic {
         let responseDates = quotes.compactMap {
             Date(timeIntervalSince1970: Double($0.date) ?? 0)
         }
-
+                        
         switch period {
         case .week: fallthrough
         case .halfMonth: fallthrough
@@ -66,7 +67,7 @@ class GraphPresenter: GraphPresentationLogic {
             dateFormatter.dateFormat = "MM.YY"
             dates = responseDates.compactMap { dateFormatter.string(from: $0) }
         }
-
+        
         return GraphViewModel(data: data, dates: dates)
     }
 }

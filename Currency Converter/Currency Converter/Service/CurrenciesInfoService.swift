@@ -12,14 +12,15 @@ class CurrenciesInfoService {
     static let shared = CurrenciesInfoService()
     
     private var currencyInfo: [CurrencyInfo]!
-    private let graphSupportedSymbols = [
-        "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK", "GBP", "RON",
-        "SEK", "IDR", "INR", "BRL", "RUB", "HRK", "JPY", "THB", "CHF",
-        "EUR", "MYR", "BGN", "TRY", "CNY", "NOK", "NZD", "ZAR", "USD",
-        "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
-    ]
+//    private let graphSupportedSymbols = [
+//        "CAD", "HKD", "ISK", "PHP", "DKK", "HUF", "CZK", "GBP", "RON",
+//        "SEK", "IDR", "INR", "BRL", "RUB", "HRK", "JPY", "THB", "CHF",
+//        "EUR", "MYR", "BGN", "TRY", "CNY", "NOK", "NZD", "ZAR", "USD",
+//        "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
+//    ]
     private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
     private let graphDefaultCurrencies = ["USD", "EUR"]
+    private let graphDefaultCryptocurrencies = ["BTC", "ETH"]
     
     private init() { }
     
@@ -59,26 +60,44 @@ class CurrenciesInfoService {
         return currencyInfo.first { $0.abbreviation == currency.currency }
     }
     
-    func getGraphSupportedCurrencies() -> [Currency] {
-        return zip(graphSupportedSymbols.indices, graphSupportedSymbols).map { Quote(
-            currency: $1,
-            rate: 0,
-            index: $0
-        ) }
-    }
+//    func getGraphSupportedCurrencies() -> [Currency] {
+//        return zip(graphSupportedSymbols.indices, graphSupportedSymbols).map { Quote(
+//            currency: $1,
+//            rate: 0,
+//            index: $0
+//        ) }
+//    }
     
-    func getPopularCurrencies() -> [Currency] {
-        return zip(popularCurrencies.indices, popularCurrencies).map { Quote(
-            currency: $1,
-            rate: 0,
-            index: $0
-        ) }
-    }
+//    func getPopularCurrencies() -> [Currency] {
+//        return zip(popularCurrencies.indices, popularCurrencies).map { Quote(
+//            currency: $1,
+//            rate: 0,
+//            index: $0
+//        ) }
+//    }
     
     func getGraphDefaultCurrencies() -> GraphConverterViewModel {
-        let info = currencyInfo == nil ? fetchCurrency() : currencyInfo!
+        let info = fetchCurrency()
         guard let baseCode = graphDefaultCurrencies.first,
             let relativeCode = graphDefaultCurrencies.last,
+            let baseInfo = info.first(where: { $0.abbreviation == baseCode }),
+            let relativeInfo = info.first(where: { $0.abbreviation == relativeCode })
+        else {
+            print(#function)
+            print(#line)
+            fatalError("Unknown default graph currencies")
+        }
+        let base = ChoiceCurrencyViewModel(currency: baseInfo.abbreviation,
+                                           title: baseInfo.title)
+        let relative = ChoiceCurrencyViewModel(currency: relativeInfo.abbreviation,
+                                               title: relativeInfo.title)
+        return GraphConverterViewModel(base: base, relative: relative)
+    }
+
+    func getGraphDefaultCryptocurrencies() -> GraphConverterViewModel {
+        let info = fetchCrypto()
+        guard let baseCode = graphDefaultCryptocurrencies.first,
+            let relativeCode = graphDefaultCryptocurrencies.last,
             let baseInfo = info.first(where: { $0.abbreviation == baseCode }),
             let relativeInfo = info.first(where: { $0.abbreviation == relativeCode })
         else {

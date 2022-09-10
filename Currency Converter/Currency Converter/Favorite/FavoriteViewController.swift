@@ -97,8 +97,10 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     private func setupView() {
         setNavbarLabelTitle()
-        setupSegmentedControl()
-        updateView(selectedIndex: segmentedControl.selectedSegmentIndex)
+        DispatchQueue.main.async {
+            self.setupSegmentedControl()
+            self.updateView(selectedIndex: self.segmentedControl.selectedSegmentIndex)
+        }
     }
     
     private func setupSegmentedControl() {

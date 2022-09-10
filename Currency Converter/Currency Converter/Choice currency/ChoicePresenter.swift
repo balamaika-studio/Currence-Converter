@@ -14,12 +14,24 @@ protocol ChoicePresentationLogic {
 
 class ChoicePresenter: ChoicePresentationLogic {
     weak var viewController: ChoiceDisplayLogic?
+    var currencyViewModels: [ChoiceCurrencyViewModel]!
+    var filteredCurrencyViewModels: [ChoiceCurrencyViewModel]?
     
     func presentData(response: Choice.Model.Response.ResponseType) {
         switch response {
         case .currencies(let currencies, let info):
             let viewModels = buildViewModels(currencies, info)
+            currencyViewModels = viewModels
             viewController?.displayData(viewModel: .displayCurrencies(viewModels))
+        case .filter(let text):
+            let filter = text.lowercased()
+            let filteredQuotes = text.isEmpty ? currencyViewModels : currencyViewModels?.filter { quote in
+                let title = quote.title.lowercased()
+                let currency = quote.currency.lowercased()
+                return title.contains(filter) || currency.contains(filter)
+            }
+            self.filteredCurrencyViewModels = filteredQuotes
+            viewController?.displayData(viewModel: .displayCurrencies(filteredQuotes ?? []))
         }
     }
         
@@ -35,18 +47,18 @@ class ChoicePresenter: ChoicePresentationLogic {
                                                     title: currencyTitle)
             result.append(viewModel)
         }
-        var sortedViewModels = result.sorted { $0.title < $1.title }
+        let sortedViewModels = result.sorted { $0.title < $1.title }
         
-        CurrenciesInfoService.shared.getPopularCurrencies()
-            .reversed()
-            .forEach { popularCurrency in
-            guard let index = sortedViewModels.firstIndex(where: { currencyViewModel -> Bool in
-                return currencyViewModel.currency == popularCurrency.currency
-            }) else { return }
-            
-            let viewModel = sortedViewModels.remove(at: index)
-            sortedViewModels.insert(viewModel, at: 0)
-        }
+//        CurrenciesInfoService.shared.getPopularCurrencies()
+//            .reversed()
+//            .forEach { popularCurrency in
+//            guard let index = sortedViewModels.firstIndex(where: { currencyViewModel -> Bool in
+//                return currencyViewModel.currency == popularCurrency.currency
+//            }) else { return }
+//            
+//            let viewModel = sortedViewModels.remove(at: index)
+//            sortedViewModels.insert(viewModel, at: 0)
+//        }
         return sortedViewModels
     }
 }

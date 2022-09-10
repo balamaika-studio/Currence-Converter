@@ -1,129 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RelativeExchangeView" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
-                <outlet property="baseChangeCurrencyIcon" destination="R7a-Ic-nTJ" id="bL1-Sw-96H"/>
-                <outlet property="baseChangeCurrencyStack" destination="tiE-Lh-OoS" id="xSR-oR-PE7"/>
+                <outlet property="baseChangeCurrencyStack" destination="CeG-DK-x6E" id="Cln-1b-HQR"/>
                 <outlet property="baseCurrencyImageView" destination="zr7-2b-GZ9" id="572-Zo-mDV"/>
                 <outlet property="baseCurrencyLabel" destination="imm-sR-7ZJ" id="kpd-kR-zvo"/>
                 <outlet property="baseCurrencyTitleLabel" destination="k1H-eO-kbd" id="7d1-B6-xcr"/>
-                <outlet property="relativeChangeCurrencyIcon" destination="hNy-vc-5pl" id="FAd-RE-ivo"/>
-                <outlet property="relativeChangeCurrencyStack" destination="Spl-q8-Dnp" id="pU7-xQ-Zxw"/>
+                <outlet property="relativeChangeCurrencyStack" destination="srj-c6-nYP" id="fab-bV-uWR"/>
                 <outlet property="relativeCurrencyImageView" destination="yYE-wU-WXe" id="RjW-SP-Uyf"/>
                 <outlet property="relativeCurrencyLabel" destination="jbZ-SN-t3E" id="23Q-e4-QQW"/>
                 <outlet property="relativeCurrencyTitleLabel" destination="kOT-DB-uEH" id="UDb-R0-Jck"/>
-                <outlet property="swapCurrenciesWidth" destination="NXd-3J-lgn" id="JZG-CU-Phd"/>
+                <outlet property="shadowContainerView" destination="tLi-Aw-wZK" id="pgU-aP-HK7"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="506" height="74"/>
+            <rect key="frame" x="0.0" y="0.0" width="506" height="101"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="usd" translatesAutoresizingMaskIntoConstraints="NO" id="zr7-2b-GZ9">
-                    <rect key="frame" x="16" y="18" width="40" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="mOq-Vq-Ln7"/>
-                        <constraint firstAttribute="width" secondItem="zr7-2b-GZ9" secondAttribute="height" multiplier="1:1" id="the-B7-ep4"/>
-                    </constraints>
-                </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="tiE-Lh-OoS">
-                    <rect key="frame" x="68" y="18" width="49" height="21.666666666666671"/>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tLi-Aw-wZK">
+                    <rect key="frame" x="15" y="5" width="476" height="91"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="USD" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imm-sR-7ZJ">
-                            <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="21.666666666666668"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="R7a-Ic-nTJ">
-                            <rect key="frame" x="40.666666666666671" y="0.0" width="8.3333333333333357" height="21.666666666666668"/>
-                        </imageView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcY-tv-Ie2">
+                            <rect key="frame" x="217" y="24.666666666666671" width="42" height="42"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="JcY-tv-Ie2" secondAttribute="height" multiplier="1:1" id="xEv-Un-PVm"/>
+                            </constraints>
+                            <state key="normal" image="rotatedSwap"/>
+                            <connections>
+                                <action selector="swapCurrenciesTapped:" destination="-1" eventType="touchUpInside" id="UOc-Ig-wbO"/>
+                            </connections>
+                        </button>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CeG-DK-x6E">
+                            <rect key="frame" x="98.333333333333314" y="25.666666666666671" width="98.666666666666686" height="40"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ZTu-ZR-O4F">
+                                    <rect key="frame" x="0.0" y="0.0" width="48.666666666666664" height="40"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="USD" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="imm-sR-7ZJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="48.666666666666664" height="21"/>
+                                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                            <color key="textColor" red="0.19215686274509802" green="0.396078431372549" blue="0.98431372549019602" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="US Dollar" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="k1H-eO-kbd">
+                                            <rect key="frame" x="0.0" y="20.999999999999996" width="48.666666666666664" height="19.000000000000004"/>
+                                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="11"/>
+                                            <color key="textColor" red="0.15294117647058825" green="0.1764705882352941" blue="0.25490196078431371" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="usd" translatesAutoresizingMaskIntoConstraints="NO" id="zr7-2b-GZ9">
+                                    <rect key="frame" x="58.666666666666671" y="0.0" width="40" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="mOq-Vq-Ln7"/>
+                                        <constraint firstAttribute="width" secondItem="zr7-2b-GZ9" secondAttribute="height" multiplier="1:1" id="the-B7-ep4"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="srj-c6-nYP">
+                            <rect key="frame" x="279" y="25.666666666666671" width="129.33333333333337" height="40"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eur" translatesAutoresizingMaskIntoConstraints="NO" id="yYE-wU-WXe">
+                                    <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="yYE-wU-WXe" secondAttribute="height" multiplier="1:1" id="9PC-lx-jcC"/>
+                                        <constraint firstAttribute="height" constant="40" id="xpM-KA-ObU"/>
+                                    </constraints>
+                                </imageView>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="WB9-6d-yxT">
+                                    <rect key="frame" x="49.999999999999993" y="0.0" width="79.333333333333314" height="40"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-SN-t3E">
+                                            <rect key="frame" x="0.0" y="0.0" width="79.333333333333329" height="21"/>
+                                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                            <color key="textColor" red="0.19215686269999999" green="0.39607843139999999" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="European Euro" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="kOT-DB-uEH">
+                                            <rect key="frame" x="0.0" y="20.999999999999996" width="79.333333333333329" height="19.000000000000004"/>
+                                            <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="11"/>
+                                            <color key="textColor" red="0.1529411765" green="0.1764705882" blue="0.25490196079999999" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
                     </subviews>
-                </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="US Dollar" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k1H-eO-kbd">
-                    <rect key="frame" x="66" y="40.666666666666664" width="159" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.56862745098039214" green="0.62745098039215685" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="eur" translatesAutoresizingMaskIntoConstraints="NO" id="yYE-wU-WXe">
-                    <rect key="frame" x="345.66666666666669" y="18" width="40" height="40"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="yYE-wU-WXe" secondAttribute="height" multiplier="1:1" id="9PC-lx-jcC"/>
-                        <constraint firstAttribute="height" constant="40" id="xpM-KA-ObU"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="srj-c6-nYP" secondAttribute="trailing" constant="10" id="X82-wp-OTh"/>
+                        <constraint firstItem="JcY-tv-Ie2" firstAttribute="centerY" secondItem="tLi-Aw-wZK" secondAttribute="centerY" id="XRA-kX-6XZ"/>
+                        <constraint firstItem="srj-c6-nYP" firstAttribute="leading" secondItem="JcY-tv-Ie2" secondAttribute="trailing" constant="20" id="aZh-I1-a1e"/>
+                        <constraint firstItem="JcY-tv-Ie2" firstAttribute="centerX" secondItem="tLi-Aw-wZK" secondAttribute="centerX" id="gWF-J5-0CN"/>
+                        <constraint firstItem="CeG-DK-x6E" firstAttribute="centerY" secondItem="tLi-Aw-wZK" secondAttribute="centerY" id="hSI-XP-VLZ"/>
+                        <constraint firstItem="srj-c6-nYP" firstAttribute="centerY" secondItem="tLi-Aw-wZK" secondAttribute="centerY" id="l4z-EL-SDl"/>
+                        <constraint firstItem="JcY-tv-Ie2" firstAttribute="leading" secondItem="CeG-DK-x6E" secondAttribute="trailing" constant="20" id="nWQ-qe-vt8"/>
+                        <constraint firstItem="CeG-DK-x6E" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="tLi-Aw-wZK" secondAttribute="leading" constant="10" id="tVJ-PM-fd4"/>
                     </constraints>
-                </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Spl-q8-Dnp">
-                    <rect key="frame" x="395.66666666666669" y="18" width="47" height="21.666666666666671"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EUR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-SN-t3E">
-                            <rect key="frame" x="0.0" y="0.0" width="34.666666666666664" height="21.666666666666668"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="changeCurrencyLight" translatesAutoresizingMaskIntoConstraints="NO" id="hNy-vc-5pl">
-                            <rect key="frame" x="38.666666666666629" y="0.0" width="8.3333333333333357" height="21.666666666666668"/>
-                        </imageView>
-                    </subviews>
-                </stackView>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="European Euro" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOT-DB-uEH">
-                    <rect key="frame" x="395.66666666666669" y="40.666666666666664" width="94.333333333333314" height="17"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <color key="textColor" red="0.56862745100000001" green="0.62745098040000002" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JcY-tv-Ie2">
-                    <rect key="frame" x="241" y="25" width="24" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="24" id="NXd-3J-lgn"/>
-                        <constraint firstAttribute="width" secondItem="JcY-tv-Ie2" secondAttribute="height" multiplier="1:1" id="xEv-Un-PVm"/>
-                    </constraints>
-                    <state key="normal" image="rotatedSwap"/>
-                    <connections>
-                        <action selector="swapCurrenciesTapped:" destination="-1" eventType="touchUpInside" id="UOc-Ig-wbO"/>
-                    </connections>
-                </button>
+                </view>
             </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="k1H-eO-kbd" firstAttribute="top" secondItem="imm-sR-7ZJ" secondAttribute="bottom" constant="1" id="0Uu-kQ-LMt"/>
-                <constraint firstItem="JcY-tv-Ie2" firstAttribute="leading" secondItem="k1H-eO-kbd" secondAttribute="trailing" constant="16" id="3AA-uB-D70"/>
-                <constraint firstItem="yYE-wU-WXe" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="18" id="6Jl-gc-Zmf"/>
-                <constraint firstItem="yYE-wU-WXe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JcY-tv-Ie2" secondAttribute="trailing" constant="20" id="6XA-vt-mBx"/>
-                <constraint firstItem="Spl-q8-Dnp" firstAttribute="leading" secondItem="yYE-wU-WXe" secondAttribute="trailing" constant="10" id="7nC-pf-oFd"/>
-                <constraint firstItem="JcY-tv-Ie2" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="Asy-8b-raL"/>
-                <constraint firstItem="zr7-2b-GZ9" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="18" id="FRi-IB-JEF"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Spl-q8-Dnp" secondAttribute="trailing" constant="20" id="H0b-zE-dou"/>
-                <constraint firstItem="k1H-eO-kbd" firstAttribute="leading" secondItem="imm-sR-7ZJ" secondAttribute="leading" id="LXI-eB-Fts"/>
-                <constraint firstItem="kOT-DB-uEH" firstAttribute="top" secondItem="jbZ-SN-t3E" secondAttribute="bottom" constant="1" id="NL9-lE-gWp"/>
-                <constraint firstItem="imm-sR-7ZJ" firstAttribute="top" secondItem="zr7-2b-GZ9" secondAttribute="top" id="Os8-4T-zlX"/>
-                <constraint firstItem="yYE-wU-WXe" firstAttribute="width" secondItem="yYE-wU-WXe" secondAttribute="height" multiplier="1:1" id="PXd-ti-bZd"/>
-                <constraint firstItem="imm-sR-7ZJ" firstAttribute="leading" secondItem="zr7-2b-GZ9" secondAttribute="trailing" constant="10" id="Roz-1e-asv"/>
-                <constraint firstItem="kOT-DB-uEH" firstAttribute="leading" secondItem="yYE-wU-WXe" secondAttribute="trailing" constant="10" id="Vfm-Dz-2JW"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="kOT-DB-uEH" secondAttribute="trailing" constant="16" id="fAV-ja-T2a"/>
-                <constraint firstItem="zr7-2b-GZ9" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="jJf-aD-D3h"/>
-                <constraint firstItem="Spl-q8-Dnp" firstAttribute="top" secondItem="yYE-wU-WXe" secondAttribute="top" id="rV4-ao-vsb"/>
-                <constraint firstItem="JcY-tv-Ie2" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="sZH-n7-wqF"/>
+                <constraint firstItem="tLi-Aw-wZK" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="5" id="2Pq-hg-mK6"/>
+                <constraint firstItem="tLi-Aw-wZK" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="15" id="BVj-wC-hL5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="tLi-Aw-wZK" secondAttribute="bottom" constant="5" id="MHS-oS-Rdx"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="tLi-Aw-wZK" secondAttribute="trailing" constant="15" id="fY8-08-YDX"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="204.34782608695653" y="152.44565217391306"/>
+            <point key="canvasLocation" x="204.34782608695653" y="163.45108695652175"/>
         </view>
     </objects>
     <resources>
-        <image name="changeCurrencyLight" width="8.3333330154418945" height="5.3333334922790527"/>
-        <image name="eur" width="512" height="512"/>
-        <image name="rotatedSwap" width="24" height="24"/>
-        <image name="usd" width="512" height="512"/>
+        <image name="eur" width="32" height="32"/>
+        <image name="rotatedSwap" width="42" height="40"/>
+        <image name="usd" width="32" height="32"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

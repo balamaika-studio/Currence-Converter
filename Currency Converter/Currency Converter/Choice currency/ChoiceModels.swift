@@ -13,13 +13,15 @@ enum Choice {
     enum Model {
         struct Request {
             enum RequestType {
-                case loadCurrencies(forGraph: Bool = false)
+                case loadCurrencies(forGraph: Bool = false, isCrypto: Bool = false)
                 case chooseCurrency(viewModel: ChoiceCurrencyViewModel)
+                case filter(title: String)
             }
         }
         struct Response {
             enum ResponseType {
                 case currencies([Currency], [CurrencyInfo])
+                case filter(title: String)
             }
         }
         struct ViewModel {

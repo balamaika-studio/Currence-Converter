@@ -35,10 +35,30 @@ struct NetworkManager {
         }
     }
     
-    func getQuotes(base: String, currencies: [String], start: String, end: String,
+//    func getQuotes(base: String, currencies: [String], start: String, end: String,
+//                   completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
+//        exchangeRatesRouter
+//            .request(.timeFrame(base: base, currencies: currencies, start: start, end: end)) { data, response, error in
+//            self.build(ExchangeRatesTimeSeriesResponse.self,
+//                       with: (data, response, error),
+//                       callback: completion)
+//        }
+//    }
+
+    func getForexGraphsQuotes(base: String, related: String, start: String, end: String,
                    completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
         exchangeRatesRouter
-            .request(.timeFrame(base: base, currencies: currencies, start: start, end: end)) { data, response, error in
+            .request(.timeFrameForex(base: base, related: related, start: start, end: end)) { data, response, error in
+            self.build(ExchangeRatesTimeSeriesResponse.self,
+                       with: (data, response, error),
+                       callback: completion)
+        }
+    }
+
+    func getCryptoGraphsQuotes(base: String, related: String, start: String, end: String,
+                   completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
+        exchangeRatesRouter
+            .request(.timeFrameCrypto(base: base, related: related, start: start, end: end)) { data, response, error in
             self.build(ExchangeRatesTimeSeriesResponse.self,
                        with: (data, response, error),
                        callback: completion)

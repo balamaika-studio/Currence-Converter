@@ -10,6 +10,7 @@ import UIKit
 
 protocol ChoiceRoutingLogic {
     func closeChoiceViewController()
+    func dismissViewController()
 }
 
 protocol ChoiceDataPassing {
@@ -31,7 +32,15 @@ class ChoiceRouter {
         let destinationViewController = ((viewController?.presentingViewController as? UITabBarController)?
             .selectedViewController as? UINavigationController)?
             .topViewController as? ChoiceBackDataPassing
-        
+//        var destinationViewController: ChoiceBackDataPassing?
+//         ((viewController?.presentingViewController as? UITabBarController)?
+//            .selectedViewController as? UINavigationController)?
+//            .topViewController?.children.forEach({ vc in
+//                if vc is ChoiceBackDataPassing {
+//                    destinationViewController = vc as? ChoiceBackDataPassing
+//                }
+//            })
+
         guard
             let choiceVC = viewController,
             let choiceDataStore = dataStore,
@@ -41,6 +50,14 @@ class ChoiceRouter {
         passDataBack(source: choiceDataStore, destination: &converterDataStore)
         destinationVC.updateControllerWithSelectedCurrency()
         close(choiceVC)
+    }
+
+    func dismissViewController() {
+        guard let viewController = viewController else {
+            return
+        }
+
+        close(viewController)
     }
 }
 

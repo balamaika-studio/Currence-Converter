@@ -1,5 +1,5 @@
 //
-//  GraphViewController.swift
+//  GraphCryptoCryptoViewController.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/17/20.
@@ -9,11 +9,11 @@
 import UIKit
 import Charts
 
-protocol GraphDisplayLogic: class {
-    func displayData(viewModel: Graph.Model.ViewModel.ViewModelData)
+protocol GraphCryptoDisplayLogic: class {
+    func displayData(viewModel: GraphCrypto.Model.ViewModel.ViewModelData)
 }
 
-final class GraphViewController: UIViewController, GraphDisplayLogic {
+final class GraphCryptoViewController: UIViewController, GraphCryptoDisplayLogic {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var converterView: RelativeExchangeView!
@@ -33,8 +33,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         return scrollView
     }()
     
-    var interactor: GraphBusinessLogic?
-    var router: (GraphRoutingLogic & ChoiceDataPassing)?
+    var interactor: GraphCryptoBusinessLogic?
+    var router: (GraphCryptoRoutingLogic & ChoiceDataPassing)?
     
     private var periods: [GraphPeriod]!
     private var labelLeadingMarginInitialConstant: CGFloat!
@@ -55,9 +55,9 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     
     private func setup() {
         let viewController        = self
-        let interactor            = GraphInteractor()
-        let presenter             = GraphPresenter()
-        let router                = GraphRouter()
+        let interactor            = GraphCryptoInteractor()
+        let presenter             = GraphCryptoPresenter()
+        let router                = GraphCryptoRouter()
         viewController.interactor = interactor
         viewController.router     = router
         interactor.presenter      = presenter
@@ -71,7 +71,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         super.viewDidLoad()
         setupView()
         setUpTheming()
-        interactor?.makeRequest(request: .getGraphPeriods)
+        interactor?.makeRequest(request: .getGraphCryptoPeriods)
         interactor?.makeRequest(request: .getDefaultConverter)
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -84,9 +84,9 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         self.collectionView(collectionView, didSelectItemAt: indexPath)
     }
     
-    func displayData(viewModel: Graph.Model.ViewModel.ViewModelData) {
+    func displayData(viewModel: GraphCrypto.Model.ViewModel.ViewModelData) {
         switch viewModel {
-        case .showGraphPeriods(let periods):
+        case .showGraphCryptoPeriods(let periods):
             self.periods = periods
             let padding = leadingCollectionViewConstraint.constant
             let sizeClass = traitCollection.horizontalSizeClass
@@ -96,13 +96,13 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
             collectionView.setCollectionViewLayout(layout, animated: false)
             collectionView.reloadData()
             
-        case .showGraphConverter(let viewModel):
+        case .showGraphCryptoConverter(let viewModel):
             converterView.configure(with: viewModel)
             
         case .updateConverter(let newModel):
             converterView.updateSelectedCurrency(with: newModel)
             
-        case .showGraphData(let viewModel):
+        case .showGraphCryptoData(let viewModel):
             setChartData(with: viewModel)
         }
     }
@@ -185,10 +185,10 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         self.collectionView(collectionView, didSelectItemAt: indexPath)
     }
     
-    private func setChartData(with graphViewModel: GraphViewModel) {
+    private func setChartData(with GraphCryptoCryptoViewModel: GraphViewModel) {
         chartView.clear()
-        chartView.xAxis.valueFormatter = ChartXValueFormatter(dates: graphViewModel.dates)
-        let entries = graphViewModel.data.enumerated().map { index, value in
+        chartView.xAxis.valueFormatter = ChartXValueFormatter(dates: GraphCryptoCryptoViewModel.dates)
+        let entries = GraphCryptoCryptoViewModel.data.enumerated().map { index, value in
             return ChartDataEntry(x: Double(index), y: value)
         }
         
@@ -218,7 +218,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
 }
 
 // MARK: - Themed
-extension GraphViewController: Themed {
+extension GraphCryptoViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         view.backgroundColor = theme.specificBackgroundColor
         currenciesRateLabel.textColor = theme.textColor
@@ -227,18 +227,18 @@ extension GraphViewController: Themed {
 }
 
 // MARK: - ChoiceBackDataPassing
-extension GraphViewController: ChoiceBackDataPassing {
+extension GraphCryptoViewController: ChoiceBackDataPassing {
     func getRouter() -> ChoiceDataPassing {
         return router!
     }
-    
+
     func updateControllerWithSelectedCurrency() {
         interactor?.makeRequest(request: .updateConverterCurrency)
     }
 }
 
 // MARK: - ChartViewDelegate
-extension GraphViewController: ChartViewDelegate {
+extension GraphCryptoViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         let left = highlight.xPx
         scrollView.isScrollEnabled = false
@@ -272,7 +272,7 @@ extension GraphViewController: ChartViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
-extension GraphViewController: UICollectionViewDataSource {
+extension GraphCryptoViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return periods.count
     }
@@ -292,17 +292,17 @@ extension GraphViewController: UICollectionViewDataSource {
 }
 
 // MARK: - UICollectionViewDelegate
-extension GraphViewController: UICollectionViewDelegate {
+extension GraphCryptoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? PeriodCollectionViewCell else { return }
         clearChartLabel()
         cell.isSelected = true
         let base = converterView.baseCurrency.currency
         let relative = converterView.relativeCurrency.currency
-        let graphPeriod = periods[indexPath.row]
-        interactor?.makeRequest(request: .loadGraphData(base: base,
+        let GraphCryptoCryptoPeriod = periods[indexPath.row]
+        interactor?.makeRequest(request: .loadGraphCryptoData(base: base,
                                                         relative: relative,
-                                                        period: graphPeriod))
+                                                        period: GraphCryptoCryptoPeriod))
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -312,7 +312,7 @@ extension GraphViewController: UICollectionViewDelegate {
 }
 
 //// MARK: - UIViewControllerTransitioningDelegate
-//extension GraphViewController: UIViewControllerTransitioningDelegate {
+//extension GraphCryptoViewController: UIViewControllerTransitioningDelegate {
 //    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
 //        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
 //    }

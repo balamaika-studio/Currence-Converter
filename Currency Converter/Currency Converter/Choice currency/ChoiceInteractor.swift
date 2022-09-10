@@ -32,29 +32,34 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
     func makeRequest(request: Choice.Model.Request.RequestType) {
         
         switch request {
-        case .loadCurrencies(let isGraphCurrencies):
+        case .loadCurrencies(let isGraphCurrencies, let isCrypto):
             storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
                 self.currencies = isGraphCurrencies == true ?
                     filterGraphCurrencies(from: currencies) :
                     currencies
-                
-                var currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-                let cryptoCurrency =  CurrenciesInfoService.shared.fetchCrypto()
-                currenciesInfo.append(contentsOf: cryptoCurrency)
+                var cryptoCurrency: [CurrencyInfo] = []
+                if isCrypto {
+                    cryptoCurrency =  CurrenciesInfoService.shared.fetchCrypto()
+                } else {
+                    cryptoCurrency = CurrenciesInfoService.shared.fetchCurrency()
+                }
                 self.presenter?.presentData(response: .currencies(self.currencies,
-                                                                  currenciesInfo))
+                                                                  cryptoCurrency))
             }
             
         case .chooseCurrency(let viewModel):
             selectedCurrency = currencies.first { $0.currency == viewModel.currency }
+        case .filter(let title):
+            presenter?.presentData(response: .filter(title: title))
         }
     }
     
     private func filterGraphCurrencies(from currencies: [Currency]) -> [Currency] {
-        let graphCurrencies = CurrenciesInfoService.shared.getGraphSupportedCurrencies()
-        return currencies.filter { currency in
-            graphCurrencies.contains { $0.currency == currency.currency }
-        }
+//        let graphCurrencies = CurrenciesInfoService.shared.getGraphSupportedCurrencies()
+//        return currencies.filter { currency in
+//            graphCurrencies.contains { $0.currency == currency.currency }
+//        }
+        return currencies
     }
     
 }

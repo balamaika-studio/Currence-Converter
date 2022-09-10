@@ -1,5 +1,5 @@
 //
-//  GraphInteractor.swift
+//  GraphCryptoInteractor.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/17/20.
@@ -8,62 +8,52 @@
 
 import UIKit
 
-protocol GraphBusinessLogic {
-    func makeRequest(request: Graph.Model.Request.RequestType)
+protocol GraphCryptoBusinessLogic {
+    func makeRequest(request: GraphCrypto.Model.Request.RequestType)
 }
 
-class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
+class GraphCryptoInteractor: GraphCryptoBusinessLogic, ChoiceDataStore {
     var selectedCurrency: Currency?
-    var presenter: GraphPresentationLogic?
+    var presenter: GraphCryptoPresentationLogic?
     var networkManager: NetworkManager!
     
     init() {
         self.networkManager = NetworkManager()
     }
     
-    func makeRequest(request: Graph.Model.Request.RequestType) {
+    func makeRequest(request: GraphCrypto.Model.Request.RequestType) {
         switch request {
-        case .getGraphPeriods:
+        case .getGraphCryptoPeriods:
             let periods = PeriodService.shared.buildGraphPeriodModels()
-            presenter?.presentData(response: .graphPeriods(periods))
+            presenter?.presentData(response: .GraphCryptoPeriods(periods))
             
         case .getDefaultConverter:
-            let converter = CurrenciesInfoService.shared.getGraphDefaultCurrencies()
+            let converter = CurrenciesInfoService.shared.getGraphDefaultCryptocurrencies()
             presenter?.presentData(response: .defaultConverter(converter))
             
         case .updateConverterCurrency:
             guard let newCurrency = selectedCurrency else { break }
             presenter?.presentData(response: .newConverterCurrency(newCurrency))
             
-        case .loadGraphData(let base, let relative, let period):
-            let interval = buildGraphRequestInterval(period: period)
+        case .loadGraphCryptoData(let base, let relative, let period):
+            let interval = buildGraphCryptoRequestInterval(period: period)
             if base == relative {
                 let quotes = self.buildEqualTimeFrameQuotes(period: period, currency: base)
-                self.presenter?.presentData(response: .graphData(quotes.sorted(by: <), period: period))
+                self.presenter?.presentData(response: .GraphCryptoData(quotes.sorted(by: <), period: period))
             }
             
-            networkManager.getForexGraphsQuotes(base: base, related: relative, start: interval.startDate, end: interval.endDate) { response, errorMessage in
+            networkManager.getCryptoGraphsQuotes(base: base, related: relative, start: interval.startDate, end: interval.endDate) { response, errorMessage in
                 guard let answer = response?.quotes else {
-                    print(errorMessage ?? "Error Load graph data")
+                    print(errorMessage ?? "Error Load GraphCrypto data")
                     return
                 }
-                if answer.isEmpty {
-                    self.networkManager.getCryptoGraphsQuotes(base: base, related: relative, start: interval.startDate, end: interval.endDate) { response, errorMessage in
-                        guard let answer = response?.quotes else {
-                            print(errorMessage ?? "Error Load GraphCrypto data")
-                            return
-                        }
-                        self.presenter?.presentData(response: .graphData(answer.sorted(by: <), period: period))
-                    }
-                } else {
-                    self.presenter?.presentData(response: .graphData(answer.sorted(by: <), period: period))
-                }
+                self.presenter?.presentData(response: .GraphCryptoData(answer.sorted(by: <), period: period))
             }
         }
         
     }
     
-    private func buildGraphRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {
+    private func buildGraphCryptoRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {
         var startInterval = period.interval
         let testRange = Period.week.range(to: .halfMonth)
         

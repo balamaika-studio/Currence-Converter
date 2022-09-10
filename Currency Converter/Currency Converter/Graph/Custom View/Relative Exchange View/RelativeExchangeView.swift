@@ -10,20 +10,18 @@ import UIKit
 
 class RelativeExchangeView: UIView {
     // MARK: - UI
-    @IBOutlet weak var baseChangeCurrencyIcon: UIImageView!
     @IBOutlet weak var baseCurrencyImageView: UIImageView!
     @IBOutlet weak var baseCurrencyLabel: UILabel!
     @IBOutlet weak var baseCurrencyTitleLabel: UILabel!
     @IBOutlet weak var baseChangeCurrencyStack: UIStackView!
-    
-    @IBOutlet weak var relativeChangeCurrencyIcon: UIImageView!
+
     @IBOutlet weak var relativeCurrencyImageView: UIImageView!
     @IBOutlet weak var relativeCurrencyLabel: UILabel!
     @IBOutlet weak var relativeCurrencyTitleLabel: UILabel!
     @IBOutlet weak var relativeChangeCurrencyStack: UIStackView!
-    
-    @IBOutlet weak var swapCurrenciesWidth: NSLayoutConstraint!
-    
+
+    @IBOutlet weak var shadowContainerView: UIView!
+
     private var contentView: UIView!
     
     //MARK: - Properties
@@ -58,10 +56,14 @@ class RelativeExchangeView: UIView {
     
     // MARK: - Methods
     override func layoutSubviews() {
-        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-        layer.shadowRadius = 5
-        layer.shadowOffset = .init(width: 0, height: 5)
-        layer.shadowOpacity = 0.1
+        shadowContainerView.layer.cornerRadius = 10
+
+        shadowContainerView.clipsToBounds = true
+        shadowContainerView.layer.masksToBounds = false
+        shadowContainerView.layer.shadowRadius = 7
+        shadowContainerView.layer.shadowOpacity = 0.6
+        shadowContainerView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        shadowContainerView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
     }
     
     func configure(with viewModel: GraphConverterViewModel) {
@@ -145,18 +147,12 @@ class RelativeExchangeView: UIView {
 
 extension RelativeExchangeView: Themed {
     func applyTheme(_ theme: AppTheme) {
-        let changeCurrencyIcon = theme == .light ?
-            R.image.changeCurrencyLight() :
-            R.image.changeCurrencyDark()
-        
         contentView.backgroundColor = theme.backgroundConverterColor
         backgroundColor = theme.backgroundConverterColor
         baseCurrencyLabel.textColor = theme.textColor
         baseCurrencyTitleLabel.textColor = theme.subtitleColor
-        baseChangeCurrencyIcon.image = changeCurrencyIcon
         
         relativeCurrencyLabel.textColor = theme.textColor
         relativeCurrencyTitleLabel.textColor = theme.subtitleColor
-        relativeChangeCurrencyIcon.image = changeCurrencyIcon
     }
 }

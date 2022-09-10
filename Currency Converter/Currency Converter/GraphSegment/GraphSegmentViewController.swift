@@ -1,47 +1,36 @@
 //
-//  ExchangeRatesViewController.swift
+//  GraphSegmentViewController.swift
 //  Currency Converter
 //
-//  Created by Кирилл Клименков on 4/9/20.
+//  Created by Кирилл Клименков on 3/26/20.
 //  Copyright (c) 2020 Kiryl Klimiankou. All rights reserved.
 //
 
 import UIKit
 
-protocol ExchangeRatesDisplayLogic: class {
-    func displayData(viewModel: ExchangeRates.Model.ViewModel.ViewModelData)
+protocol GraphSegmentDisplayLogic: class {
 }
 
-protocol ExchangeRatesDelegate: AnyObject {
-    func setSelectedCurrency(model: FavoriteViewModel)
-    func applySelectedCurrencies()
-}
+class GraphSegmentViewController: UIViewController, GraphSegmentDisplayLogic {
 
-class ExchangeRatesViewController: UIViewController {
-    
-    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var mainView: UIView!
-    @IBOutlet weak var topCurrenciesView: ExchangeCurrenciesViews!
-
-    var interactor: ExchangeRatesBusinessLogic?
-    var router: (NSObjectProtocol & ExchangeRatesRoutingLogic)?
-    weak var delegate: CurrencyRatesDelegate?
     
-    private lazy var cryptoCurrencyRatesVC: FavoriteCryptocurrencyViewController = {
-        var viewController = FavoriteCryptocurrencyViewController(nib: R.nib.favoriteCryptocurrencyViewController)
-        viewController.delegate = self
+    private lazy var graphCurrencyVC: GraphViewController = {
+        var viewController = GraphViewController(nib: R.nib.graphViewController)
         add(asChildViewController: viewController)
         return viewController
     }()
 
-    private lazy var currencySelectionVC: FavoriteCurrencyViewController = {
-        var viewController = FavoriteCurrencyViewController(nib: R.nib.favoriteCurrencyViewController)
-        viewController.delegate = self
+    private lazy var graphCryptocurrencyVC: GraphCryptoViewController = {
+        var viewController = GraphCryptoViewController(nib: R.nib.graphCryptoViewController)
         add(asChildViewController: viewController)
         return viewController
     }()
+    
+    var interactor: GraphSegmentBusinessLogic?
+    var router: (NSObjectProtocol & GraphSegmentRoutingLogic)?
+    weak var delegate: ConverterUpdateViewDelegate?
     
     // MARK: Object lifecycle
     
@@ -59,9 +48,9 @@ class ExchangeRatesViewController: UIViewController {
     
     private func setup() {
         let viewController        = self
-        let interactor            = ExchangeRatesInteractor()
-        let presenter             = ExchangeRatesPresenter()
-        let router                = ExchangeRatesRouter()
+        let interactor            = GraphSegmentInteractor()
+        let presenter             = GraphSegmentPresenter()
+        let router                = GraphSegmentRouter()
         viewController.interactor = interactor
         viewController.router     = router
         interactor.presenter      = presenter
@@ -73,25 +62,23 @@ class ExchangeRatesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        interactor?.makeRequest(request: .configureExchangeRates)
         setupView()
-        setupMainView()
         setUpTheming()
     }
     
-    // MARK: - Private Methods
-    private func setupView() {
-        DispatchQueue.main.async {
-            self.setupSegmentedControl()
-            self.updateView(selectedIndex: self.segmentedControl.selectedSegmentIndex)
-        }
-        topCurrenciesView.configureView()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
-
-    private func setupMainView() {
-        mainView.layer.cornerRadius = 14
-        mainView.clipsToBounds = true
-        titleLabel.text =  R.string.localizable.addPair()
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    // MARK: - Private Methods
+    
+    private func setupView() {
+        setupSegmentedControl()
+        updateView(selectedIndex: segmentedControl.selectedSegmentIndex)
     }
     
     private func setupSegmentedControl() {
@@ -120,15 +107,15 @@ class ExchangeRatesViewController: UIViewController {
     @objc private func selectionDidChange(_ sender: UISegmentedControl) {
         updateView(selectedIndex: sender.selectedSegmentIndex)
     }
-    
+
     private func updateView(selectedIndex: Int) {
         switch selectedIndex {
         case 0:
-            remove(asChildViewController: cryptoCurrencyRatesVC)
-            add(asChildViewController: currencySelectionVC)
+            remove(asChildViewController: graphCryptocurrencyVC)
+            add(asChildViewController: graphCurrencyVC)
         case 1:
-            remove(asChildViewController: currencySelectionVC)
-            add(asChildViewController: cryptoCurrencyRatesVC)
+            remove(asChildViewController: graphCurrencyVC)
+            add(asChildViewController: graphCryptocurrencyVC)
         default:
             break
         }
@@ -137,10 +124,10 @@ class ExchangeRatesViewController: UIViewController {
     private func add(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
         addChild(viewController)
-
+        
         // Add Child View as Subview
         containerView.addSubview(viewController.view)
-
+        
         // Configure Child View
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -149,7 +136,7 @@ class ExchangeRatesViewController: UIViewController {
             viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
         ])
-
+        
         // Notify Child View Controller
         viewController.didMove(toParent: self)
     }
@@ -157,33 +144,17 @@ class ExchangeRatesViewController: UIViewController {
     private func remove(asChildViewController viewController: UIViewController) {
         // Notify Child View Controller
         viewController.willMove(toParent: nil)
-
+        
         // Remove Child View From Superview
         viewController.view.removeFromSuperview()
-
+        
         // Notify Child View Controller
         viewController.removeFromParent()
     }
 }
 
 // MARK: - Themed
-extension ExchangeRatesViewController: Themed {
+extension GraphSegmentViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        titleLabel.textColor = .white
-    }
-}
-
-// MARK: - ExchangeRatesDelegate
-extension ExchangeRatesViewController: ExchangeRatesDelegate {
-
-    public func setSelectedCurrency(model: FavoriteViewModel) {
-        topCurrenciesView.setCurrency(viewModel: model)
-    }
-
-    public func applySelectedCurrencies() {
-        if let relative = topCurrenciesView.getCurrencies() {
-            interactor?.makeRequest(request: .saveSelectedExchangeRates(relative))
-            delegate?.reloadData()
-        }
     }
 }
