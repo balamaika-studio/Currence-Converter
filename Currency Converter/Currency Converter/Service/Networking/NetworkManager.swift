@@ -17,6 +17,14 @@ public typealias RouterCompletionData = (
 struct NetworkManager {
     let exchangeRatesRouter = Router<ExchangeRatesApi>()
     private let baseCurrency = "EUR"
+
+    func getAllCurrencies(exchangeType: ExchangeType, completion: @escaping (_ response: CurrencyListResponse?, _ error: String?) -> Void) {
+        exchangeRatesRouter.request(.list(type: exchangeType)) { data, response, error in
+            self.build(CurrencyListResponse.self,
+                       with: (data, response, error),
+                       callback: completion)
+        }
+    }
     
     func getQuotes(exchangeType: ExchangeType, completion: @escaping (_ response: ExchangeRatesHistoryResponse?, _ error: String?) -> Void) {
         exchangeRatesRouter.request(.live(base: baseCurrency, type: exchangeType)) { data, response, error in
@@ -34,31 +42,21 @@ struct NetworkManager {
                         callback: completion)
         }
     }
-    
-//    func getQuotes(base: String, currencies: [String], start: String, end: String,
-//                   completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
-//        exchangeRatesRouter
-//            .request(.timeFrame(base: base, currencies: currencies, start: start, end: end)) { data, response, error in
-//            self.build(ExchangeRatesTimeSeriesResponse.self,
-//                       with: (data, response, error),
-//                       callback: completion)
-//        }
-//    }
 
-    func getForexGraphsQuotes(base: String, related: String, start: String, end: String,
+    func getForexGraphsQuotes(id: String, start: String, end: String,
                    completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
         exchangeRatesRouter
-            .request(.timeFrameForex(base: base, related: related, start: start, end: end)) { data, response, error in
+            .request(.timeFrameForex(id: id, start: start, end: end)) { data, response, error in
             self.build(ExchangeRatesTimeSeriesResponse.self,
                        with: (data, response, error),
                        callback: completion)
         }
     }
 
-    func getCryptoGraphsQuotes(base: String, related: String, start: String, end: String,
+    func getCryptoGraphsQuotes(id: String, start: String, end: String,
                    completion: @escaping (_ response: ExchangeRatesTimeSeriesResponse?,_ error: String?) -> Void) {
         exchangeRatesRouter
-            .request(.timeFrameCrypto(base: base, related: related, start: start, end: end)) { data, response, error in
+            .request(.timeFrameCrypto(id: id, start: start, end: end)) { data, response, error in
             self.build(ExchangeRatesTimeSeriesResponse.self,
                        with: (data, response, error),
                        callback: completion)

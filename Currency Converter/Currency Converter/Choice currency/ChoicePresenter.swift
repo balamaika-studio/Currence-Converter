@@ -19,8 +19,8 @@ class ChoicePresenter: ChoicePresentationLogic {
     
     func presentData(response: Choice.Model.Response.ResponseType) {
         switch response {
-        case .currencies(let currencies, let info):
-            let viewModels = buildViewModels(currencies, info)
+        case .currencies(let currencies, let info, let pairCurrency, let oppositeCurrency):
+            let viewModels = buildViewModels(currencies, info, pairCurrency, oppositeCurrency)
             currencyViewModels = viewModels
             viewController?.displayData(viewModel: .displayCurrencies(viewModels))
         case .filter(let text):
@@ -35,19 +35,30 @@ class ChoicePresenter: ChoicePresentationLogic {
         }
     }
         
-    private func buildViewModels(_ currencies: [Currency], _ info: [CurrencyInfo]) -> [ChoiceCurrencyViewModel] {
+    private func buildViewModels(_ currencies: [Currency], _ info: [CurrencyInfo], _ pairCurrency: [RealmPairCurrency], _ oppositeCurrency: String) -> [ChoiceCurrencyViewModel] {
         var result = [ChoiceCurrencyViewModel]()
         let validCurrencies = currencies.filter { currency in
             return info.contains { $0.abbreviation == currency.currency }
         }
+
+        var currentValidCurrencies: [Currency] = []
+        currentValidCurrencies.appendDistinct(contentsOf: validCurrencies, where: { (cur1, cur2) -> Bool in
+                return cur1.currency != cur2.currency
+        })
         
-        validCurrencies.forEach { value in
+        currentValidCurrencies.forEach { value in
             let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
             let viewModel = ChoiceCurrencyViewModel(currency: value.currency,
                                                     title: currencyTitle)
             result.append(viewModel)
         }
         let sortedViewModels = result.sorted { $0.title < $1.title }
+
+        let sortedViewModel = sortedViewModels.filter { model in
+            pairCurrency.contains {
+                ($0.base == model.currency && $0.relative == oppositeCurrency) || ($0.relative == model.currency && $0.base == oppositeCurrency)
+            }
+        }
         
 //        CurrenciesInfoService.shared.getPopularCurrencies()
 //            .reversed()
@@ -59,6 +70,6 @@ class ChoicePresenter: ChoicePresentationLogic {
 //            let viewModel = sortedViewModels.remove(at: index)
 //            sortedViewModels.insert(viewModel, at: 0)
 //        }
-        return sortedViewModels
+        return sortedViewModel
     }
 }

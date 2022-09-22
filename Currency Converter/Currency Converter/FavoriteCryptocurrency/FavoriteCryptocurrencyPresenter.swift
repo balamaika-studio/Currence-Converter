@@ -23,7 +23,7 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
         // TODO: - Replace to functions
         
         switch response {
-        case .currenciesConverter(let currencies, let info):
+        case .currenciesConverter(let currencies, let info, let currencyPair):
             var result = [FavoriteViewModel]()
             let validCurrencies = currencies.filter { currency in
                 return info.contains { $0.abbreviation == currency.currency }
@@ -40,7 +40,7 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
             quotes = sortedQuotes
             viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
 
-        case .currenciesExchange(let currencies, let info):
+        case .currenciesExchange(let currencies, let info, let currencyPair, let mainCurrency):
             var result = [FavoriteViewModel]()
             let validCurrencies = currencies.filter { currency in
                 return info.contains { $0.abbreviation == currency.currency }
@@ -54,8 +54,13 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
                 result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
-            quotes = sortedQuotes
-            viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
+            let sortQuotes = sortedQuotes.filter { model in
+                currencyPair.contains {
+                    ($0.base == model.currency && $0.relative == mainCurrency) || ($0.relative == model.currency && $0.base == mainCurrency)
+                }
+            }
+            quotes = sortQuotes
+            viewController?.displayData(viewModel: .showCurrencies(sortQuotes))
             
         case .update(let viewModel, let isSelected):
             let index = quotes.firstIndex(of: viewModel)!

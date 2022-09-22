@@ -26,8 +26,8 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
         case .loadCurrenciesConverter:
             fetchCurrenciesConverter()
 
-        case .loadCurrenciesExchange:
-            fetchCurrenciesExchange()
+        case .loadCurrenciesExchange(let relative, let isLeftSelected):
+            fetchCurrenciesExchange(relative: relative, isLeftSelected: isLeftSelected)
             
         case .addFavorite(let model):
             update(model, isFavorite: true)
@@ -55,16 +55,23 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     }
     
     private func fetchCurrenciesConverter() {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo))
+            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+
+                self?.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo, cur))
+            }
         }
     }
 
-    private func fetchCurrenciesExchange() {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+    private func fetchCurrenciesExchange(relative: Relative?, isLeftSelected: Bool) {
+        let mainCurrency = (!isLeftSelected ? relative?.base : relative?.relative) ?? ""
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo))
+            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+
+                self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, cur, mainCurrency))
+            }
         }
     }
 }

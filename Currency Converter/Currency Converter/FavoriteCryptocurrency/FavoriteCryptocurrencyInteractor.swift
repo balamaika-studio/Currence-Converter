@@ -26,8 +26,8 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
         case .loadCurrenciesConverter:
             fetchCurrenciesConverter()
 
-        case .loadCurrenciesExchange:
-            fetchCurrenciesExchange()
+        case .loadCurrenciesExchange(let relative, let isLeftSelected):
+            fetchCurrenciesExchange(relative: relative, isLeftSelected: isLeftSelected)
             
         case .addFavorite(let model):
             update(model, isFavorite: true)
@@ -55,16 +55,22 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
     }
     
     private func fetchCurrenciesConverter() {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let cryptoCurrencyinfo = CurrenciesInfoService.shared.fetchCrypto()
-            self.presenter?.presentData(response: .currenciesConverter(currencies, cryptoCurrencyinfo))
+            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+                self?.presenter?.presentData(response: .currenciesConverter(currencies, cryptoCurrencyinfo, cur))
+            }
         }
     }
 
-    private func fetchCurrenciesExchange() {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-            let cryptoCurrencyinfo = CurrenciesInfoService.shared.fetchCrypto()
-            self.presenter?.presentData(response: .currenciesExchange(currencies, cryptoCurrencyinfo))
+    private func fetchCurrenciesExchange(relative: Relative?, isLeftSelected: Bool) {
+        let mainCurrency = (!isLeftSelected ? relative?.base : relative?.relative) ?? ""
+        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
+            let currenciesInfo = CurrenciesInfoService.shared.fetchCrypto()
+            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+
+                self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, cur, mainCurrency))
+            }
         }
     }
 }

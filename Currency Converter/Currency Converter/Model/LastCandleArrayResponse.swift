@@ -46,6 +46,7 @@ class CandleResponse: Codable {
     let id, o, h, l: String?
     let c, t, up, ch: String?
     let cp, s, tm: String?
+    var isReverted: Bool?
 
     init(id: String?, o: String?, h: String?, l: String?, c: String?, t: String?, up: String?, ch: String?, cp: String?, s: String?, tm: String?) {
         self.id = id

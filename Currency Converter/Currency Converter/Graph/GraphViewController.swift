@@ -172,8 +172,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         converterView.updateCurrenciesLabel = self.updateCurrenciesRateLabel
     }
     
-    private func showChoiceViewController() {
-        router?.showChoiceViewController()
+    private func showChoiceViewController(isLeft: Bool, oppositeCurrency: String) {
+        router?.showChoiceViewController(isLeft: isLeft, oppositeCurrency: oppositeCurrency)
     }
     
     private func updateCurrenciesRateLabel(_ text: String) {

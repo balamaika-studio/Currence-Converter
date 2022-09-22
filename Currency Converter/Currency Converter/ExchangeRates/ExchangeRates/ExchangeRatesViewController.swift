@@ -14,7 +14,8 @@ protocol ExchangeRatesDisplayLogic: class {
 
 protocol ExchangeRatesDelegate: AnyObject {
     func setSelectedCurrency(model: FavoriteViewModel)
-    func applySelectedCurrencies()
+    func getTopCurrencyModels() -> (Relative?, Bool)
+    func applySelectedCurrencies(exchangeType: ExchangeType)
 }
 
 class ExchangeRatesViewController: UIViewController {
@@ -28,6 +29,18 @@ class ExchangeRatesViewController: UIViewController {
     var interactor: ExchangeRatesBusinessLogic?
     var router: (NSObjectProtocol & ExchangeRatesRoutingLogic)?
     weak var delegate: CurrencyRatesDelegate?
+    private var relativeCur: Relative = Relative(
+        base: "USD",
+        relative: "EUR",
+        isSelected: false
+    )
+
+    private var relativeCryptoCur: Relative = Relative(
+        base: "BTC",
+        relative: "ETH",
+        isSelected: false
+    )
+    private var isLeftSelected = true
     
     private lazy var cryptoCurrencyRatesVC: FavoriteCryptocurrencyViewController = {
         var viewController = FavoriteCryptocurrencyViewController(nib: R.nib.favoriteCryptocurrencyViewController)
@@ -86,6 +99,7 @@ class ExchangeRatesViewController: UIViewController {
             self.updateView(selectedIndex: self.segmentedControl.selectedSegmentIndex)
         }
         topCurrenciesView.configureView()
+        topCurrenciesView.delegate = self
     }
 
     private func setupMainView() {
@@ -126,9 +140,11 @@ class ExchangeRatesViewController: UIViewController {
         case 0:
             remove(asChildViewController: cryptoCurrencyRatesVC)
             add(asChildViewController: currencySelectionVC)
+            currencySelectionVC.loadData()
         case 1:
             remove(asChildViewController: currencySelectionVC)
             add(asChildViewController: cryptoCurrencyRatesVC)
+            cryptoCurrencyRatesVC.loadData()
         default:
             break
         }
@@ -180,10 +196,27 @@ extension ExchangeRatesViewController: ExchangeRatesDelegate {
         topCurrenciesView.setCurrency(viewModel: model)
     }
 
-    public func applySelectedCurrencies() {
+    public func getTopCurrencyModels() -> (Relative?, Bool) {
+        return (topCurrenciesView.getCurrencies(), isLeftSelected)
+    }
+
+    public func applySelectedCurrencies(exchangeType: ExchangeType) {
         if let relative = topCurrenciesView.getCurrencies() {
             interactor?.makeRequest(request: .saveSelectedExchangeRates(relative))
+            switch exchangeType {
+            case .crypto:
+                relativeCryptoCur = relative
+            case .forex:
+                relativeCur = relative
+            }
             delegate?.reloadData()
         }
+    }
+}
+
+extension ExchangeRatesViewController: ExchangeCurrenciesViewsDelegate {
+    func itemDidChange(isLeftSelected: Bool) {
+        self.isLeftSelected = isLeftSelected
+        updateView(selectedIndex:  segmentedControl.selectedSegmentIndex)
     }
 }

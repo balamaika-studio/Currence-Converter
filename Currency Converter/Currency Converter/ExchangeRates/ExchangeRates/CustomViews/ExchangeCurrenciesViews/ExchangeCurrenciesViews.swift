@@ -2,7 +2,7 @@
 import UIKit
 
 protocol ExchangeCurrenciesViewsDelegate {
-
+    func itemDidChange(isLeftSelected: Bool)
 }
 
 
@@ -21,7 +21,8 @@ class ExchangeCurrenciesViews: UIView {
 
     // MARK: - Properties
     private var contentView: UIView!
-    private var isLeftSelected: Bool = true {
+    public var delegate: ExchangeCurrenciesViewsDelegate?
+    public var isLeftSelected: Bool = true {
         didSet {
             if isLeftSelected {
                 configureLeftViewSelected()
@@ -116,10 +117,12 @@ class ExchangeCurrenciesViews: UIView {
     // MARK: - Actions
     @objc func handleTapLeft(_ sender: UITapGestureRecognizer? = nil) {
         isLeftSelected = true
+        delegate?.itemDidChange(isLeftSelected: isLeftSelected)
     }
 
     @objc func handleTapRight(_ sender: UITapGestureRecognizer? = nil) {
         isLeftSelected = false
+        delegate?.itemDidChange(isLeftSelected: isLeftSelected)
     }
 
     // MARK: - Private Methods
@@ -151,10 +154,6 @@ class ExchangeCurrenciesViews: UIView {
         rightCurrencyCodeLabel.textColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
         leftCurrencyCodeLabel.textColor = #colorLiteral(red: 0.662745098, green: 0.6705882353, blue: 0.7019607843, alpha: 1)
     }
-}
-
-extension ExchangeCurrenciesViews: ExchangeCurrenciesViewsDelegate {
-
 }
 
 

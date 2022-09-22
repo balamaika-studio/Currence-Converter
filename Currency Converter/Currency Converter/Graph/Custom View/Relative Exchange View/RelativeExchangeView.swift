@@ -28,7 +28,7 @@ class RelativeExchangeView: UIView {
     var baseCurrency: ChoiceCurrencyViewModel!
     var relativeCurrency: ChoiceCurrencyViewModel!
     var selectedCurrency: ChoiceCurrencyViewModel!
-    var changeCurrencyTapped: (() -> Void)?
+    var changeCurrencyTapped: ((Bool, String) -> Void)?
     var updateCurrenciesLabel: ((String) -> Void)?
     
     // MARK: - Initialization
@@ -135,12 +135,16 @@ class RelativeExchangeView: UIView {
     @objc private func changeCurrencyTapped(_ recognizer: UITapGestureRecognizer) {
         guard let viewId = recognizer.view?.accessibilityIdentifier else { return }
         switch viewId {
-        case "base": selectedCurrency = baseCurrency
-        case "relative": selectedCurrency = relativeCurrency
+        case "base":
+            selectedCurrency = baseCurrency
+            changeCurrencyTapped?(true, relativeCurrency.currency)
+        case "relative":
+            selectedCurrency = relativeCurrency
+            changeCurrencyTapped?(false, baseCurrency.currency)
         default:
             print("Unknown view ID")
         }
-        changeCurrencyTapped?()
+
     }
 }
 

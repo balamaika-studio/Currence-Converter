@@ -127,6 +127,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.updateQuotes(quotes, in: self.storage)
             }
         }
+
+        if UserDefaultsService.shared.isFirstLoad {
+            let group = DispatchGroup()
+
+            group.enter()
+            networkManager.getAllCurrencies(exchangeType: .forex) { [weak self] response, error in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                group.leave()
+                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .forex)
+            }
+
+            group.enter()
+            networkManager.getAllCurrencies(exchangeType: .crypto) { [weak self] response, error in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                group.leave()
+                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .crypto)
+            }
+
+            group.notify(queue: .main) {
+                UserDefaultsService.shared.isFirstLoad = false
+            }
+        }
         
         AppsFlyerLib.shared().start()
     }
@@ -193,6 +221,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 try? realm.update {
                     currency.rate = newQuote.rate
                 }
+            }
+        }
+    }
+
+    private func setCurrenciesList(_ response: [CurrencyResponse]?, in realm: StorageContext, exchangeType: ExchangeType) {
+        response?.forEach { pair in
+            guard let baseAndRelative = pair.symbol?.split(separator: "/").map({ String($0) }),
+                  let id = pair.id,
+                  let base = baseAndRelative.first,
+                  let relative = baseAndRelative.last else {
+                      return
+                  }
+            try? realm.create(RealmPairCurrency.self) { currency in
+                currency.currencyPairId = id
+                currency.base = base
+                currency.relative = relative
+                currency.type = exchangeType
             }
         }
     }

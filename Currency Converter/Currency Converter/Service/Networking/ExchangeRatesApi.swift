@@ -17,8 +17,9 @@ extension DateFormatter {
 }
 
 enum ExchangeRatesApi {
-    case timeFrameForex(base: String, related: String, start: String, end: String)
-    case timeFrameCrypto(base: String, related: String, start: String, end: String)
+    case list(type: ExchangeType)
+    case timeFrameForex(id: String, start: String, end: String)
+    case timeFrameCrypto(id: String, start: String, end: String)
     case live(base: String, type: ExchangeType)
     case historical(date: Date)
     case lastCandleForex(symbols: [String], period: PeriodType)
@@ -53,6 +54,7 @@ extension ExchangeRatesApi: EndPointType {
     
     var path: String {
         switch self {
+        case .list: return "forex/list"
         case .timeFrameForex: return "forex/history"
         case .timeFrameCrypto: return "crypto/history"
         case .historical(let date): return DateFormatter.exchangeRateGeneralDateFormatter.string(from: date)
@@ -68,22 +70,27 @@ extension ExchangeRatesApi: EndPointType {
     
     var task: HTTPTask {
         switch self {
-        case .timeFrameForex(let base, let related, let start, let end):
-            let currenciesString = "\(base)/\(related)"
+        case .list(let type):
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["symbol": currenciesString,
+                                          urlParameters: ["type": type.rawValue,
+                                                          "access_key": apiKey])
+        case .timeFrameForex(let id, let start, let end):
+//            let currenciesString = "\(base)/\(related)"
+            return .requestWithParameters(bodyParameters: nil,
+                                          bodyEncoding: .urlEncoding,
+                                          urlParameters: ["id": id,
                                                           "from": start,
                                                           "to": end,
                                                           "period": PeriodType.oneDay.rawValue,
                                                           "level": "3",
                                                           "access_key": apiKey])
 
-        case .timeFrameCrypto(let base, let related, let start, let end):
-            let currenciesString = "\(base)/\(related)"
+        case .timeFrameCrypto(let id, let start, let end):
+//            let currenciesString = "\(base)/\(related)"
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["symbol": currenciesString,
+                                          urlParameters: ["id": id,
                                                           "from": start,
                                                           "to": end,
                                                           "period": PeriodType.oneDay.rawValue,
@@ -101,14 +108,14 @@ extension ExchangeRatesApi: EndPointType {
             let currenciesString = symbols.joined(separator: ",")
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["symbol": currenciesString,
+                                          urlParameters: ["id": currenciesString,
                                                           "period": period.rawValue,
                                                           "access_key": apiKey])
         case .lastCandleCrypto(let symbols, let period):
             let currenciesString = symbols.joined(separator: ",")
             return .requestWithParameters(bodyParameters: nil,
                                           bodyEncoding: .urlEncoding,
-                                          urlParameters: ["symbol": currenciesString,
+                                          urlParameters: ["id": currenciesString,
                                                           "period": period.rawValue,
                                                           "access_key": apiKey])
         }

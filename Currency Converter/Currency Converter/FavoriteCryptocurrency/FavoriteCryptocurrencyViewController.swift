@@ -63,8 +63,14 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
         super.viewWillAppear(animated)
         if delegate == nil {
             interactor?.makeRequest(request: .loadCurrenciesConverter)
+        }
+    }
+
+    public func loadData() {
+        if delegate == nil {
+            interactor?.makeRequest(request: .loadCurrenciesConverter)
         } else {
-            interactor?.makeRequest(request: .loadCurrenciesExchange)
+            interactor?.makeRequest(request: .loadCurrenciesExchange(delegate?.getTopCurrencyModels().0, delegate?.getTopCurrencyModels().1 ?? true))
         }
     }
     
@@ -154,7 +160,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
             }
             router?.dismiss()
         } else {
-            delegate?.applySelectedCurrencies()
+            delegate?.applySelectedCurrencies(exchangeType: .crypto)
             router?.dismiss()
         }
     }

@@ -27,6 +27,8 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     
     var isShowGraphCurrencies = false
     var isCrypto = false
+    var oppositeCurrency: String = ""
+    var isLeft: Bool = true
     private var currencies: [ChoiceCurrencyViewModel]!
     
     // MARK: Object lifecycle
@@ -76,7 +78,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto))
+        interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
     }
     
     func displayData(viewModel: Choice.Model.ViewModel.ViewModelData) {
@@ -122,11 +124,11 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         case 0:
             isCrypto = false
             titleLabel.text = R.string.localizable.favouriteCurrencySegmentTitle()
-            interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto))
+            interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
         case 1:
             isCrypto = true
             titleLabel.text = R.string.localizable.favouriteCryptocurrencySegmentTitle()
-            interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto))
+            interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
         default:
             break
         }

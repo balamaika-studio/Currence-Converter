@@ -9,7 +9,7 @@
 import UIKit
 
 protocol GraphRoutingLogic {
-    func showChoiceViewController()
+    func showChoiceViewController(isLeft: Bool, oppositeCurrency: String)
 }
 
 class GraphRouter: ChoiceDataPassing {
@@ -17,7 +17,7 @@ class GraphRouter: ChoiceDataPassing {
     var dataStore: ChoiceDataStore?
     
     // MARK: Routing
-    func showChoiceViewController() {
+    func showChoiceViewController(isLeft: Bool, oppositeCurrency: String) {
         guard
             let viewController = viewController
             else { fatalError("Graph fail route") }
@@ -25,6 +25,8 @@ class GraphRouter: ChoiceDataPassing {
         let choiceVc = ChoiceViewController(nib: R.nib.choiceViewController)
         choiceVc.isShowGraphCurrencies = true
         choiceVc.isCrypto = false
+        choiceVc.isLeft = isLeft
+        choiceVc.oppositeCurrency = oppositeCurrency
         choiceVc.modalPresentationStyle = .overFullScreen
         viewController.present(choiceVc, animated: true, completion: nil)
     }

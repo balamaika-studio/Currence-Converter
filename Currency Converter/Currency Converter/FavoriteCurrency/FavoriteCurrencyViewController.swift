@@ -63,8 +63,14 @@ class FavoriteCurrencyViewController: UIViewController, FavoriteCurrencyDisplayL
         super.viewWillAppear(animated)
         if delegate == nil {
             interactor?.makeRequest(request: .loadCurrenciesConverter)
+        } 
+    }
+
+    public func loadData() {
+        if delegate == nil {
+            interactor?.makeRequest(request: .loadCurrenciesConverter)
         } else {
-            interactor?.makeRequest(request: .loadCurrenciesExchange)
+            interactor?.makeRequest(request: .loadCurrenciesExchange(delegate?.getTopCurrencyModels().0, delegate?.getTopCurrencyModels().1 ?? true))
         }
     }
     
@@ -155,7 +161,7 @@ class FavoriteCurrencyViewController: UIViewController, FavoriteCurrencyDisplayL
             }
             router?.dismiss()
         } else {
-            delegate?.applySelectedCurrencies()
+            delegate?.applySelectedCurrencies(exchangeType: .forex)
             router?.dismiss()
         }
     }
@@ -205,6 +211,8 @@ extension FavoriteCurrencyViewController: UITableViewDelegate {
             currencyQuotes[indexPath.row].isSelected = true
             quotes = currencyQuotes
             delegate?.setSelectedCurrency(model: currencyQuotes[indexPath.row])
+//            interactor?.makeRequest(request: .loadCurrenciesExchange(delegate?.getTopCurrencyModels().0, delegate?.getTopCurrencyModels().1 ?? true))
+//            let relative = delegate?.getTopCurrencyModels()
         }
     }
 

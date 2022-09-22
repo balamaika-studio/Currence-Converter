@@ -16,9 +16,11 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
     var selectedCurrency: Currency?
     var presenter: GraphPresentationLogic?
     var networkManager: NetworkManager!
+    var storage: StorageContext!
     
-    init() {
+    init(storage: StorageContext = try! RealmStorageContext()) {
         self.networkManager = NetworkManager()
+        self.storage = storage
     }
     
     func makeRequest(request: Graph.Model.Request.RequestType) {
@@ -41,26 +43,53 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
                 let quotes = self.buildEqualTimeFrameQuotes(period: period, currency: base)
                 self.presenter?.presentData(response: .graphData(quotes.sorted(by: <), period: period))
             }
-            
-            networkManager.getForexGraphsQuotes(base: base, related: relative, start: interval.startDate, end: interval.endDate) { response, errorMessage in
-                guard let answer = response?.quotes else {
-                    print(errorMessage ?? "Error Load graph data")
-                    return
-                }
-                if answer.isEmpty {
-                    self.networkManager.getCryptoGraphsQuotes(base: base, related: relative, start: interval.startDate, end: interval.endDate) { response, errorMessage in
-                        guard let answer = response?.quotes else {
-                            print(errorMessage ?? "Error Load GraphCrypto data")
-                            return
-                        }
-                        self.presenter?.presentData(response: .graphData(answer.sorted(by: <), period: period))
+
+            var pairsModels: [RealmPairCurrency] = []
+            storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { pairs in
+                pairsModels = pairs
+            }
+
+            if let pairModel = pairsModels.first(where: { curPair in
+                (curPair.base == base && curPair.relative == relative) ||
+                (curPair.base == relative && curPair.relative == base)
+            }) {
+                networkManager.getForexGraphsQuotes(id: pairModel.currencyPairId ?? "", start: interval.startDate, end: interval.endDate) { response, errorMessage in
+                    guard let answer = response?.quotes else {
+                        print(errorMessage ?? "Error Load graph data")
+                        return
                     }
-                } else {
-                    self.presenter?.presentData(response: .graphData(answer.sorted(by: <), period: period))
+                    if answer.isEmpty {
+                        self.networkManager.getCryptoGraphsQuotes(id: pairModel.currencyPairId ?? "", start: interval.startDate, end: interval.endDate) { response, errorMessage in
+                            guard let answer = response?.quotes else {
+                                print(errorMessage ?? "Error Load GraphCrypto data")
+                                return
+                            }
+                            var currentAnswer = answer
+                            if pairModel.base != base {
+                                currentAnswer = []
+                                answer.forEach {
+                                    var quote = $0
+                                    quote.rate = (1 / $0.rate)
+                                    currentAnswer.append(quote)
+                                }
+                            }
+                            self.presenter?.presentData(response: .graphData(currentAnswer.sorted(by: <), period: period))
+                        }
+                    } else {
+                        var currentAnswer = answer
+                        if pairModel.base != base {
+                            currentAnswer = []
+                            answer.forEach {
+                                var quote = $0
+                                quote.rate = (1 / $0.rate)
+                                currentAnswer.append(quote)
+                            }
+                        }
+                        self.presenter?.presentData(response: .graphData(currentAnswer.sorted(by: <), period: period))
+                    }
                 }
             }
         }
-        
     }
     
     private func buildGraphRequestInterval(period: GraphPeriod) -> GraphPeriodInterval {

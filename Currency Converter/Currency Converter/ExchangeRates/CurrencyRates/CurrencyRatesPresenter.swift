@@ -54,24 +54,33 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
 
     private func buildViewModels(_ response: [CandleResponse]) -> [CurrencyRatesViewModel] {
         var result = [CurrencyRatesViewModel]()
-//        guard live.count == historical.count else { return result }
-
         for exchangeRate in response {
             guard let relation = exchangeRate.s,
+                  let lastPrice = exchangeRate.c,
                   let roundedRate = exchangeRate.ch else {
                       return result
                   }
 
-            let curArray = relation.components(separatedBy: "/")
-            let change = calculateChange(exchangeRate: Decimal(string: roundedRate) ?? 0)
+            var rate: String = ""
+            if exchangeRate.isReverted ?? false {
+                if let decimalRate = Double(lastPrice) {
+                    rate = AccuracyManager.shared.formatNumber(1 / decimalRate)
+                }
+            } else {
+                if let decimalRate = Double(lastPrice) {
+                    rate = AccuracyManager.shared.formatNumber(decimalRate)
+                }
+            }
 
-            let viewModel = CurrencyRatesViewModel(leftCurrency: curArray.first!,
-                                                   rightCurrency: curArray.last!,
+            let curArray = relation.components(separatedBy: "/")
+            let change = calculateChange(exchangeRate: Decimal(string: roundedRate) ?? 0, isReverted: exchangeRate.isReverted ?? false)
+
+            let viewModel = CurrencyRatesViewModel(leftCurrency: (exchangeRate.isReverted ?? false) ? curArray.last! : curArray.first!,
+                                                   rightCurrency: (exchangeRate.isReverted ?? false) ? curArray.first! : curArray.last!,
                                                    change: change,
-                                                   rate: roundedRate)
+                                                   rate: rate)
             if !result.contains(where: { model in
                 (model.rightCurrency == viewModel.rightCurrency && model.leftCurrency == viewModel.leftCurrency)
-                || (model.rightCurrency == viewModel.leftCurrency && model.leftCurrency == viewModel.rightCurrency)
             }) {
                 result.append(viewModel)
             }
@@ -79,7 +88,7 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
         return result
     }
     
-    private func calculateChange(exchangeRate: Decimal) -> Change {
+    private func calculateChange(exchangeRate: Decimal, isReverted: Bool) -> Change {
         var change: Change = .stay
 //        guard let base = exchangeRate.base,
 //            let relative = exchangeRate.relative else { fatalError() }
@@ -96,9 +105,9 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
 //        } else if currentRate < historicalRate {
 //            change = .down
 //        }
-        if exchangeRate > 0 {
+        if (exchangeRate > 0 && !isReverted) || (exchangeRate < 0 && isReverted) {
             change = .increase
-        } else if exchangeRate < 0 {
+        } else if (exchangeRate < 0 && !isReverted) || (exchangeRate > 0 && isReverted) {
             change = .down
         }
 

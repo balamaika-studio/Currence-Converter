@@ -29,14 +29,14 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
 
     // MARK: - Private methods
 
-    private func loadHistory(currencies: [String]) {
+    private func loadHistory(currencies: [ShowCurrencyModel]) {
         candleResponse = []
         let group = DispatchGroup()
 
         group.enter()
         networkManager.getLastChangeForex(
             type: .forex,
-            currencies: currencies) { [weak self] response, error in
+            currencies: currencies.map{$0.id ?? ""}) { [weak self] response, error in
                 self?.candleResponse.append(contentsOf: response?.response ?? [])
                 group.leave()
             }
@@ -44,13 +44,22 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
         group.enter()
         networkManager.getLastChangeCrypto(
             type: .forex,
-            currencies: currencies) { [weak self] response, error in
+            currencies: currencies.map{$0.id ?? ""}) { [weak self] response, error in
                 self?.candleResponse.append(contentsOf: response?.response ?? [])
                 group.leave()
             }
 
         group.notify(queue: .main) { [weak self] in
-            self?.presenter?.presentData(response: .createViewModel(self?.candleResponse ?? []))
+            var responses: [CandleResponse] = []
+            self?.candleResponse.forEach({ response in
+                let pairModelIsReverted = currencies.first { cur in
+                    cur.id == response.id
+                }?.isReverted
+                let result = response
+                result.isReverted = pairModelIsReverted
+                responses.append(result)
+            })
+            self?.presenter?.presentData(response: .createViewModel(responses))
         }
     }
 
@@ -69,17 +78,26 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
     func makeRequest(request: CurrencyRates.Model.Request.RequestType) {
         switch request {
         case .loadCurrencyRateChanges:
+            var pairsModels: [RealmPairCurrency] = []
+            liveStorage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { pairs in
+                pairsModels = pairs
+            }
                 let relativesPredicate = NSPredicate(format: "isSelected = true")
                 liveStorage.fetch(RealmExchangeRate.self, predicate: relativesPredicate, sorted: nil) { relatives in
-                    var currencies: [String] = []
+                    var currencies: [ShowCurrencyModel] = []
                     for relative in relatives {
                         guard let base = relative.base,
                             let relative = relative.relative else { continue }
-
-                        let relation = "\(base.currency)/\(relative.currency)"
-                        let revertedRelation = "\(relative.currency)/\(base.currency)"
-                        currencies.append(revertedRelation)
-                        currencies.append(relation)
+                        if let pairModel = pairsModels.first(where: { curPair in
+                            (curPair.base == base.currency && curPair.relative == relative.currency) ||
+                            (curPair.base == relative.currency && curPair.relative == base.currency)
+                        }) {
+                            if pairModel.base == base.currency {
+                                currencies.append(ShowCurrencyModel(id: pairModel.currencyPairId, isReverted: false))
+                            } else {
+                                currencies.append(ShowCurrencyModel(id: pairModel.currencyPairId, isReverted: true))
+                            }
+                        }
                     }
                     loadHistory(currencies: currencies)
             }
