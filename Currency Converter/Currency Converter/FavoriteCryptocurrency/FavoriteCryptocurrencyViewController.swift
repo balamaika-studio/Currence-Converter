@@ -18,7 +18,8 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var confirmButton: UIButton!
     @IBOutlet weak var buttonsContainerView: UIView!
-    
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     private var quotes = [FavoriteViewModel]()
     
     var interactor: FavoriteCryptocurrencyBusinessLogic?
@@ -63,14 +64,21 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
         super.viewWillAppear(animated)
         if delegate == nil {
             interactor?.makeRequest(request: .loadCurrenciesConverter)
+            if quotes.isEmpty {
+                showActivityIndicator()
+            }
+        } else {
+            quotes.removeAll()
         }
     }
 
     public func loadData() {
         if delegate == nil {
             interactor?.makeRequest(request: .loadCurrenciesConverter)
+            showActivityIndicator()
         } else {
             interactor?.makeRequest(request: .loadCurrenciesExchange(delegate?.getTopCurrencyModels().0, delegate?.getTopCurrencyModels().1 ?? true))
+            showActivityIndicator()
         }
     }
     
@@ -83,6 +91,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     func displayData(viewModel: Favorite.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showCurrencies(let quotes):
+            hideActivityIndicator()
             self.quotes = quotes
             self.tableView.reloadData()
         }
@@ -108,6 +117,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
         }
         tableView.rowHeight = 62
         configureButton()
+        hideActivityIndicator()
     }
     
     private func configureButton() {
@@ -141,6 +151,16 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
             }
         }
         return placeholder;
+    }
+
+    private func showActivityIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
     // MARK: - Actions

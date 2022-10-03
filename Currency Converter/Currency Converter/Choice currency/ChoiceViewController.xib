@@ -16,6 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ChoiceViewController" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="Kgv-Fa-D2g" id="9H5-UX-Lh9"/>
                 <outlet property="buttonsContainerView" destination="cX3-yg-lN9" id="PVr-W2-nzc"/>
                 <outlet property="cancelButton" destination="oLk-z4-WoP" id="9BN-dk-uKc"/>
                 <outlet property="confirmButton" destination="w3B-RN-Ikm" id="lMT-0T-WqT"/>
@@ -111,10 +112,15 @@
                             <rect key="frame" x="0.0" y="177" width="345" height="328"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         </tableView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Kgv-Fa-D2g">
+                            <rect key="frame" x="154" y="269" width="37" height="37"/>
+                            <color key="color" red="0.19215686269999999" green="0.39607843139999999" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                        </activityIndicatorView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="ZgZ-uT-7Yu" firstAttribute="leading" secondItem="DcX-Fx-LQW" secondAttribute="leading" id="2XR-fq-CtL"/>
+                        <constraint firstItem="Kgv-Fa-D2g" firstAttribute="centerX" secondItem="DcX-Fx-LQW" secondAttribute="centerX" id="DmB-gO-hIy"/>
                         <constraint firstAttribute="trailing" secondItem="yce-n8-o7G" secondAttribute="trailing" id="Eah-K8-C7y"/>
                         <constraint firstItem="2fz-vL-pYy" firstAttribute="top" secondItem="ZgZ-uT-7Yu" secondAttribute="bottom" constant="15" id="IkE-ds-dGM"/>
                         <constraint firstItem="ZgZ-uT-7Yu" firstAttribute="top" secondItem="DcX-Fx-LQW" secondAttribute="top" id="KQH-FH-8zp"/>
@@ -123,6 +129,7 @@
                         <constraint firstAttribute="trailing" secondItem="cX3-yg-lN9" secondAttribute="trailing" id="aLw-cy-ux8"/>
                         <constraint firstItem="cX3-yg-lN9" firstAttribute="leading" secondItem="DcX-Fx-LQW" secondAttribute="leading" id="aTx-dD-wx5"/>
                         <constraint firstItem="18e-dq-9Cu" firstAttribute="top" secondItem="yce-n8-o7G" secondAttribute="bottom" id="chd-t1-ucQ"/>
+                        <constraint firstItem="Kgv-Fa-D2g" firstAttribute="centerY" secondItem="DcX-Fx-LQW" secondAttribute="centerY" id="cvj-F4-K7p"/>
                         <constraint firstAttribute="trailing" secondItem="2fz-vL-pYy" secondAttribute="trailing" constant="10" id="ej5-24-kVp"/>
                         <constraint firstItem="18e-dq-9Cu" firstAttribute="leading" secondItem="DcX-Fx-LQW" secondAttribute="leading" id="gRV-ac-WY6"/>
                         <constraint firstAttribute="trailing" secondItem="18e-dq-9Cu" secondAttribute="trailing" id="jxz-Az-euh"/>

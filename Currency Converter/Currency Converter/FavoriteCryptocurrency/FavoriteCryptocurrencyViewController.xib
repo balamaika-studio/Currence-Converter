@@ -16,6 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FavoriteCryptocurrencyViewController" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
+                <outlet property="activityIndicator" destination="GwC-jB-kg3" id="PuS-KP-LSE"/>
                 <outlet property="buttonsContainerView" destination="Jd8-qY-rpg" id="bko-Um-IHb"/>
                 <outlet property="cancelButton" destination="ZsQ-nL-Gmc" id="CxG-Og-vNv"/>
                 <outlet property="confirmButton" destination="iFd-vj-Lz0" id="QSw-6J-Xdz"/>
@@ -78,13 +79,19 @@
                         <constraint firstItem="Fvx-N2-Cll" firstAttribute="leading" secondItem="Jd8-qY-rpg" secondAttribute="leading" constant="16" id="Xop-0S-hbY"/>
                     </constraints>
                 </view>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="GwC-jB-kg3">
+                    <rect key="frame" x="176.66666666666666" y="403.66666666666669" width="37" height="37"/>
+                    <color key="color" red="0.19215686269999999" green="0.39607843139999999" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Nzj-bd-fat"/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="wl3-Uk-epu" secondAttribute="trailing" id="A2n-zP-Fj0"/>
+                <constraint firstItem="GwC-jB-kg3" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Srw-vd-Xzz"/>
                 <constraint firstItem="Jd8-qY-rpg" firstAttribute="top" secondItem="wl3-Uk-epu" secondAttribute="bottom" id="ZON-BG-fyH"/>
                 <constraint firstItem="wl3-Uk-epu" firstAttribute="leading" secondItem="Nzj-bd-fat" secondAttribute="leading" id="aDy-Tb-VkC"/>
+                <constraint firstItem="GwC-jB-kg3" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="f35-6Q-AH1"/>
                 <constraint firstItem="wl3-Uk-epu" firstAttribute="top" secondItem="npH-1g-KBF" secondAttribute="bottom" id="gao-on-Ij7"/>
                 <constraint firstItem="npH-1g-KBF" firstAttribute="top" secondItem="Nzj-bd-fat" secondAttribute="top" constant="8" id="pDF-1j-ugD"/>
                 <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="npH-1g-KBF" secondAttribute="trailing" constant="10" id="rSo-C2-n39"/>

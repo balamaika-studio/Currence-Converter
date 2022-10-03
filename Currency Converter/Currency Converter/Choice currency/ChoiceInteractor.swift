@@ -33,25 +33,28 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
         
         switch request {
         case .loadCurrencies(let isGraphCurrencies, let isCrypto, let oppositeCurrency):
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
-                self.currencies = isGraphCurrencies == true ?
-                    filterGraphCurrencies(from: currencies) :
-                    currencies
-                var currencyArray: [CurrencyInfo] = []
-                if isCrypto {
-                    currencyArray =  CurrenciesInfoService.shared.fetchCrypto()
-                } else {
-                    currencyArray = CurrenciesInfoService.shared.fetchCurrency()
-                }
+            DispatchQueue.main.async {
+                self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+                    self.currencies = isGraphCurrencies == true ?
+                    self.filterGraphCurrencies(from: currencies) :
+                        currencies
+                    var currencyArray: [CurrencyInfo] = []
+                    if isCrypto {
+                        currencyArray =  CurrenciesInfoService.shared.fetchCrypto()
+                    } else {
+                        currencyArray = CurrenciesInfoService.shared.fetchCurrency()
+                    }
 
-                self.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { cur in
+                    self.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { cur in
 
-                    self.presenter?.presentData(response: .currencies(self.currencies,
-                                                                       currencyArray,
-                                                                      cur,
-                                                                     oppositeCurrency))
+                        self.presenter?.presentData(response: .currencies(self.currencies,
+                                                                           currencyArray,
+                                                                          cur,
+                                                                         oppositeCurrency))
+                    }
                 }
             }
+
             
         case .chooseCurrency(let viewModel):
             selectedCurrency = currencies.first { $0.currency == viewModel.currency }

@@ -136,15 +136,22 @@ class ExchangeRatesViewController: UIViewController {
     }
     
     private func updateView(selectedIndex: Int) {
+
         switch selectedIndex {
         case 0:
             remove(asChildViewController: cryptoCurrencyRatesVC)
             add(asChildViewController: currencySelectionVC)
-            currencySelectionVC.loadData()
+            DispatchQueue.main.async {
+                self.currencySelectionVC.loadData()
+            }
+
         case 1:
             remove(asChildViewController: currencySelectionVC)
             add(asChildViewController: cryptoCurrencyRatesVC)
-            cryptoCurrencyRatesVC.loadData()
+            DispatchQueue.main.async {
+                self.cryptoCurrencyRatesVC.loadData()
+            }
+
         default:
             break
         }

@@ -59,7 +59,12 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
                 result.isReverted = pairModelIsReverted
                 responses.append(result)
             })
-            self?.presenter?.presentData(response: .createViewModel(responses))
+
+            var resultResp = currencies.compactMap { order in
+                responses.first(where: { $0.id == order.id })
+            }
+            resultResp.reverse()
+            self?.presenter?.presentData(response: .createViewModel(resultResp))
         }
     }
 

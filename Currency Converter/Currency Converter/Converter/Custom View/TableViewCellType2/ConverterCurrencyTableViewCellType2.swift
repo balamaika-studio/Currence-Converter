@@ -20,7 +20,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     @IBOutlet private weak var countTextField: UITextField!
     @IBOutlet private weak var mainView: UIView!
 
-    private let maxLength = 8
+    private let maxLength = 24
     private var validateService: Validating?
     weak var delegate: ConverterCurrencyTableViewCellType2Deleagte?
     var model: FavoriteConverterViewModel?

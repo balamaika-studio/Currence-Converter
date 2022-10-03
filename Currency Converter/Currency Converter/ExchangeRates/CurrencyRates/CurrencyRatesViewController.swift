@@ -81,6 +81,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(R.nib.currencyPairTableViewCell)
+        tableView.register(UINib(nibName: R.nib.type2SectionHeaderView.name, bundle: nil), forHeaderFooterViewReuseIdentifier: R.nib.type2SectionHeaderView.name)
 
         tableView.refreshControl = refreshControl
         reorderTableView = LongPressReorderTableView(tableView,
@@ -162,6 +163,18 @@ extension CurrencyRatesViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
         self.tableView.setSwipeActionFont(R.font.poppinsRegular(size: 15)!, withTintColor: .red)
+    }
+
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45.5
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Type2SectionHeaderView") as! Type2SectionHeaderView
+        view.updateTitle(Date().toString())
+
+        return view
     }
 }
 

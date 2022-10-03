@@ -21,6 +21,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var interactor: ChoiceBusinessLogic?
     var router: ChoiceRoutingLogic?
@@ -79,11 +80,13 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
+        showActivityIndicator()
     }
     
     func displayData(viewModel: Choice.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .displayCurrencies(let currencies):
+            self.hideActivityIndicator()
             self.currencies = currencies
             self.tableView.reloadData()
         }
@@ -125,10 +128,12 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
             isCrypto = false
             titleLabel.text = R.string.localizable.favouriteCurrencySegmentTitle()
             interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
+            showActivityIndicator()
         case 1:
             isCrypto = true
             titleLabel.text = R.string.localizable.favouriteCryptocurrencySegmentTitle()
             interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
+            showActivityIndicator()
         default:
             break
         }
@@ -187,6 +192,16 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
             }
         }
         return placeholder;
+    }
+
+    private func showActivityIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
 }
