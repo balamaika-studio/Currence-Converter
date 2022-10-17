@@ -120,8 +120,10 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
 
 extension CurrencyRatesViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        view.backgroundColor = theme.backgroundColor
+        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = .clear
+        view.backgroundColor = theme.backgroundColor
+        tableView.reloadData()
     }
 }
 
@@ -152,7 +154,7 @@ extension CurrencyRatesViewController: UITableViewDataSource {
             self.interactor?.makeRequest(request: .removeRelative(relative))
             completionHandler(true)
         }
-        deleteAction.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1)
+        deleteAction.backgroundColor = view.backgroundColor
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
     }

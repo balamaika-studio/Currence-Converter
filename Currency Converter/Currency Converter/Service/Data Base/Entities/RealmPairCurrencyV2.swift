@@ -1,5 +1,5 @@
 //
-//  RealmPairCurrency.swift
+//  RealmPairCurrencyV2.swift
 //  Currency Converter
 //
 //  Created by Vlad Sys on 10.09.22.
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-public class RealmPairCurrency: Object {
+public class RealmPairCurrencyV2: Object {
 
     dynamic var id = UUID().uuidString
     dynamic var currencyPairId: String?

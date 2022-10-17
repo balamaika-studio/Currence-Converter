@@ -70,7 +70,7 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
 
     private func delete(_ relative: CurrencyPairViewModel) {
         let relativesPredicate = NSPredicate(format: "isSelected = true")
-        liveStorage.fetch(RealmExchangeRate.self, predicate: relativesPredicate, sorted: nil) {
+        liveStorage.fetch(RealmExchangeRateV2.self, predicate: relativesPredicate, sorted: nil) {
             $0.forEach { relativeCur in
                 if (relativeCur.base?.currency == relative.leftCurrency || relativeCur.base?.currency  == relative.rightCurrency)
                     && (relativeCur.relative?.currency == relative.leftCurrency || relativeCur.relative?.currency == relative.rightCurrency) {
@@ -83,12 +83,12 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
     func makeRequest(request: CurrencyRates.Model.Request.RequestType) {
         switch request {
         case .loadCurrencyRateChanges:
-            var pairsModels: [RealmPairCurrency] = []
-            liveStorage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { pairs in
+            var pairsModels: [RealmPairCurrencyV2] = []
+            liveStorage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { pairs in
                 pairsModels = pairs
             }
                 let relativesPredicate = NSPredicate(format: "isSelected = true")
-                liveStorage.fetch(RealmExchangeRate.self, predicate: relativesPredicate, sorted: nil) { relatives in
+                liveStorage.fetch(RealmExchangeRateV2.self, predicate: relativesPredicate, sorted: nil) { relatives in
                     var currencies: [ShowCurrencyModel] = []
                     for relative in relatives {
                         guard let base = relative.base,

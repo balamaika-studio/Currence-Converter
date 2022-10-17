@@ -24,7 +24,7 @@ class CurrencySelectionInteractor: CurrencySelectionBusinessLogic {
     func makeRequest(request: CurrencySelection.Model.Request.RequestType) {
         switch request {
         case .loadRelatives:
-            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) {
+            storage.fetch(RealmExchangeRateV2.self, predicate: nil, sorted: nil) {
                 presenter?.presentData(response: .relatives($0))
             }
             
@@ -38,7 +38,7 @@ class CurrencySelectionInteractor: CurrencySelectionBusinessLogic {
     
     private func update(_ relative: CurrencyPairViewModel, isSelected: Bool) {
         let realmId = NSPredicate(format: "id = %@", relative.realmId)
-        storage.fetch(RealmExchangeRate.self, predicate: realmId, sorted: nil) {
+        storage.fetch(RealmExchangeRateV2.self, predicate: realmId, sorted: nil) {
             guard let exchangeRate = $0.first else { return }
             try? storage.update {
                 exchangeRate.isSelected = isSelected

@@ -46,7 +46,7 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
     
     private func update(_ favorite: FavoriteViewModel, isFavorite: Bool) {
         let predicate = NSPredicate(format: "currency = %@", favorite.currency)
-        storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
+        storage.fetch(RealmCurrencyV2.self, predicate: predicate, sorted: nil) { result in
             let selectedCurrency = result.first!
             try! storage.update {
                 selectedCurrency.isFavorite = isFavorite
@@ -56,9 +56,9 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
     
     private func fetchCurrenciesConverter() {
         DispatchQueue.main.async {
-            self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
+            self.storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
                 let cryptoCurrencyinfo = CurrenciesInfoService.shared.fetchCrypto()
-                self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+                self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
                     self?.presenter?.presentData(response: .currenciesConverter(currencies, cryptoCurrencyinfo, cur))
                 }
             }
@@ -68,9 +68,9 @@ class FavoriteCryptocurrencyInteractor: FavoriteCryptocurrencyBusinessLogic {
     private func fetchCurrenciesExchange(relative: Relative?, isLeftSelected: Bool) {
         DispatchQueue.main.async {
             let mainCurrency = (!isLeftSelected ? relative?.base : relative?.relative) ?? ""
-            self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
+            self.storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
                 let currenciesInfo = CurrenciesInfoService.shared.fetchCrypto()
-                self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+                self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
 
                     self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, cur, mainCurrency))
                 }

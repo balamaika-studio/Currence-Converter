@@ -1,5 +1,5 @@
 //
-//  RealmCurrency.swift
+//  RealmCurrencyV2.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/2/20.
@@ -18,7 +18,7 @@ extension Object: Storable {
 }
 
 @objcMembers
-public class RealmCurrency: Object, Currency {
+public class RealmCurrencyV2: Object, Currency {
     dynamic var id: String = UUID().uuidString
     dynamic var currency: String = ""
     dynamic var rate: Double = 0.0

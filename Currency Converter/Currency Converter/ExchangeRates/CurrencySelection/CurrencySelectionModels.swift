@@ -20,7 +20,7 @@ enum CurrencySelection {
         }
         struct Response {
             enum ResponseType {
-                case relatives(_ relatives: [RealmExchangeRate])
+                case relatives(_ relatives: [RealmExchangeRateV2])
             }
         }
         struct ViewModel {

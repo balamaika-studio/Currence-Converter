@@ -66,6 +66,7 @@ class CurrencyPairTableViewCell: UITableViewCell {
         selectionView.layer.shadowOpacity = 0.6
         selectionView.layer.shadowOffset = CGSize(width: 0, height: 5)
         selectionView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
+        selectionView.layer.borderWidth = 1.5
     }
 //
 //    func configureForSelection() {
@@ -87,8 +88,10 @@ class CurrencyPairTableViewCell: UITableViewCell {
 extension CurrencyPairTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         backgroundColor = .clear
-        contentView.backgroundColor = .clear
-//        selectionColor = theme.tableCellSelectionColor
-//        currencyRelativeLabel.textColor = theme.textColor
+        contentView.backgroundColor = theme.backgroundColor
+        leftCurrencyLabel.textColor = theme.textColor
+        rightCurrencyLAbel.textColor = theme.textColor
+        selectionView.backgroundColor = theme.backgroundColor
+        selectionView.layer.borderColor = UIColor.white.cgColor
     }
 }

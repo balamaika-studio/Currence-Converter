@@ -13,15 +13,15 @@ class UserDefaultsService {
 
     var isFirstLoad: Bool {
         get {
-            if UserDefaults.standard.value(forKey: "isFirstLoad") == nil { 
-                UserDefaults.standard.set(true, forKey: "isFirstLoad")
+            if UserDefaults.standard.value(forKey: "isFirstLoadV2") == nil {
+                UserDefaults.standard.set(true, forKey: "isFirstLoadV2")
             }
-            let value = UserDefaults.standard.bool(forKey: "isFirstLoad")
+            let value = UserDefaults.standard.bool(forKey: "isFirstLoadV2")
             return value
         }
 
         set {
-            UserDefaults.standard.set(newValue, forKey: "isFirstLoad")
+            UserDefaults.standard.set(newValue, forKey: "isFirstLoadV2")
         }
     }
 

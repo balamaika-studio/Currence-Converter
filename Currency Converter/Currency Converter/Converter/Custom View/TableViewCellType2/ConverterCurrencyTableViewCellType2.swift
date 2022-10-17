@@ -80,8 +80,8 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
             mainView.layer.borderWidth = 1.5
             mainView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.7)
         } else {
-            mainView.layer.borderWidth = 0
-            mainView.layer.borderColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
+            mainView.layer.borderWidth = 1
+            mainView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         }
     }
 
@@ -111,10 +111,22 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
 
 extension ConverterCurrencyTableViewCellType2: Themed {
     func applyTheme(_ theme: AppTheme) {
+
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
-        countTextField.textColor = theme.textColor
+        countTextField.textColor = theme.priceColor
+        mainView.backgroundColor = theme.backgroundColor
         reorderControlImageView?.tint(color: theme.textColor)
+
+        if let clearButton = countTextField.value(forKeyPath: "_clearButton") as? UIButton {
+            if theme == .light {
+                clearButton.setImage(R.image.dismissLight(), for: .normal)
+                clearButton.setImage(R.image.dismissLight(), for: .highlighted)
+            } else {
+                clearButton.setImage(R.image.dismissDark(), for: .normal)
+                clearButton.setImage(R.image.dismissDark(), for: .highlighted)
+            }
+        }
     }
 }
 

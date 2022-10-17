@@ -21,6 +21,7 @@
                 <outlet property="cancelButton" destination="oLk-z4-WoP" id="9BN-dk-uKc"/>
                 <outlet property="confirmButton" destination="w3B-RN-Ikm" id="lMT-0T-WqT"/>
                 <outlet property="mainView" destination="DcX-Fx-LQW" id="qG0-GX-ySK"/>
+                <outlet property="navbarView" destination="ZgZ-uT-7Yu" id="IVH-uK-JSO"/>
                 <outlet property="searchBar" destination="yce-n8-o7G" id="VZS-4a-cG0"/>
                 <outlet property="segmentedControl" destination="2fz-vL-pYy" id="vX8-p0-14k"/>
                 <outlet property="tableView" destination="18e-dq-9Cu" id="CPJ-hH-4HO"/>

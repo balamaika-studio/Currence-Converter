@@ -34,7 +34,7 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
         switch request {
         case .loadCurrencies(let isGraphCurrencies, let isCrypto, let oppositeCurrency):
             DispatchQueue.main.async {
-                self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { currencies in
+                self.storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { currencies in
                     self.currencies = isGraphCurrencies == true ?
                     self.filterGraphCurrencies(from: currencies) :
                         currencies
@@ -45,7 +45,7 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
                         currencyArray = CurrenciesInfoService.shared.fetchCurrency()
                     }
 
-                    self.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { cur in
+                    self.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { cur in
 
                         self.presenter?.presentData(response: .currencies(self.currencies,
                                                                            currencyArray,

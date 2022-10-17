@@ -23,7 +23,7 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
         let theme = themeProvider.currentTheme
         let selectColor = selected ?
             theme.tableCellSelectionColor :
-            theme.specificBackgroundColor
+            theme.backgroundColor
         contentView.backgroundColor = selectColor
     }
     
@@ -39,7 +39,7 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
 }
 extension ChoiceCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
-        backgroundColor = theme.specificBackgroundColor
+        backgroundColor = .clear
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
     }

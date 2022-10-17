@@ -24,10 +24,12 @@ final class NavBarThemeManager {
         ]
         if #available(iOS 13.0, *) {
             let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
+            appearance.configureWithTransparentBackground()
             appearance.titleTextAttributes = titleTextAttrs
             appearance.backgroundColor = theme.barBackgroundColor
+
             UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().compactAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         } else {
             //let image = UIImage.from(color: theme.barTintColor)
@@ -35,8 +37,6 @@ final class NavBarThemeManager {
             appearance.barTintColor = theme.barBackgroundColor//setBackgroundImage(image, for: .default)
             appearance.titleTextAttributes = titleTextAttrs
         }
-        UITabBar.appearance().unselectedItemTintColor = theme.barUnselectedTintColor
-        UITabBar.appearance().tintColor = theme.barBackgroundColor
     }
 }
 

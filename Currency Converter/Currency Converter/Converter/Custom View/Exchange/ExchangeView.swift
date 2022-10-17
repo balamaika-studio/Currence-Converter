@@ -85,6 +85,10 @@ class ExchangeView: UIView {
         tapGesture.addTarget(self, action: #selector(changeCurrencyTapped))
         contentView.addGestureRecognizer(tapGesture)
         countTextField.delegate = self
+        countTextField.clearButtonMode = .whileEditing
+        if let clearButton = countTextField.value(forKeyPath: "_clearButton") as? UIButton {
+            clearButton.setImage(UIImage(named:"dismissDark"), for: .normal)
+        }
         validateService = ValidateService()
         addDoneButtonOnKeyboard()
         setUpClearSetting()
@@ -190,5 +194,15 @@ extension ExchangeView: Themed {
         rateLabel.textColor = theme.subtitleColor
         countTextField.textColor = theme.textColor
         changeCurrencyIcon.image = changeCurrencyIconImage
+
+        if let clearButton = countTextField.value(forKeyPath: "_clearButton") as? UIButton {
+            if theme == .light {
+                clearButton.setImage(R.image.dismissLight(), for: .normal)
+                clearButton.setImage(R.image.dismissLight(), for: .highlighted)
+            } else {
+                clearButton.setImage(R.image.dismissDark(), for: .normal)
+                clearButton.setImage(R.image.dismissDark(), for: .highlighted)
+            }
+        }
     }
 }

@@ -116,6 +116,8 @@ class FavoriteCurrencyViewController: UIViewController, FavoriteCurrencyDisplayL
         confirmButton.setTitle(R.string.localizable.add(), for: .normal)
         confirmButton.layer.cornerRadius = 7
         cancelButton.layer.cornerRadius = 7
+        cancelButton.layer.borderWidth = 1
+        cancelButton.layer.borderColor = UIColor.white.cgColor
     }
     
     private func setPlaceHolder(placeholder: String) -> String {
@@ -185,14 +187,14 @@ extension FavoriteCurrencyViewController: Themed {
         searchBar.setImage(searchIcon, for: .search, state: .normal)
         searchTextField?.textColor = theme.searchTextColor
         searchTextField?.backgroundColor = theme.searchTextFieldColor
-        view.backgroundColor = theme.specificBackgroundColor
-        tableView.backgroundColor = .clear
-        tableView.reloadData()
-        cancelButton.backgroundColor = .white
+        view.backgroundColor = theme.backgroundColor
+        tableView.backgroundColor = theme.backgroundColor
+        cancelButton.backgroundColor = theme.backgroundConverterColor
         confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        cancelButton.setTitleColor(.gray , for: .normal)
+        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
         buttonsContainerView.backgroundColor = theme.backgroundColor
+        tableView.reloadData()
     }
 }
 

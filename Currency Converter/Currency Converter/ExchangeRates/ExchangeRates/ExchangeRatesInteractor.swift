@@ -17,7 +17,7 @@ class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
     var presenter: ExchangeRatesPresentationLogic?
     var storage: StorageContext!
     
-    var currencies: [RealmCurrency]!
+    var currencies: [RealmCurrencyV2]!
     
     init(storage: StorageContext = try! RealmStorageContext()) {
         self.storage = storage
@@ -27,17 +27,17 @@ class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
         switch request {
         case .configureExchangeRates:
             break
-//            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+//            storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
 //                self.currencies = $0
 //            }
 //
-//            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
+//            storage.fetch(RealmExchangeRateV2.self, predicate: nil, sorted: nil) { rates in
 //                if rates.isEmpty {
 //                    defaultRelatives.forEach { stringRelative in
 //                        let model = buildRelative(stringRelative)
 //                        if let base = currencies.first(where: { $0.currency == model.base }),
 //                           let relative = currencies.first(where: { $0.currency == model.relative }) {
-//                            try? storage.create(RealmExchangeRate.self) { rate in
+//                            try? storage.create(RealmExchangeRateV2.self) { rate in
 //                                rate.base = base
 //                                rate.relative = relative
 //                                rate.isSelected = model.isSelected
@@ -47,13 +47,13 @@ class ExchangeRatesInteractor: ExchangeRatesBusinessLogic {
 //                }
 //            }
         case .saveSelectedExchangeRates(let rate):
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
                 self.currencies = $0
             }
-            storage.fetch(RealmExchangeRate.self, predicate: nil, sorted: nil) { rates in
+            storage.fetch(RealmExchangeRateV2.self, predicate: nil, sorted: nil) { rates in
                 if let base = currencies.first(where: { $0.currency == rate.base }),
                    let relative = currencies.first(where: { $0.currency == rate.relative }) {
-                    try? storage.create(RealmExchangeRate.self) { rate in
+                    try? storage.create(RealmExchangeRateV2.self) { rate in
                         rate.base = base
                         rate.relative = relative
                         rate.isSelected = true

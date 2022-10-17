@@ -18,6 +18,7 @@
             <connections>
                 <outlet property="containerView" destination="2KC-rm-VSe" id="qb8-74-5x0"/>
                 <outlet property="mainView" destination="Pg2-Qi-pae" id="Y8S-dB-HLV"/>
+                <outlet property="navbarView" destination="30e-IV-ZSt" id="Spe-BN-IiD"/>
                 <outlet property="segmentedControl" destination="wtK-f8-6wL" id="xqB-Wz-7sb"/>
                 <outlet property="titleLabel" destination="33Y-p8-Dlf" id="t4e-Px-Ktu"/>
                 <outlet property="topCurrenciesView" destination="Lhf-HE-PHB" id="sO5-z6-GTU"/>

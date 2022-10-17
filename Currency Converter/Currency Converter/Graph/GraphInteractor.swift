@@ -44,8 +44,8 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
                 self.presenter?.presentData(response: .graphData(quotes.sorted(by: <), period: period))
             }
 
-            var pairsModels: [RealmPairCurrency] = []
-            storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { pairs in
+            var pairsModels: [RealmPairCurrencyV2] = []
+            storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { pairs in
                 pairsModels = pairs
             }
 

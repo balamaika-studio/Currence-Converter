@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var storage: StorageContext!
     var networkManager: NetworkManager!
     private var bannerView: GADBannerView!
+    private var timer: Timer?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -55,10 +56,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 helper.update(products: products)
             }
         }
-        
         checkInternetConnection()
         configureAppsFlyer()
-        requestIDFA()
         
         return true
     }
@@ -86,6 +85,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
         bannerView.load(GADRequest())
+        setupInterstitialAd()
+    }
+
+    private func setupInterstitialAd() {
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { _ in
+            let vc = FullScreenAdController()
+            vc.onDismissed = { [weak self] in self?.setupInterstitialAd() }
+            vc.loadInterstitialAd(id: "ca-app-pub-5773099160082927/1278122807") { [weak self, weak vc] in
+                guard $0, let self = self, let vc = vc else { return }
+                self.window?.rootViewController?.present(vc, animated: true)
+            }
+        }
     }
     
     private func configureAppsFlyer() {
@@ -157,6 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         AppsFlyerLib.shared().start()
+        requestIDFA()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -173,6 +185,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             AppsFlyerLib.shared().handlePushNotification(userInfo)
             completionHandler(.noData)
         }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        timer?.invalidate()
+        timer = nil
+    }
     
     @objc func handlePurchaseNotification(_ notification: Notification) {
         guard let productID = notification.object as? String else { return }
@@ -188,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //MARK: - Private Methods
     private func checkInternetConnection() {
         ConnectionManager.shared.reachability.whenUnreachable = { _ in
-            self.storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] in
+            self.storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] in
                 guard let self = self else { return }
                 if $0.isEmpty {
                     // configure modal offline screen
@@ -214,7 +231,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
-        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+        realm.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
             for currency in $0 {
                 let quote = quotes.first { $0.currency == currency.currency }
                 guard let newQuote = quote else { return }
@@ -233,7 +250,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                   let relative = baseAndRelative.last else {
                       return
                   }
-            try? realm.create(RealmPairCurrency.self) { currency in
+            try? realm.create(RealmPairCurrencyV2.self) { currency in
                 currency.currencyPairId = id
                 currency.base = base
                 currency.relative = relative

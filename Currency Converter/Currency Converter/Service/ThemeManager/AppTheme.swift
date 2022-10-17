@@ -14,6 +14,7 @@ struct AppTheme {
     var barTintColor: UIColor
     var barUnselectedTintColor: UIColor
     var barBackgroundColor: UIColor
+    var popUpBarColor: UIColor
 
     var backgroundColor: UIColor
     var specificBackgroundColor: UIColor
@@ -24,7 +25,10 @@ struct AppTheme {
 
     var textColor: UIColor
     var subtitleColor: UIColor
+    var priceColor: UIColor
     var unselectedSwitchTextColor: UIColor
+
+    var cancelTitleColor: UIColor
 
     var shadowOpacity: Float
     var searchTextColor: UIColor
@@ -49,17 +53,21 @@ extension AppTheme {
         barTintColor: UIColor(red: 0.19, green: 0.4, blue: 0.98, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.3058823529, green: 0.2941176471, blue: 0.3764705882, alpha: 0.8),
         barBackgroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1),
+        popUpBarColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1),
 
-        backgroundColor: #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1),
+        backgroundColor: #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1), // fix
         specificBackgroundColor: .white,
         backgroundConverterColor: .white,
 
         tableCellSelectionColor: #colorLiteral(red: 0.9019607843, green: 0.9333333333, blue: 1, alpha: 1),
         collectionCellSelectionColor: #colorLiteral(red: 0.9019607843, green: 0.9333333333, blue: 1, alpha: 1),
 
-        textColor: .darkText,
-        subtitleColor: .gray,
+        textColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1), // fix
+        subtitleColor: #colorLiteral(red: 0.1529411765, green: 0.1764705882, blue: 0.2549019608, alpha: 0.4), // fix
+        priceColor: #colorLiteral(red: 0.1529411765, green: 0.1764705882, blue: 0.2549019608, alpha: 1), // fix
         unselectedSwitchTextColor: .systemBlue,
+
+        cancelTitleColor: #colorLiteral(red: 0.1529411765, green: 0.1764705882, blue: 0.2549019608, alpha: 0.4),
 
         shadowOpacity: 0.3,
         searchTextColor: #colorLiteral(red: 0.4196078431, green: 0.4196078431, blue: 0.4196078431, alpha: 1),
@@ -76,17 +84,21 @@ extension AppTheme {
         barTintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),
         barBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        popUpBarColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
-        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1), //fix
         specificBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
         backgroundConverterColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
         tableCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
         collectionCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
-        textColor: .white,
-        subtitleColor: .lightGray,
+        textColor: .white, // fix
+        subtitleColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1), // fix
+        priceColor: .white, // fix
         unselectedSwitchTextColor: .white,
+
+        cancelTitleColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
 
         shadowOpacity: 0.6,
         searchTextColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),

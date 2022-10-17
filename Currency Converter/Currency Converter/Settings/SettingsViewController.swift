@@ -202,14 +202,17 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
 
 extension SettingsViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
+        _ = navigationController?.view.snapshotView(afterScreenUpdates: true)
         if let toolBar = hiddenTextField.inputAccessoryView as? UIToolbar {
             toolBar.barStyle = theme == .light ? .default : .black
         } else {
             hiddenTextField.inputAccessoryView?.backgroundColor = theme.specificBackgroundColor
         }
-        view.backgroundColor = theme.specificBackgroundColor
-        tableView.backgroundColor = theme.specificBackgroundColor
+        view.backgroundColor = theme.backgroundColor
+        tableView.backgroundColor = theme.backgroundColor
         hiddenTextField.inputView?.backgroundColor = theme.backgroundColor
+        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
+        navigationController?.navigationBar.update(backroundColor: theme.barBackgroundColor, titleColor: .white)
     }
 }
 

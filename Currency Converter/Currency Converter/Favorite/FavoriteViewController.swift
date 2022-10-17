@@ -18,7 +18,7 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     @IBOutlet weak var navbarView: UIView!
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
-    
+
     private lazy var favouriteCurrencyVC: FavoriteCurrencyViewController = {
         var viewController = FavoriteCurrencyViewController(nib: R.nib.favoriteCurrencyViewController)
         add(asChildViewController: viewController)
@@ -118,8 +118,6 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
                                                 for: .selected)
-        segmentedControl.setTitleTextAttributes([.foregroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)],
-                                                for: .normal)
         segmentedControl.layer.cornerRadius = 10
         segmentedControl.layer.borderWidth = 1
         segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
@@ -179,5 +177,9 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
 extension FavoriteViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         navbarTitleLabel.textColor = .white
+        navbarView.backgroundColor = theme.barBackgroundColor
+        mainView.backgroundColor = theme.backgroundColor
+        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
+                                                for: .normal)
     }
 }

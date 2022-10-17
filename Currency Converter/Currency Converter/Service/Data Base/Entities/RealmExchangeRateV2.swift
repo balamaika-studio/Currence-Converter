@@ -1,5 +1,5 @@
 //
-//  RealmExchangeRate.swift
+//  RealmExchangeRateV2.swift
 //  Currency Converter
 //
 //  Created by Кирилл Клименков on 4/9/20.
@@ -10,10 +10,10 @@ import Foundation
 import RealmSwift
 
 @objcMembers
-public class RealmExchangeRate: Object {
+public class RealmExchangeRateV2: Object {
     dynamic var id: String = UUID().uuidString
-    dynamic var base: RealmCurrency? = nil
-    dynamic var relative: RealmCurrency? = nil
+    dynamic var base: RealmCurrencyV2? = nil
+    dynamic var relative: RealmCurrencyV2? = nil
     dynamic var isSelected: Bool = false
     
     public override class func primaryKey() -> String? {

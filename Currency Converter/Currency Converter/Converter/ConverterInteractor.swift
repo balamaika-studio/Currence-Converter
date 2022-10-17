@@ -64,7 +64,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         case .loadFavoriteCurrenciesFirst(let total, let index):
             lastTotalSum = total == nil ? lastTotalSum : total!
             let predicate = NSPredicate(format: "isFavorite = true")
-            storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
+            storage.fetch(RealmCurrencyV2.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
                 presenter?.presentData(response: .favoriteCurrencies(favoriteCurrencies,
                                                                      total: lastTotalSum,
                                                                      totalIndex: index))
@@ -72,7 +72,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         case .loadFavoriteCurrencies(let total, let index):
             lastTotalSum = total == nil ? lastTotalSum : total!
             let predicate = NSPredicate(format: "isFavorite = true")
-            storage.fetch(RealmCurrency.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
+            storage.fetch(RealmCurrencyV2.self, predicate: predicate, sorted: Sorted(key: "currency")) { favoriteCurrencies in
                 presenter?.presentData(response: .favoriteCurrenciesPartUpdate(favoriteCurrencies,
                                                                      total: lastTotalSum,
                                                                      totalIndex: index))
@@ -81,14 +81,14 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         case .loadCryptoCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> EUR from net
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ? loadQuotes(exchangeType: .crypto) : setupConverter(with: $0)
             }
 
         case .loadConverterCurrencies:
             // if there are saved currencies, load them from DB
             // else load USD -> BTC from net
-            storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ? loadQuotes(exchangeType: .forex) : setupConverter(with: $0)
             }
             
@@ -114,7 +114,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     // MARK: - Private Methods
     private func update(_ favorite: Currency, isFavorite: Bool) {
         let predicate = NSPredicate(format: "currency = %@", favorite.currency)
-        storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
+        storage.fetch(RealmCurrencyV2.self, predicate: predicate, sorted: nil) { result in
             let selectedCurrency = result.first!
             try! storage.update {
                 selectedCurrency.isFavorite = isFavorite
@@ -148,7 +148,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         date.addTimeInterval(-TimeInterval(dayInSec))
         networkManager.getQuotes(date: date) { response, errorMessageerrorMessage in
             guard let quotes = response?.quotes else { return }
-            self.historicalStorage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+            self.historicalStorage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
                 $0.isEmpty ?
                     self.createQuotes(quotes, in: self.historicalStorage) :
                     self.updateQuotes(quotes, in: self.historicalStorage)
@@ -158,7 +158,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     private func createQuotes(_ quotes: [Quote], in realm: StorageContext) {
         quotes.forEach { quote in
-            try? realm.create(RealmCurrency.self) { currency in
+            try? realm.create(RealmCurrencyV2.self) { currency in
                 currency.currency = quote.currency
                 currency.rate = quote.rate
                 currency.index = quote.index
@@ -167,7 +167,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     }
     
     private func updateQuotes(_ quotes: [Quote], in realm: StorageContext) {
-        realm.fetch(RealmCurrency.self, predicate: nil, sorted: nil) {
+        realm.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
             for currency in $0 {
                 let quote = quotes.first { $0.currency == currency.currency }
                 guard let newQuote = quote else { return }

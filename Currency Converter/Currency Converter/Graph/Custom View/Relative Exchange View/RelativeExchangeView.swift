@@ -64,6 +64,7 @@ class RelativeExchangeView: UIView {
         shadowContainerView.layer.shadowOpacity = 0.6
         shadowContainerView.layer.shadowOffset = CGSize(width: 0, height: 5)
         shadowContainerView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
+        shadowContainerView.layer.borderWidth = 1.5
     }
     
     func configure(with viewModel: GraphConverterViewModel) {
@@ -151,12 +152,14 @@ class RelativeExchangeView: UIView {
 
 extension RelativeExchangeView: Themed {
     func applyTheme(_ theme: AppTheme) {
-        contentView.backgroundColor = theme.backgroundConverterColor
-        backgroundColor = theme.backgroundConverterColor
+        contentView.backgroundColor = theme.backgroundColor
+        backgroundColor = theme.backgroundColor
         baseCurrencyLabel.textColor = theme.textColor
         baseCurrencyTitleLabel.textColor = theme.subtitleColor
         
         relativeCurrencyLabel.textColor = theme.textColor
         relativeCurrencyTitleLabel.textColor = theme.subtitleColor
+        shadowContainerView.backgroundColor = theme.backgroundColor
+        shadowContainerView.layer.borderColor = UIColor.white.cgColor
     }
 }

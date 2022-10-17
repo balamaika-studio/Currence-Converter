@@ -31,6 +31,7 @@ class ExchangeCurrenciesViews: UIView {
             }
         }
     }
+    private var themeId: String = ""
     private var leftCurrency: FavoriteViewModel? = FavoriteViewModel(
         currency: "USD",
         title: "US Dollar",
@@ -140,24 +141,44 @@ class ExchangeCurrenciesViews: UIView {
     }
 
     private func configureLeftViewSelected() {
-        currencyRightView.layer.borderColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
-        currencyLeftView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+        if themeId ==  "light" {
+            currencyRightView.layer.borderColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
+            currencyLeftView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
 
-        leftCurrencyCodeLabel.textColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        rightCurrencyCodeLabel.textColor = #colorLiteral(red: 0.662745098, green: 0.6705882353, blue: 0.7019607843, alpha: 1)
+            leftCurrencyCodeLabel.textColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+            rightCurrencyCodeLabel.textColor = #colorLiteral(red: 0.662745098, green: 0.6705882353, blue: 0.7019607843, alpha: 1)
+        } else {
+            currencyRightView.layer.borderColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
+            currencyLeftView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+
+            leftCurrencyCodeLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            rightCurrencyCodeLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        }
     }
 
     private func configureRightViewSelected() {
-        currencyLeftView.layer.borderColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
-        currencyRightView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+        if themeId ==  "light" {
+            currencyLeftView.layer.borderColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
+            currencyRightView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
 
-        rightCurrencyCodeLabel.textColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        leftCurrencyCodeLabel.textColor = #colorLiteral(red: 0.662745098, green: 0.6705882353, blue: 0.7019607843, alpha: 1)
+            rightCurrencyCodeLabel.textColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+            leftCurrencyCodeLabel.textColor = #colorLiteral(red: 0.662745098, green: 0.6705882353, blue: 0.7019607843, alpha: 1)
+        } else {
+            currencyLeftView.layer.borderColor = #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1)
+            currencyRightView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+
+            rightCurrencyCodeLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            leftCurrencyCodeLabel.textColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+        }
     }
 }
 
 
 extension ExchangeCurrenciesViews: Themed {
     func applyTheme(_ theme: AppTheme) {
+        self.backgroundColor = theme.backgroundColor
+        themeId = theme.themeId
+        currencyLeftView.backgroundColor = theme.backgroundColor
+        currencyRightView.backgroundColor = theme.backgroundColor
     }
 }

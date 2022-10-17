@@ -27,7 +27,7 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
                 return info.contains { $0.abbreviation == currency.currency }
             }
 
-            var currentValidCurrencies: [RealmCurrency] = []
+            var currentValidCurrencies: [RealmCurrencyV2] = []
             currentValidCurrencies.appendDistinct(contentsOf: validCurrencies, where: { (cur1, cur2) -> Bool in
                     return cur1.currency != cur2.currency
             })
@@ -54,7 +54,7 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
                 return info.contains { $0.abbreviation == currency.currency }
             }
 
-            var currentValidCurrencies: [RealmCurrency] = []
+            var currentValidCurrencies: [RealmCurrencyV2] = []
             currentValidCurrencies.appendDistinct(contentsOf: validCurrencies, where: { (cur1, cur2) -> Bool in
                     return cur1.currency != cur2.currency
             })

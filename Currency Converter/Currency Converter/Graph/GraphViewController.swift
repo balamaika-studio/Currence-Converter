@@ -220,7 +220,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
 // MARK: - Themed
 extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        view.backgroundColor = theme.specificBackgroundColor
+        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.backgroundColor
         currenciesRateLabel.textColor = theme.textColor
         chartView.noDataTextColor = theme.textColor
     }

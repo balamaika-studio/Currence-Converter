@@ -53,7 +53,7 @@ extension RestorePurchasesFooterView: Themed {
         restoreButton.backgroundColor = theme.purchaseButtonColor
         restoreButton.setTitleColor(theme.textColor, for: .normal)
         restoreButton.layer.borderColor = theme.restoreBorderColor.cgColor
-        contentView.backgroundColor = theme.specificBackgroundColor
+        contentView.backgroundColor = theme.backgroundColor
         restoreButton.layer.cornerRadius = restoreButton.frame.height / 10
     }
 }

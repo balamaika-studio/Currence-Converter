@@ -22,6 +22,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var navbarView: UIView!
 
     var interactor: ChoiceBusinessLogic?
     var router: ChoiceRoutingLogic?
@@ -110,8 +111,6 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
                                                 for: .selected)
-        segmentedControl.setTitleTextAttributes([.foregroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)],
-                                                for: .normal)
         segmentedControl.layer.cornerRadius = 10
         segmentedControl.layer.borderWidth = 1
         segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
@@ -224,13 +223,17 @@ extension ChoiceViewController: Themed {
         searchTextField?.textColor = theme.searchTextColor
         searchTextField?.backgroundColor = theme.searchTextFieldColor
         titleLabel.textColor = .white
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = theme.backgroundColor
         tableView.reloadData()
-        cancelButton.backgroundColor = .white
+        cancelButton.backgroundColor = theme.backgroundConverterColor
         confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        cancelButton.setTitleColor(.gray , for: .normal)
+        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
         buttonsContainerView.backgroundColor = theme.backgroundColor
+        mainView.backgroundColor = theme.backgroundColor
+        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
+                                                for: .normal)
+        navbarView.backgroundColor = theme.barBackgroundColor
     }
 }
 

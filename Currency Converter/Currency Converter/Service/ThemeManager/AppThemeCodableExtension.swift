@@ -15,6 +15,7 @@ extension AppTheme: Codable {
         case barTintColor
         case barUnselectedTintColor
         case barBackgroundColor
+        case popUpBarColor
 
         case backgroundColor
         case specificBackgroundColor
@@ -25,7 +26,10 @@ extension AppTheme: Codable {
 
         case textColor
         case subtitleColor
+        case priceColor
         case unselectedSwitchTextColor
+
+        case cancelTitleColor
 
         case shadowOpacity
         case searchTextColor
@@ -52,6 +56,8 @@ extension AppTheme: Codable {
                                                       forKey: .barUnselectedTintColor).color
         barBackgroundColor = try container.decode(CodableColor.self,
                                                   forKey: .barBackgroundColor).color
+        popUpBarColor = try container.decode(CodableColor.self,
+                                                  forKey: .popUpBarColor).color
 
         backgroundColor = try container.decode(CodableColor.self, forKey: .backgroundColor).color
         specificBackgroundColor = try container.decode(CodableColor.self, forKey: .specificBackgroundColor).color
@@ -62,7 +68,10 @@ extension AppTheme: Codable {
 
         textColor = try container.decode(CodableColor.self, forKey: .textColor).color
         subtitleColor = try container.decode(CodableColor.self, forKey: .subtitleColor).color
+        priceColor = try container.decode(CodableColor.self, forKey: .priceColor).color
         unselectedSwitchTextColor = try container.decode(CodableColor.self, forKey: .unselectedSwitchTextColor).color
+
+        cancelTitleColor = try container.decode(CodableColor.self, forKey: .cancelTitleColor).color
 
         searchTextColor = try container.decode(CodableColor.self, forKey: .searchTextColor).color
         searchTextFieldColor = try container.decode(CodableColor.self,
@@ -90,7 +99,8 @@ extension AppTheme: Codable {
                              forKey: .barUnselectedTintColor)
         try container.encode(CodableColor(color: barBackgroundColor),
                              forKey: .barBackgroundColor)
-
+        try container.encode(CodableColor(color: popUpBarColor),
+                             forKey: .popUpBarColor)
         try container.encode(CodableColor(color: backgroundColor),
                              forKey: .backgroundColor)
         try container.encode(CodableColor(color: specificBackgroundColor),
@@ -107,8 +117,13 @@ extension AppTheme: Codable {
                              forKey: .textColor)
         try container.encode(CodableColor(color: subtitleColor),
                              forKey: .subtitleColor)
+        try container.encode(CodableColor(color: priceColor),
+                             forKey: .priceColor)
         try container.encode(CodableColor(color: unselectedSwitchTextColor),
                              forKey: .unselectedSwitchTextColor)
+
+        try container.encode(CodableColor(color: cancelTitleColor),
+                             forKey: .cancelTitleColor)
 
         try container.encode(CodableColor(color: searchTextColor),
                              forKey: .searchTextColor)

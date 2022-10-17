@@ -262,7 +262,7 @@ extension ConverterViewController: UITableViewDataSource {
             self.interactor?.makeRequest(request: .remove(favorite: currency))
             completionHandler(true)
         }
-        deleteAction.backgroundColor = #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1)
+        deleteAction.backgroundColor = view.backgroundColor
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
     }

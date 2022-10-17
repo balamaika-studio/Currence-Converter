@@ -37,31 +37,31 @@ extension AppNavigationController: Themed {
     func applyTheme(_ theme: AppTheme) {
         navigationBar.tintColor = .white
         // gradient
-        var startColor: UIColor!
-        var endColor: UIColor!
-        let statusBarHeight = UIApplication.shared.statusBarFrame.height
-        
-        switch theme {
-        case .light:
-            startColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
-            endColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
-        case .dark:
-            startColor = theme.backgroundColor
-            endColor = theme.backgroundColor
-        default: break
-        }
-
-        let gradient = CAGradientLayer()
-        var bounds = navigationBar.bounds
-        bounds.size.height += statusBarHeight
-        gradient.frame = bounds
-        gradient.colors = [startColor.cgColor, endColor.cgColor]
-        gradient.startPoint = CGPoint(x: 0, y: 0)
-        gradient.endPoint = CGPoint(x: 0, y: 1)
-        if let image = getImageFrom(gradientLayer: gradient) {
-            navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
-        }
-        themedStatusBarStyle = .lightContent
-        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+//        var startColor: UIColor!
+//        var endColor: UIColor!
+//        let statusBarHeight = UIApplication.shared.statusBarFrame.height
+//
+//        switch theme {
+//        case .light:
+//            startColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+//            endColor = #colorLiteral(red: 0.01680417731, green: 0.1983509958, blue: 1, alpha: 1)
+//        case .dark:
+//            startColor = theme.backgroundColor
+//            endColor = theme.backgroundColor
+//        default: break
+//        }
+//
+//        let gradient = CAGradientLayer()
+//        var bounds = navigationBar.bounds
+//        bounds.size.height += statusBarHeight
+//        gradient.frame = bounds
+//        gradient.colors = [startColor.cgColor, endColor.cgColor]
+//        gradient.startPoint = CGPoint(x: 0, y: 0)
+//        gradient.endPoint = CGPoint(x: 0, y: 1)
+//        if let image = getImageFrom(gradientLayer: gradient) {
+//            navigationBar.setBackgroundImage(image, for: UIBarMetrics.default)
+//        }
+//        themedStatusBarStyle = .lightContent
+//        navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
     }
 }

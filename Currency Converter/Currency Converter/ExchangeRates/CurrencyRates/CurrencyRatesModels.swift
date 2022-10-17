@@ -20,9 +20,9 @@ enum CurrencyRates {
         }
         struct Response {
             enum ResponseType {
-                case currencies(_ live: [RealmCurrency],
-                                _ historical: [RealmCurrency],
-                                _ relatives: [RealmExchangeRate])
+                case currencies(_ live: [RealmCurrencyV2],
+                                _ historical: [RealmCurrencyV2],
+                                _ relatives: [RealmExchangeRateV2])
                 case createViewModel(_ response: [CandleResponse])
             }
         }

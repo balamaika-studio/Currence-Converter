@@ -23,7 +23,7 @@ class CurrencySelectionPresenter: CurrencySelectionPresentationLogic {
         }
     }
     
-    private func buildCurrencySelectionViewModels(exchangeRates: [RealmExchangeRate]) -> [CurrencySelectionViewModel] {
+    private func buildCurrencySelectionViewModels(exchangeRates: [RealmExchangeRateV2]) -> [CurrencySelectionViewModel] {
         var result = [CurrencySelectionViewModel]()
         
         for exchangeRate in exchangeRates {

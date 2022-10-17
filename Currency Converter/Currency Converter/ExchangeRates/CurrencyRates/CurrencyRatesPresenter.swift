@@ -28,9 +28,9 @@ class CurrencyRatesPresenter: CurrencyRatesPresentationLogic {
     }
     
     
-//    private func buildViewModels(_ live: [RealmCurrency],
-//                                 _ historical: [RealmCurrency],
-//                                 _ exchangeRates: [RealmExchangeRate]) -> [CurrencyRatesViewModel] {
+//    private func buildViewModels(_ live: [RealmCurrencyV2],
+//                                 _ historical: [RealmCurrencyV2],
+//                                 _ exchangeRates: [RealmExchangeRateV2]) -> [CurrencyRatesViewModel] {
 //        var result = [CurrencyRatesViewModel]()
 //        guard live.count == historical.count else { return result }
 //

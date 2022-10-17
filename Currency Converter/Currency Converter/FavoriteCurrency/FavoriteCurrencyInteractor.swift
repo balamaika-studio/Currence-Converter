@@ -46,7 +46,7 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     
     private func update(_ favorite: FavoriteViewModel, isFavorite: Bool) {
         let predicate = NSPredicate(format: "currency = %@", favorite.currency)
-        storage.fetch(RealmCurrency.self, predicate: predicate, sorted: nil) { result in
+        storage.fetch(RealmCurrencyV2.self, predicate: predicate, sorted: nil) { result in
             let selectedCurrency = result.first!
             try! storage.update {
                 selectedCurrency.isFavorite = isFavorite
@@ -55,9 +55,9 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     }
     
     private func fetchCurrenciesConverter() {
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
+        storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+            self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
 
                 self?.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo, cur))
             }
@@ -66,9 +66,9 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
 
     private func fetchCurrenciesExchange(relative: Relative?, isLeftSelected: Bool) {
         let mainCurrency = (!isLeftSelected ? relative?.base : relative?.relative) ?? ""
-        storage.fetch(RealmCurrency.self, predicate: nil, sorted: nil) { [weak self] currencies in
+        storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self?.storage.fetch(RealmPairCurrency.self, predicate: nil, sorted: nil) { [weak self] cur in
+            self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
 
                 self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, cur, mainCurrency))
             }

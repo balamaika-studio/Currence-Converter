@@ -96,6 +96,6 @@ extension SettingsTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         textLabel?.textColor = theme.textColor
         detailTextLabel?.textColor = theme.subtitleColor
-        backgroundColor = theme.specificBackgroundColor
+        backgroundColor = theme.backgroundColor
     }
 }
