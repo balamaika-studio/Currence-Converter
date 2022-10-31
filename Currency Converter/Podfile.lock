@@ -64,8 +64,8 @@ PODS:
     - FirebaseInstallations (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - "GoogleUtilities/NSData+zlib (~> 7.4)"
-  - Google-Mobile-Ads-SDK (8.10.0):
-    - GoogleAppMeasurement (< 9.0, >= 7.0)
+  - Google-Mobile-Ads-SDK (9.12.0):
+    - GoogleAppMeasurement (< 11.0, >= 7.0)
     - GoogleUserMessagingPlatform (>= 1.1)
   - GoogleAppMeasurement (8.6.0):
     - GoogleAppMeasurement/AdIdSupport (= 8.6.0)
@@ -84,7 +84,7 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUserMessagingPlatform (2.0.0)
+  - GoogleUserMessagingPlatform (2.0.1)
   - GoogleUtilities/AppDelegateSwizzler (7.5.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -182,10 +182,10 @@ SPEC CHECKSUMS:
   FirebaseInstallations: 0ede6ffcd215b8f93c19d9b06c1c54e2d4107e98
   FirebasePerformance: 5177c87ffbb447f73aa96796e0573c3698238954
   FirebaseRemoteConfig: 9ee4672d4eacf646256e26cfac61021b3a390ea4
-  Google-Mobile-Ads-SDK: 9c78323a7069cd42ddf1ad2fddbaec889b085091
+  Google-Mobile-Ads-SDK: b4e9efb765ef1693ae9dd94c527b6c1d91ee5052
   GoogleAppMeasurement: 2c0c6e2a7ab3fe730ade6379f732bdefb46f50b0
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
-  GoogleUserMessagingPlatform: ab890ce5f6620f293a21b6bdd82e416a2c73aeca
+  GoogleUserMessagingPlatform: 5f8b30daf181805317b6b985bb51c1ff3beca054
   GoogleUtilities: 8de2a97a17e15b6b98e38e8770e2d129a57c0040
   JJFloatingActionButton: fdc3aefb0f28f04d0f988fa25d5fac97028a9ea7
   LongPressReorder: 71b132d61786d45a1241dd0ff356a2bec1deff63

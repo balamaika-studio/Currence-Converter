@@ -24,6 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var networkManager: NetworkManager!
     private var bannerView: GADBannerView!
     private var timer: Timer?
+    private var isFirstLaunch: Bool = true
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
@@ -58,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         checkInternetConnection()
         configureAppsFlyer()
-        
+        requestIDFA()
         return true
     }
     
@@ -80,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let height = tabBarViewController.tabBar.frame.size.height / 2
         UserDefaults.standard.set(height, forKey: "bannerInset")
         GADMobileAds.sharedInstance().start(completionHandler: nil)
-        bannerView = GADBannerView(adSize: kGADAdSizeBanner)
+        bannerView = GADBannerView(adSize: GADAdSizeBanner)
         addBanner(bannerView)
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
@@ -91,7 +92,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private func setupInterstitialAd() {
         timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { _ in
             let vc = FullScreenAdController()
-            vc.onDismissed = { [weak self] in self?.setupInterstitialAd() }
+            vc.onDismissed = { [weak self] in
+                self?.timer?.invalidate()
+                self?.timer = nil
+                self?.setupInterstitialAd()
+            }
             vc.loadInterstitialAd(id: "ca-app-pub-5773099160082927/1278122807") { [weak self, weak vc] in
                 guard $0, let self = self, let vc = vc else { return }
                 self.window?.rootViewController?.present(vc, animated: true)
@@ -113,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func addBanner(_ bannerView: GADBannerView) {
-        let height = kGADAdSizeBanner.size.height
+        let height = GADAdSizeBanner.size.height
         tabBarViewController.additionalSafeAreaInsets.bottom += height
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
@@ -168,7 +173,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         AppsFlyerLib.shared().start()
-        requestIDFA()
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
+        setupInterstitialAd()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {

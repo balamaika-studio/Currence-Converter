@@ -66,14 +66,22 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
                                                 isSelected: false)
                 result.append(viewModel)
             }
-            let sortedQuotes = result.sorted { $0.title < $1.title }
-            let sortQuotes = sortedQuotes.filter { model in
+            let mainCurrencyModel = result.first {
+                $0.currency == mainCurrency
+            }
+
+            var sortQuotes = result.filter { model in
                 currencyPair.contains {
                     ($0.base == model.currency && $0.relative == mainCurrency) || ($0.relative == model.currency && $0.base == mainCurrency)
                 }
             }
-            quotes = sortQuotes
-            viewController?.displayData(viewModel: .showCurrencies(sortQuotes))
+            if let mainCurrencyModel = mainCurrencyModel {
+                sortQuotes.append(mainCurrencyModel)
+            }
+
+            let sortedQuotes = sortQuotes.sorted { $0.title < $1.title }
+            quotes = sortedQuotes
+            viewController?.displayData(viewModel: .showCurrencies(sortedQuotes))
             
         case .update(let viewModel, let isSelected):
             let index = quotes.firstIndex(of: viewModel)!

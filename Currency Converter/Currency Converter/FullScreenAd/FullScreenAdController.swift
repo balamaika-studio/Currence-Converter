@@ -21,21 +21,26 @@ final class FullScreenAdController: UIViewController, GADFullScreenContentDelega
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        interstitialAd?.present(fromRootViewController: self)
+        if interstitialAd != nil {
+            interstitialAd?.present(fromRootViewController: self)
+        } else {
+            print("Ad wasn't ready")
+        }
     }
 
     func loadInterstitialAd(id: String, completion: ((Bool)->Void)?) {
+        let request = GADRequest()
         GADInterstitialAd.load(withAdUnitID: id,
-                               request: GADRequest()) { [weak self] ad, error in
-            ad?.fullScreenContentDelegate = self
-            self?.interstitialAd = ad
+                               request: request) { [self] ad, error in
+            interstitialAd = ad
+            interstitialAd?.fullScreenContentDelegate = self
             completion?(error == nil)
         }
     }
 
-    func adDidPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
-        print("Ad presented")
-    }
+    func adWillPresentFullScreenContent(_ ad: GADFullScreenPresentingAd) {
+        print("Ad will present full screen content.")
+      }
 
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         presentingViewController?.dismiss(animated: true)

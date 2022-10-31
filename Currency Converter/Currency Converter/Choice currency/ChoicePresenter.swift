@@ -52,13 +52,22 @@ class ChoicePresenter: ChoicePresentationLogic {
                                                     title: currencyTitle)
             result.append(viewModel)
         }
-        let sortedViewModels = result.sorted { $0.title < $1.title }
 
-        let sortedViewModel = sortedViewModels.filter { model in
+        let mainCurrencyModel = result.first {
+            $0.currency == oppositeCurrency
+        }
+
+        var sortedViewModel = result.filter { model in
             pairCurrency.contains {
                 ($0.base == model.currency && $0.relative == oppositeCurrency) || ($0.relative == model.currency && $0.base == oppositeCurrency)
             }
         }
+
+        if let mainCurrencyModel = mainCurrencyModel {
+            sortedViewModel.append(mainCurrencyModel)
+        }
+
+        let sortedViewModels = sortedViewModel.sorted { $0.title < $1.title }
         
 //        CurrenciesInfoService.shared.getPopularCurrencies()
 //            .reversed()
@@ -70,6 +79,6 @@ class ChoicePresenter: ChoicePresentationLogic {
 //            let viewModel = sortedViewModels.remove(at: index)
 //            sortedViewModels.insert(viewModel, at: 0)
 //        }
-        return sortedViewModel
+        return sortedViewModels
     }
 }
