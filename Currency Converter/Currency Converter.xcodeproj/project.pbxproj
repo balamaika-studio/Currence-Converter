@@ -1753,7 +1753,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z6FP9BG3A5;
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1778,7 +1778,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Currency Converter/Currency Converter.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = Z6FP9BG3A5;
 				INFOPLIST_FILE = "Currency Converter/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

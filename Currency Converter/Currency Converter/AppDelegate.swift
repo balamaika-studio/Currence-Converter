@@ -86,7 +86,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         bannerView.adUnitID = adUnitID
         bannerView.rootViewController = tabBarViewController
         bannerView.load(GADRequest())
-        setupInterstitialAd()
     }
 
     private func setupInterstitialAd() {
@@ -175,7 +174,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AppsFlyerLib.shared().start()
         let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) { return }
-        setupInterstitialAd()
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { [weak self] _ in
+                DispatchQueue.main.async {
+                    self?.setupInterstitialAd()
+                }
+            }
+        } else {
+            setupInterstitialAd()
+        }
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
