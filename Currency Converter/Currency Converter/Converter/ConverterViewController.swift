@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import LongPressReorder
 
 protocol ConverterUpdateViewDelegate: AnyObject {
     func updateView()
@@ -26,7 +25,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     private var horizontalConstraint: NSLayoutConstraint!
     private var verticalConstraint: NSLayoutConstraint!
     
-    private var reorderTableView: LongPressReorderTableView!
     private var longPressGesture: UILongPressGestureRecognizer!
     private var gestureRecognizer: UITapGestureRecognizer!
     private var favoriteCurrencies: [FavoriteConverterViewModel]! {
@@ -142,12 +140,6 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         router?.showChoiceViewController()
     }
     
-//    private func swapCurrencyTapped(converter model: ConverterViewModel) {
-//        interactor?.makeRequest(request: .updateBaseCurrency(base: model.firstExchange))
-//        interactor?.makeRequest(request: .changeBottomCurrency(with: model.secondExchange))
-//        interactor?.makeRequest(request: .loadFavoriteCurrencies(total: nil))
-//    }
-    
     private func updateFavoriteWith(total: Double, index: Int) {
         interactor?.makeRequest(request: .loadFavoriteCurrencies(total: total, index: index))
     }
@@ -174,11 +166,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.refreshControl = refreshControl
-        reorderTableView = LongPressReorderTableView(tableView,
-                                                     scrollBehaviour: .late,
-                                                     selectedRowScale: .big)
-        reorderTableView.delegate = self
-        reorderTableView.enableLongPressReorder()
+        tableView.allowsSelectionDuringEditing = true
         
         refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
         refreshControl.addTarget(self,
@@ -190,10 +178,20 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         setupNavBar()
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        // Takes care of toggling the button's title.
+        super.setEditing(editing, animated: true)
+
+        // Toggle table view editing.
+        tableView.setEditing(editing, animated: true)
+        tableView.reloadData()
+    }
+    
     private func setupNavBar() {
         let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
 
-        navigationItem.rightBarButtonItems = [add]
+        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.leftBarButtonItems = [add]
     }
     
     @objc private func addTapped() {
@@ -227,8 +225,6 @@ extension ConverterViewController: ChoiceBackDataPassing {
     }
     
     func updateControllerWithSelectedCurrency() {
-//        let currencyName = converterView.replacingView.currencyName
-//        interactor?.makeRequest(request: .changeCurrency(name: currencyName))
     }
 }
 
@@ -262,17 +258,13 @@ extension ConverterViewController: UITableViewDataSource {
             self.interactor?.makeRequest(request: .remove(favorite: currency))
             completionHandler(true)
         }
-        deleteAction.backgroundColor = view.backgroundColor
+        deleteAction.backgroundColor = .red
         let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
         return configuration
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         75
-    }
-
-    func tableView(_ tableView: UITableView, willBeginEditingRowAt indexPath: IndexPath) {
-        self.tableView.setSwipeActionFont(R.font.poppinsRegular(size: 15)!, withTintColor: .red)
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -300,16 +292,19 @@ extension ConverterViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let currency = favoriteCurrencies[indexPath.row]
-//        interactor?.makeRequest(request: .changeBottomCurrency(with: currency))
     }
-}
-
-// MARK: - LongPressReorder Delegate
-extension ConverterViewController {
-    override func reorderFinished(initialIndex: IndexPath, finalIndex: IndexPath) {
-        let currency = favoriteCurrencies.remove(at: initialIndex.row)
-        favoriteCurrencies.insert(currency, at: finalIndex.row)
+    
+    private func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell.EditingStyle {
+        return .delete
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let currency = favoriteCurrencies.remove(at: sourceIndexPath.row)
+        favoriteCurrencies.insert(currency, at: destinationIndexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        return true
     }
 }
 

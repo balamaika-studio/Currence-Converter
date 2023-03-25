@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class ChartXValueFormatter: IAxisValueFormatter {
+class ChartXValueFormatter: AxisValueFormatter {
     private var dates: [String]
     private var previousDate: String
     

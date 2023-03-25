@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 
-class ChartYValueFormatter: IAxisValueFormatter {
+class ChartYValueFormatter: AxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         return AccuracyManager.shared.formatNumber(value)
     }

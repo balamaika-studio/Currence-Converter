@@ -37,12 +37,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tabBarViewController = R.storyboard.main.instantiateInitialViewController()!
         
         let converterViewController = AppViewController.converter.viewController
-        let exchangeRatesViewController = AppViewController.currencyRates.viewController
+//        let exchangeRatesViewController = AppViewController.currencyRates.viewController
         let graphViewController = AppViewController.graph.viewController
         let settingsViewController = AppViewController.settings.viewController
         
         tabBarViewController.viewControllers = [converterViewController,
-                                                exchangeRatesViewController,
+//                                                exchangeRatesViewController,
                                                 graphViewController,
                                                 settingsViewController]
         
@@ -122,7 +122,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
         bannerView.bottomAnchor.constraint(equalTo: tabBarViewController.view.bottomAnchor).isActive = true
-       bannerView.heightAnchor.constraint(equalToConstant: height).isActive = true
+        bannerView.heightAnchor.constraint(equalToConstant: height).isActive = true
         bannerView.leadingAnchor.constraint(equalTo: tabBarViewController.view.leadingAnchor).isActive = true
         bannerView.trailingAnchor.constraint(equalTo: tabBarViewController.view.trailingAnchor).isActive = true
     }

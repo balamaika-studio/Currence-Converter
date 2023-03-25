@@ -29,7 +29,7 @@ class NoOverlappingLabelsXAxisRenderer: XAxisRenderer {
     }
     
     //swiftlint:disable function_parameter_count
-    override func drawLabel(context: CGContext, formattedLabel: String, x: CGFloat, y: CGFloat, attributes: [NSAttributedString.Key : Any], constrainedToSize: CGSize, anchor: CGPoint, angleRadians: CGFloat) {
+    override func drawLabel(context: CGContext, formattedLabel: String, x: CGFloat, y: CGFloat, attributes: [NSAttributedString.Key : Any], constrainedTo constrainedToSize: CGSize, anchor: CGPoint, angleRadians: CGFloat) {
         guard let axis = self.axis as? XAxis else { return }
 
         // determine label rect
@@ -46,7 +46,7 @@ class NoOverlappingLabelsXAxisRenderer: XAxisRenderer {
         self.previousLabelRect = labelRect
         
         // draw label
-        super.drawLabel(context: context, formattedLabel: formattedLabel, x: x, y: y, attributes: attributes, constrainedToSize: constrainedToSize, anchor: anchor, angleRadians: angleRadians)
+        super.drawLabel(context: context, formattedLabel: formattedLabel, x: x, y: y, attributes: attributes, constrainedTo: constrainedToSize, anchor: anchor, angleRadians: angleRadians)
         
         // draw label rect for debugging purposes
         if shouldDrawBoundingBoxes {

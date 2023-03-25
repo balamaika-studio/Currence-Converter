@@ -7,7 +7,7 @@ target 'Currency Converter' do
 
   # Pods for Currency Converter
   pod 'R.swift'
-  pod 'Charts'
+  pod 'Charts', '~> 4.1.0'
   pod 'RealmSwift'
   pod 'ReachabilitySwift'
   pod 'JJFloatingActionButton'

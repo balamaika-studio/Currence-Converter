@@ -134,7 +134,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         chartView.delegate = self
         chartView.drawGridBackgroundEnabled = false
         chartView.drawBordersEnabled = false
-        chartView.chartDescription?.enabled = false
+        chartView.chartDescription.enabled = false
         chartView.pinchZoomEnabled = false
         chartView.setScaleEnabled(false)
         chartView.legend.enabled = false
@@ -164,7 +164,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         chartView.setExtraOffsets(left: 20, top: 0, right: 0, bottom: 0)
         
         let xAxisRender = NoOverlappingLabelsXAxisRenderer(viewPortHandler: chartView.viewPortHandler,
-                                                           xAxis: xAxis,
+                                                           axis: xAxis,
                                                            transformer: chartView.xAxisRenderer.transformer)
         chartView.xAxisRenderer = xAxisRender
         
