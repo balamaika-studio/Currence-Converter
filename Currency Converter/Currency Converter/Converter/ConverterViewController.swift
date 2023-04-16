@@ -18,6 +18,7 @@ protocol ConverterDisplayLogic: class {
 
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
@@ -95,6 +96,13 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AccuracyManager.shared.accuracy = 2
+        if UserDefaultsService.shared.isFirstLoad {
+            interactor?.makeRequest(request: .firstLoad)
+            showActivityIndicator()
+        } else {
+            hideActivityIndicator()
+        }
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadCryptoCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
@@ -105,7 +113,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .saveFavoriteOrder(currencies: favoriteCurrencies))
         closeKeyboard()
     }
-    
+
     func displayData(viewModel: Converter.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showConverterViewModel(let converterViewModel):
@@ -116,12 +124,16 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             
         case .showFavoriteViewModel(let favoriteViewModel):
             self.favoriteCurrencies = favoriteViewModel
-            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+            if !UserDefaultsService.shared.isFirstLoad {
+                tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+            }
             tableView.reloadData()
 
         case .updateFavoriteViewModel(let favoriteViewModel, let indexPathes):
             self.favoriteCurrencies = favoriteViewModel
-            tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+            if !UserDefaultsService.shared.isFirstLoad {
+                tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
+            }
             tableView.reloadRows(at: indexPathes, with: .none)
             indexPathes.forEach {
                 tableView.deselectRow(at: $0, animated: true)
@@ -131,6 +143,9 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             // dont show alert over top controller
             if let _ = presentedViewController { break }
             showAlert(with: message, title: R.string.localizable.error())
+            
+        case .firstLoadComplete:
+            hideActivityIndicator()
         }
     }
     
@@ -206,6 +221,16 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .updateCurrencies)
         interactor?.makeRequest(request: .updateCrypto)
         interactor?.makeRequest(request: .loadFavoriteCurrencies())
+    }
+    
+    private func showActivityIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+
+    private func hideActivityIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
 }
 

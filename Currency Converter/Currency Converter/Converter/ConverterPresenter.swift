@@ -66,6 +66,9 @@ class ConverterPresenter: ConverterPresentationLogic {
         case .error(let message):
             guard let message = message else { break }
             viewController?.displayData(viewModel: .showError(message: message))
+            
+        case .firstLoadComplete:
+            viewController?.displayData(viewModel: .firstLoadComplete())
         }
     }
     

@@ -33,10 +33,11 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
             })
             
             currentValidCurrencies.forEach { value in
-                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let currencyInfValue = info.first { $0.abbreviation == value.currency }
                 let viewModel = FavoriteViewModel(currency: value.currency,
-                                                title: currencyTitle,
-                                                isSelected: value.isFavorite)
+                                                  title: currencyInfValue?.title ?? "",
+                                                  isSelected: value.isFavorite,
+                                                  isFree: currencyInfValue?.isFree ?? true)
                 result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
@@ -60,10 +61,11 @@ class FavoriteCurrencyPresenter: FavoriteCurrencyPresentationLogic {
             })
 
             currentValidCurrencies.forEach { value in
-                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let currencyInfValue = info.first { $0.abbreviation == value.currency }
                 let viewModel = FavoriteViewModel(currency: value.currency,
-                                                title: currencyTitle,
-                                                isSelected: false)
+                                                  title: currencyInfValue?.title ?? "",
+                                                  isSelected: value.isFavorite,
+                                                  isFree: currencyInfValue?.isFree ?? true)
                 result.append(viewModel)
             }
             let mainCurrencyModel = result.first {

@@ -35,12 +35,14 @@ class ExchangeCurrenciesViews: UIView {
     private var leftCurrency: FavoriteViewModel? = FavoriteViewModel(
         currency: "USD",
         title: "US Dollar",
-        isSelected: true
+        isSelected: true,
+        isFree: true
     )
     private var rightCurrency: FavoriteViewModel? = FavoriteViewModel(
         currency: "EUR",
         title: "European Euro",
-        isSelected: true
+        isSelected: true,
+        isFree: true
     )
     
     // MARK: - Initialization

@@ -13,6 +13,7 @@ enum Converter {
     enum Model {
         struct Request {
             enum RequestType {
+                case firstLoad
                 case changeCurrency(name: String)
                 case loadConverterCurrencies
                 case loadCryptoCurrencies
@@ -33,6 +34,7 @@ enum Converter {
                 case favoriteCurrenciesPartUpdate([Currency], total: Double, totalIndex: Int)
                 case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
+                case firstLoadComplete()
             }
         }
         struct ViewModel {
@@ -41,6 +43,7 @@ enum Converter {
                 case showConverterViewModel(_ viewModel: ConverterViewModel)
                 case showFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel])
                 case updateFavoriteViewModel(_ viewModel: [FavoriteConverterViewModel], indexPathes: [IndexPath])
+                case firstLoadComplete()
             }
         }
     }

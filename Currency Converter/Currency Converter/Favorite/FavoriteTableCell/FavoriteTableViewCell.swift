@@ -24,6 +24,9 @@ class FavoriteTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectionView.backgroundColor = selected ? selectionColor : nil
+        if !isUserInteractionEnabled {
+            selectionView.backgroundColor = .gray
+        }
     }
     
     func configure(with viewModel: FavoriteViewModel) {

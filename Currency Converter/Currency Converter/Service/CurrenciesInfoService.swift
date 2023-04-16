@@ -21,6 +21,7 @@ class CurrenciesInfoService {
     private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
     private let graphDefaultCurrencies = ["USD", "EUR"]
     private let graphDefaultCryptocurrencies = ["BTC", "ETH"]
+    private let freeCrypto = ["BTC", "ETH", "LTC", "XRP"]
     
     private init() { }
     
@@ -34,7 +35,7 @@ class CurrenciesInfoService {
         var result = [CurrencyInfo]()
         json.forEach { code, _ in
             guard let title = getTitle(for: code) else { return }
-            let model = CurrencyInfo(abbreviation: code, title: title)
+            let model = CurrencyInfo(abbreviation: code, title: title, isFree: true)
             result.append(model)
         }
         currencyInfo = result
@@ -49,8 +50,17 @@ class CurrenciesInfoService {
 
         var result = [CurrencyInfo]()
         json.forEach { code, name in
-            let model = CurrencyInfo(abbreviation: code, title: name)
+            var isFree = false
+            if freeCrypto.contains(where: { crypto in
+                crypto == code
+            }) {
+                isFree = true
+            }
+            let model = CurrencyInfo(abbreviation: code, title: name, isFree: isFree)
             result.append(model)
+        }
+        result.sort {
+            $0.isFree && !$1.isFree
         }
         currencyInfo = result
         return currencyInfo
@@ -88,9 +98,11 @@ class CurrenciesInfoService {
             fatalError("Unknown default graph currencies")
         }
         let base = ChoiceCurrencyViewModel(currency: baseInfo.abbreviation,
-                                           title: baseInfo.title)
+                                           title: baseInfo.title,
+                                           isFree: baseInfo.isFree)
         let relative = ChoiceCurrencyViewModel(currency: relativeInfo.abbreviation,
-                                               title: relativeInfo.title)
+                                               title: relativeInfo.title,
+                                               isFree: relativeInfo.isFree)
         return GraphConverterViewModel(base: base, relative: relative)
     }
 
@@ -106,9 +118,11 @@ class CurrenciesInfoService {
             fatalError("Unknown default graph currencies")
         }
         let base = ChoiceCurrencyViewModel(currency: baseInfo.abbreviation,
-                                           title: baseInfo.title)
+                                           title: baseInfo.title,
+                                           isFree: baseInfo.isFree)
         let relative = ChoiceCurrencyViewModel(currency: relativeInfo.abbreviation,
-                                               title: relativeInfo.title)
+                                               title: relativeInfo.title,
+                                               isFree: relativeInfo.isFree)
         return GraphConverterViewModel(base: base, relative: relative)
     }
     

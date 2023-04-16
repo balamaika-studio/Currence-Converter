@@ -14,30 +14,25 @@ protocol GraphDisplayLogic: class {
 }
 
 final class GraphViewController: UIViewController, GraphDisplayLogic {
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var chartView: LineChartView!
     @IBOutlet weak var converterView: RelativeExchangeView!
     @IBOutlet weak var currenciesRateLabel: UILabel!
     
+    @IBOutlet weak var currencyValue: UILabel!
     @IBOutlet weak var labelLeadingMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var chartValueLabel: EdgeInsetLabel!
     
     @IBOutlet weak var contenerView: UIView!
-    @IBOutlet weak var leadingCollectionViewConstraint: NSLayoutConstraint!
     
-    private lazy var scrollView: UIScrollView = {
-        let scrollView = UIScrollView()
-        scrollView.preservesSuperviewLayoutMargins = true
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contenerView)
-        return scrollView
-    }()
+    @IBOutlet weak var purchaseLabel: UILabel!
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     var interactor: GraphBusinessLogic?
     var router: (GraphRoutingLogic & ChoiceDataPassing)?
     
     private var periods: [GraphPeriod]!
     private var labelLeadingMarginInitialConstant: CGFloat!
+    private var viewModel: GraphViewModel?
     
     // MARK: Object lifecycle
     
@@ -74,30 +69,39 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         interactor?.makeRequest(request: .getGraphPeriods)
         interactor?.makeRequest(request: .getDefaultConverter)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        AccuracyManager.shared.accuracy = 4
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        var indexPath = IndexPath(item: 0, section: 0)
-        if let selectedIndexPath = collectionView.indexPathsForSelectedItems?.first {
-            indexPath = selectedIndexPath
+        let adsProductId = ConverterProducts.SwiftShopping
+        guard ConverterProducts.store.isProductPurchased(adsProductId) else {
+            return
         }
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
-        self.collectionView(collectionView, didSelectItemAt: indexPath)
+        converterView.isUserInteractionEnabled = true
+        purchaseLabel.isHidden = true
     }
     
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData) {
         switch viewModel {
         case .showGraphPeriods(let periods):
             self.periods = periods
-            let padding = leadingCollectionViewConstraint.constant
-            let sizeClass = traitCollection.horizontalSizeClass
-            let layout = PeriodCollectionViewHelper.shared.getLayout(for: sizeClass,
-                                                                     itemsCount: periods.count,
-                                                                     padding: padding)
-            collectionView.setCollectionViewLayout(layout, animated: false)
-            collectionView.reloadData()
+            configureSegment()
             
         case .showGraphConverter(let viewModel):
             converterView.configure(with: viewModel)
+            segmentedControlValueChanged(segmentControl)
             
         case .updateConverter(let newModel):
             converterView.updateSelectedCurrency(with: newModel)
@@ -108,28 +112,20 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func setupView() {
-        view.addSubview(scrollView)
+        converterView.isUserInteractionEnabled = false
+        view.addSubview(contenerView)
         edgesForExtendedLayout = UIRectEdge()
         extendedLayoutIncludesOpaqueBars = false
         NSLayoutConstraint.activate([
-        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-        scrollView.topAnchor.constraint(equalTo: converterView.bottomAnchor),
-        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-        
-        scrollView.leadingAnchor.constraint(equalTo: contenerView.leadingAnchor),
-        scrollView.topAnchor.constraint(equalTo: contenerView.topAnchor),
-        scrollView.trailingAnchor.constraint(equalTo: contenerView.trailingAnchor),
-        scrollView.bottomAnchor.constraint(equalTo: contenerView.bottomAnchor),
-        
-        contenerView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
+            contenerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            contenerView.topAnchor.constraint(equalTo: view.topAnchor),
+            contenerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            contenerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
-        
+        purchaseLabel.text = R.string.localizable.purchase()
         periods = []
         labelLeadingMarginInitialConstant = labelLeadingMarginConstraint.constant
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.register(R.nib.periodCollectionViewCell)
+        chartValueLabel.layer.cornerRadius = 10
 
         chartView.delegate = self
         chartView.drawGridBackgroundEnabled = false
@@ -149,7 +145,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         
         let rightYAxis = chartView.getAxis(.right)
         rightYAxis.valueFormatter = ChartYValueFormatter()
-        rightYAxis.enabled = true // right axis
+        rightYAxis.enabled = false // right axis
         rightYAxis.labelTextColor = .gray
         rightYAxis.drawGridLinesEnabled = false
         rightYAxis.drawAxisLineEnabled = false
@@ -159,9 +155,9 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         xAxis.labelPosition = .bottom
         xAxis.labelFont = UIFont.systemFont(ofSize: 12)
         xAxis.labelTextColor = .gray
+        xAxis.enabled = false
         xAxis.drawAxisLineEnabled = false
         xAxis.drawGridLinesEnabled = false
-        chartView.setExtraOffsets(left: 20, top: 0, right: 0, bottom: 0)
         
         let xAxisRender = NoOverlappingLabelsXAxisRenderer(viewPortHandler: chartView.viewPortHandler,
                                                            axis: xAxis,
@@ -172,22 +168,31 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         converterView.updateCurrenciesLabel = self.updateCurrenciesRateLabel
     }
     
+    private func configureSegment() {
+        let _ = zip(periods.indices, periods).map { (index, period) in
+            segmentControl.setTitle(period.period + period.title, forSegmentAt: index)
+        }
+        segmentControl.addTarget(self, action: #selector(GraphViewController.segmentedControlValueChanged(_:)), for: .valueChanged)
+        
+        let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
+        segmentControl.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
+    }
+    
     private func showChoiceViewController(isLeft: Bool, oppositeCurrency: String) {
         router?.showChoiceViewController(isLeft: isLeft, oppositeCurrency: oppositeCurrency)
     }
     
     private func updateCurrenciesRateLabel(_ text: String) {
         currenciesRateLabel.text = text
-        guard let indexPath = collectionView.indexPathsForSelectedItems?.first else {
-            return
-        }
-        collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .left)
-        self.collectionView(collectionView, didSelectItemAt: indexPath)
+        segmentedControlValueChanged(segmentControl)
     }
     
     private func setChartData(with graphViewModel: GraphViewModel) {
         chartView.clear()
         chartView.xAxis.valueFormatter = ChartXValueFormatter(dates: graphViewModel.dates)
+        viewModel = graphViewModel
         let entries = graphViewModel.data.enumerated().map { index, value in
             return ChartDataEntry(x: Double(index), y: value)
         }
@@ -204,7 +209,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         lineDataSet.drawHorizontalHighlightIndicatorEnabled = false
         lineDataSet.highlightLineWidth = 1.5
         lineDataSet.drawValuesEnabled = false
-        lineDataSet.mode = .cubicBezier
+        lineDataSet.mode = .linear
         
         let chartData = LineChartData(dataSet: lineDataSet)
         chartView.data = chartData
@@ -212,8 +217,19 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     
     private func clearChartLabel() {
         chartValueLabel.text = ""
+        currencyValue.text = ""
         chartValueLabel.backgroundColor = .clear
         labelLeadingMarginConstraint.constant = labelLeadingMarginInitialConstant
+    }
+    
+    @objc func segmentedControlValueChanged(_ sender: UISegmentedControl) {
+        clearChartLabel()
+        let base = converterView.baseCurrency.currency
+        let relative = converterView.relativeCurrency.currency
+        let graphPeriod = periods[sender.selectedSegmentIndex]
+        interactor?.makeRequest(request: .loadGraphData(base: base,
+                                                        relative: relative,
+                                                        period: graphPeriod))
     }
 }
 
@@ -222,7 +238,7 @@ extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         tabBarController?.tabBar.backgroundColor = theme.backgroundColor
         view.backgroundColor = theme.backgroundColor
-        currenciesRateLabel.textColor = theme.textColor
+//        currenciesRateLabel.textColor = theme.textColor
         chartView.noDataTextColor = theme.textColor
     }
 }
@@ -242,10 +258,11 @@ extension GraphViewController: ChoiceBackDataPassing {
 extension GraphViewController: ChartViewDelegate {
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
         let left = highlight.xPx
-        scrollView.isScrollEnabled = false
-        scrollView.touchesShouldCancel(in: chartView)        
         chartValueLabel.backgroundColor = #colorLiteral(red: 0.3882352941, green: 0.5450980392, blue: 0.9843137255, alpha: 1)
-        chartValueLabel.text = "\(AccuracyManager.shared.formatNumber(entry.y))"
+        currencyValue.text = "\(AccuracyManager.shared.formatNumber(entry.y))"
+        if let date = viewModel?.dates[Int(entry.x)] {
+            chartValueLabel.text = "\(date)"
+        }
         
         // Align the label to the touch left position, centered
         var constant = labelLeadingMarginInitialConstant + left - (chartValueLabel.frame.width / 2)
@@ -262,59 +279,4 @@ extension GraphViewController: ChartViewDelegate {
         }
         labelLeadingMarginConstraint.constant = constant
     }
-    
-    func chartViewDidEndPanning(_ chartView: ChartViewBase) {
-        scrollView.isScrollEnabled = true
-    }
-    
-    func chartValueNothingSelected(_ chartView: ChartViewBase) {
-        scrollView.isScrollEnabled = true
-    }
 }
-
-// MARK: - UICollectionViewDataSource
-extension GraphViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return periods.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let id = R.reuseIdentifier.periodCollectionViewCell
-        guard let
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: id,
-                                                      for: indexPath)
-            else {
-            fatalError()
-        }
-        let viewModel = periods[indexPath.item]
-        cell.configure(with: viewModel)
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension GraphViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PeriodCollectionViewCell else { return }
-        clearChartLabel()
-        cell.isSelected = true
-        let base = converterView.baseCurrency.currency
-        let relative = converterView.relativeCurrency.currency
-        let graphPeriod = periods[indexPath.row]
-        interactor?.makeRequest(request: .loadGraphData(base: base,
-                                                        relative: relative,
-                                                        period: graphPeriod))
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? PeriodCollectionViewCell else { return }
-        cell.isSelected = false
-    }
-}
-
-//// MARK: - UIViewControllerTransitioningDelegate
-//extension GraphViewController: UIViewControllerTransitioningDelegate {
-//    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-//        return HalfSizePresentationController(presentedViewController: presented, presenting: presenting)
-//    }
-//}

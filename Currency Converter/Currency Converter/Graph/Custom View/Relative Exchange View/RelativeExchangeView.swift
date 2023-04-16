@@ -12,14 +12,15 @@ class RelativeExchangeView: UIView {
     // MARK: - UI
     @IBOutlet weak var baseCurrencyImageView: UIImageView!
     @IBOutlet weak var baseCurrencyLabel: UILabel!
-    @IBOutlet weak var baseCurrencyTitleLabel: UILabel!
     @IBOutlet weak var baseChangeCurrencyStack: UIStackView!
-
+    @IBOutlet weak var baseBackgroundView: UIView!
+    
+    @IBOutlet weak var relativeBackgroundView: UIView!
     @IBOutlet weak var relativeCurrencyImageView: UIImageView!
     @IBOutlet weak var relativeCurrencyLabel: UILabel!
-    @IBOutlet weak var relativeCurrencyTitleLabel: UILabel!
     @IBOutlet weak var relativeChangeCurrencyStack: UIStackView!
 
+    @IBOutlet weak var switchBackgroundView: UIView!
     @IBOutlet weak var shadowContainerView: UIView!
 
     private var contentView: UIView!
@@ -56,15 +57,14 @@ class RelativeExchangeView: UIView {
     
     // MARK: - Methods
     override func layoutSubviews() {
-        shadowContainerView.layer.cornerRadius = 10
+        switchBackgroundView.layer.cornerRadius = 14
 
-        shadowContainerView.clipsToBounds = true
-        shadowContainerView.layer.masksToBounds = false
-        shadowContainerView.layer.shadowRadius = 7
-        shadowContainerView.layer.shadowOpacity = 0.6
-        shadowContainerView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        shadowContainerView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
-        shadowContainerView.layer.borderWidth = 1.5
+        switchBackgroundView.clipsToBounds = true
+        switchBackgroundView.layer.masksToBounds = false
+        switchBackgroundView.layer.shadowRadius = 7
+        switchBackgroundView.layer.shadowOpacity = 0.6
+        switchBackgroundView.layer.shadowOffset = CGSize(width: 0, height: 5)
+        switchBackgroundView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
     }
     
     func configure(with viewModel: GraphConverterViewModel) {
@@ -87,11 +87,11 @@ class RelativeExchangeView: UIView {
         let emptyFlag = R.image.emptyFlag()
         baseCurrencyImageView.image = UIImage(named: baseCurrency.currency.lowercased()) ?? emptyFlag
         baseCurrencyLabel.text = baseCurrency.currency
-        baseCurrencyTitleLabel.text = baseCurrency.title
+        baseBackgroundView.layer.cornerRadius = 14
+        relativeBackgroundView.layer.cornerRadius = 14
         
         relativeCurrencyImageView.image = UIImage(named: relativeCurrency.currency.lowercased()) ?? emptyFlag
         relativeCurrencyLabel.text = relativeCurrency.currency
-        relativeCurrencyTitleLabel.text = relativeCurrency.title
         
         updateCurrenciesLabel?(buildCurrenciesRateLabelText())
     }
@@ -123,7 +123,7 @@ class RelativeExchangeView: UIView {
             let relativetext = relativeCurrencyLabel.text else {
                 return result
         }
-        result = "1\(baseText) = x\(relativetext)"
+        result = "\(baseText) \(R.string.localizable.forVal()) 1\(relativetext)"
         return result
     }
     
@@ -155,11 +155,11 @@ extension RelativeExchangeView: Themed {
         contentView.backgroundColor = theme.backgroundColor
         backgroundColor = theme.backgroundColor
         baseCurrencyLabel.textColor = theme.textColor
-        baseCurrencyTitleLabel.textColor = theme.subtitleColor
+//        baseCurrencyTitleLabel.textColor = theme.subtitleColor
         
         relativeCurrencyLabel.textColor = theme.textColor
-        relativeCurrencyTitleLabel.textColor = theme.subtitleColor
-        shadowContainerView.backgroundColor = theme.backgroundColor
-        shadowContainerView.layer.borderColor = UIColor.white.cgColor
+//        relativeCurrencyTitleLabel.textColor = theme.subtitleColor
+//        shadowContainerView.backgroundColor = theme.backgroundColor
+//        shadowContainerView.layer.borderColor = UIColor.white.cgColor
     }
 }

@@ -37,6 +37,9 @@
 "Graph title" = "Graphs";
 "Graph tabBar item" = "Graphs";
 "No graph data" = "No chart data available";
+"forVal" = "for";
+"purchase" = "Presented chart with default currencies.
+Upgrade to Converter+ to change currencies.";
 
 // periods collection view
 "Days" = "days";

@@ -47,10 +47,13 @@ class ChoicePresenter: ChoicePresentationLogic {
         })
         
         currentValidCurrencies.forEach { value in
-            let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+            let currency = info.first { $0.abbreviation == value.currency }
             let viewModel = ChoiceCurrencyViewModel(currency: value.currency,
-                                                    title: currencyTitle)
-            result.append(viewModel)
+                                                    title: currency?.title ?? "",
+                                                    isFree: currency?.isFree ?? true)
+            if viewModel.isFree {
+                result.append(viewModel)
+            }
         }
 
         let mainCurrencyModel = result.first {

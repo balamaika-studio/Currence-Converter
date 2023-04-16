@@ -41,6 +41,7 @@ struct FavoriteViewModel: Hashable {
     let currency: String
     let title: String
     var isSelected: Bool
+    var isFree: Bool
 }
 
 extension FavoriteViewModel: Equatable {

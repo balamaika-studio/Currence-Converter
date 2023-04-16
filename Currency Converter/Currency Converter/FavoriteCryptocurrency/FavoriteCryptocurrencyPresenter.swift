@@ -30,11 +30,14 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
             }
             
             validCurrencies.forEach { value in
-                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let currencyInfValue = info.first { $0.abbreviation == value.currency }
                 let viewModel = FavoriteViewModel(currency: value.currency,
-                                                title: currencyTitle,
-                                                isSelected: value.isFavorite)
-                result.append(viewModel)
+                                                  title: currencyInfValue?.title ?? "",
+                                                  isSelected: value.isFavorite,
+                                                  isFree: currencyInfValue?.isFree ?? true)
+                if currencyInfValue?.isFree ?? true {
+                    result.append(viewModel)
+                }
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
             quotes = sortedQuotes
@@ -47,11 +50,14 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
             }
 
             validCurrencies.forEach { value in
-                let currencyTitle = info.first { $0.abbreviation == value.currency }!.title
+                let currencyInfValue = info.first { $0.abbreviation == value.currency }
                 let viewModel = FavoriteViewModel(currency: value.currency,
-                                                title: currencyTitle,
-                                                isSelected: false)
-                result.append(viewModel)
+                                                  title: currencyInfValue?.title ?? "",
+                                                  isSelected: value.isFavorite,
+                                                  isFree: currencyInfValue?.isFree ?? true)
+                if currencyInfValue?.isFree ?? true {
+                    result.append(viewModel)
+                }
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
             let sortQuotes = sortedQuotes.filter { model in

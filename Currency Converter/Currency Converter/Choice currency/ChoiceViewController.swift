@@ -32,6 +32,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     var oppositeCurrency: String = ""
     var isLeft: Bool = true
     private var currencies: [ChoiceCurrencyViewModel]!
+    var userHasPurchase: Bool = false
     
     // MARK: Object lifecycle
     
@@ -80,6 +81,10 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) {
+            userHasPurchase = true
+        }
         interactor?.makeRequest(request: .loadCurrencies(forGraph: isShowGraphCurrencies, isCrypto: isCrypto, oppositeCurrency: oppositeCurrency))
         showActivityIndicator()
     }
@@ -247,6 +252,11 @@ extension ChoiceViewController: UITableViewDataSource {
                                                        for: indexPath) else { fatalError() }
         
         let viewModel = currencies[indexPath.row]
+        if !userHasPurchase && !viewModel.isFree {
+            cell.isUserInteractionEnabled = false
+        } else {
+            cell.isUserInteractionEnabled = true
+        }
         cell.configure(with: viewModel)
         return cell
     }

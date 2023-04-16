@@ -37,6 +37,7 @@ enum Choice {
 struct ChoiceCurrencyViewModel {
     let currency: String
     let title: String
+    var isFree: Bool
 }
 
 extension ChoiceCurrencyViewModel: Equatable {

@@ -39,7 +39,7 @@ class GraphPresenter: GraphPresentationLogic {
         guard let info = CurrenciesInfoService.shared.getInfo(by: currency) else {
             return nil
         }
-        return ChoiceCurrencyViewModel(currency: info.abbreviation, title: info.title)
+        return ChoiceCurrencyViewModel(currency: info.abbreviation, title: info.title, isFree: info.isFree)
     }
     
     private func buildGraphViewModel(_ quotes: [TimeFrameQuote]) -> GraphViewModel {
@@ -59,11 +59,11 @@ class GraphPresenter: GraphPresentationLogic {
         case .week: fallthrough
         case .halfMonth: fallthrough
         case .month:
-            dateFormatter.dateFormat = "dd.MM"
+            dateFormatter.dateFormat = "dd.MM.YY"
             dates = responseDates.compactMap { dateFormatter.string(from: $0) }
 
         default:
-            dateFormatter.dateFormat = "MM.YY"
+            dateFormatter.dateFormat = "dd.MM.YY"
             dates = responseDates.compactMap { dateFormatter.string(from: $0) }
         }
 

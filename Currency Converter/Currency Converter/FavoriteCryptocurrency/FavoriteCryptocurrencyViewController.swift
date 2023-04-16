@@ -25,6 +25,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     var interactor: FavoriteCryptocurrencyBusinessLogic?
     var router: (NSObjectProtocol & FavoriteCryptocurrencyRoutingLogic)?
     weak var delegate: ExchangeRatesDelegate?
+    var userHasPurchase: Bool = false
     
     // MARK: Object lifecycle
     
@@ -62,6 +63,10 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) {
+            userHasPurchase = true
+        }
         if delegate == nil {
             interactor?.makeRequest(request: .loadCurrenciesConverter)
             if quotes.isEmpty {
@@ -256,6 +261,11 @@ extension FavoriteCryptocurrencyViewController: UITableViewDataSource {
         }
         
         let quote = quotes[indexPath.row]
+        if !userHasPurchase && !quote.isFree {
+            cell.isUserInteractionEnabled = false
+        } else {
+            cell.isUserInteractionEnabled = true
+        }
         cell.configure(with: quote)
         if quote.isSelected {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)

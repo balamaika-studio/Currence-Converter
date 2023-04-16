@@ -37,6 +37,9 @@
 "Graph title" = "Графики";
 "Graph tabBar item" = "Графики";
 "No graph data" = "Нет данных графика";
+"forVal" = "за";
+"purchase" = "Представлен график с валютами по умолчанию.
+Обновите до Converter+, чтобы изменить валюты.";
 
 // periods collection view
 "Days" = "дней";

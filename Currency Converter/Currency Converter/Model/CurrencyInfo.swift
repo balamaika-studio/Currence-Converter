@@ -11,4 +11,5 @@ import Foundation
 struct CurrencyInfo: Codable, Hashable {
     let abbreviation: String
     let title: String
+    var isFree: Bool
 }

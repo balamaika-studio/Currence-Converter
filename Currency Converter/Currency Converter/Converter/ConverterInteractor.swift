@@ -38,6 +38,8 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     func makeRequest(request: Converter.Model.Request.RequestType) {
         switch request {
+        case .firstLoad:
+            firstLoad()
         case .changeCurrency(let currencyName):
             guard let newCurrency = selectedCurrency else { break }
 
@@ -193,5 +195,89 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         
         presenter?.presentData(response: .converterCurrencies(first: topCurrency,
                                                               second: bottomCurrency))
+    }
+    
+    private func firstLoad() {
+        if UserDefaultsService.shared.isFirstLoad {
+            let group = DispatchGroup()
+
+            group.enter()
+            networkManager.getAllCurrencies(exchangeType: .forex) { [weak self] response, error in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .forex)
+                group.leave()
+            }
+
+            group.enter()
+            networkManager.getAllCurrencies(exchangeType: .crypto) { [weak self] response, error in
+                guard let strongSelf = self else {
+                    return
+                }
+
+                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .crypto)
+                group.leave()
+            }
+
+            group.notify(queue: .main) {
+                self.addFirstLoadCurrency()
+                UserDefaultsService.shared.isFirstLoad = false
+            }
+        }
+    }
+    
+    private func setCurrenciesList(_ response: [CurrencyResponse]?, in realm: StorageContext, exchangeType: ExchangeType) {
+        var currencyArray = [CurrencyInfo]()
+        switch exchangeType {
+        case .forex:
+            currencyArray = CurrenciesInfoService.shared.fetchCurrency()
+        case .crypto:
+            currencyArray = CurrenciesInfoService.shared.fetchCrypto()
+        }
+        
+        response?.forEach { pair in
+            guard let baseAndRelative = pair.symbol?.split(separator: "/").map({ String($0) }),
+                  let id = pair.id,
+                  let base = baseAndRelative.first,
+                  let relative = baseAndRelative.last else {
+                      return
+                  }
+            if currencyArray.contains(where: { el in
+                el.abbreviation == base || el.abbreviation == relative
+            }) {
+                try? realm.create(RealmPairCurrencyV2.self) { currency in
+                    currency.currencyPairId = id
+                    currency.base = base
+                    currency.relative = relative
+                    currency.type = exchangeType
+                }
+            }
+        }
+    }
+    
+    
+    private func addFirstLoadCurrency() {
+        let locale = Locale.current
+        let currencyCode = locale.currencyCode!
+        storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) {
+            let curr = $0.filter { el in
+                el.currency == "USD" ||
+                el.currency == "EUR" ||
+                el.currency == "GBP" ||
+                el.currency == "CNY" ||
+                el.currency == "JPY" ||
+                el.currency == "CHF" ||
+                el.currency == "BTC" ||
+                el.currency == currencyCode
+            }
+            curr.forEach { currency in
+                update(currency, isFavorite: true)
+            }
+        }
+        makeRequest(request: .updateCurrencies)
+        makeRequest(request: .updateCrypto)
+        presenter?.presentData(response: .firstLoadComplete())
     }
 }
