@@ -9,7 +9,11 @@
 import UIKit
 
 class SettingsTableViewCell: UITableViewCell {
-    static let cellId = "SettingsTableViewCell"
+    
+    @IBOutlet private weak var underlineView: UIView!
+    @IBOutlet private weak var switchControl: UISwitch!
+    @IBOutlet private weak var mainView: UIView!
+    @IBOutlet private weak var titleLable: UILabel!
     
     var autoUpdateChanged: ((Bool) -> Void)?
     var clearFieldChnaged: ((Bool) -> Void)?
@@ -26,76 +30,95 @@ class SettingsTableViewCell: UITableViewCell {
     var sectionType: SectionCellType? {
         didSet {
             guard let sectionType = sectionType else { return }
-            textLabel?.text = sectionType.description
-            detailTextLabel?.text = sectionType.detailText
+            titleLable.text = sectionType.description
             switchControl.isHidden = !sectionType.containsSwitch
         }
     }
     
-    lazy var switchControl: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        switchControl.onTintColor = #colorLiteral(red: 0.3647058824, green: 0.5647058824, blue: 0.9921568627, alpha: 1)
-        switchControl.addTarget(self,
-                                action: #selector(handleSwitchAction(sender:)),
-                                for: .valueChanged)
-        switchControl.isOn = false
-        return switchControl
-    }()
-    
-    // MARK: - Initialization
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
+    override func awakeFromNib() {
+        super.awakeFromNib()
         setupView()
+        setUpTheming()
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func configure(with type: SectionCellType?, state: SwitchState?, position: SettingsPosition) {
+        if let type {
+            sectionType = type
+            titleLable.text = type.description
+            switchControl.isHidden = !type.containsSwitch
+        }
+
+        if let state {
+            switchControl.isHidden = false
+            switchControl.isOn = state.rawValue
+            handleSwitchAction(sender: switchControl)
+        } else {
+            switchControl.isHidden = true
+        }
+        
+        configureForPosition(position)
+    }
+    
+    override func prepareForReuse() {
+        mainView.roundCorners(corners: [.allCorners], radius: 0)
     }
     
     // MARK: - Private Methods
     private func setupView() {
         backgroundColor = .clear
-        contentView.addSubview(switchControl)
-        NSLayoutConstraint.activate([
-            switchControl.centerYAnchor.constraint(equalTo: centerYAnchor),
-            trailingAnchor.constraint(equalTo: switchControl.trailingAnchor, constant: 16)
-        ])
-        // 3.75% of cell width
-        let size = bounds.width * 0.0375
-        detailTextLabel?.font = UIFont.systemFont(ofSize: size)
-        textLabel?.font = UIFont.systemFont(ofSize: 16)
-        setUpTheming()
-
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        switchControl.onTintColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+        switchControl.addTarget(self,
+                                action: #selector(handleSwitchAction(sender:)),
+                                for: .valueChanged)
+        switchControl.isOn = false
+    }
+    
+    private func configureForPosition(_ position: SettingsPosition) {
+        switch position {
+        case .first:
+            mainView.roundCorners(corners: [.topRight, .topLeft], radius: 10)
+            underlineView.isHidden = false
+        case .middle:
+            mainView.roundCorners(corners: [.allCorners], radius: 0)
+            underlineView.isHidden = false
+        case .last:
+            mainView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 10)
+            underlineView.isHidden = true
+        case .all:
+            mainView.roundCorners(corners: [.allCorners], radius: 10)
+            underlineView.isHidden = true
+        }
     }
 
     @objc private func handleSwitchAction(sender: UISwitch) {
-        var result = String()
         let switchState = SwitchState(rawValue: sender.isOn)
         guard let switchText = switchState?.description else { return }
         
-        if let network = sectionType as? NetworkOptions {
-            result = "\(network) \(switchText)"
+        if sectionType is NetworkOptions {
             autoUpdateChanged?(sender.isOn)
         } else if let appearanceOptions = sectionType as? AppearanceOptions {
-            result = switchText.capitalized
             switch appearanceOptions {
             case .clearField: clearFieldChnaged?(sender.isOn)
             case .theme: themeChanged?(sender.isOn)
-                
-            default: break
             }
         }
-        
-        detailTextLabel?.text = result
     }
     
 }
 
 extension SettingsTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
-        textLabel?.textColor = theme.textColor
-        detailTextLabel?.textColor = theme.subtitleColor
-        backgroundColor = theme.backgroundColor
+        if theme.themeId == "light" {
+            mainView.backgroundColor = .white
+            titleLable.textColor = .black
+        } else {
+            titleLable.textColor = .white
+            mainView.backgroundColor = theme.barUnselectedTintColor
+        }
+        
+//        textLabel?.textColor = theme.textColor
+//        detailTextLabel?.textColor = theme.subtitleColor
+//        backgroundColor = theme.backgroundColor
     }
 }

@@ -18,7 +18,6 @@ protocol ConverterDisplayLogic: class {
 
 class ConverterViewController: UIViewController, ConverterDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var interactor: ConverterBusinessLogic?
     var router: (ConverterRoutingLogic & ChoiceDataPassing)?
@@ -96,13 +95,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AccuracyManager.shared.accuracy = 2
-        if UserDefaultsService.shared.isFirstLoad {
-            interactor?.makeRequest(request: .firstLoad)
-            showActivityIndicator()
-        } else {
-            hideActivityIndicator()
-        }
+
+        interactor?.makeRequest(request: .firstLoad)
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadCryptoCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
@@ -145,7 +139,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             showAlert(with: message, title: R.string.localizable.error())
             
         case .firstLoadComplete:
-            hideActivityIndicator()
+            tableView.reloadData()
         }
     }
     
@@ -175,8 +169,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     // MARK: Setup
     private func setupView() {
         
+        navigationController?.navigationBar.prefersLargeTitles = true
         tableView.register(R.nib.converterCurrencyTableViewCellType2)
-        tableView.register(UINib(nibName: R.nib.type2SectionHeaderView.name, bundle: nil), forHeaderFooterViewReuseIdentifier: R.nib.type2SectionHeaderView.name)
         tableView.separatorStyle = .none
         tableView.delegate = self
         tableView.dataSource = self
@@ -218,19 +212,17 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     @objc private func refreshCurrencies(_ sender: Any) {
+        let adsProductId = ConverterProducts.SwiftShopping
+        if !ConverterProducts.store.isProductPurchased(adsProductId) &&
+            (Date().timeIntervalSince1970 - UserDefaultsService.shared.lastUpdateTimeInteraval) < 3600 {
+            self.refreshControl.endRefreshing()
+            Notify.showWith(title: R.string.localizable.purchaseTitle())
+            
+            return
+        }
         interactor?.makeRequest(request: .updateCurrencies)
         interactor?.makeRequest(request: .updateCrypto)
         interactor?.makeRequest(request: .loadFavoriteCurrencies())
-    }
-    
-    private func showActivityIndicator() {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-    }
-
-    private func hideActivityIndicator() {
-        activityIndicator.isHidden = true
-        activityIndicator.stopAnimating()
     }
 }
 
@@ -292,18 +284,6 @@ extension ConverterViewController: UITableViewDataSource {
         75
     }
 
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 45.5
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-
-        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "Type2SectionHeaderView") as! Type2SectionHeaderView
-        view.updateTitle(Date().toString())
-
-        return view
-    }
-
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let viewModel = favoriteCurrencies[indexPath.row]
         if viewModel.isSelected {
@@ -317,6 +297,10 @@ extension ConverterViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension ConverterViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPath = tableView.indexPathForSelectedRow,
+           let currentCell = tableView.cellForRow(at: indexPath) as? ConverterCurrencyTableViewCellType2 {
+            currentCell.countTextField.becomeFirstResponder()
+        }
     }
     
     private func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell.EditingStyle {

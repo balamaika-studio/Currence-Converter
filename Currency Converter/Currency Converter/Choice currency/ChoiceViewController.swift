@@ -17,7 +17,6 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var confirmButton: UIButton!
-    @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -76,7 +75,7 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         super.viewDidLoad()
         setupView()
         setUpTheming()
-        setupMainView()
+//        setupMainView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +92,12 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         switch viewModel {
         case .displayCurrencies(let currencies):
             self.hideActivityIndicator()
-            self.currencies = currencies
+            
+            if userHasPurchase {
+                self.currencies = currencies
+            } else {
+                self.currencies = currencies.filter { $0.isFree }
+            }
             self.tableView.reloadData()
         }
     }
@@ -114,12 +118,12 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
 
         // Select First Segment
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
-                                                for: .selected)
-        segmentedControl.layer.cornerRadius = 10
-        segmentedControl.layer.borderWidth = 1
-        segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        segmentedControl.setClearBackgroundSegmentControl()
+//        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
+//                                                for: .selected)
+//        segmentedControl.layer.cornerRadius = 10
+//        segmentedControl.layer.borderWidth = 1
+//        segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+//        segmentedControl.setClearBackgroundSegmentControl()
     }
 
     @objc private func selectionDidChange(_ sender: UISegmentedControl) {
@@ -143,10 +147,10 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
         }
     }
 
-    private func setupMainView() {
-        mainView.layer.cornerRadius = 14
-        mainView.clipsToBounds = true
-    }
+//    private func setupMainView() {
+//        mainView.layer.cornerRadius = 14
+//        mainView.clipsToBounds = true
+//    }
     
     private func setupView() {
         DispatchQueue.main.async {
@@ -168,8 +172,6 @@ class ChoiceViewController: UIViewController, ChoiceDisplayLogic {
     private func configureButton() {
         cancelButton.setTitle(R.string.localizable.cancel(), for: .normal)
         confirmButton.setTitle(R.string.localizable.add(), for: .normal)
-        confirmButton.layer.cornerRadius = 7
-        cancelButton.layer.cornerRadius = 7
     }
 
     private func setPlaceHolder(placeholder: String) -> String {
@@ -227,18 +229,18 @@ extension ChoiceViewController: Themed {
         searchBar.setImage(searchIcon, for: .search, state: .normal)
         searchTextField?.textColor = theme.searchTextColor
         searchTextField?.backgroundColor = theme.searchTextFieldColor
-        titleLabel.textColor = .white
+        titleLabel.textColor = .black
         tableView.backgroundColor = theme.backgroundColor
         tableView.reloadData()
-        cancelButton.backgroundColor = theme.backgroundConverterColor
-        confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
-        confirmButton.setTitleColor(.white, for: .normal)
-        buttonsContainerView.backgroundColor = theme.backgroundColor
+//        cancelButton.backgroundColor = theme.backgroundConverterColor
+//        confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+//        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
+//        confirmButton.setTitleColor(.white, for: .normal)
+//        buttonsContainerView.backgroundColor = theme.backgroundColor
         mainView.backgroundColor = theme.backgroundColor
-        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black],
                                                 for: .normal)
-        navbarView.backgroundColor = theme.barBackgroundColor
+        navbarView.backgroundColor = theme.backgroundColor
     }
 }
 

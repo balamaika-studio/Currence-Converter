@@ -23,13 +23,10 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     var accuracyPicker: UIPickerView!
     var blurView: UIVisualEffectView!
     var vibrancyView: UIVisualEffectView!
-    var tableViewDataSource: SettingsTableViewDataSource!
-    
     var selectedCell: UITableViewCell?
     var selectedAccuracy: Accuracy?
-    var products: [SKProduct] {
+    var products: [SKProduct] = [] {
         didSet {
-            tableViewDataSource.products = products
             tableView.reloadData()
         }
     }
@@ -66,6 +63,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.prefersLargeTitles = true
         interactor?.makeRequest(request: .purchases)
         createPickerView()
         setupTableView()
@@ -136,29 +134,41 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
             products.contains(where: { $0.productIdentifier == productID }) == true
             else { return }
         
-        tableView.reloadSections(IndexSet(integer: 1), with: .fade)
+        tableView.reloadData()
+    }
+    
+    private func autoUpdate(_ state: Bool) {
+        UserDefaults.standard.set(state, forKey: "autoUpdate")
+    }
+    
+    private func clearField(_ state: Bool) {
+        AppFieldClearManager.shared.isClear = state
+        UserDefaults.standard.set(state, forKey: "clearField")
+    }
+    
+    private func updateTheme(_ state: Bool) {
+        let newTheme = state == true ? AppTheme.dark : AppTheme.light
+        AppThemeManager.shared.currentTheme = newTheme
     }
     
     private func setupTableView() {
         let footerFrame = CGRect(x: 0, y: 0,
                                  width: tableView.frame.width,
                                  height: 75)
-        tableViewDataSource = SettingsTableViewDataSource()
         tableView.delegate = self
-        tableView.dataSource = tableViewDataSource
+        tableView.dataSource = self
         tableView.sectionFooterHeight = 0.5
         tableView.contentInset = AdBannerInsetService.shared.tableInset
-        
         tableView.tableFooterView = RestorePurchasesFooterView(frame: footerFrame)
         tableView.register(SettingsTableViewHeader.self,
                            forHeaderFooterViewReuseIdentifier: SettingsTableViewHeader.reuseId)
         tableView.register(R.nib.settingsPurchaseCell)
-        tableView.register(SettingsTableViewCell.self,
-                           forCellReuseIdentifier: SettingsTableViewCell.cellId)
+        tableView.register(R.nib.settingsTableViewCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
                                                name: .IAPHelperPurchaseNotification,
                                                object: nil)
+
     }
     
     private func deselectDecimaPlacesCell() {
@@ -208,11 +218,11 @@ extension SettingsViewController: Themed {
         } else {
             hiddenTextField.inputAccessoryView?.backgroundColor = theme.specificBackgroundColor
         }
-        view.backgroundColor = theme.backgroundColor
-        tableView.backgroundColor = theme.backgroundColor
+        view.backgroundColor = theme.settingsBackgroundColor
+//        tableView.backgroundColor = theme.backgroundColor
         hiddenTextField.inputView?.backgroundColor = theme.backgroundColor
         tabBarController?.tabBar.backgroundColor = theme.backgroundColor
-        navigationController?.navigationBar.update(backroundColor: theme.barBackgroundColor, titleColor: .white)
+        navigationController?.navigationBar.update(backroundColor: theme.settingsBackgroundColor, titleColor: theme.barTintColor)
     }
 }
 
@@ -249,20 +259,11 @@ extension SettingsViewController: UITableViewDelegate {
         }
         switch section {
         case .purchases:
-            height = 100
+            height = 240
         default:
-            height = 60
+            height = 44
         }
         return height
-    }
-    
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let separatorFrame = CGRect(x: 0, y: 0,
-                                    width: tableView.frame.width,
-                                    height: 0.5)
-        let separator = UIView(frame: separatorFrame)
-        separator.backgroundColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
-        return separator
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -270,14 +271,14 @@ extension SettingsViewController: UITableViewDelegate {
             let section = SettingsSection(rawValue: indexPath.section),
             let selectedCell = tableView.cellForRow(at: indexPath) else { return }
         switch section {
+        case .symbolCount:
+            chooseAccuracyTapped(cell: selectedCell)
+        case .network:
+            break
+        case .purchases:
+            break
         case .appearance:
-            guard let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
-            switch appearance {
-            case .accuracy: chooseAccuracyTapped(cell: selectedCell)
-            default: break
-            }
-            
-        default: break
+            break
         }
     }
 }
@@ -305,5 +306,87 @@ extension SettingsViewController: UIPickerViewDelegate {
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return Accuracy(rawValue: row + 1)?.description
+    }
+}
+
+extension SettingsViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return SettingsSection.allCases.count
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let section = SettingsSection(rawValue: section) else { return 0 }
+        switch section {
+        case .network: return NetworkOptions.allCases.count
+        case .appearance: return AppearanceOptions.allCases.count
+        case .purchases:
+            let availableProducts = products.filter { !ConverterProducts.store.isProductPurchased($0.productIdentifier) }
+            if !availableProducts.isEmpty {
+                return PurchaseOptions.allCases.count
+            } else {
+                return 0
+            }
+            
+        case .symbolCount: return SymbolCountOptions.allCases.count
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = UITableViewCell()
+        guard let section = SettingsSection(rawValue: indexPath.section) else {
+            return cell
+        }
+        
+        switch section {
+        case .network:
+            guard let settingCell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.settingsTableViewCell,
+                                                               for: indexPath) else { fatalError() }
+            let network = NetworkOptions(rawValue: indexPath.row)
+            settingCell.autoUpdateChanged = self.autoUpdate
+            settingCell.selectionStyle = .none
+            let isAutoUpdateEnable = UserDefaults.standard.bool(forKey: "autoUpdate")
+            settingCell.configure(with: network, state: SwitchState(rawValue: isAutoUpdateEnable), position: .all)
+            cell = settingCell
+            
+        case .purchases:
+            let purchaseCellId = R.reuseIdentifier.settingsPurchaseCell
+            guard let purchaseCell = tableView.dequeueReusableCell(withIdentifier: purchaseCellId,
+                                                                   for: indexPath) else { break }
+            purchaseCell.product = products[indexPath.row]
+            purchaseCell.buyButtonHandler = { product in
+                ConverterProducts.store.buyProduct(product)
+            }
+            cell = purchaseCell
+            
+        case .appearance:
+            guard
+                let settingCell = tableView.dequeueReusableCell(withIdentifier: R.nib.settingsTableViewCell,
+                                                                for: indexPath) ,
+                let appearance = AppearanceOptions(rawValue: indexPath.row) else { break }
+            switch appearance {
+            case .clearField:
+                settingCell.clearFieldChnaged = self.clearField
+                settingCell.selectionStyle = .none
+                let isFieldClearEnable = AppFieldClearManager.shared.isClear
+                settingCell.configure(with: appearance, state: SwitchState(rawValue: isFieldClearEnable), position: .first)
+                
+            case .theme:
+                let switchState = AppThemeManager.shared.currentTheme == .dark ? true : false
+                settingCell.themeChanged = self.updateTheme
+                settingCell.selectionStyle = .none
+                settingCell.configure(with: appearance, state: SwitchState(rawValue: switchState), position: .last)
+            }
+            cell = settingCell
+        case .symbolCount:
+            guard
+                let settingCell = tableView.dequeueReusableCell(withIdentifier: R.nib.settingsTableViewCell,
+                                                                for: indexPath) else { break }
+            let symbolCountOptions = SymbolCountOptions(rawValue: indexPath.row)
+            settingCell.selectionStyle = .none
+            settingCell.configure(with: symbolCountOptions, state: nil, position: .all)
+            cell = settingCell
+        }
+        
+        return cell
     }
 }

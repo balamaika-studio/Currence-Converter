@@ -14,7 +14,7 @@ class SettingsTableViewHeader: UITableViewHeaderFooterView {
     private lazy var headerTitleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         return label
     }()
 
@@ -46,7 +46,7 @@ class SettingsTableViewHeader: UITableViewHeaderFooterView {
 
 extension SettingsTableViewHeader: Themed {
     func applyTheme(_ theme: AppTheme) {
-        headerTitleLabel.textColor = theme.textColor
-        contentView.backgroundColor = theme.backgroundColor
+        headerTitleLabel.textColor = theme.cancelTitleColor
+        contentView.backgroundColor = .clear
     }
 }

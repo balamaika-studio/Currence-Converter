@@ -11,6 +11,7 @@
 "Updated" = "Updated";
 "Empty state title" = "Add additional currencies in the «Favorite» section";
 "Converter tabBar item" = "Converter";
+"purchase title" = "Subscribe to get real-time course updates.";
 
 // MARK: - Favorite
 "Favorite title" = "Favorite";
@@ -55,16 +56,20 @@ Upgrade to Converter+ to change currencies.";
 "Disabled" = "disabled";
 
 // Mark: network
-"Network section title" = "Network";
+"Network section title" = "COURSE UPDATE";
 "Automatic update" = "Automatic update";
 
 // MARK: Ads
-"Ads title" = "Advertising";
-"Remove ads" = "Remove advertising";
+"Ads title" = "Update Currency Converter";
+"Ads subtitle" = "Disable ads and unlock all features";
+"Remove ads" = "UPDATE";
 "Restore purchases" = "Restore purchases";
 
 // Mark: appearance
-"Appearance section title" = "Appearance";
+"Appearance section title" = "APPEARANCE";
+
+// MARK: symbol count
+"Symbol count section title" = "NUMBER OF DECIMAL PLACES";
 
 // accuracy
 "Accuracy title" = "Decimal places";
@@ -102,3 +107,12 @@ Upgrade to Converter+ to change currencies.";
 
 // MARK: - ExchangeRate
 "Add pair" = "Add pairs";
+
+// MARK: - Splash
+"Please wait" = "Please wait 15 sec";
+
+// MARK: - Purchase
+"not now" = "Not now";
+"update" = "Update";
+"Update Currency Converter" = "Update Currency Converter";
+"purchase value text" = "Try for free, then $2/month";

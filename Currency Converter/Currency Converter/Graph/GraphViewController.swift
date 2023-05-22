@@ -18,6 +18,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     @IBOutlet weak var converterView: RelativeExchangeView!
     @IBOutlet weak var currenciesRateLabel: UILabel!
     
+    @IBOutlet weak var purchaseButton: UIButton!
     @IBOutlet weak var currencyValue: UILabel!
     @IBOutlet weak var labelLeadingMarginConstraint: NSLayoutConstraint!
     @IBOutlet weak var chartValueLabel: EdgeInsetLabel!
@@ -73,7 +74,6 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        AccuracyManager.shared.accuracy = 4
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
@@ -89,6 +89,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         guard ConverterProducts.store.isProductPurchased(adsProductId) else {
             return
         }
+        purchaseButton.isHidden = true
         converterView.isUserInteractionEnabled = true
         purchaseLabel.isHidden = true
     }
@@ -215,6 +216,9 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         chartView.data = chartData
     }
     
+    @IBAction func purchaseButtonAction(_ sender: Any) {
+        router?.showPurchaseViewController()
+    }
     private func clearChartLabel() {
         chartValueLabel.text = ""
         currencyValue.text = ""

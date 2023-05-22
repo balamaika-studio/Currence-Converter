@@ -192,7 +192,7 @@ class ExchangeRatesViewController: UIViewController {
 extension ExchangeRatesViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
         titleLabel.textColor = .white
-        navbarView.backgroundColor = theme.barBackgroundColor
+        navbarView.backgroundColor = theme.popUpBarColor
         mainView.backgroundColor = theme.backgroundColor
         segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
                                                 for: .normal)

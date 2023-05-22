@@ -10,7 +10,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConverterViewController" customModule="Currency_Converter" customModuleProvider="target">
             <connections>
-                <outlet property="activityIndicator" destination="exh-BS-vwU" id="XPH-23-MmT"/>
                 <outlet property="tableView" destination="Nt0-GE-cjR" id="bu2-nW-NuQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="lve-0c-VcA"/>
             </connections>
@@ -24,20 +23,14 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="exh-BS-vwU">
-                    <rect key="frame" x="169" y="315" width="37" height="37"/>
-                    <color key="color" red="0.19215686269999999" green="0.39607843139999999" blue="0.98431372549999996" alpha="1" colorSpace="calibratedRGB"/>
-                </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="exh-BS-vwU" firstAttribute="centerX" secondItem="vUN-kp-3ea" secondAttribute="centerX" id="CTP-rT-d5W"/>
                 <constraint firstItem="Nt0-GE-cjR" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Cgn-OH-jXg"/>
                 <constraint firstItem="Nt0-GE-cjR" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="E5E-V3-6f0"/>
                 <constraint firstItem="Nt0-GE-cjR" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="SnC-gQ-mna"/>
                 <constraint firstItem="Nt0-GE-cjR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="bpZ-9y-j5d"/>
-                <constraint firstItem="exh-BS-vwU" firstAttribute="centerY" secondItem="vUN-kp-3ea" secondAttribute="centerY" id="hQR-vW-y1Z"/>
             </constraints>
             <point key="canvasLocation" x="139" y="108"/>
         </view>

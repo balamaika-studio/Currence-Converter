@@ -11,6 +11,7 @@
 "Updated" = "Обновлено";
 "Empty state title" = "Добавьте дополнительные валюты в разделе «Избранное»";
 "Converter tabBar item" = "Конвертер";
+"purchase title" = "Оформите подписку чтобы обновлять курс в реальном времени.";
 
 // MARK: - Favorite
 "Favorite title" = "Избранное";
@@ -55,16 +56,20 @@
 "Disabled" = "отключено";
 
 // Mark: network
-"Network section title" = "Сеть";
+"Network section title" = "ОБНОВЛЕНИЕ КУРСОВ";
 "Automatic update" = "Автоматическое обновление";
 
 // MARK: Ads
-"Ads title" = "Реклама";
-"Remove ads" = "Отключить рекламу";
+"Ads title" = "Обновите Currency Converter";
+"Ads subtitle" = "Отключите рекламу и откройте все функции";
+"Remove ads" = "ОБНОВИТЬ";
 "Restore purchases" = "Восстановить покупки";
 
 // Mark: appearance
-"Appearance section title" = "Вид";
+"Appearance section title" = "ВИД";
+
+// MARK: symbol count
+"Symbol count section title" = "ЧИСЛО ДЕСЯТИЧНЫХ ЗНАКОВ";
 
 // accuracy
 "Accuracy title" = "Десятичные знаки";
@@ -102,3 +107,13 @@
 
 // MARK: - ExchangeRate
 "Add pair" = "Добавить пару";
+
+// MARK: - Splash
+"Please wait" = "Пожалуйста подождите 15 сек";
+
+// MARK: - Purchase
+"not now" = "Не сейчас";
+"update" = "Обновить";
+"update currency converter" = "Обновите Currency Converter";
+"purchase value text" = "Попробовать бесплатно, затем 2$ в месяц";
+

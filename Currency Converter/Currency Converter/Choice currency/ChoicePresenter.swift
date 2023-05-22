@@ -51,9 +51,7 @@ class ChoicePresenter: ChoicePresentationLogic {
             let viewModel = ChoiceCurrencyViewModel(currency: value.currency,
                                                     title: currency?.title ?? "",
                                                     isFree: currency?.isFree ?? true)
-            if viewModel.isFree {
-                result.append(viewModel)
-            }
+            result.append(viewModel)
         }
 
         let mainCurrencyModel = result.first {

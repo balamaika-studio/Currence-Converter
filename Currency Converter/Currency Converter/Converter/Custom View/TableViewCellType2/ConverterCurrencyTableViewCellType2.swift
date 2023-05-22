@@ -17,7 +17,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     @IBOutlet private weak var currencyImageView: UIImageView!
     @IBOutlet private weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet private weak var currencyTitleLabel: UILabel!
-    @IBOutlet private weak var countTextField: UITextField!
+    @IBOutlet weak var countTextField: UITextField!
     @IBOutlet private weak var mainView: UIView!
 
     private let maxLength = 24
@@ -52,6 +52,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
         setUpClearSetting()
         countTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), for: .editingChanged)
         countTextField.addTarget(self, action: #selector(self.textFieldDidBeginEditing(_:)), for: .editingDidBegin)
+        currencyImageView.layer.cornerRadius = 5
     }
 
     @objc func textFieldDidBeginEditing(_ textField: UITextField) {
@@ -64,24 +65,11 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
         delegate?.convert(exchangeView: self, total: total, index: model?.index ?? 0)
     }
 
-    override func layoutSubviews() {
-        mainView.layer.cornerRadius = 10
-
-        mainView.clipsToBounds = true
-        mainView.layer.masksToBounds = false
-        mainView.layer.shadowRadius = 7
-        mainView.layer.shadowOpacity = 0.6
-        mainView.layer.shadowOffset = CGSize(width: 0, height: 5)
-        mainView.layer.shadowColor = UIColor(red: 0.192, green: 0.396, blue: 0.984, alpha: 0.2).cgColor
-    }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            mainView.layer.borderWidth = 1.5
-            mainView.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.7)
+            mainView.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.1)
         } else {
-            mainView.layer.borderWidth = 1
-            mainView.layer.borderColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
+            mainView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         }
     }
 

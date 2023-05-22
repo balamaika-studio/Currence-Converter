@@ -14,7 +14,8 @@ class SettingsPurchaseCell: UITableViewCell {
     static let cellId = "SettingsPurchaseCell"
     private let contentSpace: CGFloat = 8
     
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitle: UILabel!
+    @IBOutlet weak var title: UILabel!
     @IBOutlet weak var buyButton: UIButton!
     
     var buyButtonHandler: ((_ product: SKProduct) -> Void)?
@@ -44,7 +45,8 @@ class SettingsPurchaseCell: UITableViewCell {
             bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: contentSpace),
         ])
         
-        titleLabel.text = R.string.localizable.adsTitle()
+        title.text = R.string.localizable.adsTitle()
+        subtitle.text = R.string.localizable.adsSubtitle()
         buyButton.setTitle(R.string.localizable.removeAds(), for: .normal)
         selectionStyle = .none
         contentView.layer.cornerRadius = contentView.frame.height / 10
@@ -54,10 +56,11 @@ class SettingsPurchaseCell: UITableViewCell {
 
 extension SettingsPurchaseCell: Themed {
     func applyTheme(_ theme: AppTheme) {
-        titleLabel.textColor = .white
-        buyButton.setTitleColor(theme.textColor, for: .normal)
-        buyButton.backgroundColor = theme.purchaseButtonColor
-        contentView.backgroundColor = theme.purchaseCellColor
-        backgroundColor = theme.specificBackgroundColor
+        title.textColor = .white
+        subtitle.textColor = .white
+        buyButton.setTitleColor(.white, for: .normal)
+//        buyButton.backgroundColor = theme.purchaseButtonColor
+//        contentView.backgroundColor = theme.settingsBackgroundColor
+        backgroundColor = .clear
     }
 }

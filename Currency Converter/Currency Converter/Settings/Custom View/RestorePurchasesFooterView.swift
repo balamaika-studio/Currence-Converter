@@ -16,7 +16,7 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(R.string.localizable.restorePurchases(), for: .normal)
         button.contentEdgeInsets = .init(top: 8, left: 12, bottom: 8, right: 12)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         button.addTarget(self, action: #selector(restoreTapped), for: .touchUpInside)
         return button
     }()
@@ -42,7 +42,6 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
             restoreButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
         
-        restoreButton.layer.borderWidth = 0.5
         setUpTheming()
     }
     
@@ -50,10 +49,9 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
 
 extension RestorePurchasesFooterView: Themed {
     func applyTheme(_ theme: AppTheme) {
-        restoreButton.backgroundColor = theme.purchaseButtonColor
-        restoreButton.setTitleColor(theme.textColor, for: .normal)
-        restoreButton.layer.borderColor = theme.restoreBorderColor.cgColor
-        contentView.backgroundColor = theme.backgroundColor
+        restoreButton.backgroundColor = .clear
+        restoreButton.setTitleColor(theme.segmentedControlTintColor, for: .normal)
+        contentView.backgroundColor = .clear
         restoreButton.layer.cornerRadius = restoreButton.frame.height / 10
     }
 }

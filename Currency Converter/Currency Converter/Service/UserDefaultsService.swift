@@ -24,6 +24,20 @@ class UserDefaultsService {
             UserDefaults.standard.set(newValue, forKey: "isFirstLoadV2")
         }
     }
+    
+    var lastUpdateTimeInteraval: Double {
+        get {
+            if UserDefaults.standard.value(forKey: "lastUpdateTimeInteraval") == nil {
+                UserDefaults.standard.set(Date().timeIntervalSince1970, forKey: "lastUpdateTimeInteraval")
+            }
+            let value = UserDefaults.standard.double(forKey: "lastUpdateTimeInteraval")
+            return value
+        }
+
+        set {
+            UserDefaults.standard.set(newValue, forKey: "lastUpdateTimeInteraval")
+        }
+    }
 
     private init() {}
 }

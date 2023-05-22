@@ -15,7 +15,7 @@ public protocol EventTracker {
 
 public struct ConverterProducts {
     
-    public static let SwiftShopping = "Maksim.Haroshka.CurrencyConverter.NoAds"
+    public static let SwiftShopping = "12"
     
     private static let productIdentifiers: Set<ProductIdentifier> = [ConverterProducts.SwiftShopping]
     

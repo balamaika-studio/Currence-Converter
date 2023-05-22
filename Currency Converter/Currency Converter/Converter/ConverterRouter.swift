@@ -10,6 +10,7 @@ import UIKit
 
 protocol ConverterRoutingLogic {
     func showChoiceViewController()
+    func showPurchaseViewController()
     func showFavoriteViewController()
 }
 
@@ -26,12 +27,20 @@ class ConverterRouter: ChoiceDataPassing {
         present(source: viewController, destination: choiceVc)
     }
     
+    func showPurchaseViewController() {
+        guard let viewController = viewController else {
+            fatalError("Fail route to second")
+        }
+        let purchaseVc = PurchaseViewController(nib: R.nib.purchaseViewController)
+        viewController.present(purchaseVc, animated: true)
+    }
+    
     func showFavoriteViewController() {
         guard let viewController = viewController else {
                 fatalError("Fail route to second")
         }
         let favoriteViewController = FavoriteViewController(nib: R.nib.favoriteViewController)
-        favoriteViewController.modalPresentationStyle = .overFullScreen
+//        favoriteViewController.modalPresentationStyle = .
         favoriteViewController.delegate = viewController
         viewController.present(favoriteViewController, animated: true, completion: nil)
     }

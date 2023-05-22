@@ -17,6 +17,7 @@ struct AppTheme {
     var popUpBarColor: UIColor
 
     var backgroundColor: UIColor
+    var settingsBackgroundColor: UIColor
     var specificBackgroundColor: UIColor
     var backgroundConverterColor: UIColor
 
@@ -52,17 +53,18 @@ extension AppTheme {
         themeId: "light",
         barTintColor: UIColor(red: 0.19, green: 0.4, blue: 0.98, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.3058823529, green: 0.2941176471, blue: 0.3764705882, alpha: 0.8),
-        barBackgroundColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1),
+        barBackgroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1),
         popUpBarColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1),
 
-        backgroundColor: #colorLiteral(red: 0.9725490196, green: 0.9803921569, blue: 1, alpha: 1), // fix
+        backgroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1),
+        settingsBackgroundColor: UIColor(hexString: "#F0F3F5"), // fix
         specificBackgroundColor: .white,
         backgroundConverterColor: .white,
 
         tableCellSelectionColor: #colorLiteral(red: 0.9019607843, green: 0.9333333333, blue: 1, alpha: 1),
         collectionCellSelectionColor: #colorLiteral(red: 0.9019607843, green: 0.9333333333, blue: 1, alpha: 1),
 
-        textColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1), // fix
+        textColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1), // fix
         subtitleColor: #colorLiteral(red: 0.1529411765, green: 0.1764705882, blue: 0.2549019608, alpha: 0.4), // fix
         priceColor: #colorLiteral(red: 0.1529411765, green: 0.1764705882, blue: 0.2549019608, alpha: 1), // fix
         unselectedSwitchTextColor: .systemBlue,
@@ -86,7 +88,8 @@ extension AppTheme {
         barBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
         popUpBarColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
-        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1), //fix
+        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        settingsBackgroundColor:  #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
         specificBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
         backgroundConverterColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 

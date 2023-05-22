@@ -10,6 +10,7 @@ import UIKit
 
 protocol GraphRoutingLogic {
     func showChoiceViewController(isLeft: Bool, oppositeCurrency: String)
+    func showPurchaseViewController()
 }
 
 class GraphRouter: ChoiceDataPassing {
@@ -27,8 +28,16 @@ class GraphRouter: ChoiceDataPassing {
         choiceVc.isCrypto = false
         choiceVc.isLeft = isLeft
         choiceVc.oppositeCurrency = oppositeCurrency
-        choiceVc.modalPresentationStyle = .overFullScreen
+//        choiceVc.modalPresentationStyle = .overFullScreen
         viewController.present(choiceVc, animated: true, completion: nil)
+    }
+    
+    func showPurchaseViewController() {
+        guard let viewController = viewController else {
+            fatalError("Fail route to second")
+        }
+        let purchaseVc = PurchaseViewController(nib: R.nib.purchaseViewController)
+        viewController.present(purchaseVc, animated: true)
     }
 }
 

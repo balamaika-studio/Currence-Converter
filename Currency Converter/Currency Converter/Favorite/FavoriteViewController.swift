@@ -18,22 +18,29 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     @IBOutlet weak var navbarView: UIView!
     @IBOutlet weak var navbarTitleLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
-
+    @IBOutlet weak var confirmButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
+    @IBOutlet weak var cryptoContainerView: UIView!
     private lazy var favouriteCurrencyVC: FavoriteCurrencyViewController = {
         var viewController = FavoriteCurrencyViewController(nib: R.nib.favoriteCurrencyViewController)
-        add(asChildViewController: viewController)
+        confirmDelegate = viewController
+        addForex(asChildViewController: viewController)
         return viewController
     }()
 
     private lazy var favouriteCryptocurrencyVC: FavoriteCryptocurrencyViewController = {
         var viewController = FavoriteCryptocurrencyViewController(nib: R.nib.favoriteCryptocurrencyViewController)
-        add(asChildViewController: viewController)
+        confirmCryptoDelegate = viewController
+        addCrypto(asChildViewController: viewController)
         return viewController
     }()
     
     var interactor: FavoriteBusinessLogic?
     var router: (NSObjectProtocol & FavoriteRoutingLogic)?
     weak var delegate: ConverterUpdateViewDelegate?
+    weak var confirmDelegate: FavoriteCurrencyConfirmProtocol?
+    weak var confirmCryptoDelegate: FavoriteCurrencyConfirmProtocol?
+    
     
     // MARK: Object lifecycle
     
@@ -93,6 +100,8 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     
     private func setNavbarLabelTitle() {
         navbarTitleLabel.text = R.string.localizable.favouriteAddCurrencyTitle()
+        cancelButton.setTitle(R.string.localizable.cancel(), for: .normal)
+        confirmButton.setTitle(R.string.localizable.add(), for: .normal)
     }
     
     private func setupView() {
@@ -100,6 +109,8 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         DispatchQueue.main.async {
             self.setupSegmentedControl()
             self.updateView(selectedIndex: self.segmentedControl.selectedSegmentIndex)
+            self.addForex(asChildViewController: self.favouriteCurrencyVC)
+            self.addCrypto(asChildViewController: self.favouriteCryptocurrencyVC)
         }
     }
     
@@ -116,12 +127,15 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         
         // Select First Segment
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.white],
-                                                for: .selected)
-        segmentedControl.layer.cornerRadius = 10
-        segmentedControl.layer.borderWidth = 1
-        segmentedControl.layer.borderColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        segmentedControl.setClearBackgroundSegmentControl()
+    }
+    
+    @IBAction func confirmButtonAction(_ sender: UIButton) {
+        confirmDelegate?.saveCurrency()
+        confirmCryptoDelegate?.saveCurrency()
+    }
+    
+    @IBAction func cancelButtonAction(_ sender: UIButton) {
+        router?.dismiss()
     }
     
     @objc private func selectionDidChange(_ sender: UISegmentedControl) {
@@ -131,22 +145,42 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
     private func updateView(selectedIndex: Int) {
         switch selectedIndex {
         case 0:
-            remove(asChildViewController: favouriteCryptocurrencyVC)
-            add(asChildViewController: favouriteCurrencyVC)
+            showVC(isCrypto: false)
+            hideVC(isCrypto: true)
         case 1:
-            remove(asChildViewController: favouriteCurrencyVC)
-            add(asChildViewController: favouriteCryptocurrencyVC)
+            showVC(isCrypto: true)
+            hideVC(isCrypto: false)
         default:
             break
         }
     }
     
-    private func add(asChildViewController viewController: UIViewController) {
+    private func addForex(asChildViewController viewController: UIViewController) {
         // Add Child View Controller
         addChild(viewController)
         
         // Add Child View as Subview
         containerView.addSubview(viewController.view)
+        
+        // Configure Child View
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            viewController.view.topAnchor.constraint(equalTo: containerView.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+        ])
+        
+        // Notify Child View Controller
+        viewController.didMove(toParent: self)
+    }
+    
+    private func addCrypto(asChildViewController viewController: UIViewController) {
+        // Add Child View Controller
+        addChild(viewController)
+        
+        // Add Child View as Subview
+        cryptoContainerView.addSubview(viewController.view)
         
         // Configure Child View
         viewController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -171,15 +205,31 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
         // Notify Child View Controller
         viewController.removeFromParent()
     }
+    
+    private func hideVC(isCrypto: Bool) {
+        if isCrypto {
+            cryptoContainerView.isHidden = true
+        } else {
+            containerView.isHidden = true
+        }
+    }
+    
+    private func showVC(isCrypto: Bool) {
+        if isCrypto {
+            cryptoContainerView.isHidden = false
+        } else {
+            containerView.isHidden = false
+        }
+    }
 }
 
 // MARK: - Themed
 extension FavoriteViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        navbarTitleLabel.textColor = .white
-        navbarView.backgroundColor = theme.barBackgroundColor
+        navbarTitleLabel.textColor = .black
+        navbarView.backgroundColor = theme.backgroundColor
         mainView.backgroundColor = theme.backgroundColor
-        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
+        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black],
                                                 for: .normal)
     }
 }

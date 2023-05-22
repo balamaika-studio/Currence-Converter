@@ -45,8 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                                                exchangeRatesViewController,
                                                 graphViewController,
                                                 settingsViewController]
-        
-        window?.rootViewController = tabBarViewController
+        if UserDefaultsService.shared.isFirstLoad {
+            window?.rootViewController = SplashViewController(nib: R.nib.splashViewController)
+        } else {
+            window?.rootViewController = tabBarViewController
+        }
         window?.makeKeyAndVisible()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
                                                name: .IAPHelperPurchaseNotification,
@@ -57,10 +60,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 helper.update(products: products)
             }
         }
+        UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
         checkInternetConnection()
         configureAppsFlyer()
         requestIDFA()
         return true
+    }
+    
+    public func setTabbar() {
+        window?.rootViewController = tabBarViewController
+        window?.makeKeyAndVisible()
     }
     
     private func requestIDFA() {

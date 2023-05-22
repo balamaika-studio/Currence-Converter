@@ -34,7 +34,7 @@ enum Converter {
                 case favoriteCurrenciesPartUpdate([Currency], total: Double, totalIndex: Int)
                 case updateBaseCurrency(base: Currency)
                 case error(_ message: String?)
-                case firstLoadComplete()
+                case firstLoadComplete
             }
         }
         struct ViewModel {

@@ -35,9 +35,7 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
                                                   title: currencyInfValue?.title ?? "",
                                                   isSelected: value.isFavorite,
                                                   isFree: currencyInfValue?.isFree ?? true)
-                if currencyInfValue?.isFree ?? true {
-                    result.append(viewModel)
-                }
+                result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
             quotes = sortedQuotes
@@ -55,9 +53,7 @@ class FavoriteCryptocurrencyPresenter: FavoriteCryptocurrencyPresentationLogic {
                                                   title: currencyInfValue?.title ?? "",
                                                   isSelected: value.isFavorite,
                                                   isFree: currencyInfValue?.isFree ?? true)
-                if currencyInfValue?.isFree ?? true {
-                    result.append(viewModel)
-                }
+                result.append(viewModel)
             }
             let sortedQuotes = result.sorted { $0.title < $1.title }
             let sortQuotes = sortedQuotes.filter { model in

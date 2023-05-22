@@ -18,6 +18,7 @@ extension AppTheme: Codable {
         case popUpBarColor
 
         case backgroundColor
+        case settingsBackgroundColor
         case specificBackgroundColor
         case backgroundConverterColor
 
@@ -60,6 +61,7 @@ extension AppTheme: Codable {
                                                   forKey: .popUpBarColor).color
 
         backgroundColor = try container.decode(CodableColor.self, forKey: .backgroundColor).color
+        settingsBackgroundColor = try container.decode(CodableColor.self, forKey: .settingsBackgroundColor).color
         specificBackgroundColor = try container.decode(CodableColor.self, forKey: .specificBackgroundColor).color
         backgroundConverterColor = try container.decode(CodableColor.self, forKey: .backgroundConverterColor).color
 
@@ -103,6 +105,8 @@ extension AppTheme: Codable {
                              forKey: .popUpBarColor)
         try container.encode(CodableColor(color: backgroundColor),
                              forKey: .backgroundColor)
+        try container.encode(CodableColor(color: settingsBackgroundColor),
+                             forKey: .settingsBackgroundColor)
         try container.encode(CodableColor(color: specificBackgroundColor),
                              forKey: .specificBackgroundColor)
         try container.encode(CodableColor(color: backgroundConverterColor),

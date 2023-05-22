@@ -12,6 +12,7 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
     @IBOutlet weak var currencyImageView: UIImageView!
     @IBOutlet weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet weak var currencyTitleLabel: UILabel!
+    @IBOutlet weak var checkBoxImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -21,16 +22,18 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         let theme = themeProvider.currentTheme
-        let selectColor = selected ?
-            theme.tableCellSelectionColor :
-            theme.backgroundColor
-        contentView.backgroundColor = selectColor
+        checkBoxImageView.image = selected ? R.image.boxOn() : R.image.boxOff()
+//        let selectColor = selected ?
+//            theme.tableCellSelectionColor :
+//            theme.backgroundColor
+//        contentView.backgroundColor = selectColor
     }
     
     func configure(with viewModel: ChoiceCurrencyViewModel) {
         let emptyFlag = R.image.emptyFlag()
         let image = UIImage(named: viewModel.currency.lowercased()) ?? emptyFlag
         currencyImageView.image = image
+        currencyImageView.roundCorners(corners: [.allCorners], radius: 10)
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
         selectionStyle = .none
@@ -40,6 +43,7 @@ class ChoiceCurrencyTableViewCell: UITableViewCell {
 extension ChoiceCurrencyTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         backgroundColor = .clear
+        contentView.backgroundColor = .clear
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
     }

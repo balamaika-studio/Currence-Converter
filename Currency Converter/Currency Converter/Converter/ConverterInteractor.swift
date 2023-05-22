@@ -28,6 +28,7 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     var bottomCurrency: Currency!
     var isFirstLoading = true
     var lastTotalSum: Double = 1
+    var group = DispatchGroup()
     
     init(storage: StorageContext = try! RealmStorageContext()) {
         self.storage = storage
@@ -96,9 +97,11 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
             
         case .updateCurrencies:
             loadQuotes(update: true, exchangeType: .forex)
+            UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
 
         case .updateCrypto:
             loadQuotes(update: true, exchangeType: .crypto)
+            UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
 
         case .remove(let favoriteCurrency):
             update(favoriteCurrency, isFavorite: false)
@@ -199,32 +202,8 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     private func firstLoad() {
         if UserDefaultsService.shared.isFirstLoad {
-            let group = DispatchGroup()
-
-            group.enter()
-            networkManager.getAllCurrencies(exchangeType: .forex) { [weak self] response, error in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .forex)
-                group.leave()
-            }
-
-            group.enter()
-            networkManager.getAllCurrencies(exchangeType: .crypto) { [weak self] response, error in
-                guard let strongSelf = self else {
-                    return
-                }
-
-                strongSelf.setCurrenciesList(response?.response, in: strongSelf.storage, exchangeType: .crypto)
-                group.leave()
-            }
-
-            group.notify(queue: .main) {
-                self.addFirstLoadCurrency()
-                UserDefaultsService.shared.isFirstLoad = false
-            }
+            self.addFirstLoadCurrency()
+            UserDefaultsService.shared.isFirstLoad = false
         }
     }
     
@@ -278,6 +257,6 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
         }
         makeRequest(request: .updateCurrencies)
         makeRequest(request: .updateCrypto)
-        presenter?.presentData(response: .firstLoadComplete())
+        presenter?.presentData(response: .firstLoadComplete)
     }
 }

@@ -15,9 +15,6 @@ protocol FavoriteCryptocurrencyDisplayLogic: class {
 class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurrencyDisplayLogic {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var cancelButton: UIButton!
-    @IBOutlet weak var confirmButton: UIButton!
-    @IBOutlet weak var buttonsContainerView: UIView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     private var quotes = [FavoriteViewModel]()
@@ -97,7 +94,11 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
         switch viewModel {
         case .showCurrencies(let quotes):
             hideActivityIndicator()
-            self.quotes = quotes
+            if userHasPurchase {
+                self.quotes = quotes
+            } else {
+                self.quotes = quotes.filter { $0.isFree }
+            }
             self.tableView.reloadData()
         }
     }
@@ -121,17 +122,7 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
             tableView.allowsMultipleSelection = false
         }
         tableView.rowHeight = 62
-        configureButton()
         hideActivityIndicator()
-    }
-    
-    private func configureButton() {
-        cancelButton.setTitle(R.string.localizable.cancel(), for: .normal)
-        confirmButton.setTitle(R.string.localizable.add(), for: .normal)
-        confirmButton.layer.cornerRadius = 7
-        cancelButton.layer.cornerRadius = 7
-        cancelButton.layer.borderWidth = 1
-        cancelButton.layer.borderColor = UIColor.white.cgColor
     }
     
     private func setPlaceHolder(placeholder: String) -> String {
@@ -171,26 +162,6 @@ class FavoriteCryptocurrencyViewController: UIViewController, FavoriteCryptocurr
     }
     
     // MARK: - Actions
-    
-    @IBAction func cancelButtonAction(_ sender: Any) {
-        router?.dismiss()
-    }
-    
-    @IBAction func confirmButtonAction(_ sender: Any) {
-        if delegate == nil {
-            quotes.forEach {
-                if $0.isSelected {
-                    interactor?.makeRequest(request: .addFavorite($0))
-                } else {
-                    interactor?.makeRequest(request: .removeFavorite($0))
-                }
-            }
-            router?.dismiss()
-        } else {
-            delegate?.applySelectedCurrencies(exchangeType: .crypto)
-            router?.dismiss()
-        }
-    }
 }
 
 // MARK: - Themed
@@ -213,11 +184,6 @@ extension FavoriteCryptocurrencyViewController: Themed {
         searchTextField?.backgroundColor = theme.searchTextFieldColor
         view.backgroundColor = theme.backgroundColor
         tableView.backgroundColor = theme.backgroundColor
-        cancelButton.backgroundColor = theme.backgroundConverterColor
-        confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
-        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
-        confirmButton.setTitleColor(.white, for: .normal)
-        buttonsContainerView.backgroundColor = theme.backgroundColor
         tableView.reloadData()
     }
 }
@@ -261,11 +227,6 @@ extension FavoriteCryptocurrencyViewController: UITableViewDataSource {
         }
         
         let quote = quotes[indexPath.row]
-        if !userHasPurchase && !quote.isFree {
-            cell.isUserInteractionEnabled = false
-        } else {
-            cell.isUserInteractionEnabled = true
-        }
         cell.configure(with: quote)
         if quote.isSelected {
             tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
@@ -282,5 +243,23 @@ extension FavoriteCryptocurrencyViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+    }
+}
+
+extension FavoriteCryptocurrencyViewController: FavoriteCurrencyConfirmProtocol {
+    func saveCurrency() {
+        if delegate == nil {
+            quotes.forEach {
+                if $0.isSelected {
+                    interactor?.makeRequest(request: .addFavorite($0))
+                } else {
+                    interactor?.makeRequest(request: .removeFavorite($0))
+                }
+            }
+            router?.dismiss()
+        } else {
+            delegate?.applySelectedCurrencies(exchangeType: .crypto)
+            router?.dismiss()
+        }
     }
 }
