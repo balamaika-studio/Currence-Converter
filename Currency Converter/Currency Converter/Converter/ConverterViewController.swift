@@ -185,6 +185,15 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         favoriteCurrencies = []
 
         setupNavBar()
+        
+        if UserDefaultsService.shared.isFirstLoad {
+            router?.showPurchaseViewController()
+        }
+        
+        let adsProductId = ConverterProducts.SwiftShopping
+        if !ConverterProducts.store.isProductPurchased(adsProductId) {
+            Notify.showWith(title: R.string.localizable.firstLoadBunner())
+        }
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

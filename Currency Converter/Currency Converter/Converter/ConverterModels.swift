@@ -72,6 +72,7 @@ struct ConverterViewModel {
 // MARK: - Favorite View Model
 public struct FavoriteConverterViewModel: Currency {
     var currency: String
+    var symbol: String?
     let title: String
     let total: String
     var rate: Double

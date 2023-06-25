@@ -22,8 +22,8 @@ enum Favorite {
         }
         struct Response {
             enum ResponseType {
-                case currenciesConverter([RealmCurrencyV2], [CurrencyInfo], [RealmPairCurrencyV2])
-                case currenciesExchange([RealmCurrencyV2], [CurrencyInfo], [RealmPairCurrencyV2], String)
+                case currenciesConverter([RealmCurrencyV2], [CurrencyInfo], [PairsModelSaved])
+                case currenciesExchange([RealmCurrencyV2], [CurrencyInfo], [PairsModelSaved], String)
                 case filter(title: String)
                 case update(viewModel: FavoriteViewModel, isSelected: Bool)
             }

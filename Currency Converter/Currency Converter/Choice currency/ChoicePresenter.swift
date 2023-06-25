@@ -35,7 +35,7 @@ class ChoicePresenter: ChoicePresentationLogic {
         }
     }
         
-    private func buildViewModels(_ currencies: [Currency], _ info: [CurrencyInfo], _ pairCurrency: [RealmPairCurrencyV2], _ oppositeCurrency: String) -> [ChoiceCurrencyViewModel] {
+    private func buildViewModels(_ currencies: [Currency], _ info: [CurrencyInfo], _ pairCurrency: [PairsModelSaved], _ oppositeCurrency: String) -> [ChoiceCurrencyViewModel] {
         var result = [ChoiceCurrencyViewModel]()
         let validCurrencies = currencies.filter { currency in
             return info.contains { $0.abbreviation == currency.currency }

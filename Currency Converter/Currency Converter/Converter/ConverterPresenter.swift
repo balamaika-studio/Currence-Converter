@@ -100,8 +100,16 @@ class ConverterPresenter: ConverterPresentationLogic {
             let title = currenciesInfo.first { $0.abbreviation == currency.element.currency }!
             let isSelected = currency.offset == totalIndex
             
+            var symbol = ""
+            if let symbolValue = getSymbol(forCurrencyCode: currency.element.currency) {
+                symbol = symbolValue
+            } else {
+                symbol = String(currency.element.currency.prefix(1))
+            }
+            
             let viewModel = FavoriteConverterViewModel(
                 currency: currency.element.currency,
+                symbol: symbol,
                 title: title.title,
                 total: roundedSum,
                 rate: currency.element.rate,

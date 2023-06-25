@@ -14,6 +14,7 @@ protocol ConverterCurrencyTableViewCellType2Deleagte: class {
 }
 
 class ConverterCurrencyTableViewCellType2: UITableViewCell {
+    @IBOutlet private weak var symbolLabel: UILabel!
     @IBOutlet private weak var currencyImageView: UIImageView!
     @IBOutlet private weak var currencyAbbreviationLabel: UILabel!
     @IBOutlet private weak var currencyTitleLabel: UILabel!
@@ -92,6 +93,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
         currencyAbbreviationLabel.text = viewModel.currency
         currencyTitleLabel.text = viewModel.title
         countTextField.text = viewModel.total
+        symbolLabel.text = viewModel.symbol
         selectionStyle = .none
         model = viewModel
     }

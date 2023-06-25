@@ -20,7 +20,7 @@ enum Choice {
         }
         struct Response {
             enum ResponseType {
-                case currencies([Currency], [CurrencyInfo], [RealmPairCurrencyV2], String)
+                case currencies([Currency], [CurrencyInfo], [PairsModelSaved], String)
                 case filter(title: String)
             }
         }

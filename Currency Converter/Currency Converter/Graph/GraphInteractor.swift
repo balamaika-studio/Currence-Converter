@@ -44,10 +44,7 @@ class GraphInteractor: GraphBusinessLogic, ChoiceDataStore {
                 self.presenter?.presentData(response: .graphData(quotes.sorted(by: <), period: period))
             }
 
-            var pairsModels: [RealmPairCurrencyV2] = []
-            storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { pairs in
-                pairsModels = pairs
-            }
+            let pairsModels = CurrenciesInfoService.shared.fetchPairs()
 
             if let pairModel = pairsModels.first(where: { curPair in
                 (curPair.base == base && curPair.relative == relative) ||

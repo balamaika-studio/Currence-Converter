@@ -66,6 +66,25 @@ class CurrenciesInfoService {
         return currencyInfo
     }
     
+    func fetchPairs() -> [PairsModelSaved] {
+        let path = Bundle.main.path(forResource: "currenciesPairs", ofType: ".json")!
+        let fileUrl = URL(fileURLWithPath: path)
+        let data = try! Data(contentsOf: fileUrl, options: .mappedIfSafe)
+        let pairsObjects = try? JSONDecoder().decode(
+            [PairsModel].self,
+            from: data
+        )
+
+        var result = [PairsModelSaved]()
+        pairsObjects?.forEach({ model in
+            let baseAndRelative = model.symbol.split(separator: "/").map({ String($0) })
+            let base = baseAndRelative.first
+            let relative = baseAndRelative.last
+            result.append(PairsModelSaved(currencyPairId: model.id, base: base, relative: relative))
+        })
+        return result
+    }
+    
     func getInfo(by currency: Currency) -> CurrencyInfo? {
         return currencyInfo.first { $0.abbreviation == currency.currency }
     }

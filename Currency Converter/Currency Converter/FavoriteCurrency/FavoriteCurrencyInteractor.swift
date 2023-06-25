@@ -57,10 +57,8 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
     private func fetchCurrenciesConverter() {
         storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
-
-                self?.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo, cur))
-            }
+            let pairs = CurrenciesInfoService.shared.fetchPairs()
+            self?.presenter?.presentData(response: .currenciesConverter(currencies, currenciesInfo, pairs))
         }
     }
 
@@ -68,10 +66,8 @@ class FavoriteCurrencyInteractor: FavoriteCurrencyBusinessLogic {
         let mainCurrency = (!isLeftSelected ? relative?.base : relative?.relative) ?? ""
         storage.fetch(RealmCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] currencies in
             let currenciesInfo = CurrenciesInfoService.shared.fetchCurrency()
-            self?.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { [weak self] cur in
-
-                self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, cur, mainCurrency))
-            }
+            let pairs = CurrenciesInfoService.shared.fetchPairs()
+            self?.presenter?.presentData(response: .currenciesExchange(currencies, currenciesInfo, pairs, mainCurrency))
         }
     }
 }

@@ -202,39 +202,40 @@ class ConverterInteractor: ConverterBusinessLogic, ChoiceDataStore {
     
     private func firstLoad() {
         if UserDefaultsService.shared.isFirstLoad {
+            UserDefaults.standard.set(true, forKey: "clearField")
             self.addFirstLoadCurrency()
             UserDefaultsService.shared.isFirstLoad = false
         }
     }
     
-    private func setCurrenciesList(_ response: [CurrencyResponse]?, in realm: StorageContext, exchangeType: ExchangeType) {
-        var currencyArray = [CurrencyInfo]()
-        switch exchangeType {
-        case .forex:
-            currencyArray = CurrenciesInfoService.shared.fetchCurrency()
-        case .crypto:
-            currencyArray = CurrenciesInfoService.shared.fetchCrypto()
-        }
-        
-        response?.forEach { pair in
-            guard let baseAndRelative = pair.symbol?.split(separator: "/").map({ String($0) }),
-                  let id = pair.id,
-                  let base = baseAndRelative.first,
-                  let relative = baseAndRelative.last else {
-                      return
-                  }
-            if currencyArray.contains(where: { el in
-                el.abbreviation == base || el.abbreviation == relative
-            }) {
-                try? realm.create(RealmPairCurrencyV2.self) { currency in
-                    currency.currencyPairId = id
-                    currency.base = base
-                    currency.relative = relative
-                    currency.type = exchangeType
-                }
-            }
-        }
-    }
+//    private func setCurrenciesList(_ response: [CurrencyResponse]?, in realm: StorageContext, exchangeType: ExchangeType) {
+//        var currencyArray = [CurrencyInfo]()
+//        switch exchangeType {
+//        case .forex:
+//            currencyArray = CurrenciesInfoService.shared.fetchCurrency()
+//        case .crypto:
+//            currencyArray = CurrenciesInfoService.shared.fetchCrypto()
+//        }
+//        
+//        response?.forEach { pair in
+//            guard let baseAndRelative = pair.symbol?.split(separator: "/").map({ String($0) }),
+//                  let id = pair.id,
+//                  let base = baseAndRelative.first,
+//                  let relative = baseAndRelative.last else {
+//                      return
+//                  }
+//            if currencyArray.contains(where: { el in
+//                el.abbreviation == base || el.abbreviation == relative
+//            }) {
+//                try? realm.create(RealmPairCurrencyV2.self) { currency in
+//                    currency.currencyPairId = id
+//                    currency.base = base
+//                    currency.relative = relative
+//                    currency.type = exchangeType
+//                }
+//            }
+//        }
+//    }
     
     
     private func addFirstLoadCurrency() {

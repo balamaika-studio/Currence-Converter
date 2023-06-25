@@ -44,14 +44,11 @@ class ChoiceInteractor: ChoiceBusinessLogic, ChoiceDataStore {
                     } else {
                         currencyArray = CurrenciesInfoService.shared.fetchCurrency()
                     }
-
-                    self.storage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { cur in
-
+                    let pairsModels = CurrenciesInfoService.shared.fetchPairs()
                         self.presenter?.presentData(response: .currencies(self.currencies,
                                                                            currencyArray,
-                                                                          cur,
+                                                                          pairsModels,
                                                                          oppositeCurrency))
-                    }
                 }
             }
 

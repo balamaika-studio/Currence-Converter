@@ -148,7 +148,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             networkManager.getQuotes(exchangeType: .crypto) { response, errorMessage in
                 guard let quotes = response?.quotes else { return }
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
-                self.updateQuotes(quotes, in: self.storage)
+                let currenciesInfo = CurrenciesInfoService.shared.fetchCrypto()
+                let filteredQuotes = quotes.filter { quote in
+                    currenciesInfo.contains { info in
+                        quote.currency == info.abbreviation
+                    }
+                }
+                self.updateQuotes(filteredQuotes, in: self.storage)
             }
         }
         

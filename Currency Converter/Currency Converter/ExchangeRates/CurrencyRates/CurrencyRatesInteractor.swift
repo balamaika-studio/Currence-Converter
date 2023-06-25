@@ -83,10 +83,7 @@ class CurrencyRatesInteractor: CurrencyRatesBusinessLogic {
     func makeRequest(request: CurrencyRates.Model.Request.RequestType) {
         switch request {
         case .loadCurrencyRateChanges:
-            var pairsModels: [RealmPairCurrencyV2] = []
-            liveStorage.fetch(RealmPairCurrencyV2.self, predicate: nil, sorted: nil) { pairs in
-                pairsModels = pairs
-            }
+            let pairsModels = CurrenciesInfoService.shared.fetchPairs()
                 let relativesPredicate = NSPredicate(format: "isSelected = true")
                 liveStorage.fetch(RealmExchangeRateV2.self, predicate: relativesPredicate, sorted: nil) { relatives in
                     var currencies: [ShowCurrencyModel] = []

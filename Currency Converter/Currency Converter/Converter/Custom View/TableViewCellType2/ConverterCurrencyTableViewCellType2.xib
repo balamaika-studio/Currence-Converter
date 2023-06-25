@@ -57,11 +57,17 @@
                                         </subviews>
                                     </stackView>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="50" textAlignment="right" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="MV3-DO-JSm">
-                                        <rect key="frame" x="158.5" y="59" width="452.5" height="25.5"/>
+                                        <rect key="frame" x="158.5" y="59" width="392.5" height="25.5"/>
                                         <color key="textColor" red="0.1529411765" green="0.1764705882" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="17"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                     </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ztb-TS-ZUv">
+                                        <rect key="frame" x="561" y="46.5" width="50" height="50"/>
+                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="17"/>
+                                        <color key="textColor" red="0.1529411765" green="0.1764705882" blue="0.25490196079999999" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="73r-Ry-Ofg">
@@ -100,6 +106,7 @@
                 <outlet property="currencyImageView" destination="m4r-Ti-Ey8" id="nWo-8S-ffo"/>
                 <outlet property="currencyTitleLabel" destination="lVa-FJ-YA0" id="tQx-Nj-63A"/>
                 <outlet property="mainView" destination="VZH-NV-8J8" id="ZTO-hQ-60D"/>
+                <outlet property="symbolLabel" destination="ztb-TS-ZUv" id="qej-qn-4Ht"/>
             </connections>
             <point key="canvasLocation" x="254.34782608695653" y="136.94196428571428"/>
         </tableViewCell>
