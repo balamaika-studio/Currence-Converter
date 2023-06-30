@@ -20,6 +20,7 @@ class RelativeExchangeView: UIView {
     @IBOutlet weak var relativeCurrencyLabel: UILabel!
     @IBOutlet weak var relativeChangeCurrencyStack: UIStackView!
 
+    @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var switchBackgroundView: UIView!
     @IBOutlet weak var shadowContainerView: UIView!
 
@@ -155,6 +156,14 @@ extension RelativeExchangeView: Themed {
         contentView.backgroundColor = theme.backgroundColor
         backgroundColor = theme.backgroundColor
         baseCurrencyLabel.textColor = theme.textColor
+        baseBackgroundView.backgroundColor = theme == .light ? #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 0.15) : #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        relativeBackgroundView.backgroundColor = theme == .light ? #colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 0.15) : #colorLiteral(red: 0.2, green: 0.2, blue: 0.2, alpha: 1)
+        switchBackgroundView.backgroundColor = theme == .light ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1) : #colorLiteral(red: 0.2450228035, green: 0.4974169135, blue: 0.9887898564, alpha: 1)
+        if theme == .light {
+            switchButton.setImage(R.image.rotatedSwap()!, for: .normal)
+        } else {
+            switchButton.setImage(R.image.rotatedSwapDark()!, for: .normal)
+        }
 //        baseCurrencyTitleLabel.textColor = theme.subtitleColor
         
         relativeCurrencyLabel.textColor = theme.textColor

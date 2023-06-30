@@ -67,8 +67,14 @@ extension AppTabBarController: UITabBarControllerDelegate  {
 // MARK: - UITabBarControllerDelegate
 extension AppTabBarController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        tabBar.barTintColor = theme.backgroundColor
         tabBar.tintColor = theme.barTintColor
         tabBar.unselectedItemTintColor = theme.barUnselectedTintColor
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = theme.barBackgroundColor
+            tabBar.standardAppearance = appearance
+            tabBar.scrollEdgeAppearance = tabBar.standardAppearance
+        }
     }
 }

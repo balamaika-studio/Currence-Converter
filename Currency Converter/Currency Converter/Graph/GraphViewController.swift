@@ -240,10 +240,26 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
 // MARK: - Themed
 extension GraphViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
+        tabBarController?.tabBar.backgroundColor = theme.barBackgroundColor
         view.backgroundColor = theme.backgroundColor
-//        currenciesRateLabel.textColor = theme.textColor
+        currenciesRateLabel.textColor = theme.textColor
         chartView.noDataTextColor = theme.textColor
+        
+        if theme == .light {
+            let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+            let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
+            segmentControl.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
+            segmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
+            segmentControl.backgroundColor = #colorLiteral(red: 0.9411764706, green: 0.9529411765, blue: 0.9607843137, alpha: 1)
+        } else {
+            let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            let selectedTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            segmentControl.setTitleTextAttributes(titleTextAttributes, for: .normal)
+            segmentControl.setTitleTextAttributes(selectedTitleTextAttributes, for: .selected)
+            segmentControl.selectedSegmentTintColor = #colorLiteral(red: 0.3882352941, green: 0.3882352941, blue: 0.4, alpha: 1)
+            segmentControl.backgroundColor = #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.65)
+        }
     }
 }
 

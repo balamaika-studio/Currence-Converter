@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,9 +25,9 @@
                     <rect key="frame" x="10" y="55" width="370" height="56"/>
                     <textInputTraits key="textInputTraits" returnKeyType="done"/>
                 </searchBar>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wl3-Uk-epu" customClass="AdaptiveTableView" customModule="Currency_Converter" customModuleProvider="target">
+                <tableView contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wl3-Uk-epu" customClass="AdaptiveTableView" customModule="Currency_Converter" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="111" width="390" height="699"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="GwC-jB-kg3">
                     <rect key="frame" x="176.66666666666666" y="403.66666666666669" width="37" height="37"/>
@@ -36,7 +35,7 @@
                 </activityIndicatorView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Nzj-bd-fat"/>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="Nzj-bd-fat" firstAttribute="bottom" secondItem="wl3-Uk-epu" secondAttribute="bottom" id="9qd-UX-qkR"/>
                 <constraint firstItem="Nzj-bd-fat" firstAttribute="trailing" secondItem="wl3-Uk-epu" secondAttribute="trailing" id="A2n-zP-Fj0"/>
@@ -52,9 +51,4 @@
             <point key="canvasLocation" x="452.30769230769226" y="368.2464454976303"/>
         </view>
     </objects>
-    <resources>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-    </resources>
 </document>

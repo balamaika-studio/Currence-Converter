@@ -114,7 +114,7 @@ extension SettingsTableViewCell: Themed {
             titleLable.textColor = .black
         } else {
             titleLable.textColor = .white
-            mainView.backgroundColor = theme.barUnselectedTintColor
+            mainView.backgroundColor = #colorLiteral(red: 0.3294117647, green: 0.3294117647, blue: 0.3450980392, alpha: 0.65)
         }
         
 //        textLabel?.textColor = theme.textColor

@@ -43,7 +43,7 @@ extension FavoriteTableViewCell: Themed {
     func applyTheme(_ theme: AppTheme) {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
-        selectionColor = theme.backgroundColor
+        selectionColor = .clear
         currencyAbbreviationLabel.textColor = theme.textColor
         currencyTitleLabel.textColor = theme.subtitleColor
     }

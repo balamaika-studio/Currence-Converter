@@ -40,8 +40,7 @@
 "Graph tabBar item" = "Графики";
 "No graph data" = "Нет данных графика";
 "forVal" = "за";
-"purchase" = "Представлен график с валютами по умолчанию.
-Обновите до Converter+, чтобы изменить валюты.";
+"purchase" = "Доступны только валюты по умолчанию. Обновите подписку, чтобы иметь выбор валют.";
 
 // periods collection view
 "Days" = "дней";
@@ -57,7 +56,7 @@
 "Disabled" = "отключено";
 
 // Mark: network
-"Network section title" = "ОБНОВЛЕНИЕ КУРСОВ";
+"Network section title" = "ОБНОВЛЕНИЯ КУРСОВ ВАЛЮТЫ";
 "Automatic update" = "Автоматическое обновление";
 
 // MARK: Ads
@@ -110,11 +109,26 @@
 "Add pair" = "Добавить пару";
 
 // MARK: - Splash
-"Please wait" = "Пожалуйста подождите 15 сек";
+"Please wait" = "Пожалуйста подождите.";
 
 // MARK: - Purchase
 "not now" = "Не сейчас";
 "update" = "Обновить";
 "update currency converter" = "Обновите Currency Converter";
-"purchase value text" = "Попробовать бесплатно, затем 2$ в месяц";
+"purchase value text" = "Попробуйте бесплатно, а затем за 14,99 $ в год.";
+"purchase title" = "Конвертер валют Платная подписка";
 
+"purchase array title1" = "100 основных криптовалют";
+"purchase array subtitle1" = "Мониторинг курса криптовалюты без ограничений.";
+
+"purchase array title2" = "Мгновенные обновления ставок";
+"purchase array subtitle2" = "Получите самую последнюю ставку, просто проведя пальцем вниз.";
+
+"purchase array title3" = "Графики для всех валют";
+"purchase array subtitle3" = "Выберите любую доступную валюту из списка.";
+
+"purchase array title4" = "Без рекламы";
+"purchase array subtitle4" = "Используйте приложение, не отвлекаясь на раздражающие факторы.";
+
+"purchase array title5" = "Поддержите нас";
+"purchase array subtitle5" = "Помогите нам сделать это приложение еще более удобным в использовании.";

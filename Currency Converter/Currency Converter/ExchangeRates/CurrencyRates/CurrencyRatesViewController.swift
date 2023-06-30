@@ -120,7 +120,7 @@ class CurrencyRatesViewController: UIViewController, CurrencyRatesDisplayLogic {
 
 extension CurrencyRatesViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
+        tabBarController?.tabBar.backgroundColor = theme.barBackgroundColor
         tableView.backgroundColor = .clear
         view.backgroundColor = theme.backgroundColor
         tableView.reloadData()

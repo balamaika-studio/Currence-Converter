@@ -40,8 +40,7 @@
 "Graph tabBar item" = "Graphs";
 "No graph data" = "No chart data available";
 "forVal" = "for";
-"purchase" = "Presented chart with default currencies.
-Upgrade to Converter+ to change currencies.";
+"purchase" = "Default currencies available only. Upgrade your subscription to have a selection of currencies.";
 
 // periods collection view
 "Days" = "days";
@@ -57,7 +56,7 @@ Upgrade to Converter+ to change currencies.";
 "Disabled" = "disabled";
 
 // Mark: network
-"Network section title" = "COURSE UPDATE";
+"Network section title" = "CURRENCY RATE UPDATES";
 "Automatic update" = "Automatic update";
 
 // MARK: Ads
@@ -110,10 +109,26 @@ Upgrade to Converter+ to change currencies.";
 "Add pair" = "Add pairs";
 
 // MARK: - Splash
-"Please wait" = "Please wait 15 sec";
+"Please wait" = "Please Wait.";
 
 // MARK: - Purchase
 "not now" = "Not now";
-"update" = "Update";
+"update" = "Subscribe";
 "Update Currency Converter" = "Update Currency Converter";
-"purchase value text" = "Try for free, then $2/month";
+"purchase value text" = "Try for free, and then for 14.99$ per year.";
+"purchase title" = "Currency Converter Paid Subscription";
+
+"purchase array title1" = "100 major cryptocurrencies";
+"purchase array subtitle1" = "Monitor crypto exchange rate with no restrictions.";
+
+"purchase array title2" = "Instant rate updates";
+"purchase array subtitle2" = "Get the most recent rate with just a swipe down.";
+
+"purchase array title3" = "Graphs for all currencies";
+"purchase array subtitle3" = "Select any currency available from the list.";
+
+"purchase array title4" = "No Ads";
+"purchase array subtitle4" = "Use the app without annoying distractions.";
+
+"purchase array title5" = "Support us";
+"purchase array subtitle5" = "Help us make this app even more comfortable to use.";

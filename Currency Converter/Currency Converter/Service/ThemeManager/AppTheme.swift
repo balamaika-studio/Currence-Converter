@@ -53,7 +53,7 @@ extension AppTheme {
         themeId: "light",
         barTintColor: UIColor(red: 0.19, green: 0.4, blue: 0.98, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.3058823529, green: 0.2941176471, blue: 0.3764705882, alpha: 0.8),
-        barBackgroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1),
+        barBackgroundColor: #colorLiteral(red: 0.9764705882, green: 0.9764705882, blue: 0.9764705882, alpha: 0.94),
         popUpBarColor: #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1),
 
         backgroundColor: #colorLiteral(red: 0.9999960065, green: 1, blue: 1, alpha: 1),
@@ -78,26 +78,26 @@ extension AppTheme {
         separatorColor: #colorLiteral(red: 0.8549019608, green: 0.8784313725, blue: 0.9294117647, alpha: 1),
         purchaseCellColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1),
         purchaseButtonColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
-        restoreBorderColor: .black
+        restoreBorderColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
     )
 
     static let dark = AppTheme(
         themeId: "dark",
         barTintColor: #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1),
         barUnselectedTintColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1),
-        barBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        barBackgroundColor: #colorLiteral(red: 0.0862745098, green: 0.0862745098, blue: 0.0862745098, alpha: 0.94),
         popUpBarColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
-        backgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        backgroundColor: #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1),
         settingsBackgroundColor:  #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
-        specificBackgroundColor: #colorLiteral(red: 0.1529411765, green: 0.1607843137, blue: 0.2588235294, alpha: 1),
+        specificBackgroundColor: #colorLiteral(red: 0.462745098, green: 0.462745098, blue: 0.5019607843, alpha: 0.24),
         backgroundConverterColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
         tableCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
         collectionCellSelectionColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
 
         textColor: .white, // fix
-        subtitleColor: #colorLiteral(red: 0.737254902, green: 0.737254902, blue: 0.8941176471, alpha: 1), // fix
+        subtitleColor: #colorLiteral(red: 0.9215686275, green: 0.9215686275, blue: 0.9607843137, alpha: 0.6), // fix
         priceColor: .white, // fix
         unselectedSwitchTextColor: .white,
 
@@ -110,6 +110,6 @@ extension AppTheme {
         separatorColor: #colorLiteral(red: 0.3294117647, green: 0.3333333333, blue: 0.4784313725, alpha: 1),
         purchaseCellColor: #colorLiteral(red: 0.2156862745, green: 0.2196078431, blue: 0.337254902, alpha: 1),
         purchaseButtonColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1),
-        restoreBorderColor: #colorLiteral(red: 0.4156862745, green: 0.5529411765, blue: 0.9843137255, alpha: 1)
+        restoreBorderColor: #colorLiteral(red: 0.3882352941, green: 0.3882352941, blue: 0.4, alpha: 1)
     )
 }

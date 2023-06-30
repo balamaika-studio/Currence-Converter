@@ -226,10 +226,13 @@ class FavoriteViewController: UIViewController, FavoriteDisplayLogic {
 // MARK: - Themed
 extension FavoriteViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        navbarTitleLabel.textColor = .black
-        navbarView.backgroundColor = theme.backgroundColor
-        mainView.backgroundColor = theme.backgroundColor
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black],
+        navbarTitleLabel.textColor = theme.textColor
+        navbarView.backgroundColor = theme.barBackgroundColor
+        mainView.backgroundColor = theme.barBackgroundColor
+        view.backgroundColor = theme.barBackgroundColor
+        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
                                                 for: .normal)
+        segmentedControl.selectedSegmentTintColor = theme.restoreBorderColor
+        segmentedControl.backgroundColor = theme.barBackgroundColor
     }
 }

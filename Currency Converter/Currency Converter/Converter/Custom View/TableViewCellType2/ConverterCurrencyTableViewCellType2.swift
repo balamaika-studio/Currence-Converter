@@ -29,6 +29,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
     var total: Double {
         return Double(countTextField.text ?? "0") ?? 0
     }
+    var selectedColor = #colorLiteral(red: 0.1725490196, green: 0.1725490196, blue: 0.1803921569, alpha: 1)
     
     /// get reoder control image view
     var reorderControlImageView: UIImageView? {
@@ -68,7 +69,7 @@ class ConverterCurrencyTableViewCellType2: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         if selected {
-            mainView.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.1)
+            mainView.backgroundColor = selectedColor
         } else {
             mainView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
         }
@@ -107,6 +108,12 @@ extension ConverterCurrencyTableViewCellType2: Themed {
         countTextField.textColor = theme.priceColor
         mainView.backgroundColor = theme.backgroundColor
         reorderControlImageView?.tint(color: theme.textColor)
+        if theme == .light {
+            selectedColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 0.1)
+        } else {
+            selectedColor = #colorLiteral(red: 0.1725490196, green: 0.1725490196, blue: 0.1803921569, alpha: 1)
+        }
+        
 
         if let clearButton = countTextField.value(forKeyPath: "_clearButton") as? UIButton {
             if theme == .light {

@@ -228,19 +228,22 @@ extension ChoiceViewController: Themed {
         searchBar.barTintColor = theme.specificBackgroundColor
         searchBar.setImage(searchIcon, for: .search, state: .normal)
         searchTextField?.textColor = theme.searchTextColor
-        searchTextField?.backgroundColor = theme.searchTextFieldColor
-        titleLabel.textColor = .black
-        tableView.backgroundColor = theme.backgroundColor
+        searchTextField?.backgroundColor = theme == .light ? #colorLiteral(red: 0.3058823529, green: 0.2941176471, blue: 0.3764705882, alpha: 0.2) : #colorLiteral(red: 0.462745098, green: 0.462745098, blue: 0.5019607843, alpha: 1)
+        titleLabel.textColor = theme.textColor
+        tableView.backgroundColor = theme.barBackgroundColor
         tableView.reloadData()
+        view.backgroundColor = theme.barBackgroundColor
 //        cancelButton.backgroundColor = theme.backgroundConverterColor
 //        confirmButton.backgroundColor = #colorLiteral(red: 0.1921568627, green: 0.3960784314, blue: 0.9843137255, alpha: 1)
 //        cancelButton.setTitleColor(theme.cancelTitleColor , for: .normal)
 //        confirmButton.setTitleColor(.white, for: .normal)
 //        buttonsContainerView.backgroundColor = theme.backgroundColor
-        mainView.backgroundColor = theme.backgroundColor
-        segmentedControl.setTitleTextAttributes([.foregroundColor: UIColor.black],
+        mainView.backgroundColor = theme.barBackgroundColor
+        segmentedControl.setTitleTextAttributes([.foregroundColor: theme.textColor],
                                                 for: .normal)
-        navbarView.backgroundColor = theme.backgroundColor
+        segmentedControl.selectedSegmentTintColor = theme.restoreBorderColor
+        segmentedControl.backgroundColor = theme.barBackgroundColor
+        navbarView.backgroundColor = theme.barBackgroundColor
     }
 }
 

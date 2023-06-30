@@ -181,9 +181,9 @@ extension FavoriteCryptocurrencyViewController: Themed {
         searchBar.barTintColor = theme.specificBackgroundColor
         searchBar.setImage(searchIcon, for: .search, state: .normal)
         searchTextField?.textColor = theme.searchTextColor
-        searchTextField?.backgroundColor = theme.searchTextFieldColor
-        view.backgroundColor = theme.backgroundColor
-        tableView.backgroundColor = theme.backgroundColor
+        searchTextField?.backgroundColor = theme == .light ? #colorLiteral(red: 0.3058823529, green: 0.2941176471, blue: 0.3764705882, alpha: 0.2) : #colorLiteral(red: 0.462745098, green: 0.462745098, blue: 0.5019607843, alpha: 1)
+        view.backgroundColor = theme.barBackgroundColor
+        tableView.backgroundColor = theme.barBackgroundColor
         tableView.reloadData()
     }
 }

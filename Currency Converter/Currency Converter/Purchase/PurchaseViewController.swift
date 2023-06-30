@@ -62,6 +62,7 @@ class PurchaseViewController: UIViewController, PurchaseDisplayLogic {
         super.viewDidLoad()
         
         setupView()
+        setUpTheming()
         interactor?.makeRequest(request: .purchases)
     }
     
@@ -90,7 +91,10 @@ class PurchaseViewController: UIViewController, PurchaseDisplayLogic {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
         updateButton.layer.cornerRadius = 14
-        
+        updateDescription.text = R.string.localizable.purchaseValueText()
+        titleLabel.text = R.string.localizable.purchaseTitle()
+        updateButton.setTitle(R.string.localizable.update(), for: .normal)
+        dismissButton.setTitle(R.string.localizable.notNow(), for: .normal)
     }
     
     private func setupShadowBottomView() {
@@ -105,8 +109,8 @@ class PurchaseViewController: UIViewController, PurchaseDisplayLogic {
     }
     @IBAction func updateButtonAction(_ sender: Any) {
         if !products.isEmpty {
-            if let availableProduct = products.filter { !ConverterProducts.store.isProductPurchased($0.productIdentifier)
-            }.first {
+            if let availableProduct = products.filter({ !ConverterProducts.store.isProductPurchased($0.productIdentifier)
+            }).first {
                 ConverterProducts.store.buyProduct(availableProduct)
             }
             
@@ -123,7 +127,10 @@ class PurchaseViewController: UIViewController, PurchaseDisplayLogic {
 // MARK: - Themed
 extension PurchaseViewController: Themed {
     func applyTheme(_ theme: AppTheme) {
-        
+        titleLabel.textColor = theme.textColor
+        view.backgroundColor = theme == .light ? theme.backgroundColor : theme.barBackgroundColor
+        bottomBackgroundView.backgroundColor = theme == .light ? .white : #colorLiteral(red: 0.1725490196, green: 0.1725490196, blue: 0.1803921569, alpha: 1)
+        updateDescription.textColor = theme.textColor
     }
 }
 
@@ -133,13 +140,13 @@ extension PurchaseViewController: UITableViewDelegate {
 
 extension PurchaseViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return PurchaseArray.values.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: R.reuseIdentifier.purchaseDescriptionTableViewCell,
                                                        for: indexPath) else { fatalError() }
-        cell.configure(model: PurchaseDescriptionModel(title: "dfsdfsdf fsdf sdf sdfsdsdf ", subTitle: "sdfs dfdsfsdf sdfsdfsdf sdfsdfsdfs fsdfsdfsdf sdfsdfsdf s"))
+        cell.configure(model: PurchaseArray.values[indexPath.row])
         
         return cell
     }

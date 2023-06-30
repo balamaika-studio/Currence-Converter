@@ -19,7 +19,7 @@ class CurrenciesInfoService {
 //        "MXN", "SGD", "AUD", "ILS", "KRW", "PLN"
 //    ]
     private let popularCurrencies = ["USD", "EUR", "GBP", "CHF", "JPY", "CNY"]
-    private let graphDefaultCurrencies = ["USD", "EUR"]
+    private let graphDefaultCurrencies = ["EUR", "USD"]
     private let graphDefaultCryptocurrencies = ["BTC", "ETH"]
     private let freeCrypto = ["BTC", "ETH", "LTC", "XRP"]
     

@@ -29,3 +29,28 @@ enum Purchase {
     }
     
 }
+
+struct PurchaseArray {
+    static let values: [PurchaseDescriptionModel] = [
+        PurchaseDescriptionModel(
+            title: R.string.localizable.purchaseArrayTitle1(),
+            subTitle: R.string.localizable.purchaseArraySubtitle1()
+        ),
+        PurchaseDescriptionModel(
+            title: R.string.localizable.purchaseArrayTitle2(),
+            subTitle: R.string.localizable.purchaseArraySubtitle2()
+        ),
+        PurchaseDescriptionModel(
+            title: R.string.localizable.purchaseArrayTitle3(),
+            subTitle: R.string.localizable.purchaseArraySubtitle3()
+        ),
+        PurchaseDescriptionModel(
+            title: R.string.localizable.purchaseArrayTitle4(),
+            subTitle: R.string.localizable.purchaseArraySubtitle4()
+        ),
+        PurchaseDescriptionModel(
+            title: R.string.localizable.purchaseArrayTitle5(),
+            subTitle: R.string.localizable.purchaseArraySubtitle5()
+        )
+    ]
+}

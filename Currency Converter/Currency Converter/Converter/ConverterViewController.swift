@@ -241,6 +241,8 @@ extension ConverterViewController: Themed {
         tableView.backgroundColor = .clear
         view.backgroundColor = theme.backgroundColor
         tableView.reloadData()
+        navigationController?.navigationBar.update(backroundColor: theme.backgroundColor, titleColor: theme.textColor)
+        tabBarController?.tabBar.backgroundColor = theme.barBackgroundColor
     }
 }
 

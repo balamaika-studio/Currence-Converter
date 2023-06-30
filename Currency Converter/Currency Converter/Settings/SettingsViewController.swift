@@ -218,11 +218,12 @@ extension SettingsViewController: Themed {
         } else {
             hiddenTextField.inputAccessoryView?.backgroundColor = theme.specificBackgroundColor
         }
-        view.backgroundColor = theme.settingsBackgroundColor
-//        tableView.backgroundColor = theme.backgroundColor
-        hiddenTextField.inputView?.backgroundColor = theme.backgroundColor
-        tabBarController?.tabBar.backgroundColor = theme.backgroundColor
-        navigationController?.navigationBar.update(backroundColor: theme.settingsBackgroundColor, titleColor: theme.barTintColor)
+        view.backgroundColor = theme == .light ? theme.settingsBackgroundColor : theme.backgroundColor
+        tableView.backgroundColor = theme == .light ? theme.settingsBackgroundColor : theme.backgroundColor
+        hiddenTextField.inputView?.backgroundColor = theme == .light ? theme.settingsBackgroundColor : theme.backgroundColor
+        tabBarController?.tabBar.isTranslucent = false
+        tabBarController?.tabBar.backgroundColor = theme.barBackgroundColor
+        navigationController?.navigationBar.update(backroundColor: theme == .light ? theme.settingsBackgroundColor : theme.backgroundColor, titleColor: theme.textColor)
     }
 }
 
