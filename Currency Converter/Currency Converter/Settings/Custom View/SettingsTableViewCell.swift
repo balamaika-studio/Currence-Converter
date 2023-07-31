@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SettingsTableViewCellDelegate: AnyObject {
+    func autoUpdateTapped()
+}
+
 class SettingsTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var underlineView: UIView!
@@ -18,6 +22,7 @@ class SettingsTableViewCell: UITableViewCell {
     var autoUpdateChanged: ((Bool) -> Void)?
     var clearFieldChnaged: ((Bool) -> Void)?
     var themeChanged: ((Bool) -> Void)?
+    weak var delegate: SettingsTableViewCellDelegate?
     
     var switchState: SwitchState? {
         didSet {
@@ -59,6 +64,10 @@ class SettingsTableViewCell: UITableViewCell {
         configureForPosition(position)
     }
     
+    func setDelegate(_ delegate: SettingsTableViewCellDelegate?) {
+        self.delegate = delegate
+    }
+    
     override func prepareForReuse() {
         mainView.roundCorners(corners: [.allCorners], radius: 0)
     }
@@ -97,6 +106,9 @@ class SettingsTableViewCell: UITableViewCell {
         
         if sectionType is NetworkOptions {
             autoUpdateChanged?(sender.isOn)
+            if sender.isOn {
+                delegate?.autoUpdateTapped()
+            }
         } else if let appearanceOptions = sectionType as? AppearanceOptions {
             switch appearanceOptions {
             case .clearField: clearFieldChnaged?(sender.isOn)

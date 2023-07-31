@@ -8,6 +8,7 @@
 
 import UIKit
 import Charts
+import Appodeal
 
 protocol GraphDisplayLogic: class {
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData)
@@ -34,6 +35,7 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     private var periods: [GraphPeriod]!
     private var labelLeadingMarginInitialConstant: CGFloat!
     private var viewModel: GraphViewModel?
+    private var defaultAccuracy: Int?
     
     // MARK: Object lifecycle
     
@@ -74,12 +76,29 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        defaultAccuracy = AccuracyManager.shared.accuracy
+        AccuracyManager.shared.accuracy = 3
+
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) {
+            Appodeal.hideBanner()
+            return
+        }
+        Appodeal.showAd(
+            .bannerBottom,
+            forPlacement: "Banner",
+            rootViewController: self
+        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
+        if let defaultAccuracy {
+            AccuracyManager.shared.accuracy = defaultAccuracy
+        }
+        
         navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     

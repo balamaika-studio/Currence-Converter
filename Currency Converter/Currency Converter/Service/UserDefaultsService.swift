@@ -38,6 +38,20 @@ class UserDefaultsService {
             UserDefaults.standard.set(newValue, forKey: "lastUpdateTimeInteraval")
         }
     }
+    
+    var purchaseViewShowCounter: Int {
+        get {
+            if UserDefaults.standard.value(forKey: "purchaseViewShowCounter") == nil {
+                UserDefaults.standard.set(0, forKey: "purchaseViewShowCounter")
+            }
+            let value = UserDefaults.standard.integer(forKey: "purchaseViewShowCounter")
+            return value
+        }
+
+        set {
+            UserDefaults.standard.set(newValue, forKey: "purchaseViewShowCounter")
+        }
+    }
 
     private init() {}
 }

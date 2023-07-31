@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import GoogleMobileAds
 
 protocol TableInset {
     var bannerHeight: CGFloat { get }

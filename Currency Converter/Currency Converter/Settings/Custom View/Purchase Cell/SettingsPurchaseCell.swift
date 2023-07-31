@@ -9,17 +9,19 @@
 import UIKit
 import StoreKit
 
+protocol SettingsPurchaseCellDelegate {
+    func buyButtonTapped()
+}
+
 
 class SettingsPurchaseCell: UITableViewCell {
     static let cellId = "SettingsPurchaseCell"
     private let contentSpace: CGFloat = 8
+    private var delegate: SettingsPurchaseCellDelegate?
     
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var buyButton: UIButton!
-    
-    var buyButtonHandler: ((_ product: SKProduct) -> Void)?
-    var product: SKProduct?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,8 +34,11 @@ class SettingsPurchaseCell: UITableViewCell {
     }
     
     @IBAction func butButtonTapped(_ sender: Any) {
-        guard let product = product else { return }
-        buyButtonHandler?(product)
+        delegate?.buyButtonTapped()
+    }
+    
+    public func setDelegate(delagate: SettingsPurchaseCellDelegate?) {
+        self.delegate = delagate
     }
     
     private func setupView() {

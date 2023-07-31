@@ -12,7 +12,8 @@ class PurchaseDescriptionTableViewCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var mainBackgroundView: UIView!
-    
+    @IBOutlet weak var imageViewPurchase: UIImageView!
+
     override func awakeFromNib() {
         super.awakeFromNib()
         setUpTheming()
@@ -27,6 +28,7 @@ class PurchaseDescriptionTableViewCell: UITableViewCell {
     func configure(model: PurchaseDescriptionModel) {
         titleLabel.text = model.title
         subtitleLabel.text = model.subTitle
+        imageViewPurchase.image = model.image
     }
     
 }

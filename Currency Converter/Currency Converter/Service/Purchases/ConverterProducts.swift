@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AppsFlyerLib
 
 public protocol EventTracker {
     func trackPurchase(id: String, productIdentifier: String, revenue: Float, currency: String)
@@ -31,7 +30,7 @@ func resourceNameForProductIdentifier(_ productIdentifier: String) -> String? {
 struct AppsFlyerEventTracker: EventTracker {
     func trackPurchase(id: String, productIdentifier: String, revenue: Float, currency: String) {
         // AppsFlyer
-        let event = ConverterProducts.subscriptionsProductIdentifiers.contains(productIdentifier) ? AFEventSubscribe : AFEventPurchase
+//        let event = ConverterProducts.subscriptionsProductIdentifiers.contains(productIdentifier) ? AFEventSubscribe : AFEventPurchase
 
         let receiptString: String
 
@@ -55,11 +54,11 @@ struct AppsFlyerEventTracker: EventTracker {
 //        print("Revenue: \(revenue) currency: \(currency)")
 //        print("REC: \(receiptString)")
 
-        AppsFlyerLib.shared().logEvent(event, withValues: [
-            AFEventParamOrderId: id,
-            AFEventParamContentId: productIdentifier,
-            AFEventParamRevenue: revenue,
-            AFEventParamCurrency: currency
-        ])
+//        AppsFlyerLib.shared().logEvent(event, withValues: [
+//            AFEventParamOrderId: id,
+//            AFEventParamContentId: productIdentifier,
+//            AFEventParamRevenue: revenue,
+//            AFEventParamCurrency: currency
+//        ])
     }
 }

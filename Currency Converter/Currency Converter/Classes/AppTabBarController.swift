@@ -6,10 +6,13 @@
 //  Copyright © 2020 Kiryl Klimiankou. All rights reserved.
 //
 
+import Appodeal
 import UIKit
 
 class AppTabBarController: UITabBarController {
     private var swipeTransition: SwipeTabBarTransition?
+    
+    var onDismissed: (()->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,4 +80,32 @@ extension AppTabBarController: Themed {
             tabBar.scrollEdgeAppearance = tabBar.standardAppearance
         }
     }
+}
+
+extension AppTabBarController: AppodealBannerViewDelegate {
+    func bannerViewDidLoadAd(_ bannerView: APDBannerView, isPrecache precache: Bool) {
+        print(bannerView.isReady)
+    }
+    func bannerView(_ bannerView: APDBannerView, didFailToLoadAdWithError error: Error) {
+        print(error)
+    }
+    func bannerViewDidInteract(_ bannerView: APDBannerView) {}
+    func bannerViewDidShow(_ bannerView: APDBannerView) {
+        print("----------------")
+    }
+}
+
+extension AppTabBarController: AppodealInterstitialDelegate {
+    func interstitialDidLoadAdIsPrecache(_ precache: Bool) {}
+    func interstitialDidFailToLoadAd() {
+        onDismissed?()
+    }
+    func interstitialDidFailToPresent() {
+        onDismissed?()
+    }
+    func interstitialWillPresent() {}
+    func interstitialDidDismiss() {
+        onDismissed?()
+    }
+    func interstitialDidClick() {}
 }

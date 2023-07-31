@@ -6,7 +6,7 @@
 //  Copyright © 2023 Kiryl Klimiankou. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 struct PurchaseDescriptionModels {
     var models: [PurchaseDescriptionModel]
@@ -15,4 +15,5 @@ struct PurchaseDescriptionModels {
 struct PurchaseDescriptionModel {
     var title: String
     var subTitle: String
+    var image: UIImage
 }

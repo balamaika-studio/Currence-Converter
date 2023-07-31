@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SettingsRoutingLogic {
-    
+    func showPurchaseViewController()
 }
 
 class SettingsRouter: NSObject, SettingsRoutingLogic {
@@ -17,5 +17,13 @@ class SettingsRouter: NSObject, SettingsRoutingLogic {
     weak var viewController: SettingsViewController?
     
     // MARK: Routing
+    
+    func showPurchaseViewController() {
+        guard let viewController = viewController else {
+            fatalError("Fail route to second")
+        }
+        let purchaseVc = PurchaseViewController(nib: R.nib.purchaseViewController)
+        viewController.present(purchaseVc, animated: true)
+    }
     
 }

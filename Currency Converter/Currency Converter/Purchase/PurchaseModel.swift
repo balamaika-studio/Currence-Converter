@@ -34,23 +34,28 @@ struct PurchaseArray {
     static let values: [PurchaseDescriptionModel] = [
         PurchaseDescriptionModel(
             title: R.string.localizable.purchaseArrayTitle1(),
-            subTitle: R.string.localizable.purchaseArraySubtitle1()
+            subTitle: R.string.localizable.purchaseArraySubtitle1(),
+            image: R.image.purchase1()!
         ),
         PurchaseDescriptionModel(
             title: R.string.localizable.purchaseArrayTitle2(),
-            subTitle: R.string.localizable.purchaseArraySubtitle2()
+            subTitle: R.string.localizable.purchaseArraySubtitle2(),
+            image: R.image.purchase2()!
         ),
         PurchaseDescriptionModel(
             title: R.string.localizable.purchaseArrayTitle3(),
-            subTitle: R.string.localizable.purchaseArraySubtitle3()
+            subTitle: R.string.localizable.purchaseArraySubtitle3(),
+            image: R.image.purchase3()!
         ),
         PurchaseDescriptionModel(
             title: R.string.localizable.purchaseArrayTitle4(),
-            subTitle: R.string.localizable.purchaseArraySubtitle4()
+            subTitle: R.string.localizable.purchaseArraySubtitle4(),
+            image: R.image.purchase4()!
         ),
         PurchaseDescriptionModel(
             title: R.string.localizable.purchaseArrayTitle5(),
-            subTitle: R.string.localizable.purchaseArraySubtitle5()
+            subTitle: R.string.localizable.purchaseArraySubtitle5(),
+            image: R.image.purchase5()!
         )
     ]
 }

@@ -57,7 +57,7 @@
 
 // Mark: network
 "Network section title" = "ОБНОВЛЕНИЯ КУРСОВ ВАЛЮТЫ";
-"Automatic update" = "Автоматическое обновление";
+"Automatic update" = "Обновления в реальном времени";
 
 // MARK: Ads
 "Ads title" = "Отключить рекламу и получить все функции.";
@@ -116,6 +116,7 @@
 "update" = "Обновить";
 "update currency converter" = "Обновите Currency Converter";
 "purchase value text" = "Попробуйте бесплатно, а затем за 14,99 $ в год.";
+"purchase title banner" = "Купите подписку, чтобы получать мгновенные обновления ставок";
 "purchase title" = "Конвертер валют Платная подписка";
 
 "purchase array title1" = "100 основных криптовалют";

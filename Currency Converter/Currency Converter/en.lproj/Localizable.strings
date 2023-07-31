@@ -57,7 +57,7 @@
 
 // Mark: network
 "Network section title" = "CURRENCY RATE UPDATES";
-"Automatic update" = "Automatic update";
+"Automatic update" = "Real-time updates";
 
 // MARK: Ads
 "Ads title" = "Remove ads and get access to all features.";
@@ -116,6 +116,7 @@
 "update" = "Subscribe";
 "Update Currency Converter" = "Update Currency Converter";
 "purchase value text" = "Try for free, and then for 14.99$ per year.";
+"purchase title banner" = "Subscribe to get instant rate updates";
 "purchase title" = "Currency Converter Paid Subscription";
 
 "purchase array title1" = "100 major cryptocurrencies";

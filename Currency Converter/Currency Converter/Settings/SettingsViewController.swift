@@ -8,13 +8,15 @@
 
 import UIKit
 import StoreKit
+import Appodeal
 
 protocol SettingsDisplayLogic: class {
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData)
 }
 
-class SettingsViewController: UIViewController, SettingsDisplayLogic {
-    @IBOutlet weak var tableView: UITableView!
+class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTableViewCellDelegate {
+    
+    @IBOutlet weak var tableView: AdaptiveTableView!
     @IBOutlet weak var hiddenTextField: UITextField!
     
     var interactor: SettingsBusinessLogic?
@@ -63,7 +65,9 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.prefersLargeTitles = true
+        if #available(iOS 15.0, *) {
+            UITableView.appearance().sectionHeaderTopPadding = CGFloat(0)
+        }
         interactor?.makeRequest(request: .purchases)
         createPickerView()
         setupTableView()
@@ -73,6 +77,16 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createVisualEffects()
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) {
+            Appodeal.hideBanner()
+            return
+        }
+        Appodeal.showAd(
+            .bannerBottom,
+            forPlacement: "Banner",
+            rootViewController: self
+        )
     }
     
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData) {
@@ -141,6 +155,10 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
         UserDefaults.standard.set(state, forKey: "autoUpdate")
     }
     
+    private func showPurchase() {
+        router?.showPurchaseViewController()
+    }
+    
     private func clearField(_ state: Bool) {
         AppFieldClearManager.shared.isClear = state
         UserDefaults.standard.set(state, forKey: "clearField")
@@ -152,13 +170,14 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic {
     }
     
     private func setupTableView() {
+        navigationController?.navigationBar.prefersLargeTitles = true
         let footerFrame = CGRect(x: 0, y: 0,
                                  width: tableView.frame.width,
                                  height: 75)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.sectionFooterHeight = 0.5
-        tableView.contentInset = AdBannerInsetService.shared.tableInset
+        tableView.contentInset = UIEdgeInsets(top: .zero, left: .zero, bottom: 70, right: .zero)
         tableView.tableFooterView = RestorePurchasesFooterView(frame: footerFrame)
         tableView.register(SettingsTableViewHeader.self,
                            forHeaderFooterViewReuseIdentifier: SettingsTableViewHeader.reuseId)
@@ -347,16 +366,14 @@ extension SettingsViewController: UITableViewDataSource {
             settingCell.selectionStyle = .none
             let isAutoUpdateEnable = UserDefaults.standard.bool(forKey: "autoUpdate")
             settingCell.configure(with: network, state: SwitchState(rawValue: isAutoUpdateEnable), position: .all)
+            settingCell.setDelegate(self)
             cell = settingCell
             
         case .purchases:
             let purchaseCellId = R.reuseIdentifier.settingsPurchaseCell
             guard let purchaseCell = tableView.dequeueReusableCell(withIdentifier: purchaseCellId,
                                                                    for: indexPath) else { break }
-            purchaseCell.product = products[indexPath.row]
-            purchaseCell.buyButtonHandler = { product in
-                ConverterProducts.store.buyProduct(product)
-            }
+            purchaseCell.setDelegate(delagate: self)
             cell = purchaseCell
             
         case .appearance:
@@ -389,5 +406,21 @@ extension SettingsViewController: UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func autoUpdateTapped() {
+        let adsProductId = ConverterProducts.SwiftShopping
+        if !ConverterProducts.store.isProductPurchased(adsProductId) {
+            autoUpdate(false)
+            tableView.reloadData()
+            router?.showPurchaseViewController()
+        }
+    }
+}
+
+// MARK: - SettingsPurchaseCellDelegate
+extension SettingsViewController: SettingsPurchaseCellDelegate {
+    func buyButtonTapped() {
+        router?.showPurchaseViewController()
     }
 }

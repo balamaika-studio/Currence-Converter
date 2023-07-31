@@ -113,7 +113,6 @@ class PurchaseViewController: UIViewController, PurchaseDisplayLogic {
             }).first {
                 ConverterProducts.store.buyProduct(availableProduct)
             }
-            
         }
     }
     

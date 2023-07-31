@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Appodeal
 
 protocol ConverterUpdateViewDelegate: AnyObject {
     func updateView()
@@ -100,6 +101,16 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadCryptoCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) {
+            Appodeal.hideBanner()
+            return
+        }
+        Appodeal.showAd(
+            .bannerBottom,
+            forPlacement: "Banner",
+            rootViewController: self
+        )
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -186,13 +197,17 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
 
         setupNavBar()
         
-        if UserDefaultsService.shared.isFirstLoad {
-            router?.showPurchaseViewController()
-        }
-        
         let adsProductId = ConverterProducts.SwiftShopping
         if !ConverterProducts.store.isProductPurchased(adsProductId) {
-            Notify.showWith(title: R.string.localizable.firstLoadBunner())
+            Notify.showWith(title: R.string.localizable.firstLoadBunner(), duration: 1)
+            
+            if UserDefaultsService.shared.isFirstLoad {
+                router?.showPurchaseViewController()
+            }
+            
+            if ((UserDefaultsService.shared.purchaseViewShowCounter % 4) == 0) {
+                router?.showPurchaseViewController()
+            }
         }
     }
     
@@ -225,7 +240,7 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         if !ConverterProducts.store.isProductPurchased(adsProductId) &&
             (Date().timeIntervalSince1970 - UserDefaultsService.shared.lastUpdateTimeInteraval) < 3600 {
             self.refreshControl.endRefreshing()
-            Notify.showWith(title: R.string.localizable.purchaseTitle())
+            Notify.showWith(title: R.string.localizable.purchaseTitleBanner(), duration: 1)
             
             return
         }

@@ -7,28 +7,38 @@
 //
 
 import UIKit
-import GoogleMobileAds
-import AppsFlyerLib
 import AppTrackingTransparency
 import AdSupport
-import Firebase
+import Appodeal
+import StackConsentManager
+
+let kIsTablet = (UIDevice.current.userInterfaceIdiom == .pad)
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, STKConsentManagerDisplayDelegate {
     
     private let adUnitID = "ca-app-pub-5773099160082927/4750121114"
     
     var window: UIWindow?
-    var tabBarViewController: UITabBarController!
+    var tabBarViewController: AppTabBarController!
     var storage: StorageContext!
     var networkManager: NetworkManager!
-    private var bannerView: GADBannerView!
+    private var bannerView: APDBannerView!
     private var timer: Timer?
     private var isFirstLaunch: Bool = true
+    private struct AppodealConstants {
+        static let key: String = "3481d44187da8f04f1bd4a97ceab68b99c79f2e77f9c5bd2"
+        static let adTypes: AppodealAdType = [.interstitial, .rewardedVideo, .banner]
+        static let logLevel: APDLogLevel = .debug
+        static let interPlacement = "Inter"
+#if DEBUG
+        static let testMode: Bool = true
+#else
+        static let testMode: Bool = false
+#endif
+    }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         storage = try! RealmStorageContext()
         networkManager = NetworkManager()
@@ -49,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             window?.rootViewController = SplashViewController(nib: R.nib.splashViewController)
         } else {
             window?.rootViewController = tabBarViewController
+            UserDefaultsService.shared.purchaseViewShowCounter += 1
         }
         window?.makeKeyAndVisible()
         NotificationCenter.default.addObserver(self, selector: #selector(handlePurchaseNotification(_:)),
@@ -62,9 +73,52 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
         checkInternetConnection()
-        configureAppsFlyer()
-        requestIDFA()
+        
+        STKConsentManager.shared().synchronize(withAppKey: AppodealConstants.key) { [weak self] error in
+            error.map { print("Error while synchronising consent manager: \($0)") }
+            guard STKConsentManager.shared().shouldShowConsentDialog == .true else {
+                self?.initializeAppodealSDK()
+                return
+            }
+    
+            // Load and present consent dialog
+            STKConsentManager.shared().loadConsentDialog { [weak self] error in
+                error.map { print("Error while loading consent dialog: \($0)") }
+                guard
+                    let controller = self?.window?.rootViewController,
+                    STKConsentManager.shared().isConsentDialogReady
+                else {
+                    self?.initializeAppodealSDK()
+                    return
+                }
+                // Show consent dialog
+                STKConsentManager.shared().showConsentDialog(fromRootViewController: controller, delegate: self)
+            }
+        }
+
         return true
+    }
+    
+    // MARK: Appodeal Initialization
+    private func initializeAppodealSDK() {
+        /// Custom settings
+        // Appodeal.setFramework(.native, version: "1.0.0")
+        // Appodeal.setTriggerPrecacheCallbacks(true)
+        // Appodeal.setLocationTracking(true)
+        Appodeal.setLogLevel(AppodealConstants.logLevel)
+        Appodeal.setAutocache(true, types: AppodealConstants.adTypes)
+        
+        /// Test Mode
+        Appodeal.setTestingEnabled(false)
+        
+        /// User Data
+        // Appodeal.setUserId("userID")
+        
+        
+        // Initialise Appodeal SDK
+        Appodeal.setInitializationDelegate(self)
+        Appodeal.initialize(withApiKey: AppodealConstants.key, types: AppodealConstants.adTypes)
+        Appodeal.cacheAd(.banner)
     }
     
     public func setTabbar() {
@@ -73,60 +127,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func requestIDFA() {
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.setupAds()
-                }
-            }
-        } else {
-            setupAds()
-        }
+        setupAds()
     }
     
     private func setupAds() {
         let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) { return }
-        let height = tabBarViewController.tabBar.frame.size.height / 2
-        UserDefaults.standard.set(height, forKey: "bannerInset")
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
-        bannerView = GADBannerView(adSize: GADAdSizeBanner)
-        addBanner(bannerView)
-        bannerView.adUnitID = adUnitID
-        bannerView.rootViewController = tabBarViewController
-        bannerView.load(GADRequest())
+//        let height = tabBarViewController.tabBar.frame.size.height / 2
+//        UserDefaults.standard.set(height, forKey: "bannerInset")
+//        let bannerSize = kIsTablet ? kAPDAdSize728x90 : kAPDAdSize320x50
+//        bannerView = AppodealBannerView(size: bannerSize, rootViewController: tabBarViewController)
+//        bannerView.delegate = tabBarViewController
+//        bannerView.placement = "Banner"
+//        bannerView.loadAd()
+//        addBanner(bannerView)
+        Appodeal.canShow(.banner, forPlacement: "Banner")
     }
 
     private func setupInterstitialAd() {
-        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { _ in
-            let vc = FullScreenAdController()
-            vc.onDismissed = { [weak self] in
+        let adsProductId = ConverterProducts.SwiftShopping
+        if ConverterProducts.store.isProductPurchased(adsProductId) { return }
+        timer = Timer.scheduledTimer(withTimeInterval: 60, repeats: false) { [weak self] _ in
+            self?.tabBarViewController.onDismissed = { [weak self] in
                 self?.timer?.invalidate()
                 self?.timer = nil
                 self?.setupInterstitialAd()
             }
-            vc.loadInterstitialAd(id: "ca-app-pub-5773099160082927/1278122807") { [weak self, weak vc] in
-                guard $0, let self = self, let vc = vc else { return }
-                self.window?.rootViewController?.present(vc, animated: true)
+
+            Appodeal.setInterstitialDelegate(self?.tabBarViewController)
+            guard Appodeal.isInitialized(for: .interstitial),
+                  Appodeal.isReadyForShow(with: .interstitial)
+            else {
+                return
             }
+            
+            Appodeal.showAd(
+                .interstitial,
+                forPlacement: AppodealConstants.interPlacement,
+                rootViewController: self?.tabBarViewController
+            )
         }
     }
     
-    private func configureAppsFlyer() {
-        let appsFlyer = AppsFlyerLib.shared()
-        appsFlyer.appsFlyerDevKey = "6sG9tvthbLbQdohMzWSCy4"
-        appsFlyer.appleAppID = "1512175521"
-        appsFlyer.delegate = self
-        if #available(iOS 14, *) {
-            appsFlyer.waitForATTUserAuthorization(timeoutInterval: 30)
-        }
-        #if DEBUG
-        appsFlyer.isDebug = true
-        #endif
-    }
-    
-    func addBanner(_ bannerView: GADBannerView) {
-        let height = GADAdSizeBanner.size.height
+    func addBanner(_ bannerView: AppodealBannerView) {
+        let bannerSize = kIsTablet ? kAPDAdSize728x90 : kAPDAdSize320x50
+        let height = bannerSize.height
         tabBarViewController.additionalSafeAreaInsets.bottom += height
         bannerView.translatesAutoresizingMaskIntoConstraints = false
         tabBarViewController.view.addSubview(bannerView)
@@ -137,14 +182,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if UserDefaults.standard.bool(forKey: "autoUpdate") {
-            print("Load Quotes")
+        var canUpdate = false
+        let adsProductId = ConverterProducts.SwiftShopping
+        
+        if !ConverterProducts.store.isProductPurchased(adsProductId) &&
+            (Date().timeIntervalSince1970 - UserDefaultsService.shared.lastUpdateTimeInteraval) < 3600 {
+            canUpdate = false
+        } else if !ConverterProducts.store.isProductPurchased(adsProductId) &&
+                    (Date().timeIntervalSince1970 - UserDefaultsService.shared.lastUpdateTimeInteraval) > 3600 {
+            canUpdate = true
+        } else if ConverterProducts.store.isProductPurchased(adsProductId) && UserDefaults.standard.bool(forKey: "autoUpdate") {
+            canUpdate = true
+        } else {
+            canUpdate = false
+        }
+        
+        if canUpdate {
             networkManager.getQuotes(exchangeType: .forex) { response, errorMessage in
                 guard let quotes = response?.quotes else { return }
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
+                UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
                 self.updateQuotes(quotes, in: self.storage)
             }
-
+            
             networkManager.getQuotes(exchangeType: .crypto) { response, errorMessage in
                 guard let quotes = response?.quotes else { return }
                 UserDefaults.standard.set(response!.updated, forKey: "updated")
@@ -154,36 +214,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         quote.currency == info.abbreviation
                     }
                 }
+                UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
                 self.updateQuotes(filteredQuotes, in: self.storage)
             }
         }
         
-        AppsFlyerLib.shared().start()
-        let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) { return }
-        if #available(iOS 14, *) {
-            ATTrackingManager.requestTrackingAuthorization { [weak self] _ in
-                DispatchQueue.main.async {
-                    self?.setupInterstitialAd()
-                }
-            }
-        } else {
-            setupInterstitialAd()
-        }
+        setupInterstitialAd()
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        AppsFlyerLib.shared().handleOpen(url, options: options)
         return true
     }
     
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        AppsFlyerLib.shared().continue(userActivity, restorationHandler: nil)
         return true
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-            AppsFlyerLib.shared().handlePushNotification(userInfo)
             completionHandler(.noData)
         }
 
@@ -199,6 +247,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 bannerView.removeFromSuperview()
                 let height = self.tabBarViewController.tabBar.frame.size.height / 2
                 UserDefaults.standard.set(height, forKey: "bannerInset")
+            }
+            if ConverterProducts.SwiftShopping == productID {
+                Appodeal.hideBanner()
             }
         }
     }
@@ -249,14 +300,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
     }
-}
-
-extension AppDelegate: AppsFlyerLibDelegate {
-    func onConversionDataFail(_ error: Error) {
-        
+    
+    func consentManagerWillShowDialog(_ consentManager: STKConsentManager) {
+        initializeAppodealSDK()
     }
     
-    func onConversionDataSuccess(_ conversionInfo: [AnyHashable : Any]) {
-        
+    func consentManager(_ consentManager: STKConsentManager, didFailToPresent error: Error) {
+        initializeAppodealSDK()
+    }
+    
+    func consentManagerDidDismissDialog(_ consentManager: STKConsentManager) {
+        let report = STKConsentManager.shared().consent!
+        Appodeal.updateConsentReport(report)
+        initializeAppodealSDK()
+    }
+}
+
+extension AppDelegate: AppodealInitializationDelegate {
+    func appodealSDKDidInitialize() {
+        requestIDFA()
     }
 }
