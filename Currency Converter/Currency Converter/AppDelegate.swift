@@ -11,6 +11,7 @@ import AppTrackingTransparency
 import AdSupport
 import Appodeal
 import StackConsentManager
+import Firebase
 
 let kIsTablet = (UIDevice.current.userInterfaceIdiom == .pad)
 
@@ -73,6 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, STKConsentManagerDisplayD
         }
         UserDefaultsService.shared.lastUpdateTimeInteraval = Date().timeIntervalSince1970
         checkInternetConnection()
+        FirebaseApp.configure()
         
         STKConsentManager.shared().synchronize(withAppKey: AppodealConstants.key) { [weak self] error in
             error.map { print("Error while synchronising consent manager: \($0)") }

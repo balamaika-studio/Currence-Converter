@@ -133,3 +133,12 @@
 
 "purchase array title5" = "Support us";
 "purchase array subtitle5" = "Help us make this app even more comfortable to use.";
+
+// MARK: - Settings
+"FeedbackAndSupport" = "Reviews ans support";
+"RateInAppStore" = "Rate in AppStore";
+
+"bottomTextSettings" = "The app is not responsible for errors or delays in currency exchange rates or your action based on the rate data. Copyright © Maksim Haroshka";
+
+"Terms" = "Terms Of Service";
+"Policy" = "Privacy Policy";

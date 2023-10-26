@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Appodeal
+import Firebase
 
 class RelativeExchangeView: UIView {
     // MARK: - UI
@@ -50,6 +52,8 @@ class RelativeExchangeView: UIView {
     
     // MARK: - Actions
     @IBAction func swapCurrenciesTapped(_ sender: UIButton) {
+        Appodeal.trackEvent("Graphs_currency", customParameters: ["Graphs_currency": "click"])
+        Analytics.logEvent("Graphs_currency", parameters: ["Graphs_currency": "click"])
         let tmpCurrency = baseCurrency
         baseCurrency = relativeCurrency
         relativeCurrency = tmpCurrency

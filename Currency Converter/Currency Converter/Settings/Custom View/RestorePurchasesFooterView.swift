@@ -20,6 +20,15 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
         button.addTarget(self, action: #selector(restoreTapped), for: .touchUpInside)
         return button
     }()
+    
+    private lazy var termsLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.numberOfLines = 0
+        label.text = R.string.localizable.bottomTextSettings()
+        return label
+    }()
 
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
@@ -39,7 +48,14 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
         contentView.addSubview(restoreButton)
         NSLayoutConstraint.activate([
             restoreButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            restoreButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            restoreButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+        ])
+        contentView.addSubview(termsLabel)
+        NSLayoutConstraint.activate([
+            termsLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            termsLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            termsLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16),
+            termsLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16)
         ])
         
         setUpTheming()
@@ -49,6 +65,7 @@ class RestorePurchasesFooterView: UITableViewHeaderFooterView {
 
 extension RestorePurchasesFooterView: Themed {
     func applyTheme(_ theme: AppTheme) {
+        termsLabel.textColor = theme.cancelTitleColor
         restoreButton.backgroundColor = .clear
         restoreButton.setTitleColor(theme.segmentedControlTintColor, for: .normal)
         contentView.backgroundColor = .clear

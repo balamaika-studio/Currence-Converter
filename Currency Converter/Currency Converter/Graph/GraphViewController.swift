@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import Appodeal
+import Firebase
 
 protocol GraphDisplayLogic: class {
     func displayData(viewModel: Graph.Model.ViewModel.ViewModelData)
@@ -80,6 +81,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         AccuracyManager.shared.accuracy = 3
 
         navigationController?.setNavigationBarHidden(true, animated: animated)
+        Appodeal.trackEvent("Graphs", customParameters: ["Graphs": "open"])
+        Analytics.logEvent("Graphs", parameters: ["Graphs": "open"])
         let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) {
             Appodeal.hideBanner()
@@ -201,6 +204,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     private func showChoiceViewController(isLeft: Bool, oppositeCurrency: String) {
+        Appodeal.trackEvent("Graphs_currency", customParameters: ["Graphs_currency": "click"])
+        Analytics.logEvent("Graphs_currency", parameters: ["Graphs_currency": "click"])
         router?.showChoiceViewController(isLeft: isLeft, oppositeCurrency: oppositeCurrency)
     }
     
@@ -236,6 +241,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
     }
     
     @IBAction func purchaseButtonAction(_ sender: Any) {
+        Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "graphs"])
+        Analytics.logEvent("Supscription_wndw", parameters: ["open": "graphs"])
         router?.showPurchaseViewController()
     }
     private func clearChartLabel() {
@@ -249,6 +256,8 @@ final class GraphViewController: UIViewController, GraphDisplayLogic {
         clearChartLabel()
         let base = converterView.baseCurrency.currency
         let relative = converterView.relativeCurrency.currency
+        Appodeal.trackEvent("Graphs_days", customParameters: ["Graphs_days": "click"])
+        Analytics.logEvent("Graphs_days", parameters: ["Graphs_days": "click"])
         let graphPeriod = periods[sender.selectedSegmentIndex]
         interactor?.makeRequest(request: .loadGraphData(base: base,
                                                         relative: relative,

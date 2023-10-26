@@ -13,6 +13,8 @@ enum SettingsSection: Int, CaseIterable {
     case network
     case symbolCount
     case appearance
+    case rate
+    case terms
 }
 
 extension SettingsSection: CustomStringConvertible {
@@ -22,6 +24,8 @@ extension SettingsSection: CustomStringConvertible {
         case .appearance: return R.string.localizable.appearanceSectionTitle()
         case .purchases: return String()
         case .symbolCount: return R.string.localizable.symbolCountSectionTitle()
+        case .rate: return String()
+        case .terms: return String()
         }
     }
 }

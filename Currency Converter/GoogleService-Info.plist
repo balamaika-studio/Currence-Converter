@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>588042783694-n8cb7kejs6rrn3i2ucglidpsn2q9nhhn.apps.googleusercontent.com</string>
+	<string>637745875138-lpa6kucfu1qe188o0khgu1v5pmu1l1cu.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.588042783694-n8cb7kejs6rrn3i2ucglidpsn2q9nhhn</string>
+	<string>com.googleusercontent.apps.637745875138-lpa6kucfu1qe188o0khgu1v5pmu1l1cu</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD_DsNMQaQd8HQh4z8VajK_QkyQfpo6iXI</string>
+	<string>AIzaSyBUQ71HTdwBIgnRMyScvreRaGsgaKBRDt0</string>
 	<key>GCM_SENDER_ID</key>
-	<string>588042783694</string>
+	<string>637745875138</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>Maksim.Haroshka.CurrencyConverterFree</string>
 	<key>PROJECT_ID</key>
-	<string>currency-converter-7ee09</string>
+	<string>converter-2-8a189</string>
 	<key>STORAGE_BUCKET</key>
-	<string>currency-converter-7ee09.appspot.com</string>
+	<string>converter-2-8a189.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:588042783694:ios:ca8702dc6cd57f7ed0399f</string>
+	<string>1:637745875138:ios:b933244209d4e45276135b</string>
 </dict>
 </plist>

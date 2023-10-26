@@ -9,12 +9,14 @@
 import UIKit
 import StoreKit
 import Appodeal
+import Firebase
+import MessageUI
 
 protocol SettingsDisplayLogic: class {
     func displayData(viewModel: Settings.Model.ViewModel.ViewModelData)
 }
 
-class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTableViewCellDelegate {
+class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTableViewCellDelegate, MFMailComposeViewControllerDelegate {
     
     @IBOutlet weak var tableView: AdaptiveTableView!
     @IBOutlet weak var hiddenTextField: UITextField!
@@ -77,6 +79,8 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         createVisualEffects()
+        Appodeal.trackEvent("Settings_open", customParameters: ["Settings_open": "open"])
+        Analytics.logEvent("Settings_open", parameters: ["Settings_open": "open"])
         let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) {
             Appodeal.hideBanner()
@@ -156,6 +160,8 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTa
     }
     
     private func showPurchase() {
+        Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "setting_sub"])
+        Analytics.logEvent("Supscription_wndw", parameters: ["open": "setting_sub"])
         router?.showPurchaseViewController()
     }
     
@@ -173,7 +179,7 @@ class SettingsViewController: UIViewController, SettingsDisplayLogic, SettingsTa
         navigationController?.navigationBar.prefersLargeTitles = true
         let footerFrame = CGRect(x: 0, y: 0,
                                  width: tableView.frame.width,
-                                 height: 75)
+                                 height: 120)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.sectionFooterHeight = 0.5
@@ -299,7 +305,77 @@ extension SettingsViewController: UITableViewDelegate {
             break
         case .appearance:
             break
+        case .rate:
+            let appearance = RateOptions(rawValue: indexPath.row)
+            switch appearance {
+            case .feedback:
+                sendEmail()
+                
+            case .rate:
+                rateApp()
+                
+            case .none:
+                break
+            }
+        case .terms:
+            let appearance = termsOptions(rawValue: indexPath.row)
+            switch appearance {
+            case .terms:
+                guard let url = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/") else {
+                  return //be safe
+                }
+
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+                
+            case .policy:
+                guard let url = URL(string: "https://balamaika.github.io/privacy-policy.html") else {
+                  return //be safe
+                }
+
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    UIApplication.shared.openURL(url)
+                }
+            case .none:
+                break
+            }
         }
+    }
+    
+    private func rateApp() {
+        if #available(iOS 10.3, *) {
+            SKStoreReviewController.requestReview()
+
+        } else if let url = URL(string: "itms-apps://itunes.apple.com/app/" + "6447615742") {
+            if #available(iOS 10, *) {
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
+
+            } else {
+                UIApplication.shared.openURL(url)
+            }
+        }
+    }
+    
+    func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(["balamaika.studio@gmail.com"])
+            mail.setMessageBody("<p></p>", isHTML: true)
+            
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+        }
+    }
+    
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
 
@@ -348,6 +424,10 @@ extension SettingsViewController: UITableViewDataSource {
             }
             
         case .symbolCount: return SymbolCountOptions.allCases.count
+        case .rate:
+            return RateOptions.allCases.count
+        case .terms:
+            return termsOptions.allCases.count
         }
     }
     
@@ -365,6 +445,10 @@ extension SettingsViewController: UITableViewDataSource {
             settingCell.autoUpdateChanged = self.autoUpdate
             settingCell.selectionStyle = .none
             let isAutoUpdateEnable = UserDefaults.standard.bool(forKey: "autoUpdate")
+            if isAutoUpdateEnable {
+                Appodeal.trackEvent("Real-time_updates", customParameters: ["Real-time_updates": "click"])
+                Analytics.logEvent("Real-time_updates", parameters: ["Real-time_updates": "click"])
+            }
             settingCell.configure(with: network, state: SwitchState(rawValue: isAutoUpdateEnable), position: .all)
             settingCell.setDelegate(self)
             cell = settingCell
@@ -392,6 +476,8 @@ extension SettingsViewController: UITableViewDataSource {
                 let switchState = AppThemeManager.shared.currentTheme == .dark ? true : false
                 settingCell.themeChanged = self.updateTheme
                 settingCell.selectionStyle = .none
+                Appodeal.trackEvent("Dark_theme", customParameters: ["Dark_theme": "click"])
+                Analytics.logEvent("Dark_theme", parameters: ["Dark_theme": "click"])
                 settingCell.configure(with: appearance, state: SwitchState(rawValue: switchState), position: .last)
             }
             cell = settingCell
@@ -403,6 +489,36 @@ extension SettingsViewController: UITableViewDataSource {
             settingCell.selectionStyle = .none
             settingCell.configure(with: symbolCountOptions, state: nil, position: .all)
             cell = settingCell
+        case .rate:
+            guard
+                let settingCell = tableView.dequeueReusableCell(withIdentifier: R.nib.settingsTableViewCell,
+                                                                for: indexPath) ,
+                let appearance = RateOptions(rawValue: indexPath.row) else { break }
+            switch appearance {
+            case .feedback:
+                settingCell.selectionStyle = .none
+                settingCell.configure(with: appearance, state: nil, position: .first)
+                
+            case .rate:
+                settingCell.selectionStyle = .none
+                settingCell.configure(with: appearance, state: nil, position: .last)
+            }
+            cell = settingCell
+        case .terms:
+            guard
+                let settingCell = tableView.dequeueReusableCell(withIdentifier: R.nib.settingsTableViewCell,
+                                                                for: indexPath) ,
+                let appearance = termsOptions(rawValue: indexPath.row) else { break }
+            switch appearance {
+            case .terms:
+                settingCell.selectionStyle = .none
+                settingCell.configure(with: appearance, state: nil, position: .first)
+                
+            case .policy:
+                settingCell.selectionStyle = .none
+                settingCell.configure(with: appearance, state: nil, position: .last)
+            }
+            cell = settingCell
         }
         
         return cell
@@ -413,6 +529,8 @@ extension SettingsViewController: UITableViewDataSource {
         if !ConverterProducts.store.isProductPurchased(adsProductId) {
             autoUpdate(false)
             tableView.reloadData()
+            Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "real_time"])
+            Analytics.logEvent("Supscription_wndw", parameters: ["open": "real_time"])
             router?.showPurchaseViewController()
         }
     }
@@ -421,6 +539,10 @@ extension SettingsViewController: UITableViewDataSource {
 // MARK: - SettingsPurchaseCellDelegate
 extension SettingsViewController: SettingsPurchaseCellDelegate {
     func buyButtonTapped() {
+        Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "setting_sub"])
+        Analytics.logEvent("Supscription_wndw", parameters: ["open": "setting_sub"])
+        Appodeal.trackEvent("Settings_sub", customParameters: ["Settings_sub": "click"])
+        Analytics.logEvent("Settings_sub", parameters: ["Settings_sub": "click"])
         router?.showPurchaseViewController()
     }
 }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Appodeal
+import Firebase
 
 protocol ConverterUpdateViewDelegate: AnyObject {
     func updateView()
@@ -101,6 +102,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
         interactor?.makeRequest(request: .loadConverterCurrencies)
         interactor?.makeRequest(request: .loadCryptoCurrencies)
         interactor?.makeRequest(request: .loadFavoriteCurrenciesFirst())
+        Appodeal.trackEvent("Converter", customParameters: ["Converter": "open"])
+        Analytics.logEvent("Converter", parameters: ["Converter": "open"])
         let adsProductId = ConverterProducts.SwiftShopping
         if ConverterProducts.store.isProductPurchased(adsProductId) {
             Appodeal.hideBanner()
@@ -139,9 +142,11 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             if !UserDefaultsService.shared.isFirstLoad {
                 tableView.backgroundView = favoriteCurrencies.isEmpty ? emptyStateView : nil
             }
-            tableView.reloadRows(at: indexPathes, with: .none)
             indexPathes.forEach {
-                tableView.deselectRow(at: $0, animated: true)
+                if tableView.isValid(indexPath: $0) {
+                    tableView.reloadRows(at: [$0], with: .none)
+                    tableView.deselectRow(at: $0, animated: true)
+                }
             }
 
         case .showError(let message):
@@ -202,10 +207,14 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
             Notify.showWith(title: R.string.localizable.firstLoadBunner(), duration: 1)
             
             if UserDefaultsService.shared.isFirstLoad {
+                Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "app_entrance"])
+                Analytics.logEvent("Supscription_wndw", parameters: ["open": "app_entrance"])
                 router?.showPurchaseViewController()
             }
             
             if ((UserDefaultsService.shared.purchaseViewShowCounter % 4) == 0) {
+                Appodeal.trackEvent("Supscription_wndw", customParameters: ["open": "app_entrance"])
+                Analytics.logEvent("Supscription_wndw", parameters: ["open": "app_entrance"])
                 router?.showPurchaseViewController()
             }
         }
@@ -228,6 +237,8 @@ class ConverterViewController: UIViewController, ConverterDisplayLogic {
     }
     
     @objc private func addTapped() {
+        Appodeal.trackEvent("List_currency", customParameters: ["List_currency": "open"])
+        Analytics.logEvent("List_currency", parameters: ["List_currency": "open"])
         router?.showFavoriteViewController()
     }
   
